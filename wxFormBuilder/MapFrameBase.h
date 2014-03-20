@@ -16,6 +16,7 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/stattext.h>
 #include <wx/sizer.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -37,6 +38,7 @@ class MapFrameBase : public wxFrame
 	protected:
 		wxButton* m_OpenMap;
 		wxButton* m_SaveToPng;
+		wxStaticText* m_MapPath;
 		wxScrolledWindow* m_WindowMapView;
 		wxStaticBitmap* m_MapView;
 		

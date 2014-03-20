@@ -6,7 +6,10 @@
 MapTool::MapTool(wxWindow* parent)
 :MapFrameBase(parent)
 {
-    //ctor
+    this->SetTitle(wxT("剑侠情缘地图工具V1.0 - by 小试刀剑"));
+    this->SetIcon(wxICON(aaaa));
+    this->SetSize(800, 600);
+    this->Center();
 }
 
 MapTool::~MapTool()
@@ -27,6 +30,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
 
     Map map;
     if(!map.ReadFile(filedlg.GetPath())) return;
+    m_MapPath->SetLabel(filedlg.GetPath());
 
     m_MapImg = map.getImage();
 
@@ -36,5 +40,13 @@ void MapTool::OpenMap(wxCommandEvent& event)
 
 void MapTool::SaveToPNG(wxCommandEvent& event)
 {
+    wxFileDialog filedlg(this,
+                         wxT("存为PNG"),
+                         wxEmptyString,
+                         wxEmptyString,
+                         wxT("MAP文件(*.png)|*.png"),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
+    if(filedlg.ShowModal() != wxID_OK) return;
+    m_MapImg.SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
 }

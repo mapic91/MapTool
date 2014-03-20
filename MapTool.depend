@@ -1691,7 +1691,7 @@
 1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\theme.h
 	"wx/string.h"
 
-1395318511 source:e:\programingworkshop\maptool\mpcdecode.cpp
+1395319918 source:e:\programingworkshop\maptool\mpcdecode.cpp
 	"MpcDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -1826,7 +1826,7 @@
 	"wx/strconv.h"
 	"wx/fontenc.h"
 
-1353751060 source:e:\programingworkshop\maptool\resource.rc
+1395322744 source:e:\programingworkshop\maptool\resource.rc
 	"wx/msw/wx.rc"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\wx.rc
@@ -1879,7 +1879,7 @@
 1395297901 e:\programingworkshop\maptool\maptool.h
 	<MapFrameBase.h>
 
-1395319323 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
+1395323381 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -1888,6 +1888,7 @@
 	<wx/font.h>
 	<wx/colour.h>
 	<wx/settings.h>
+	<wx/stattext.h>
 	<wx/sizer.h>
 	<wx/bitmap.h>
 	<wx/image.h>
@@ -2002,10 +2003,10 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\scrolwin.h
 
-1395319323 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
+1395321235 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1395298198 source:e:\programingworkshop\maptool\maptool.cpp
+1395323258 source:e:\programingworkshop\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"Map.h"
@@ -2173,4 +2174,38 @@
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\lib\gcc_lib\mswud\wx\setup.h
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\lib\gcc_lib\mswu\wx\setup.h
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\stattext.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/stattext.h"
+	"wx/msw/stattext.h"
+	"wx/motif/stattext.h"
+	"wx/gtk/stattext.h"
+	"wx/gtk1/stattext.h"
+	"wx/osx/stattext.h"
+	"wx/cocoa/stattext.h"
+	"wx/os2/stattext.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\stattext.h
+	"wx/generic/stattextg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\stattextg.h
+	"wx/stattext.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\stattext.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\stattext.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\stattext.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\stattext.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\stattext.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\stattext.h
+	"wx/cocoa/NSTextField.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\stattext.h
+	"wx/control.h"
 

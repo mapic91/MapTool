@@ -19,11 +19,15 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_OpenMap = new wxButton( this, wxID_ANY, wxT("鎵撳紑鍦板浘..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_OpenMap = new wxButton( this, wxID_ANY, wxT("打开地图..."), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_OpenMap, 0, wxALL, 5 );
 	
-	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("瀛樹负PNG..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("存为PNG..."), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_SaveToPng, 0, wxALL, 5 );
+	
+	m_MapPath = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_MapPath->Wrap( -1 );
+	bSizer2->Add( m_MapPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
