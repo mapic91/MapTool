@@ -1,5 +1,6 @@
 #include "MapTool.h"
 #include "wx/filedlg.h"
+#include "wx/msgdlg.h"
 
 #include "Map.h"
 
@@ -27,11 +28,18 @@ void MapTool::OpenMap(wxCommandEvent& event)
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
-
     Map map;
-    if(!map.ReadFile(filedlg.GetPath())) return;
-    m_MapPath->SetLabel(filedlg.GetPath());
+    try
+    {
 
+        if(!map.ReadFile(filedlg.GetPath())) return;
+    }
+    catch(std::exception e)
+    {
+        wxMessageBox(wxT("Exception Occur!"));
+    }
+
+    m_MapPath->SetLabel(filedlg.GetPath());
     m_MapImg = map.getImage();
 
     m_MapView->SetBitmap(wxBitmap(m_MapImg));

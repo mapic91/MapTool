@@ -478,20 +478,28 @@ void MpcDecode::BufferData()
         temp->data = GetDecodedFrameData(i, &width, &height, PIC_RGBA);
         temp->width = width;
         temp->height = height;
-        temp->next = new Frame_Data;
-        temp = temp->next;
+        if(i != GetFramesCounts() - 1)
+        {
+            temp->next = new Frame_Data;
+            temp = temp->next;
+        }
+        else //last one
+        {
+            temp->next = NULL;
+        }
+
     }
-    delete temp->next;
-    temp->next = NULL;
 }
 
 void MpcDecode::FreeBufferData()
 {
+    Frame_Data *temp;
     while(first != NULL)
     {
+        temp = first->next;
         if(first->data != NULL) free(first->data);
         delete first;
-        first = first->next;
+        first = temp;
     }
     first = NULL;
 }
