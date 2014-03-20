@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1386829461 source:e:\programingworkshop\maptool\app.cpp
+1395296906 source:e:\programingworkshop\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
+	"MapTool.h"
 	<wx/image.h>
 
 1386829465 e:\programingworkshop\maptool\app.h
@@ -1844,4 +1845,331 @@
 	<aygshell.h>
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\rcdefs.h
+
+1395309074 source:e:\programingworkshop\maptool\map.cpp
+	"wx/filename.h"
+	"wx/stdpaths.h"
+	"Map.h"
+	"MpcDecode.hpp"
+	<fstream>
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\stdpaths.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/filefn.h"
+	"wx/msw/stdpaths.h"
+	"wx/osx/core/stdpaths.h"
+	"wx/os2/stdpaths.h"
+	"wx/unix/stdpaths.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\stdpaths.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\core\stdpaths.h
+	"wx/unix/stdpaths.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\unix\stdpaths.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\stdpaths.h
+
+1395303237 e:\programingworkshop\maptool\map.h
+	"wx/string.h"
+	"wx/image.h"
+
+1395297901 e:\programingworkshop\maptool\maptool.h
+	<MapFrameBase.h>
+
+1395298298 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
+	<wx/artprov.h>
+	<wx/xrc/xmlres.h>
+	<wx/string.h>
+	<wx/button.h>
+	<wx/gdicmn.h>
+	<wx/font.h>
+	<wx/colour.h>
+	<wx/settings.h>
+	<wx/sizer.h>
+	<wx/bitmap.h>
+	<wx/image.h>
+	<wx/icon.h>
+	<wx/statbmp.h>
+	<wx/scrolwin.h>
+	<wx/frame.h>
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\artprov.h
+	"wx/string.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/iconbndl.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\xrc\xmlres.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+	"wx/datetime.h"
+	"wx/list.h"
+	"wx/gdicmn.h"
+	"wx/filesys.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/artprov.h"
+	"wx/colour.h"
+	"wx/vector.h"
+	"wx/xrc/xmlreshandler.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\filesys.h
+	"wx/defs.h"
+	"wx/stream.h"
+	"wx/datetime.h"
+	"wx/filename.h"
+	"wx/hashmap.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\xrc\xmlreshandler.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/artprov.h"
+	"wx/colour.h"
+	"wx/filesys.h"
+	"wx/imaglist.h"
+	"wx/window.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\sizer.h
+	"wx/defs.h"
+	"wx/window.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\statbmp.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/univ/statbmp.h"
+	"wx/msw/statbmp.h"
+	"wx/motif/statbmp.h"
+	"wx/gtk/statbmp.h"
+	"wx/gtk1/statbmp.h"
+	"wx/osx/statbmp.h"
+	"wx/cocoa/statbmp.h"
+	"wx/os2/statbmp.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\statbmp.h
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\statbmp.h
+	"wx/control.h"
+	"wx/icon.h"
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\statbmp.h
+	"wx/motif/bmpmotif.h"
+	"wx/icon.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\bmpmotif.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\statbmp.h
+	"wx/icon.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\statbmp.h
+	"wx/icon.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\statbmp.h
+	"wx/osx/carbon/statbmp.h"
+	"wx/generic/statbmpg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\carbon\statbmp.h
+	"wx/icon.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\statbmpg.h
+	"wx/statbmp.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\statbmp.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\statbmp.h
+	"wx/control.h"
+	"wx/icon.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\scrolwin.h
+	"wx/panel.h"
+	"wx/gtk/scrolwin.h"
+	"wx/gtk1/scrolwin.h"
+	"wx/generic/scrolwin.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\scrolwin.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\scrolwin.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\scrolwin.h
+
+1395300875 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
+	"MapFrameBase.h"
+
+1395298198 source:e:\programingworkshop\maptool\maptool.cpp
+	"MapTool.h"
+	"wx/filedlg.h"
+	"Map.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\filedlg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/arrstr.h"
+	"wx/generic/filedlgg.h"
+	"wx/msw/filedlg.h"
+	"wx/motif/filedlg.h"
+	"wx/gtk/filedlg.h"
+	"wx/gtk1/filedlg.h"
+	"wx/osx/filedlg.h"
+	"wx/cocoa/filedlg.h"
+	"wx/os2/filedlg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\filedlgg.h
+	"wx/listctrl.h"
+	"wx/datetime.h"
+	"wx/filefn.h"
+	"wx/artprov.h"
+	"wx/filedlg.h"
+	"wx/generic/filectrlg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\listctrl.h
+	"wx/defs.h"
+	"wx/listbase.h"
+	"wx/msw/listctrl.h"
+	"wx/osx/listctrl.h"
+	"wx/generic/listctrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\listbase.h
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/gdicmn.h"
+	"wx/event.h"
+	"wx/control.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\listctrl.h
+	"wx/textctrl.h"
+	"wx/dynarray.h"
+	"wx/vector.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\textctrl.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/textentry.h"
+	"wx/dynarray.h"
+	"wx/gdicmn.h"
+	"wx/ioswrap.h"
+	"wx/x11/textctrl.h"
+	"wx/univ/textctrl.h"
+	"wx/msw/wince/textctrlce.h"
+	"wx/msw/textctrl.h"
+	"wx/motif/textctrl.h"
+	"wx/gtk/textctrl.h"
+	"wx/gtk1/textctrl.h"
+	"wx/osx/textctrl.h"
+	"wx/cocoa/textctrl.h"
+	"wx/os2/textctrl.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\textentry.h
+	"wx/filefn.h"
+	"wx/gdicmn.h"
+	"wx/gtk/textentry.h"
+	"wx/osx/textentry.h"
+	"wx/msw/textentry.h"
+	"wx/motif/textentry.h"
+	"wx/os2/textentry.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\textentry.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\textentry.h
+	"wx/control.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\textentry.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\textentry.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\textentry.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\ioswrap.h
+	"wx/beforestd.h"
+	<iostream.h>
+	<iostream>
+	"wx/afterstd.h"
+	"wx/msw/winundef.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\x11\textctrl.h
+	"wx/univ/textctrl.h"
+	"wx/scrolwin.h"
+	"wx/arrstr.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\textctrl.h
+	"wx/scrolwin.h"
+	"wx/univ/inphand.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\wince\textctrlce.h
+	"wx/dynarray.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\textctrl.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\textctrl.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\textctrl.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\textctrl.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\textctrl.h
+	"wx/control.h"
+	"wx/textctrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\textctrl.h
+	"wx/cocoa/NSTextField.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\nstextfield.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\textctrl.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\listctrl.h
+	"wx/defs.h"
+	"wx/generic/listctrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\listctrl.h
+	"wx/containr.h"
+	"wx/scrolwin.h"
+	"wx/textctrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\filectrlg.h
+	"wx/containr.h"
+	"wx/listctrl.h"
+	"wx/filectrl.h"
+	"wx/filename.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\filectrl.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/event.h"
+	"wx/gtk/filectrl.h"
+	"wx/generic/filectrlg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\filectrl.h
+	"wx/control.h"
+	"wx/filectrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\filedlg.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\filedlg.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\filedlg.h
+	"wx/gtk/filectrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\filedlg.h
+	"wx/generic/filedlgg.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\filedlg.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\filedlg.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\filedlg.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\lib\gcc_lib\mswud\wx\setup.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\lib\gcc_lib\mswu\wx\setup.h
 

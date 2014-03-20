@@ -16,6 +16,7 @@
 #endif //__BORLANDC__
 
 #include "App.h"
+#include "MapTool.h"
 
 #include <wx/image.h>
 
@@ -25,5 +26,9 @@ bool wxWidgets_templateApp::OnInit()
 {
 	bool wxsOK = true;
 	wxInitAllImageHandlers();
+
+	wxFrame* frame = new MapTool(NULL);
+	frame->Show(true);
+
 	return wxsOK;
 }

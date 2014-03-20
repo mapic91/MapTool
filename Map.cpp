@@ -61,27 +61,28 @@ bool Map::ReadFile(const wxString FilePath)
     mapfile.seekg(4, ios_base::cur);
     mapfile.read((char*)temp4b, 4);
     mCol = Char2Long(temp4b);
-    mPixelWidth = mCol * 32;
+    mPixelWidth = (mCol + 1) * 64 ;
     mapfile.read((char*)temp4b, 4);
     mRow = Char2Long(temp4b);
-    mPixelHeight = mRow * 16;
+    mPixelHeight = (mRow + 1) * 16;
 
     mapfile.seekg(192, ios_base::beg);
     Name32b* mpcnames = (Name32b*)malloc(32 * 255);
-    wxString* wx_mpcpaths = new wxString[255];
+    wxString wx_mpcpaths[255];
     for(int mi = 0; mi < 32 * 255; mi++)
     {
         ((char*)mpcnames)[mi] = 0;
     }
     for(int namei = 0; namei < 255; namei++)
     {
-        for(int nc = 0; nc < 32; nc++)
+        for(int nc = 0; nc < 64; nc++)
         {
             mapfile.read(&tempc, 1);
-            if(tempc != 0) mpcnames[namei].Name[nc] = tempc;
+            if(nc < 31 && tempc != 0) mpcnames[namei].Name[nc] = tempc;
         }
         wx_mpcpaths[namei] = wx_mpcpath + wxT("\\") + wxString(mpcnames[namei].Name);
     }
+    free(mpcnames);
 
     long totaltiles = mCol * mRow;
     Tile* tiles = new Tile[totaltiles];
@@ -99,7 +100,6 @@ bool Map::ReadFile(const wxString FilePath)
     DrawLayer(1, tiles, wx_mpcpaths);
     DrawLayer(2, tiles, wx_mpcpaths);
     DrawLayer(3, tiles, wx_mpcpaths);
-
     return true;
 }
 
@@ -132,9 +132,11 @@ void Map::DrawLayer(int index, Tile *tiles, wxString* mpcpaths)
         default:
             break;
         }
-        decode.ReadMpcFile(mpcpaths[mpcno]);
+        if(mpcno == 0) continue;
+        decode.ReadMpcFile(mpcpaths[mpcno - 1]);
         frmdata = decode.GetDecodedFrameData(frmno, &width, &height, MpcDecode::PIC_RGBA);
-        DrawTile(totaltiles%mCol, totaltiles/mCol, width, height, frmdata);
+        DrawTile(tilei%mCol, tilei/mCol, width, height, frmdata);
+        free(frmdata);
     }
 }
 
@@ -144,26 +146,26 @@ void Map::DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsig
 
     //tile top-left position
     long basex, basey;
-    basex = (Row/2) * 32 + 64 * Column;
+    basex = (Row%2) * 32 + 64 * Column;
     basey = 16 * Row;
 
     //graph top-left position
     long graphx, graphy;
-    graphx = basex + (TileWidth/2 - 32);
-    graphy = basey + (TileHeight/2 - 32);
+    graphx = basex + (32 - TileWidth/2);
+    graphy = basey + (32 - TileHeight);
 
     unsigned long datai = 0;
-    for(long ri = 0; ri < TileWidth; ri++)
+    for(long hi = 0; hi < TileHeight; hi++)
     {
-        for(long ci = 0; ci < TileWidth; ci++)
+        for(long wi = 0; wi < TileWidth; wi++)
         {
-            if(TileData[datai + 3] != 0)
+            if(TileData[datai + 3] != 0 && (graphx + wi) != 0 && (graphy + hi) != 0)
             {
-                mImg.SetRGB(graphx + ci, graphy + ri,
+                mImg.SetRGB(graphx + wi, graphy + hi,
                         TileData[datai],
                         TileData[datai + 1],
                         TileData[datai + 2]);
-                mImg.SetAlpha(graphx + ci, graphy +ri, TileData[datai + 3]);
+                mImg.SetAlpha(graphx + wi, graphy + hi, 0xFF);
             }
 
             datai += 4;

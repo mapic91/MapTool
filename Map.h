@@ -63,8 +63,8 @@ class Map
 
         long mCol;
         long mRow;
-        long mPixelWidth; // = mCol * 32
-        long mPixelHeight;// = mRow * 16
+        long mPixelWidth; // = (mCol + 1) * 64
+        long mPixelHeight;// = (mRow + 1) * 16
         wxImage mImg;
 };
 
