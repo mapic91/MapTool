@@ -35,7 +35,7 @@ public:
     unsigned char* GetDecodedFrameData(const unsigned long index, long* Width = NULL, long* Height = NULL,
                                        COLOUR_MODLE mod = PIC_RGB);
 
-    wxImage GetFrameImage(const unsigned long index, bool ShdIncluded = false);
+    wxImage GetFrameImage(const unsigned long index);
 
 
     Palette PaletteData;

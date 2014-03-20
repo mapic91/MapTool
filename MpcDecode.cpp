@@ -175,7 +175,7 @@ long MpcDecode::GetBottom()
 }
 
 unsigned char* MpcDecode::GetDecodedFrameData(const unsigned long index, long* Width, long* Height,
-        COLOUR_MODLE mod, bool *isTransparent, Palette_Colour *TransparentColor)
+        COLOUR_MODLE mod)
 {
     switch(mod)
     {
