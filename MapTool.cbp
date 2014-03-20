@@ -162,6 +162,8 @@
 		</Linker>
 		<Unit filename="App.cpp" />
 		<Unit filename="App.h" />
+		<Unit filename="Map.cpp" />
+		<Unit filename="Map.h" />
 		<Unit filename="MpcDecode.cpp" />
 		<Unit filename="MpcDecode.hpp" />
 		<Unit filename="mydefs.hpp" />
