@@ -29,15 +29,8 @@ void MapTool::OpenMap(wxCommandEvent& event)
 
     if(filedlg.ShowModal() != wxID_OK) return;
     Map map;
-    try
-    {
 
-        if(!map.ReadFile(filedlg.GetPath())) return;
-    }
-    catch(std::exception e)
-    {
-        wxMessageBox(wxT("Exception Occur!"));
-    }
+    if(!map.ReadFile(filedlg.GetPath())) return;
 
     m_MapPath->SetLabel(filedlg.GetPath());
     m_MapImg = map.getImage();
