@@ -5,6 +5,13 @@
 #include "wx/image.h"
 
 #include "mydefs.hpp"
+struct Frame_Data
+{
+    long width;
+    long height;
+    unsigned char* data;//color model RGBA
+    Frame_Data *next;
+};
 
 class MpcDecode
 {
@@ -34,9 +41,11 @@ public:
     Palette_Colour GetTransparentColor();
     unsigned char* GetDecodedFrameData(const unsigned long index, long* Width = NULL, long* Height = NULL,
                                        COLOUR_MODLE mod = PIC_RGB);
-
+    //buffered RGBA data
+    unsigned char* GetBuffedFrameData(const unsigned long index, long* Width = NULL, long* Height = NULL);
     wxImage GetFrameImage(const unsigned long index);
 
+    void BufferData();
 
     Palette PaletteData;
 
@@ -44,6 +53,9 @@ public:
 private:
     void Init();
 
+    void FreeBufferData();
+
+    Frame_Data *first;
     MpcFileHead FileHead;
     wxString FilePath;
     unsigned long FrameDataBegPos;

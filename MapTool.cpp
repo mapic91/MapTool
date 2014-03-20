@@ -31,6 +31,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
     m_MapImg = map.getImage();
 
     m_MapView->SetBitmap(wxBitmap(m_MapImg));
+    m_WindowMapView->FitInside();
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)

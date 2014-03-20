@@ -4,6 +4,8 @@
 #include "wx/string.h"
 #include "wx/image.h"
 
+#include "MpcDecode.hpp"
+
 struct Name32b
 {
     char Name[32];
@@ -49,7 +51,7 @@ class Map
         tiles: (mCol * mRow) tiles data
         mpcpaths: 255 mpc files path
         **/
-        void DrawLayer(int index, Tile *tiles, wxString* mpcpaths);
+        void DrawLayer(int index, Tile *tiles, MpcDecode *decode);
 
         long Char2Long(const unsigned char* in) const
         {

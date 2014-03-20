@@ -1,7 +1,7 @@
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
+#include "wx/log.h"
 #include "Map.h"
-#include "MpcDecode.hpp"
 #include <fstream>
 
 using namespace std;
@@ -67,22 +67,23 @@ bool Map::ReadFile(const wxString FilePath)
     mPixelHeight = (mRow + 1) * 16;
 
     mapfile.seekg(192, ios_base::beg);
-    Name32b* mpcnames = (Name32b*)malloc(32 * 255);
-    wxString wx_mpcpaths[255];
-    for(int mi = 0; mi < 32 * 255; mi++)
-    {
-        ((char*)mpcnames)[mi] = 0;
-    }
+    MpcDecode *decode = new MpcDecode[255];
+    char mpcname[32] = {0};
     for(int namei = 0; namei < 255; namei++)
     {
         for(int nc = 0; nc < 64; nc++)
         {
             mapfile.read(&tempc, 1);
-            if(nc < 31 && tempc != 0) mpcnames[namei].Name[nc] = tempc;
+            if(nc < 31)
+            {
+                mpcname[nc] = tempc;
+            }
         }
-        wx_mpcpaths[namei] = wx_mpcpath + wxT("\\") + wxString(mpcnames[namei].Name);
+        if(decode[namei].ReadMpcFile(wx_mpcpath + wxT("\\") + wxString(mpcname)))
+        {
+            decode[namei].BufferData();
+        }
     }
-    free(mpcnames);
 
     long totaltiles = mCol * mRow;
     Tile* tiles = new Tile[totaltiles];
@@ -92,22 +93,26 @@ bool Map::ReadFile(const wxString FilePath)
         mapfile.read((char*)(&tiles[tilei]), 8);
         mapfile.seekg(2, ios_base::cur);
     }
+    mapfile.close();
 
     mImg.Create(mPixelWidth, mPixelHeight, true);
     mImg.SetAlpha();
 
     //draw layer 1
-    DrawLayer(1, tiles, wx_mpcpaths);
-    DrawLayer(2, tiles, wx_mpcpaths);
-    DrawLayer(3, tiles, wx_mpcpaths);
+    DrawLayer(1, tiles, decode);
+    DrawLayer(2, tiles, decode);
+    DrawLayer(3, tiles, decode);
+
+    delete[] decode;
+    delete[] tiles;
+
     return true;
 }
 
-void Map::DrawLayer(int index, Tile *tiles, wxString* mpcpaths)
+void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode)
 {
     if(index < 1 || index > 3) return;
 
-    MpcDecode decode;
     long totaltiles = mCol * mRow;
     long width, height;
     unsigned char mpcno, frmno, *frmdata;
@@ -133,10 +138,8 @@ void Map::DrawLayer(int index, Tile *tiles, wxString* mpcpaths)
             break;
         }
         if(mpcno == 0) continue;
-        decode.ReadMpcFile(mpcpaths[mpcno - 1]);
-        frmdata = decode.GetDecodedFrameData(frmno, &width, &height, MpcDecode::PIC_RGBA);
+        frmdata = decode[mpcno - 1].GetBuffedFrameData(frmno, &width, &height);
         DrawTile(tilei%mCol, tilei/mCol, width, height, frmdata);
-        free(frmdata);
     }
 }
 
@@ -159,7 +162,7 @@ void Map::DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsig
     {
         for(long wi = 0; wi < TileWidth; wi++)
         {
-            if(TileData[datai + 3] != 0 && (graphx + wi) != 0 && (graphy + hi) != 0)
+            if(TileData[datai + 3] != 0)
             {
                 mImg.SetRGB(graphx + wi, graphy + hi,
                         TileData[datai],

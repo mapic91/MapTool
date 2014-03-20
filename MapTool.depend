@@ -1691,7 +1691,7 @@
 1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\theme.h
 	"wx/string.h"
 
-1395279094 source:e:\programingworkshop\maptool\mpcdecode.cpp
+1395318511 source:e:\programingworkshop\maptool\mpcdecode.cpp
 	"MpcDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -1699,7 +1699,7 @@
 	<cstring>
 	<fstream>
 
-1395279122 e:\programingworkshop\maptool\mpcdecode.hpp
+1395318554 e:\programingworkshop\maptool\mpcdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
 	"mydefs.hpp"
@@ -1846,11 +1846,11 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\rcdefs.h
 
-1395309074 source:e:\programingworkshop\maptool\map.cpp
+1395319184 source:e:\programingworkshop\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
+	"wx/log.h"
 	"Map.h"
-	"MpcDecode.hpp"
 	<fstream>
 
 1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\stdpaths.h
@@ -1871,14 +1871,15 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\stdpaths.h
 
-1395303237 e:\programingworkshop\maptool\map.h
+1395317189 e:\programingworkshop\maptool\map.h
 	"wx/string.h"
 	"wx/image.h"
+	"MpcDecode.hpp"
 
 1395297901 e:\programingworkshop\maptool\maptool.h
 	<MapFrameBase.h>
 
-1395298298 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
+1395319323 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2001,7 +2002,7 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\scrolwin.h
 
-1395300875 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
+1395319323 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1395298198 source:e:\programingworkshop\maptool\maptool.cpp

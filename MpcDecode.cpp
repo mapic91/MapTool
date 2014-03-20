@@ -12,7 +12,7 @@ MpcDecode::MpcDecode()
 }
 MpcDecode::~MpcDecode()
 {
-
+    FreeBufferData();
 }
 MpcDecode::MpcDecode(const wxString MpcFilePath)
 {
@@ -23,6 +23,7 @@ void MpcDecode::Init()
 {
     memset(&FileHead,0, sizeof(MpcFileHead));
     memset(&PaletteData, 0, sizeof(PaletteData));
+    first = NULL;
 }
 void MpcDecode::SetMpcFile(const wxString MpcFilePath)
 {
@@ -334,7 +335,7 @@ unsigned char* MpcDecode::GetDecodedFrameData(const unsigned long index, long* W
                         break;
                     default:
                         //can't be here
-                        return NULL;
+                        ;
                     }
                 }
             }
@@ -384,6 +385,24 @@ unsigned char* MpcDecode::GetDecodedFrameData(const unsigned long index, long* W
         return decdata;
     }
     else return NULL;
+}
+
+unsigned char* MpcDecode::GetBuffedFrameData(const unsigned long index, long* Width, long* Height)
+{
+    if(index >= GetFramesCounts()) return NULL;
+
+    Frame_Data *temp = first;
+    for(unsigned long i = 0; i < index; i++)
+    {
+        if(temp == NULL) return NULL;
+        temp = temp->next;
+    }
+
+    if(temp == NULL) return NULL;
+    if(Width != NULL) *Width = temp->width;
+    if(Height != NULL) *Height = temp->height;
+
+    return temp->data;
 }
 
 wxImage MpcDecode::GetFrameImage(const unsigned long index)
@@ -444,4 +463,35 @@ wxImage MpcDecode::GetFrameImage(const unsigned long index)
         return img;
     }
     else return  wxNullImage;
+}
+
+void MpcDecode::BufferData()
+{
+    FreeBufferData();
+    Frame_Data *temp;
+    long width, height;
+    if(GetFramesCounts() == 0) return;
+    first = new Frame_Data;
+    temp = first;
+    for(unsigned long i = 0; i < GetFramesCounts(); i++)
+    {
+        temp->data = GetDecodedFrameData(i, &width, &height, PIC_RGBA);
+        temp->width = width;
+        temp->height = height;
+        temp->next = new Frame_Data;
+        temp = temp->next;
+    }
+    delete temp->next;
+    temp->next = NULL;
+}
+
+void MpcDecode::FreeBufferData()
+{
+    while(first != NULL)
+    {
+        if(first->data != NULL) free(first->data);
+        delete first;
+        first = first->next;
+    }
+    first = NULL;
 }

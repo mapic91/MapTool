@@ -37,7 +37,7 @@ class MapFrameBase : public wxFrame
 	protected:
 		wxButton* m_OpenMap;
 		wxButton* m_SaveToPng;
-		wxScrolledWindow* m_scrolledWindow1;
+		wxScrolledWindow* m_WindowMapView;
 		wxStaticBitmap* m_MapView;
 		
 		// Virtual event handlers, overide them in your derived class

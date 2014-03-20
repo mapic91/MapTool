@@ -74,6 +74,7 @@
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
 					<Add directory="$(#wx.lib)/gcc_dll/mswu" />
 				</Compiler>
 				<ResourceCompiler>
@@ -104,6 +105,7 @@
 				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
 					<Add directory="$(#wx.lib)/gcc_lib/mswu" />
 				</Compiler>
 				<ResourceCompiler>

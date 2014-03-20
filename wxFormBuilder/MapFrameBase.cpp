@@ -31,19 +31,19 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 	
-	m_scrolledWindow1 = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
-	m_scrolledWindow1->SetScrollRate( 5, 5 );
+	m_WindowMapView = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
+	m_WindowMapView->SetScrollRate( 5, 5 );
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxVERTICAL );
 	
-	m_MapView = new wxStaticBitmap( m_scrolledWindow1, wxID_ANY, wxBitmap( wxT("../../../temp/New folder/480_800/01.jpg"), wxBITMAP_TYPE_ANY ), wxDefaultPosition, wxDefaultSize, 0 );
+	m_MapView = new wxStaticBitmap( m_WindowMapView, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer4->Add( m_MapView, 1, wxALL, 5 );
 	
 	
-	m_scrolledWindow1->SetSizer( bSizer4 );
-	m_scrolledWindow1->Layout();
-	bSizer4->Fit( m_scrolledWindow1 );
-	bSizer3->Add( m_scrolledWindow1, 1, wxEXPAND | wxALL, 5 );
+	m_WindowMapView->SetSizer( bSizer4 );
+	m_WindowMapView->Layout();
+	bSizer4->Fit( m_WindowMapView );
+	bSizer3->Add( m_WindowMapView, 1, wxEXPAND | wxALL, 5 );
 	
 	
 	bSizer1->Add( bSizer3, 1, wxEXPAND, 5 );
