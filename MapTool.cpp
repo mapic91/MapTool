@@ -31,12 +31,13 @@ void MapTool::OpenMap(wxCommandEvent& event)
     Map map;
 
     if(!map.ReadFile(filedlg.GetPath())) return;
-
+    wxMessageBox(wxT("1"));
     m_MapPath->SetLabel(filedlg.GetPath());
     m_MapImg = map.getImage();
-
+    wxMessageBox(wxT("2"));
     m_MapView->SetBitmap(wxBitmap(m_MapImg));
     m_WindowMapView->FitInside();
+    wxMessageBox(wxT("3"));
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)

@@ -1,6 +1,6 @@
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
-#include "wx/log.h"
+#include "wx/msgdlg.h"
 #include "Map.h"
 #include <fstream>
 
@@ -29,7 +29,7 @@ bool Map::ReadFile(const wxString FilePath)
     //check file format correctly
     char vinfo[16];
     mapfile.read(vinfo, 16);
-    if(strcmp(vinfo, "MAP File Ver2.0") != 0)
+    if(strncmp(vinfo, "MAP File Ver2.0", 12) != 0)
     {
         mapfile.close();
         return false;
