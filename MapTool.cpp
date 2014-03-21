@@ -2,15 +2,15 @@
 #include "wx/filedlg.h"
 #include "wx/msgdlg.h"
 
-#include "Map.h"
-
 MapTool::MapTool(wxWindow* parent)
-:MapFrameBase(parent)
+    :MapFrameBase(parent)
 {
-    this->SetTitle(wxT("剑侠情缘地图工具V1.0 - by 小试刀剑"));
+    this->SetTitle(wxT("剑侠情缘地图工具V1.0 - by 小试刀剑  2014.03.21"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
+
+    m_WindowMapView->SetScrollRate(10, 10);
 }
 
 MapTool::~MapTool()
@@ -28,16 +28,15 @@ void MapTool::OpenMap(wxCommandEvent& event)
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
-    Map map;
 
     if(!map.ReadFile(filedlg.GetPath())) return;
-    wxMessageBox(wxT("1"));
-    m_MapPath->SetLabel(filedlg.GetPath());
-    m_MapImg = map.getImage();
-    wxMessageBox(wxT("2"));
-    m_MapView->SetBitmap(wxBitmap(m_MapImg));
-    m_WindowMapView->FitInside();
-    wxMessageBox(wxT("3"));
+    this->SetTitle(wxString::Format(wxFormatString(wxT("%s      %ld × %ld - %ld × %ld")),
+                                    filedlg.GetFilename(),
+                                    map.getCol(),
+                                    map.getRow(),
+                                    map.getPixelWidth(),
+                                    map.getPixelHeight()));
+    SetMapView(ReadMap());
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)
@@ -50,5 +49,40 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if(filedlg.ShowModal() != wxID_OK) return;
-    m_MapImg.SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
+    wxImage *img = ReadMap();
+    img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
+    delete img;
+
+    wxMessageBox(wxT("完成"), wxT("消息"));
+}
+
+wxImage* MapTool::ReadMap()
+{
+    unsigned char layer = 0;
+    if(m_Layer1->IsChecked()) layer |= Map::LAYER1;
+    if(m_Layer2->IsChecked()) layer |= Map::LAYER2;
+    if(m_Layer3->IsChecked()) layer |= Map::LAYER3;
+
+    wxImage *img = map.getImage(layer);
+    return img;
+}
+
+void MapTool::SetMapView(wxImage* img, bool owe)
+{
+    m_MapView->SetBitmap(wxBitmap(*img));
+    m_WindowMapView->FitInside();
+    if(owe) delete img;
+}
+
+void MapTool::OnLayer1( wxCommandEvent& event )
+{
+    SetMapView(ReadMap());
+}
+void MapTool::OnLayer2( wxCommandEvent& event )
+{
+    SetMapView(ReadMap());
+}
+void MapTool::OnLayer3( wxCommandEvent& event )
+{
+    SetMapView(ReadMap());
 }

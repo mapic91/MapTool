@@ -16,7 +16,7 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/stattext.h>
+#include <wx/checkbox.h>
 #include <wx/sizer.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -38,13 +38,18 @@ class MapFrameBase : public wxFrame
 	protected:
 		wxButton* m_OpenMap;
 		wxButton* m_SaveToPng;
-		wxStaticText* m_MapPath;
+		wxCheckBox* m_Layer1;
+		wxCheckBox* m_Layer2;
+		wxCheckBox* m_Layer3;
 		wxScrolledWindow* m_WindowMapView;
 		wxStaticBitmap* m_MapView;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayer1( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayer2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayer3( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

@@ -1846,10 +1846,10 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\rcdefs.h
 
-1395326729 source:e:\programingworkshop\maptool\map.cpp
+1395379708 source:e:\programingworkshop\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
-	"wx/log.h"
+	"wx/msgdlg.h"
 	"Map.h"
 	<fstream>
 
@@ -1871,15 +1871,16 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\stdpaths.h
 
-1395326318 e:\programingworkshop\maptool\map.h
+1395379708 e:\programingworkshop\maptool\map.h
 	"wx/string.h"
 	"wx/image.h"
 	"MpcDecode.hpp"
 
-1395326897 e:\programingworkshop\maptool\maptool.h
+1395386481 e:\programingworkshop\maptool\maptool.h
 	<MapFrameBase.h>
+	"Map.h"
 
-1395323381 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
+1395386463 e:\programingworkshop\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -1888,7 +1889,7 @@
 	<wx/font.h>
 	<wx/colour.h>
 	<wx/settings.h>
-	<wx/stattext.h>
+	<wx/checkbox.h>
 	<wx/sizer.h>
 	<wx/bitmap.h>
 	<wx/image.h>
@@ -2003,14 +2004,13 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\scrolwin.h
 
-1395323460 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
+1395386543 source:e:\programingworkshop\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1395327144 source:e:\programingworkshop\maptool\maptool.cpp
+1395387186 source:e:\programingworkshop\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
-	"Map.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\filedlg.h
 	"wx/defs.h"
@@ -2208,5 +2208,36 @@
 	"wx/cocoa/NSTextField.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\stattext.h
+	"wx/control.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\checkbox.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/checkbox.h"
+	"wx/msw/checkbox.h"
+	"wx/motif/checkbox.h"
+	"wx/gtk/checkbox.h"
+	"wx/gtk1/checkbox.h"
+	"wx/osx/checkbox.h"
+	"wx/cocoa/checkbox.h"
+	"wx/os2/checkbox.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\checkbox.h
+	"wx/button.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\checkbox.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\checkbox.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\checkbox.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\checkbox.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\checkbox.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\checkbox.h
+	"wx/cocoa/NSButton.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\checkbox.h
 	"wx/control.h"
 

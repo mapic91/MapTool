@@ -20,14 +20,22 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_OpenMap = new wxButton( this, wxID_ANY, wxT("´ò¿ªµØÍ¼..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_OpenMap, 0, wxALL, 5 );
+	bSizer2->Add( m_OpenMap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("´æÎªPNG..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_SaveToPng, 0, wxALL, 5 );
+	bSizer2->Add( m_SaveToPng, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_MapPath = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_MapPath->Wrap( -1 );
-	bSizer2->Add( m_MapPath, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_Layer1 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã1"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer1->SetValue(true); 
+	bSizer2->Add( m_Layer1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Layer2 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer2->SetValue(true); 
+	bSizer2->Add( m_Layer2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Layer3 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã3"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer3->SetValue(true); 
+	bSizer2->Add( m_Layer3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
@@ -61,6 +69,9 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	// Connect Events
 	m_OpenMap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ), NULL, this );
 	m_SaveToPng->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::SaveToPNG ), NULL, this );
+	m_Layer1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
+	m_Layer2->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
+	m_Layer3->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -68,5 +79,8 @@ MapFrameBase::~MapFrameBase()
 	// Disconnect Events
 	m_OpenMap->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ), NULL, this );
 	m_SaveToPng->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::SaveToPNG ), NULL, this );
+	m_Layer1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
+	m_Layer2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
+	m_Layer3->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
 	
 }

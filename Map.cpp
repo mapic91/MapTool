@@ -8,16 +8,20 @@ using namespace std;
 
 Map::Map()
 {
+    decode = NULL;
+    tiles = NULL;
     //ctor
 }
 
 Map::~Map()
 {
+    DestoryData();
     //dtor
 }
 
 bool Map::ReadFile(const wxString FilePath)
 {
+    DestoryData();
 
     ifstream mapfile(FilePath.char_str(), ios_base::binary | ios_base::in);
     if(!mapfile.is_open()) return false;
@@ -38,7 +42,7 @@ bool Map::ReadFile(const wxString FilePath)
     //initialize mpc file path
     mapfile.seekg(16, ios_base::cur);
     char mpcpath[32] = {0};
-    for(int pidx = 0; pidx < 32 ;pidx++)
+    for(int pidx = 0; pidx < 32 ; pidx++)
     {
         mapfile.read(&tempc, 1);
         if(tempc != 0)
@@ -47,7 +51,7 @@ bool Map::ReadFile(const wxString FilePath)
     if(mpcpath[0] == 0)
     {
         wx_mpcpath = wxT("\\mpc\\map\\") +
-            wxFileName::FileName(FilePath).GetName();
+                     wxFileName::FileName(FilePath).GetName();
     }
     else
     {
@@ -67,7 +71,7 @@ bool Map::ReadFile(const wxString FilePath)
     mPixelHeight = (mRow + 1) * 16;
 
     mapfile.seekg(192, ios_base::beg);
-    MpcDecode *decode = new MpcDecode[255];
+    decode = new MpcDecode[255];
     char mpcname[32] = {0};
     for(int namei = 0; namei < 255; namei++)
     {
@@ -86,7 +90,7 @@ bool Map::ReadFile(const wxString FilePath)
     }
 
     long totaltiles = mCol * mRow;
-    Tile* tiles = new Tile[totaltiles];
+    tiles = new Tile[totaltiles];
     mapfile.seekg(16512, ios_base::beg);
     for(long tilei = 0; tilei < totaltiles; tilei++)
     {
@@ -95,23 +99,13 @@ bool Map::ReadFile(const wxString FilePath)
     }
     mapfile.close();
 
-    mImg.Create(mPixelWidth, mPixelHeight, true);
-    mImg.SetAlpha();
-
-    //draw layer 1
-    DrawLayer(1, tiles, decode);
-    DrawLayer(2, tiles, decode);
-    DrawLayer(3, tiles, decode);
-
-    delete[] decode;
-    delete[] tiles;
-
     return true;
 }
 
-void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode)
+void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage *img)
 {
     if(index < 1 || index > 3) return;
+    if(tiles == NULL || decode == NULL || img == NULL) return;
 
     long totaltiles = mCol * mRow;
     long width, height;
@@ -139,13 +133,15 @@ void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode)
         }
         if(mpcno == 0) continue;
         frmdata = decode[mpcno - 1].GetBuffedFrameData(frmno, &width, &height);
-        DrawTile(tilei%mCol, tilei/mCol, width, height, frmdata);
+        DrawTile(tilei%mCol, tilei/mCol, width, height, frmdata, img);
     }
 }
 
-void Map::DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsigned char* TileData)
+void Map::DrawTile(long Column, long Row,
+                   long TileWidth, long TileHeight,
+                   unsigned char* TileData, wxImage *img)
 {
-    if(TileData == NULL || Column > mCol || Row > mRow) return;
+    if(TileData == NULL || Column > mCol || Row > mRow || img == NULL) return;
 
     //tile top-left position
     long basex, basey;
@@ -164,16 +160,29 @@ void Map::DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsig
         {
             if(TileData[datai + 3] != 0)
             {
-                mImg.SetRGB(graphx + wi, graphy + hi,
-                        TileData[datai],
-                        TileData[datai + 1],
-                        TileData[datai + 2]);
-                mImg.SetAlpha(graphx + wi, graphy + hi, 0xFF);
+                img->SetRGB(graphx + wi, graphy + hi,
+                             TileData[datai],
+                             TileData[datai + 1],
+                             TileData[datai + 2]);
+                img->SetAlpha(graphx + wi, graphy + hi, 0xFF);
             }
 
             datai += 4;
         }
     }
+}
+
+wxImage* Map::getImage(unsigned char layer)
+{
+    wxImage *img = new wxImage;
+    img->Create(mPixelWidth, mPixelHeight, true);
+    img->SetAlpha();
+
+    if(layer & LAYER1) DrawLayer(1, tiles, decode, img);
+    if(layer & LAYER2) DrawLayer(2, tiles, decode, img);
+    if(layer & LAYER3) DrawLayer(3, tiles, decode, img);
+
+    return img;
 }
 
 
