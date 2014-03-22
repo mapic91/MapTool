@@ -10,12 +10,13 @@ Map::Map()
 {
     decode = NULL;
     tiles = NULL;
-    //ctor
+    LoadResource();
 }
 
 Map::~Map()
 {
     DestoryData();
+    DestoryResource();
     //dtor
 }
 
@@ -137,6 +138,78 @@ void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage *img)
     }
 }
 
+/**
+    index: 1 - barrer, 2 - trap
+**/
+void Map::DrawLayer(int index, wxImage* img)
+{
+    if(index < 1|| index > 2) return;
+
+    long totaltiles = mCol * mRow;
+    long width, height;
+    unsigned char barrertype, trapindex, *frmdata;
+
+    for(long tilei = 0; tilei < totaltiles; tilei++)
+    {
+        frmdata = NULL;
+        barrertype = 0;
+        trapindex = 0;
+        width = 0;
+        height = 0;
+
+        switch(index)
+        {
+        case 1: //barrer
+            barrertype = tiles[tilei].barrer_type;
+            break;
+        case 2: //trap
+            trapindex = tiles[tilei].trap_index;
+            break;
+        default:
+            break;
+        }
+
+        if(barrertype != 0)
+        {
+            switch(barrertype)
+            {
+            case 0x40:
+                width  = mBarrer[0].width;
+                height = mBarrer[0].height;
+                frmdata   = mBarrer[0].data;
+                break;
+            case 0x60:
+                width  = mBarrer[1].width;
+                height = mBarrer[1].height;
+                frmdata   = mBarrer[1].data;
+                break;
+            case 0x80:
+                width  = mBarrer[2].width;
+                height = mBarrer[2].height;
+                frmdata   = mBarrer[2].data;
+                break;
+            case 0xA0:
+                width  = mBarrer[3].width;
+                height = mBarrer[3].height;
+                frmdata   = mBarrer[3].data;
+                break;
+            default:
+                break;
+            }
+        }
+
+        if(trapindex != 0 && trapindex <= 19)
+        {
+            width  = mTrap[trapindex - 1].width;
+            height = mTrap[trapindex - 1].height;
+            frmdata   = mTrap[trapindex - 1].data;
+        }
+
+        if(width == 0 || height == 0 || frmdata == NULL) continue;
+        DrawTile(tilei%mCol, tilei/mCol, width, height, frmdata, img);
+    }
+}
+
 void Map::DrawTile(long Column, long Row,
                    long TileWidth, long TileHeight,
                    unsigned char* TileData, wxImage *img)
@@ -161,9 +234,9 @@ void Map::DrawTile(long Column, long Row,
             if(TileData[datai + 3] != 0)
             {
                 img->SetRGB(graphx + wi, graphy + hi,
-                             TileData[datai],
-                             TileData[datai + 1],
-                             TileData[datai + 2]);
+                            TileData[datai],
+                            TileData[datai + 1],
+                            TileData[datai + 2]);
                 img->SetAlpha(graphx + wi, graphy + hi, 0xFF);
             }
 
@@ -181,11 +254,88 @@ wxImage* Map::getImage(unsigned char layer)
     if(layer & LAYER1) DrawLayer(1, tiles, decode, img);
     if(layer & LAYER2) DrawLayer(2, tiles, decode, img);
     if(layer & LAYER3) DrawLayer(3, tiles, decode, img);
+    if(layer & BARRER) DrawLayer(1, img);
+    if(layer & TRAP)   DrawLayer(2, img);
 
     return img;
 }
 
+void Map::LoadResource()
+{
 
+    wxImage img;
+    wxString exepath;
+    exepath = wxStandardPaths::Get().GetExecutablePath();
+    exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
+
+
+    for(int i = 0; i < 19; i++)
+    {
+        img.LoadFile(exepath + wxString::Format(wxT("%d.png"), i + 1));
+        AssignImgData(&mTrap[i], img);
+    }
+
+    img.LoadFile(exepath + wxT("Í¸.png"));
+    AssignImgData(&mBarrer[0], img);
+    img.LoadFile(exepath + wxT("ÌøÍ¸.png"));
+    AssignImgData(&mBarrer[1], img);
+    img.LoadFile(exepath + wxT("ÕÏ.png"));
+    AssignImgData(&mBarrer[2], img);
+    img.LoadFile(exepath + wxT("ÌøÕÏ.png"));
+    AssignImgData(&mBarrer[3], img);
+}
+
+void Map::DestoryResource()
+{
+    for(int i = 0, i < 19; i++)
+    {
+        if(mTrap[i].data != NULL) free(mTrap[i].data);
+    }
+
+    for(int j = 0, j < 4; j++)
+    {
+        if(mBarrer[j].data != NULL) free(mBarrer[j].data);
+    }
+}
+
+void Map::AssignImgData(ImgData *imgdata, wxImage &img)
+{
+    if(imgdata == NULL) return;
+
+    if(img.IsOk())
+    {
+        unsigned char *pixdata, *alphadata;
+        int width, height;
+        long datasize;
+
+        if(!img.HasAlpha) img.SetAlpha();
+        width = img.GetWidth();
+        height = img.GetHeight();
+        pixdata = img.GetData();
+        alphadata = img.GetAlpha();
+        datasize = (long) 4  * width * height;
+
+        (*imgdata).width = (long)width;
+        (*imgdata).height = (long)height;
+        (*imgdata).data = (unsigned char*)malloc(datasize);
+        if((*imgdata).data == NULL) return;
+
+        int pi = 0, ai = 0;
+        for(int di = 0; di < datasize;)
+        {
+            (*imgdata).data[di++] = pixdata[pi++];
+            (*imgdata).data[di++] = pixdata[pi++];
+            (*imgdata).data[di++] = pixdata[pi++];
+            (*imgdata).data[di++] = alphadata[ai++];
+        }
+    }
+    else
+    {
+        (*imgdata).width = 0;
+        (*imgdata).height = 0;
+        (*imgdata).data = NULL;
+    }
+}
 
 
 

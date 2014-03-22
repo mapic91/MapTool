@@ -10,6 +10,12 @@ struct Name32b
 {
     char Name[32];
 };
+struct ImgData
+{
+    long width;
+    long height;
+    unsigned char *data; //RGBA
+};
 struct Tile
 {
     unsigned char fir_frm_no;
@@ -31,6 +37,8 @@ class Map
         static const unsigned char LAYER1 = 0x01;
         static const unsigned char LAYER2 = 0x02;
         static const unsigned char LAYER3 = 0x04;
+        static const unsigned char BARRER = 0x08;
+        static const unsigned char TRAP   = 0x10;
 
         long getCol() const {return mCol;}
         long getRow() const {return mRow;}
@@ -52,11 +60,15 @@ class Map
         void DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsigned char* TileData, wxImage *img);
 
         /**
-        index: 1,3,4
+        index: 1,2,3
         tiles: (mCol * mRow) tiles data
         mpcpaths: 255 mpc files path
         **/
         void DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage* img);
+        /**
+        index: 1 - barrer, 2 - trap
+        **/
+        void DrawLayer(int index, wxImage* img);
 
         long Char2Long(const unsigned char* in) const
         {
@@ -67,6 +79,10 @@ class Map
             temp |= (((unsigned long)in[3]) << 24);
             return temp;
         }
+
+        void LoadResource();
+        void DestoryResource();
+        void AssignImgData(ImgData *imgdata, wxImage &img)
 
         void DestoryData()
         {
@@ -83,6 +99,9 @@ class Map
         long mPixelHeight;// = (mRow + 1) * 16
         MpcDecode *decode;
         Tile* tiles;
+        //0 - Í¸ 1-ÌøÍ¸ 2-ÕÏ 3-ÌøÕÏ
+        ImgData mBarrer[4];
+        ImgData mTrap[19];
 };
 
 #endif // MAP_H
