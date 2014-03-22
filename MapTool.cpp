@@ -5,7 +5,7 @@
 MapTool::MapTool(wxWindow* parent)
     :MapFrameBase(parent)
 {
-    this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV1.0 - by Ğ¡ÊÔµ¶½£  2014.03.21"));
+    this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV1.1 - by Ğ¡ÊÔµ¶½£  2014.03.22"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
