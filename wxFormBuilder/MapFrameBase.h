@@ -17,6 +17,7 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/checkbox.h>
+#include <wx/statline.h>
 #include <wx/sizer.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -41,6 +42,9 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_Layer1;
 		wxCheckBox* m_Layer2;
 		wxCheckBox* m_Layer3;
+		wxStaticLine* m_staticline1;
+		wxCheckBox* m_Trap;
+		wxCheckBox* m_Barrer;
 		wxScrolledWindow* m_WindowMapView;
 		wxStaticBitmap* m_MapView;
 		
@@ -50,11 +54,13 @@ class MapFrameBase : public wxFrame
 		virtual void OnLayer1( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer2( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer3( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTrap( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBarrer( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
 		
-		MapFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MapFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 632,352 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MapFrameBase();
 	

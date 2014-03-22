@@ -82,7 +82,7 @@ class Map
 
         void LoadResource();
         void DestoryResource();
-        void AssignImgData(ImgData *imgdata, wxImage &img)
+        void AssignImgData(ImgData *imgdata, wxImage &img);
 
         void DestoryData()
         {

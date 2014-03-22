@@ -17,6 +17,8 @@ class MapTool : public MapFrameBase
         void OnLayer1( wxCommandEvent& event ) ;
 		void OnLayer2( wxCommandEvent& event );
 		void OnLayer3( wxCommandEvent& event );
+		void OnTrap( wxCommandEvent& event ) ;
+		void OnBarrer( wxCommandEvent& event ) ;
 
         wxImage* ReadMap();
         //own: true - img is deleted. false - img not deleted

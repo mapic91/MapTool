@@ -1,6 +1,7 @@
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
 #include "wx/msgdlg.h"
+#include "wx/log.h"
 #include "Map.h"
 #include <fstream>
 
@@ -254,19 +255,20 @@ wxImage* Map::getImage(unsigned char layer)
     if(layer & LAYER1) DrawLayer(1, tiles, decode, img);
     if(layer & LAYER2) DrawLayer(2, tiles, decode, img);
     if(layer & LAYER3) DrawLayer(3, tiles, decode, img);
-    if(layer & BARRER) DrawLayer(1, img);
     if(layer & TRAP)   DrawLayer(2, img);
+    if(layer & BARRER) DrawLayer(1, img);
 
     return img;
 }
 
 void Map::LoadResource()
 {
-
+    wxLogNull lognull;
     wxImage img;
     wxString exepath;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
+    exepath += wxT("resource\\");
 
 
     for(int i = 0; i < 19; i++)
@@ -287,12 +289,12 @@ void Map::LoadResource()
 
 void Map::DestoryResource()
 {
-    for(int i = 0, i < 19; i++)
+    for(int i = 0; i < 19; i++)
     {
         if(mTrap[i].data != NULL) free(mTrap[i].data);
     }
 
-    for(int j = 0, j < 4; j++)
+    for(int j = 0; j < 4; j++)
     {
         if(mBarrer[j].data != NULL) free(mBarrer[j].data);
     }
@@ -308,7 +310,7 @@ void Map::AssignImgData(ImgData *imgdata, wxImage &img)
         int width, height;
         long datasize;
 
-        if(!img.HasAlpha) img.SetAlpha();
+        if(!img.HasAlpha()) img.SetAlpha();
         width = img.GetWidth();
         height = img.GetHeight();
         pixdata = img.GetData();

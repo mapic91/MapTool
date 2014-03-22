@@ -37,6 +37,15 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_Layer3->SetValue(true); 
 	bSizer2->Add( m_Layer3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
+	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
+	bSizer2->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	
+	m_Trap = new wxCheckBox( this, wxID_ANY, wxT("ÏÝÚå"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer2->Add( m_Trap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Barrer = new wxCheckBox( this, wxID_ANY, wxT("ÕÏ°­"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer2->Add( m_Barrer, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
 	
@@ -72,6 +81,8 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_Layer1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
 	m_Layer2->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
 	m_Layer3->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
+	m_Trap->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
+	m_Barrer->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -82,5 +93,7 @@ MapFrameBase::~MapFrameBase()
 	m_Layer1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
 	m_Layer2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
 	m_Layer3->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
+	m_Trap->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
+	m_Barrer->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
 	
 }

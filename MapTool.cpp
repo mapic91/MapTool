@@ -62,6 +62,8 @@ wxImage* MapTool::ReadMap()
     if(m_Layer1->IsChecked()) layer |= Map::LAYER1;
     if(m_Layer2->IsChecked()) layer |= Map::LAYER2;
     if(m_Layer3->IsChecked()) layer |= Map::LAYER3;
+    if(m_Barrer->IsChecked()) layer |= Map::BARRER;
+    if(m_Trap->IsChecked())   layer |= Map::TRAP;
 
     wxImage *img = map.getImage(layer);
     return img;
@@ -85,4 +87,12 @@ void MapTool::OnLayer2( wxCommandEvent& event )
 void MapTool::OnLayer3( wxCommandEvent& event )
 {
     SetMapView(ReadMap());
+}
+void MapTool::OnTrap( wxCommandEvent& event )
+{
+     SetMapView(ReadMap());
+}
+void MapTool::OnBarrer( wxCommandEvent& event )
+{
+     SetMapView(ReadMap());
 }
