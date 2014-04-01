@@ -19,40 +19,43 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_OpenMap = new wxButton( this, wxID_ANY, wxT("´ò¿ªµØÍ¼..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_OpenMap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
+	m_OpenMap = new wxButton( m_toolBar1, wxID_ANY, wxT("´ò¿ªµØÍ¼..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_OpenMap );
+	m_SaveToPng = new wxButton( m_toolBar1, wxID_ANY, wxT("´æÎªPNG..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_SaveToPng );
+	m_toolBar1->AddSeparator(); 
 	
-	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("´æÎªPNG..."), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_SaveToPng, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_toolBar1->AddSeparator(); 
 	
-	m_Layer1 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã1"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer1 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã1"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer1->SetValue(true); 
-	bSizer2->Add( m_Layer1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
-	
-	m_Layer2 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_Layer1 );
+	m_Layer2 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã2"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer2->SetValue(true); 
-	bSizer2->Add( m_Layer2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
-	
-	m_Layer3 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã3"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_Layer2 );
+	m_Layer3 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã3"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer3->SetValue(true); 
-	bSizer2->Add( m_Layer3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_toolBar1->AddControl( m_Layer3 );
+	m_toolBar1->AddSeparator(); 
 	
-	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-	bSizer2->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	m_toolBar1->AddSeparator(); 
 	
-	m_Trap = new wxCheckBox( this, wxID_ANY, wxT("ÏÝÚå"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_Trap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_Trap = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("ÏÝÚå"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_Trap );
+	m_Barrer = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("ÕÏ°­"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_toolBar1->AddControl( m_Barrer );
+	m_toolBar1->AddSeparator(); 
 	
-	m_Barrer = new wxCheckBox( this, wxID_ANY, wxT("ÕÏ°­"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer2->Add( m_Barrer, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_toolBar1->AddSeparator(); 
 	
-	m_staticline2 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
-	bSizer2->Add( m_staticline2, 0, wxEXPAND | wxALL, 5 );
-	
-	m_LayerTransparent = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ãÍ¸Ã÷"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_LayerTransparent = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ãÍ¸Ã÷"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_LayerTransparent->SetToolTip( wxT("Ê¹Í¼²ãÍ¸Ã÷µÄµØ·½Í¸Ã÷£¬¶ø²»ÊÇºÚÉ«") );
 	
-	bSizer2->Add( m_LayerTransparent, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_toolBar1->AddControl( m_LayerTransparent );
+	m_toolBar1->Realize(); 
+	
+	bSizer2->Add( m_toolBar1, 1, wxEXPAND, 5 );
 	
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );

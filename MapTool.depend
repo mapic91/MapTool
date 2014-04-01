@@ -2355,7 +2355,7 @@
 	<MapFrameBase.h>
 	"Map.h"
 
-1396335148 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396338435 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2365,7 +2365,7 @@
 	<wx/colour.h>
 	<wx/settings.h>
 	<wx/checkbox.h>
-	<wx/statline.h>
+	<wx/toolbar.h>
 	<wx/sizer.h>
 	<wx/panel.h>
 	<wx/statusbr.h>
@@ -2510,13 +2510,14 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396335331 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396336300 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
 	"wx/dcclient.h"
 	"wx/dcmemory.h"
 	"wx/accel.h"
+	"wx/stdpaths.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\dcclient.h
 	"wx/dc.h"
@@ -2524,4 +2525,40 @@
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\dcmemory.h
 	"wx/dc.h"
 	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\bmpbuttn.h
+	"wx/defs.h"
+	"wx/button.h"
+	"wx/univ/bmpbuttn.h"
+	"wx/msw/bmpbuttn.h"
+	"wx/motif/bmpbuttn.h"
+	"wx/gtk/bmpbuttn.h"
+	"wx/gtk1/bmpbuttn.h"
+	"wx/osx/bmpbuttn.h"
+	"wx/cocoa/bmpbuttn.h"
+	"wx/os2/bmpbuttn.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\bmpbuttn.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\bmpbuttn.h
+	"wx/button.h"
+	"wx/bitmap.h"
+	"wx/brush.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\bmpbuttn.h
+	"wx/motif/bmpmotif.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\bmpbuttn.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\bmpbuttn.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\bmpbuttn.h
+	"wx/button.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\bmpbuttn.h
+	"wx/cocoa/NSButton.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\bmpbuttn.h
+	"wx/button.h"
+	"wx/dcclient.h"
 

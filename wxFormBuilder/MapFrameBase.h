@@ -17,7 +17,7 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/checkbox.h>
-#include <wx/statline.h>
+#include <wx/toolbar.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/statusbr.h>
@@ -42,15 +42,14 @@ class MapFrameBase : public wxFrame
 	private:
 	
 	protected:
+		wxToolBar* m_toolBar1;
 		wxButton* m_OpenMap;
 		wxButton* m_SaveToPng;
 		wxCheckBox* m_Layer1;
 		wxCheckBox* m_Layer2;
 		wxCheckBox* m_Layer3;
-		wxStaticLine* m_staticline1;
 		wxCheckBox* m_Trap;
 		wxCheckBox* m_Barrer;
-		wxStaticLine* m_staticline2;
 		wxCheckBox* m_LayerTransparent;
 		wxPanel* m_MapView;
 		wxStatusBar* m_StatusBar;
