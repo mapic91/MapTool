@@ -175,8 +175,8 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
                 npcOffX = m_PlaceNpc.GetLeft();
                 npcOffY = m_PlaceNpc.GetBottom();
 
-                npcDrawX = recposx + (32 - npcWidth/2) + npcOffX - m_ViewBeginx;
-                npcDrawY = recposy + (32 - npcHeight) + npcOffY - m_ViewBeginy;
+                npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
+                npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
 
                 memdc.SelectObject(npcBmp);
 
