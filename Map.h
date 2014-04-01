@@ -46,6 +46,7 @@ class Map
         long getPixelHeight() const {return mPixelHeight;}
         //returned wxImage must deleted
         wxImage* getImage(unsigned char layer = LAYER1 | LAYER2 | LAYER3);
+        wxImage* getImage(int beginPosX, int beginPosY, int width, int height, unsigned char layer = LAYER1 | LAYER2 | LAYER3);
 
         bool ReadFile(const wxString FilePath);
     protected:
@@ -69,6 +70,12 @@ class Map
         index: 1 - barrer, 2 - trap
         **/
         void DrawLayer(int index, wxImage* img);
+
+        /**
+        input: the map's pixel position
+        output: the map's corresponding tile position(tileX, tileY)
+        **/
+        void GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY);
 
         long Char2Long(const unsigned char* in) const
         {

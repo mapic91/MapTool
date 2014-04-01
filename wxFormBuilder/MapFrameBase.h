@@ -19,11 +19,7 @@
 #include <wx/checkbox.h>
 #include <wx/statline.h>
 #include <wx/sizer.h>
-#include <wx/bitmap.h>
-#include <wx/image.h>
-#include <wx/icon.h>
-#include <wx/statbmp.h>
-#include <wx/scrolwin.h>
+#include <wx/panel.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -45,8 +41,7 @@ class MapFrameBase : public wxFrame
 		wxStaticLine* m_staticline1;
 		wxCheckBox* m_Trap;
 		wxCheckBox* m_Barrer;
-		wxScrolledWindow* m_WindowMapView;
-		wxStaticBitmap* m_MapView;
+		wxPanel* m_MapView;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }

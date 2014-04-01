@@ -211,6 +211,53 @@ void Map::DrawLayer(int index, wxImage* img)
     }
 }
 
+void Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
+{
+    if(tileX == NULL ||
+       tileY == NULL ||
+       pixelX < 0 ||
+       pixelX > mPixelWidth ||
+       pixelY < 0 ||
+       pixelY > mPixelHeight) return;
+
+    //first caculating even row position, considering each tile is 64 * 32 rectangle
+    int nx, ny;
+    nx = pixelX / 64;
+    ny = (pixelY/ 32) * 2;
+
+    //now caclue real position, please see 获取地图坐标.efm
+    int dx, dy;
+    dx = pixelX - nx * 64;
+    dy = pixelY - (ny / 2) * 32;
+    if(dx < 32)
+    {
+        if(dy < (32 - dx) / 2) // 1
+        {
+            nx = nx - 1;
+            ny = ny - 1;
+        }
+        else if(dy > (dx / 2 + 16) // 2
+        {
+            nx = nx - 1;
+            ny = ny + 1;
+        }
+    }
+    if(dx > 32)
+    {
+        if(dy < (dx - 32) / 2) //3
+        {
+            ny = ny - 1;
+        }
+        else if(dy > ((64 - dx) / 2 + 16)) // 4
+        {
+            ny = ny + 1;
+        }
+    }
+
+    *tileX = nx;
+    *tileY = ny;
+}
+
 void Map::DrawTile(long Column, long Row,
                    long TileWidth, long TileHeight,
                    unsigned char* TileData, wxImage *img)
@@ -259,6 +306,15 @@ wxImage* Map::getImage(unsigned char layer)
     if(layer & BARRER) DrawLayer(1, img);
 
     return img;
+}
+
+wxImage* Map::getImage(int beginPosX, int beginPosY, int width, int height, unsigned char layer = LAYER1 | LAYER2 | LAYER3)
+{
+    wxImage *img = new wxImage;
+    img->Create(width, height, true);
+    img->SetAlpha();
+
+
 }
 
 void Map::LoadResource()
