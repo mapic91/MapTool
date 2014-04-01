@@ -19,31 +19,31 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_OpenMap = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€åœ°å›¾..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_OpenMap = new wxButton( this, wxID_ANY, wxT("´ò¿ªµØÍ¼..."), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_OpenMap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("å­˜ä¸ºPNG..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SaveToPng = new wxButton( this, wxID_ANY, wxT("´æÎªPNG..."), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_SaveToPng, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Layer1 = new wxCheckBox( this, wxID_ANY, wxT("å›¾å±‚1"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer1 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã1"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer1->SetValue(true); 
 	bSizer2->Add( m_Layer1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Layer2 = new wxCheckBox( this, wxID_ANY, wxT("å›¾å±‚2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer2 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã2"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer2->SetValue(true); 
 	bSizer2->Add( m_Layer2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Layer3 = new wxCheckBox( this, wxID_ANY, wxT("å›¾å±‚3"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer3 = new wxCheckBox( this, wxID_ANY, wxT("Í¼²ã3"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer3->SetValue(true); 
 	bSizer2->Add( m_Layer3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticline1 = new wxStaticLine( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_VERTICAL );
 	bSizer2->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 	
-	m_Trap = new wxCheckBox( this, wxID_ANY, wxT("é™·é˜±"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Trap = new wxCheckBox( this, wxID_ANY, wxT("ÏÝÚå"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_Trap, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Barrer = new wxCheckBox( this, wxID_ANY, wxT("éšœç¢"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Barrer = new wxCheckBox( this, wxID_ANY, wxT("ÕÏ°­"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer2->Add( m_Barrer, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	
@@ -61,6 +61,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	this->SetSizer( bSizer1 );
 	this->Layout();
+	m_StatusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	
 	this->Centre( wxBOTH );
 	
@@ -72,6 +73,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_Layer3->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
 	m_Trap->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
 	m_Barrer->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
+	m_MapView->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -84,5 +86,6 @@ MapFrameBase::~MapFrameBase()
 	m_Layer3->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
 	m_Trap->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
 	m_Barrer->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
+	m_MapView->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
 	
 }

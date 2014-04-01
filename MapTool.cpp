@@ -1,6 +1,8 @@
 #include "MapTool.h"
 #include "wx/filedlg.h"
 #include "wx/msgdlg.h"
+#include "wx/dcclient.h"
+#include "wx/dcmemory.h"
 
 MapTool::MapTool(wxWindow* parent)
     :MapFrameBase(parent)
@@ -10,7 +12,8 @@ MapTool::MapTool(wxWindow* parent)
     this->SetSize(800, 600);
     this->Center();
 
-    m_WindowMapView->SetScrollRate(10, 10);
+    m_ViewBeginx = m_ViewBeginy = 0;
+
 }
 
 MapTool::~MapTool()
@@ -36,7 +39,8 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getRow(),
                                     map.getPixelWidth(),
                                     map.getPixelHeight()));
-    SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)
@@ -49,14 +53,14 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if(filedlg.ShowModal() != wxID_OK) return;
-    wxImage *img = ReadMap();
+    wxImage *img = ReadMap(true);
     img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
     delete img;
 
     wxMessageBox(wxT("完成"), wxT("消息"));
 }
 
-wxImage* MapTool::ReadMap()
+wxImage* MapTool::ReadMap(bool getImg)
 {
     unsigned char layer = 0;
     if(m_Layer1->IsChecked()) layer |= Map::LAYER1;
@@ -66,33 +70,60 @@ wxImage* MapTool::ReadMap()
     if(m_Trap->IsChecked())   layer |= Map::TRAP;
 
     wxImage *img = map.getImage(layer);
-    return img;
+    m_MapBitmap = wxBitmap(*img);
+    if(getImg) return img;
+    else
+    {
+        delete img;
+        return NULL;
+    }
 }
 
-void MapTool::SetMapView(wxImage* img, bool owe)
+void MapTool::SetMapView()
 {
-    m_MapView->SetBitmap(wxBitmap(*img));
-    m_WindowMapView->FitInside();
-    if(owe) delete img;
+    m_MapView->Refresh(false);
+    m_MapView->Update();
+}
+
+void MapTool::OnMapDraw( wxPaintEvent& event )
+{
+    wxPaintDC dc(m_MapView);
+    wxMemoryDC memdc;
+    int viewWidth, viewHeight;
+    m_MapView->GetClientSize(&viewWidth, &viewHeight);
+    memdc.SelectObject(m_MapBitmap);
+
+    dc.Blit(0,
+            0,
+            viewWidth,
+            viewHeight,
+            &memdc,
+            m_ViewBeginx,
+            m_ViewBeginy);
 }
 
 void MapTool::OnLayer1( wxCommandEvent& event )
 {
-    SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }
 void MapTool::OnLayer2( wxCommandEvent& event )
 {
-    SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }
 void MapTool::OnLayer3( wxCommandEvent& event )
 {
-    SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }
 void MapTool::OnTrap( wxCommandEvent& event )
 {
-     SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }
 void MapTool::OnBarrer( wxCommandEvent& event )
 {
-     SetMapView(ReadMap());
+    ReadMap();
+    SetMapView();
 }

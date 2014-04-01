@@ -20,6 +20,7 @@
 #include <wx/statline.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
+#include <wx/statusbr.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -42,6 +43,7 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_Trap;
 		wxCheckBox* m_Barrer;
 		wxPanel* m_MapView;
+		wxStatusBar* m_StatusBar;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
@@ -51,6 +53,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnLayer3( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTrap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBarrer( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
 		
 	
 	public:

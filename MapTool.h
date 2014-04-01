@@ -19,13 +19,15 @@ class MapTool : public MapFrameBase
 		void OnLayer3( wxCommandEvent& event );
 		void OnTrap( wxCommandEvent& event ) ;
 		void OnBarrer( wxCommandEvent& event ) ;
+		void OnMapDraw( wxPaintEvent& event ) ;
 
-        wxImage* ReadMap();
-        //own: true - img is deleted. false - img not deleted
-        void SetMapView(wxImage* img, bool own = true);
+        //if getImg is true return an image, else return NULL
+        wxImage* ReadMap(bool getImg = false);
+        void SetMapView();
 
-        wxImage m_MapImg;
+        wxBitmap m_MapBitmap;
         Map map;
+        int m_ViewBeginx, m_ViewBeginy;
 };
 
 #endif // MAPTOOL_H

@@ -236,7 +236,7 @@ void Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
             nx = nx - 1;
             ny = ny - 1;
         }
-        else if(dy > (dx / 2 + 16) // 2
+        else if(dy > (dx / 2 + 16)) // 2
         {
             nx = nx - 1;
             ny = ny + 1;
@@ -308,14 +308,13 @@ wxImage* Map::getImage(unsigned char layer)
     return img;
 }
 
-wxImage* Map::getImage(int beginPosX, int beginPosY, int width, int height, unsigned char layer = LAYER1 | LAYER2 | LAYER3)
-{
-    wxImage *img = new wxImage;
-    img->Create(width, height, true);
-    img->SetAlpha();
-
-
-}
+//wxImage* Map::getImage(int beginPosX, int beginPosY, int width, int height, unsigned char layer)
+//{
+//    wxImage *img = new wxImage;
+//    img->Create(width, height, true);
+//    img->SetAlpha();
+//
+//}
 
 void Map::LoadResource()
 {
