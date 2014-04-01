@@ -225,7 +225,7 @@ void Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
     nx = pixelX / 64;
     ny = (pixelY/ 32) * 2;
 
-    //now caclue real position, please see 获取地图坐标.efm
+    //now caclue real position, please see 获取地图坐标.jpg
     int dx, dy;
     dx = pixelX - nx * 64;
     dy = pixelY - (ny / 2) * 32;
