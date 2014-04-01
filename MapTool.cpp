@@ -4,6 +4,7 @@
 #include "wx/dcclient.h"
 #include "wx/dcmemory.h"
 #include "wx/accel.h"
+#include "wx/stdpaths.h"
 
 BEGIN_EVENT_TABLE(MapTool, MapFrameBase)
     EVT_MENU(ID_MAPUP, MapTool::OnMapUp)
@@ -17,6 +18,8 @@ MapTool::MapTool(wxWindow* parent)
     :MapFrameBase(parent)
 {
     m_ViewBeginx = m_ViewBeginy = 0;
+    exepath = wxStandardPaths::Get().GetExecutablePath();
+    exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
     this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
     this->SetIcon(wxICON(aaaa));
@@ -43,7 +46,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
 {
     wxFileDialog filedlg(this,
                          wxT("请选择一个地图文件"),
-                         wxEmptyString,
+                         exepath + wxT("map\\"),
                          wxEmptyString,
                          wxT("MAP文件(*.map)|*.map"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
