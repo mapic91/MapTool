@@ -50,11 +50,18 @@ class Map
 
         /**
         input: the map's pixel position
-        output: the map's corresponding tile position(tileX, tileY)
+        output: the map's corresponding tile position(Column, Row)
         return: true - pixelX,pixelY is in map size range;
-                false - out of map size, tileX,tileY is unchanged
+                false - out of map size, Column,Row is unchanged
         **/
-        bool GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY);
+        bool GetTilePosition(int pixelX, int pixelY, int *Column, int *Row);
+        /**
+        input: the map's tile position
+        output: the map's corresponding pixel position(top-left)
+        return: true - Column,Row is in map size range;
+                false - out of map size, pixelX,pixelY is unchanged
+        **/
+        bool GetPixelPosition(int Column, int Row, int *pixelX, int *pixelY);
 
 
         bool ReadFile(const wxString FilePath);

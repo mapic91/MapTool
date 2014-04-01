@@ -259,7 +259,24 @@ bool Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
     *tileY = ny;
     return true;
 }
+bool Map::GetPixelPosition(int Column, int Row, int *pixelX, int *pixelY)
+{
+     if(pixelX == NULL ||
+       pixelY == NULL ||
+       Column < 0 ||
+       Column > mCol ||
+       Row < 0 ||
+       Row > mRow) return false;
 
+    long basex, basey;
+    basex = (Row%2) * 32 + 64 * Column;
+    basey = 16 * Row;
+
+    *pixelX = basex;
+    *pixelY = basey;
+
+    return true;
+}
 void Map::DrawTile(long Column, long Row,
                    long TileWidth, long TileHeight,
                    unsigned char* TileData, wxImage *img)

@@ -37,6 +37,8 @@ class MapTool : public MapFrameBase
         wxBitmap m_MapBitmap;
         Map map;
         int m_ViewBeginx, m_ViewBeginy;
+        //Current tile under mouse
+        int m_CurTileX, m_CurTileY;
         wxString exepath;
 
         DECLARE_EVENT_TABLE()

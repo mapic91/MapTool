@@ -18,6 +18,7 @@ MapTool::MapTool(wxWindow* parent)
     :MapFrameBase(parent)
 {
     m_ViewBeginx = m_ViewBeginy = 0;
+    m_CurTileX = m_CurTileY = 0;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
@@ -137,6 +138,20 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             m_ViewBeginy,
             wxCOPY,
             m_LayerTransparent->IsChecked());
+
+    int recposx, recposy;
+    if(map.GetPixelPosition(m_CurTileX, m_CurTileY, &recposx, &recposy))
+    {
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
+        wxPoint point[5];
+        point[0] = wxPoint(32, 0);
+        point[1] = wxPoint(64, 16);
+        point[2] = wxPoint(32, 32);
+        point[3] = wxPoint(0, 16);
+        point[4] = wxPoint(32, 0);
+        dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+    }
+
     return;
 }
 
@@ -199,12 +214,13 @@ void MapTool::OnMapRight( wxCommandEvent& event )
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
     long posx, posy;
-    int tilex, tiley;
     wxString msg;
     event.GetPosition(&posx, &posy);
 
-    if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &tilex, &tiley))
-        msg = wxString::Format(wxT("[%ld,%ld]"), tilex, tiley);
+    if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &m_CurTileX, &m_CurTileY))
+        msg = wxString::Format(wxT("[%ld,%ld]"), m_CurTileX, m_CurTileY);
+
+    RefreshMapView();
 
     m_StatusBar->SetStatusText(msg, 0);
 }
