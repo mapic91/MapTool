@@ -67,4 +67,11 @@ struct FrameData
     unsigned char* Data;
 };
 
+struct Frame_Data
+{
+    long width;
+    long height;
+    unsigned char* data;//color model RGBA
+    Frame_Data *next;
+};
 #endif // MYDEFS_HPP_INCLUDED

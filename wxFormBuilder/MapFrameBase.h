@@ -18,21 +18,23 @@
 #include <wx/settings.h>
 #include <wx/checkbox.h>
 #include <wx/toolbar.h>
-#include <wx/sizer.h>
-#include <wx/panel.h>
-#include <wx/statusbr.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/sizer.h>
+#include <wx/panel.h>
+#include <wx/statusbr.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define ID_MAPUP 1000
-#define ID_MAPDOWN 1001
-#define ID_MAPLEFT 1002
-#define ID_MAPRIGHT 1003
+#define ID_TOOLPLACE 1000
+#define ID_TOOLDELETE 1001
+#define ID_MAPUP 1002
+#define ID_MAPDOWN 1003
+#define ID_MAPLEFT 1004
+#define ID_MAPRIGHT 1005
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -51,10 +53,12 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_Trap;
 		wxCheckBox* m_Barrer;
 		wxCheckBox* m_LayerTransparent;
+		wxToolBar* m_ToolBarEdit;
 		wxPanel* m_MapView;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
-		wxMenu* m_File;
+		wxMenu* m_MenuFile;
+		wxMenu* m_MenuCharacter;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
@@ -65,12 +69,15 @@ class MapFrameBase : public wxFrame
 		virtual void OnTrap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBarrer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerTransparent( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPlaceMode( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

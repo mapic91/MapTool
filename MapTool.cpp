@@ -6,6 +6,8 @@
 #include "wx/accel.h"
 #include "wx/stdpaths.h"
 
+using namespace std;
+
 BEGIN_EVENT_TABLE(MapTool, MapFrameBase)
     EVT_MENU(ID_MAPUP, MapTool::OnMapUp)
     EVT_MENU(ID_MAPDOWN, MapTool::OnMapDown)
@@ -19,6 +21,9 @@ MapTool::MapTool(wxWindow* parent)
 {
     m_ViewBeginx = m_ViewBeginy = 0;
     m_CurTileX = m_CurTileY = 0;
+    m_NpcCurrentDir = 0;
+    m_isPlaceMode = true;
+    m_isDeleteMode = false;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
@@ -64,7 +69,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
 
     m_MapView->Refresh(true);
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)
@@ -103,7 +108,7 @@ wxImage* MapTool::ReadMap(bool getImg)
     }
 }
 
-void MapTool::RefreshMapView()
+void MapTool::RedrawMapView()
 {
     m_MapView->Refresh(false);
     m_MapView->Update();
@@ -140,76 +145,111 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             m_LayerTransparent->IsChecked());
 
     int recposx, recposy;
-    if(map.GetPixelPosition(m_CurTileX, m_CurTileY, &recposx, &recposy))
+    if(!map.GetPixelPosition(m_CurTileX, m_CurTileY, &recposx, &recposy)) return;
+
+    dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
+    wxPoint point[5];
+    point[0] = wxPoint(32, 0);
+    point[1] = wxPoint(64, 16);
+    point[2] = wxPoint(32, 32);
+    point[3] = wxPoint(0, 16);
+    point[4] = wxPoint(32, 0);
+    dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+
+    if(m_isPlaceMode)
     {
-        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
-        wxPoint point[5];
-        point[0] = wxPoint(32, 0);
-        point[1] = wxPoint(64, 16);
-        point[2] = wxPoint(32, 32);
-        point[3] = wxPoint(0, 16);
-        point[4] = wxPoint(32, 0);
-        dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+        unsigned long framecount = m_PlaceNpc.GetFramesCounts();
+        long dir = m_PlaceNpc.GetDirection();
+
+        if(framecount != 0)
+        {
+            wxImage npcImg =
+                m_PlaceNpc.GetImageFromBuffedData(m_NpcCurrentDir * (framecount / dir));
+            if(npcImg.IsOk())
+            {
+                wxBitmap npcBmp(npcImg);
+
+                long npcDrawX, npcDrawY, npcOffX, npcOffY;
+                int npcWidth = npcImg.GetWidth();
+                int npcHeight = npcImg.GetHeight();
+                npcOffX = m_PlaceNpc.GetLeft();
+                npcOffY = m_PlaceNpc.GetBottom();
+
+                npcDrawX = recposx + (32 - npcWidth/2) + npcOffX - m_ViewBeginx;
+                npcDrawY = recposy + (32 - npcHeight) + npcOffY - m_ViewBeginy;
+
+                memdc.SelectObject(npcBmp);
+
+                dc.Blit(npcDrawX,
+                        npcDrawY,
+                        npcWidth,
+                        npcHeight,
+                        &memdc,
+                        0,
+                        0,
+                        wxCOPY,
+                        true);
+            }
+        }
     }
 
-    return;
 }
 
 void MapTool::OnLayerTransparent( wxCommandEvent& event )
 {
     ReadMap();
     m_MapView->Refresh(true);
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnLayer1( wxCommandEvent& event )
 {
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnLayer2( wxCommandEvent& event )
 {
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnLayer3( wxCommandEvent& event )
 {
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnTrap( wxCommandEvent& event )
 {
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnBarrer( wxCommandEvent& event )
 {
     ReadMap();
-    RefreshMapView();
+    RedrawMapView();
 }
 
 void MapTool::OnMapUp( wxCommandEvent& event )
 {
     m_ViewBeginy -= 16;
     CheckMapViewBeginPosition();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnMapDown( wxCommandEvent& event )
 {
     m_ViewBeginy += 16;
     CheckMapViewBeginPosition();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnMapLeft( wxCommandEvent& event )
 {
     m_ViewBeginx -= 64;
     CheckMapViewBeginPosition();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnMapRight( wxCommandEvent& event )
 {
     m_ViewBeginx += 64;
     CheckMapViewBeginPosition();
-    RefreshMapView();
+    RedrawMapView();
 }
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
@@ -220,12 +260,53 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
     if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &m_CurTileX, &m_CurTileY))
         msg = wxString::Format(wxT("[%ld,%ld]"), m_CurTileX, m_CurTileY);
 
-    RefreshMapView();
+    RedrawMapView();
 
     m_StatusBar->SetStatusText(msg, 0);
 }
 
+void MapTool::OnLoadCharater( wxCommandEvent& event )
+{
+    wxFileDialog filedlg(this,
+                         wxT("选择一个人物ini文件"),
+                         exepath + wxT("ini\\npc\\"),
+                         wxT(""),
+                         wxT("ini文件(*.ini)|*.ini"),
+                         wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
+    if(filedlg.ShowModal() != wxID_OK) return;
+    ReadNpcIni(std::string(filedlg.GetPath().char_str()), &m_NpcData);
+
+    string NpcIniPath(exepath.char_str());
+    NpcIniPath += "ini\\npcres\\";
+    NpcIniPath += m_NpcData.NpcIni;
+
+    wxString asfpath(exepath +
+                     wxT("asf\\character\\") +
+                     wxString(FindStandAsf(NpcIniPath).c_str()));
+
+    m_PlaceNpc.ReadAsfFile(asfpath);
+    m_PlaceNpc.BufferData();
+}
+
+void MapTool::OnPlaceMode( wxCommandEvent& event )
+{
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
+    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
+
+    m_isPlaceMode = true;
+    m_isDeleteMode = false;
+
+}
+void MapTool::OnDeleteMode( wxCommandEvent& event )
+{
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, true);
+
+    m_isPlaceMode = false;
+    m_isDeleteMode = true;
+
+}
 
 void MapTool::CheckMapViewBeginPosition()
 {

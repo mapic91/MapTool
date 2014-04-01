@@ -5,13 +5,6 @@
 #include "wx/image.h"
 
 #include "mydefs.hpp"
-struct Frame_Data
-{
-    long width;
-    long height;
-    unsigned char* data;//color model RGBA
-    Frame_Data *next;
-};
 
 class MpcDecode
 {

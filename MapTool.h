@@ -3,6 +3,8 @@
 
 #include <MapFrameBase.h>
 #include "Map.h"
+#include "Npc.hpp"
+#include "AsfDecode.hpp"
 
 
 class MapTool : public MapFrameBase
@@ -29,9 +31,14 @@ class MapTool : public MapFrameBase
 
 		void OnMouseMove( wxMouseEvent& event );
 
+        void OnLoadCharater( wxCommandEvent& event );
+
+        void OnPlaceMode( wxCommandEvent& event ) ;
+		void OnDeleteMode( wxCommandEvent& event );
+
         //if getImg is true return an image, else return NULL
         wxImage* ReadMap(bool getImg = false);
-        void RefreshMapView();
+        void RedrawMapView();
         void CheckMapViewBeginPosition();
 
         wxBitmap m_MapBitmap;
@@ -40,6 +47,10 @@ class MapTool : public MapFrameBase
         //Current tile under mouse
         int m_CurTileX, m_CurTileY;
         wxString exepath;
+        NpcData m_NpcData;
+        AsfDecode m_PlaceNpc;
+        char m_NpcCurrentDir;
+        bool m_isPlaceMode, m_isDeleteMode;
 
         DECLARE_EVENT_TABLE()
 };

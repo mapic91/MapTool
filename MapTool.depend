@@ -2351,11 +2351,13 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1396341390 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1396358910 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
+	"Npc.hpp"
+	"AsfDecode.hpp"
 
-1396338781 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396354511 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2366,12 +2368,12 @@
 	<wx/settings.h>
 	<wx/checkbox.h>
 	<wx/toolbar.h>
-	<wx/sizer.h>
-	<wx/panel.h>
-	<wx/statusbr.h>
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/icon.h>
+	<wx/sizer.h>
+	<wx/panel.h>
+	<wx/statusbr.h>
 	<wx/menu.h>
 	<wx/frame.h>
 
@@ -2380,12 +2382,12 @@
 	"wx/image.h"
 	"MpcDecode.hpp"
 
-1395318554 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
+1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
 	"mydefs.hpp"
 
-1383739839 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
+1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
 1396342664 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
@@ -2406,7 +2408,7 @@
 1395322744 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1396338790 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1396355093 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2510,7 +2512,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396339534 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396360540 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
@@ -2561,4 +2563,25 @@
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\bmpbuttn.h
 	"wx/button.h"
 	"wx/dcclient.h"
+
+1396357458 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+	<string>
+
+1396359330 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
+	"AsfDecode.hpp"
+	"wx/image.h"
+	"wx/msgdlg.h"
+	<cstring>
+	<fstream>
+
+1396358910 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
+	"wx/string.h"
+	"wx/image.h"
+	"mydefs.hpp"
+
+1396357458 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+	"Npc.hpp"
+	<fstream>
+	<cstdlib>
+	<cstring>
 
