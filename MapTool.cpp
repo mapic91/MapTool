@@ -196,6 +196,21 @@ void MapTool::OnMapRight( wxCommandEvent& event )
     CheckMapViewBeginPosition();
     RefreshMapView();
 }
+void MapTool::OnMouseMove( wxMouseEvent& event )
+{
+    long posx, posy;
+    int tilex, tiley;
+    wxString msg;
+    event.GetPosition(&posx, &posy);
+
+    if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &tilex, &tiley))
+        msg = wxString::Format(wxT("[%ld,%ld]"), tilex, tiley);
+
+    m_StatusBar->SetStatusText(msg, 0);
+}
+
+
+
 void MapTool::CheckMapViewBeginPosition()
 {
     int viewWidth, viewHeight, bmpWidth, bmpHeight;

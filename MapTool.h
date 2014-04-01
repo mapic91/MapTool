@@ -27,6 +27,8 @@ class MapTool : public MapFrameBase
 		void OnMapLeft( wxCommandEvent& event ) ;
 		void OnMapRight( wxCommandEvent& event ) ;
 
+		void OnMouseMove( wxMouseEvent& event );
+
         //if getImg is true return an image, else return NULL
         wxImage* ReadMap(bool getImg = false);
         void RefreshMapView();

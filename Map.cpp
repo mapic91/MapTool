@@ -11,6 +11,7 @@ Map::Map()
 {
     decode = NULL;
     tiles = NULL;
+    mCol = mRow = mPixelWidth = mPixelHeight = 0;
     LoadResource();
 }
 
@@ -211,14 +212,14 @@ void Map::DrawLayer(int index, wxImage* img)
     }
 }
 
-void Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
+bool Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
 {
     if(tileX == NULL ||
        tileY == NULL ||
        pixelX < 0 ||
        pixelX > mPixelWidth ||
        pixelY < 0 ||
-       pixelY > mPixelHeight) return;
+       pixelY > mPixelHeight) return false;
 
     //first caculating even row position, considering each tile is 64 * 32 rectangle
     int nx, ny;
@@ -256,6 +257,7 @@ void Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
 
     *tileX = nx;
     *tileY = ny;
+    return true;
 }
 
 void Map::DrawTile(long Column, long Row,
