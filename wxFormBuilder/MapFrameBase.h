@@ -21,10 +21,18 @@
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/statusbr.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/menu.h>
 #include <wx/frame.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
+#define ID_MAPUP 1000
+#define ID_MAPDOWN 1001
+#define ID_MAPLEFT 1002
+#define ID_MAPRIGHT 1003
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -42,8 +50,12 @@ class MapFrameBase : public wxFrame
 		wxStaticLine* m_staticline1;
 		wxCheckBox* m_Trap;
 		wxCheckBox* m_Barrer;
+		wxStaticLine* m_staticline2;
+		wxCheckBox* m_LayerTransparent;
 		wxPanel* m_MapView;
 		wxStatusBar* m_StatusBar;
+		wxMenuBar* m_menubar3;
+		wxMenu* m_File;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
@@ -53,7 +65,12 @@ class MapFrameBase : public wxFrame
 		virtual void OnLayer3( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnTrap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBarrer( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayerTransparent( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

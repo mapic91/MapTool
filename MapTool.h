@@ -20,14 +20,23 @@ class MapTool : public MapFrameBase
 		void OnTrap( wxCommandEvent& event ) ;
 		void OnBarrer( wxCommandEvent& event ) ;
 		void OnMapDraw( wxPaintEvent& event ) ;
+		void OnLayerTransparent( wxCommandEvent& event );
+
+		void OnMapUp( wxCommandEvent& event ) ;
+		void OnMapDown( wxCommandEvent& event ) ;
+		void OnMapLeft( wxCommandEvent& event ) ;
+		void OnMapRight( wxCommandEvent& event ) ;
 
         //if getImg is true return an image, else return NULL
         wxImage* ReadMap(bool getImg = false);
-        void SetMapView();
+        void RefreshMapView();
+        void CheckMapViewBeginPosition();
 
         wxBitmap m_MapBitmap;
         Map map;
         int m_ViewBeginx, m_ViewBeginy;
+
+        DECLARE_EVENT_TABLE()
 };
 
 #endif // MAPTOOL_H

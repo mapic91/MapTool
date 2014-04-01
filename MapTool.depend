@@ -2351,11 +2351,11 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1396325742 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1396335303 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 
-1396323482 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396335148 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2369,9 +2369,13 @@
 	<wx/sizer.h>
 	<wx/panel.h>
 	<wx/statusbr.h>
+	<wx/bitmap.h>
+	<wx/image.h>
+	<wx/icon.h>
+	<wx/menu.h>
 	<wx/frame.h>
 
-1396325116 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+1396334117 e:\programmingworkshop\_store_\jxqy\maptool\map.h
 	"wx/string.h"
 	"wx/image.h"
 	"MpcDecode.hpp"
@@ -2383,7 +2387,7 @@
 
 1383739839 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1396325116 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1396335303 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2402,6 +2406,122 @@
 1395322744 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1396325025 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1396335367 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
+	"wx/defs.h"
+	"wx/list.h"
+	"wx/window.h"
+	"wx/menuitem.h"
+	"wx/univ/menu.h"
+	"wx/msw/menu.h"
+	"wx/motif/menu.h"
+	"wx/gtk/menu.h"
+	"wx/gtk1/menu.h"
+	"wx/osx/menu.h"
+	"wx/cocoa/menu.h"
+	"wx/os2/menu.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menuitem.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/univ/menuitem.h"
+	"wx/msw/menuitem.h"
+	"wx/motif/menuitem.h"
+	"wx/gtk/menuitem.h"
+	"wx/gtk1/menuitem.h"
+	"wx/osx/menuitem.h"
+	"wx/cocoa/menuitem.h"
+	"wx/os2/menuitem.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\menuitem.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\menuitem.h
+	"wx/ownerdrw.h"
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\ownerdrw.h
+	"wx/defs.h"
+	"wx/font.h"
+	"wx/colour.h"
+	"wx/msw/ownerdrw.h"
+	"wx/os2/ownerdrw.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\ownerdrw.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\ownerdrw.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\menuitem.h
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\menuitem.h
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\menuitem.h
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\menuitem.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\menuitem.h
+	"wx/hashmap.h"
+	"wx/bitmap.h"
+	"wx/cocoa/ObjcRef.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\menuitem.h
+	"wx/defs.h"
+	"wx/os2/private.h"
+	"wx/ownerdrw.h"
+	"wx/bitmap.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\menu.h
+	"wx/accel.h"
+	"wx/dynarray.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\menu.h
+	"wx/accel.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\menu.h
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/arrstr.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\menu.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\menu.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\menu.h
+	"wx/arrstr.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\menu.h
+	"wx/cocoa/NSMenu.h"
+	"wx/accel.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\nsmenu.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\menu.h
+	"wx/accel.h"
+	"wx/list.h"
+	"wx/dynarray.h"
+
+1396335331 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+	"MapTool.h"
+	"wx/filedlg.h"
+	"wx/msgdlg.h"
+	"wx/dcclient.h"
+	"wx/dcmemory.h"
+	"wx/accel.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\dcclient.h
+	"wx/dc.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\dcmemory.h
+	"wx/dc.h"
+	"wx/bitmap.h"
 

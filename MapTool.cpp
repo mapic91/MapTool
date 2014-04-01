@@ -3,16 +3,34 @@
 #include "wx/msgdlg.h"
 #include "wx/dcclient.h"
 #include "wx/dcmemory.h"
+#include "wx/accel.h"
+
+BEGIN_EVENT_TABLE(MapTool, MapFrameBase)
+    EVT_MENU(ID_MAPUP, MapTool::OnMapUp)
+    EVT_MENU(ID_MAPDOWN, MapTool::OnMapDown)
+    EVT_MENU(ID_MAPLEFT, MapTool::OnMapLeft)
+    EVT_MENU(ID_MAPRIGHT, MapTool::OnMapRight)
+END_EVENT_TABLE()
+
 
 MapTool::MapTool(wxWindow* parent)
     :MapFrameBase(parent)
 {
+    m_ViewBeginx = m_ViewBeginy = 0;
+
     this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
 
-    m_ViewBeginx = m_ViewBeginy = 0;
+    wxAcceleratorEntry ace[4];
+    ace[0].Set(wxACCEL_NORMAL, WXK_UP, ID_MAPUP);
+    ace[1].Set(wxACCEL_NORMAL, WXK_DOWN, ID_MAPDOWN);
+    ace[2].Set(wxACCEL_NORMAL, WXK_LEFT, ID_MAPLEFT);
+    ace[3].Set(wxACCEL_NORMAL, WXK_RIGHT, ID_MAPRIGHT);
+    wxAcceleratorTable act(4, ace);
+    SetAcceleratorTable(act);
+
 
 }
 
@@ -39,8 +57,10 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getRow(),
                                     map.getPixelWidth(),
                                     map.getPixelHeight()));
+
+    m_MapView->Refresh(true);
     ReadMap();
-    SetMapView();
+    RefreshMapView();
 }
 
 void MapTool::SaveToPNG(wxCommandEvent& event)
@@ -69,7 +89,7 @@ wxImage* MapTool::ReadMap(bool getImg)
     if(m_Barrer->IsChecked()) layer |= Map::BARRER;
     if(m_Trap->IsChecked())   layer |= Map::TRAP;
 
-    wxImage *img = map.getImage(layer);
+    wxImage *img = map.getImage(layer, m_LayerTransparent->IsChecked());
     m_MapBitmap = wxBitmap(*img);
     if(getImg) return img;
     else
@@ -79,7 +99,7 @@ wxImage* MapTool::ReadMap(bool getImg)
     }
 }
 
-void MapTool::SetMapView()
+void MapTool::RefreshMapView()
 {
     m_MapView->Refresh(false);
     m_MapView->Update();
@@ -89,8 +109,20 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
 {
     wxPaintDC dc(m_MapView);
     wxMemoryDC memdc;
-    int viewWidth, viewHeight;
+    int viewWidth, viewHeight, bmpWidth, bmpHeight;
     m_MapView->GetClientSize(&viewWidth, &viewHeight);
+    bmpWidth = m_MapBitmap.GetWidth();
+    bmpHeight = m_MapBitmap.GetHeight();
+
+    if(m_ViewBeginx + viewWidth > bmpWidth) m_ViewBeginx = bmpWidth - viewWidth;
+    if(m_ViewBeginy + viewHeight > bmpHeight) m_ViewBeginy = bmpHeight - viewHeight;
+    if(m_ViewBeginx < 0) m_ViewBeginx = 0;
+    if(m_ViewBeginy < 0) m_ViewBeginy = 0;
+
+    //check whether bmp size is small than view
+    if(m_ViewBeginx + viewWidth > bmpWidth) viewWidth = bmpWidth;
+    if(m_ViewBeginy + viewHeight > bmpHeight) viewHeight = bmpHeight;
+
     memdc.SelectObject(m_MapBitmap);
 
     dc.Blit(0,
@@ -99,31 +131,76 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             viewHeight,
             &memdc,
             m_ViewBeginx,
-            m_ViewBeginy);
+            m_ViewBeginy,
+            wxCOPY,
+            m_LayerTransparent->IsChecked());
+    return;
 }
 
+void MapTool::OnLayerTransparent( wxCommandEvent& event )
+{
+    ReadMap();
+    m_MapView->Refresh(true);
+    RefreshMapView();
+}
 void MapTool::OnLayer1( wxCommandEvent& event )
 {
     ReadMap();
-    SetMapView();
+    RefreshMapView();
 }
 void MapTool::OnLayer2( wxCommandEvent& event )
 {
     ReadMap();
-    SetMapView();
+    RefreshMapView();
 }
 void MapTool::OnLayer3( wxCommandEvent& event )
 {
     ReadMap();
-    SetMapView();
+    RefreshMapView();
 }
 void MapTool::OnTrap( wxCommandEvent& event )
 {
     ReadMap();
-    SetMapView();
+    RefreshMapView();
 }
 void MapTool::OnBarrer( wxCommandEvent& event )
 {
     ReadMap();
-    SetMapView();
+    RefreshMapView();
+}
+
+void MapTool::OnMapUp( wxCommandEvent& event )
+{
+    m_ViewBeginy -= 16;
+    CheckMapViewBeginPosition();
+    RefreshMapView();
+}
+void MapTool::OnMapDown( wxCommandEvent& event )
+{
+    m_ViewBeginy += 16;
+    CheckMapViewBeginPosition();
+    RefreshMapView();
+}
+void MapTool::OnMapLeft( wxCommandEvent& event )
+{
+    m_ViewBeginx -= 64;
+    CheckMapViewBeginPosition();
+    RefreshMapView();
+}
+void MapTool::OnMapRight( wxCommandEvent& event )
+{
+    m_ViewBeginx += 64;
+    CheckMapViewBeginPosition();
+    RefreshMapView();
+}
+void MapTool::CheckMapViewBeginPosition()
+{
+    int viewWidth, viewHeight, bmpWidth, bmpHeight;
+    m_MapView->GetClientSize(&viewWidth, &viewHeight);
+    bmpWidth = m_MapBitmap.GetWidth();
+    bmpHeight = m_MapBitmap.GetHeight();
+    if(m_ViewBeginx + viewWidth > bmpWidth) m_ViewBeginx = bmpWidth - viewWidth;
+    if(m_ViewBeginy + viewHeight > bmpHeight) m_ViewBeginy = bmpHeight - viewHeight;
+    if(m_ViewBeginx < 0) m_ViewBeginx = 0;
+    if(m_ViewBeginy < 0) m_ViewBeginy = 0;
 }

@@ -266,6 +266,7 @@ void Map::DrawTile(long Column, long Row,
 
     //tile top-left position
     long basex, basey;
+    bool hasAlpha = img->HasAlpha();
     basex = (Row%2) * 32 + 64 * Column;
     basey = 16 * Row;
 
@@ -281,11 +282,11 @@ void Map::DrawTile(long Column, long Row,
         {
             if(TileData[datai + 3] != 0)
             {
-                img->SetRGB(graphx + wi, graphy + hi,
+                img->SetRGB(wxRect(graphx + wi, graphy + hi, 1, 1),
                             TileData[datai],
                             TileData[datai + 1],
                             TileData[datai + 2]);
-                img->SetAlpha(graphx + wi, graphy + hi, 0xFF);
+                if(hasAlpha)img->SetAlpha(graphx + wi, graphy + hi, 0xFF);
             }
 
             datai += 4;
@@ -293,11 +294,11 @@ void Map::DrawTile(long Column, long Row,
     }
 }
 
-wxImage* Map::getImage(unsigned char layer)
+wxImage* Map::getImage(unsigned char layer, bool hasAlpha)
 {
     wxImage *img = new wxImage;
     img->Create(mPixelWidth, mPixelHeight, true);
-    img->SetAlpha();
+    if(hasAlpha)img->SetAlpha();
 
     if(layer & LAYER1) DrawLayer(1, tiles, decode, img);
     if(layer & LAYER2) DrawLayer(2, tiles, decode, img);

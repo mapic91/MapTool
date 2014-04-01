@@ -45,7 +45,7 @@ class Map
         long getPixelWidth() const {return mPixelWidth;}
         long getPixelHeight() const {return mPixelHeight;}
         //returned wxImage must deleted
-        wxImage* getImage(unsigned char layer = LAYER1 | LAYER2 | LAYER3);
+        wxImage* getImage(unsigned char layer = LAYER1 | LAYER2 | LAYER3, bool hasAlpha = true);
        // wxImage* getImage(int beginPosX, int beginPosY, int width, int height, unsigned char layer = LAYER1 | LAYER2 | LAYER3);
 
         bool ReadFile(const wxString FilePath);
