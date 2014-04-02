@@ -290,6 +290,23 @@ void MapTool::OnDrawMapControl( wxPaintEvent& event )
                    mapheight
                    );
 
+    int recwidth, recheight, recbegx, recbegy;
+    recwidth = ctlwidth * mapviewwidth / mapwidth;
+    recheight = ctlheight * mapviewheight / mapheight;
+    recbegx = ctlwidth * m_ViewBeginx / mapwidth;
+    recbegy = ctlheight * m_ViewBeginy / mapheight;
+    wxPoint points[4];
+    points[0] = wxPoint(0, 0);
+    points[1] = wxPoint(recwidth, 0);
+    points[2] = wxPoint(recwidth, recheight);
+    points[3] = wxPoint(0, recheight);
+    dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxRED)));
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    dc.DrawPolygon(4,
+                   points,
+                   recbegx,
+                   recbegy);
+
 }
 
 void MapTool::OnLoadCharater( wxCommandEvent& event )

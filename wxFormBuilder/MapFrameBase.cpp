@@ -69,26 +69,29 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizer3;
-	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
+	m_splitter2 = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_splitter2->SetSashGravity( 1 );
+	m_splitter2->Connect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter2OnIdle ), NULL, this );
 	
-	m_MapView = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer3->Add( m_MapView, 4, wxEXPAND | wxALL, 5 );
+	m_MapView = new wxPanel( m_splitter2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panel10 = new wxPanel( m_splitter2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer6;
+	bSizer6 = new wxBoxSizer( wxVERTICAL );
 	
-	wxBoxSizer* bSizer4;
-	bSizer4 = new wxBoxSizer( wxVERTICAL );
+	m_splitter4 = new wxSplitterWindow( m_panel10, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_splitter4->Connect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter4OnIdle ), NULL, this );
 	
-	m_MapControl = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer4->Add( m_MapControl, 1, wxEXPAND | wxALL, 5 );
-	
-	m_panel4 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer4->Add( m_panel4, 1, wxEXPAND | wxALL, 5 );
-	
-	
-	bSizer3->Add( bSizer4, 1, wxEXPAND, 5 );
+	m_MapControl = new wxPanel( m_splitter4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panel12 = new wxPanel( m_splitter4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_splitter4->SplitHorizontally( m_MapControl, m_panel12, 100 );
+	bSizer6->Add( m_splitter4, 1, wxEXPAND, 5 );
 	
 	
-	bSizer1->Add( bSizer3, 1, wxEXPAND, 5 );
+	m_panel10->SetSizer( bSizer6 );
+	m_panel10->Layout();
+	bSizer6->Fit( m_panel10 );
+	m_splitter2->SplitVertically( m_MapView, m_panel10, -200 );
+	bSizer1->Add( m_splitter2, 1, wxEXPAND, 5 );
 	
 	
 	this->SetSizer( bSizer1 );

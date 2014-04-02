@@ -23,6 +23,7 @@
 #include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
+#include <wx/splitter.h>
 #include <wx/statusbr.h>
 #include <wx/menu.h>
 #include <wx/frame.h>
@@ -55,9 +56,12 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_Barrer;
 		wxCheckBox* m_LayerTransparent;
 		wxToolBar* m_ToolBarEdit;
+		wxSplitterWindow* m_splitter2;
 		wxPanel* m_MapView;
+		wxPanel* m_panel10;
+		wxSplitterWindow* m_splitter4;
 		wxPanel* m_MapControl;
-		wxPanel* m_panel4;
+		wxPanel* m_panel12;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
@@ -90,6 +94,18 @@ class MapFrameBase : public wxFrame
 		MapFrameBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 632,352 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 		
 		~MapFrameBase();
+		
+		void m_splitter2OnIdle( wxIdleEvent& )
+		{
+			m_splitter2->SetSashPosition( -200 );
+			m_splitter2->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter2OnIdle ), NULL, this );
+		}
+		
+		void m_splitter4OnIdle( wxIdleEvent& )
+		{
+			m_splitter4->SetSashPosition( 100 );
+			m_splitter4->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter4OnIdle ), NULL, this );
+		}
 	
 };
 

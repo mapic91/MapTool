@@ -2357,7 +2357,7 @@
 	"Npc.hpp"
 	"AsfDecode.hpp"
 
-1396399517 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396403123 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2373,6 +2373,7 @@
 	<wx/icon.h>
 	<wx/sizer.h>
 	<wx/panel.h>
+	<wx/splitter.h>
 	<wx/statusbr.h>
 	<wx/menu.h>
 	<wx/frame.h>
@@ -2408,7 +2409,7 @@
 1395322744 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1396401040 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1396403140 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2512,7 +2513,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396399174 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396401274 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
@@ -2584,4 +2585,12 @@
 	<fstream>
 	<cstdlib>
 	<cstring>
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\splitter.h
+	"wx/event.h"
+	"wx/generic/splitter.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\splitter.h
+	"wx/window.h"
+	"wx/containr.h"
 
