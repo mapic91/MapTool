@@ -87,6 +87,17 @@ public:
         for(int i = 0; i < index; i++, it++);
         return *it;
     }
+    T GetItem(long mapx, long mapy)
+    {
+        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+        {
+            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            {
+                return *it;
+            }
+        }
+        return T(NULL);
+    }
 
     void AddItem(T item)
     {
@@ -144,5 +155,6 @@ private:
 };
 
 typedef ItemList<NpcItem*> NpcList;
+bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
 
 #endif // NPC_HPP_INCLUDED

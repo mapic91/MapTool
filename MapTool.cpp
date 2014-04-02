@@ -25,6 +25,7 @@ MapTool::MapTool(wxWindow* parent)
     m_PlaceNpcData.Dir = 0;
     m_isPlaceMode = true;
     m_isDeleteMode = false;
+    m_isEditAttribute = false;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
@@ -61,8 +62,9 @@ void MapTool::OpenMap(wxCommandEvent& event)
     if(filedlg.ShowModal() != wxID_OK) return;
 
     if(!map.ReadFile(filedlg.GetPath())) return;
+    m_MapFileName = filedlg.GetFilename();
     this->SetTitle(wxString::Format(wxFormatString(wxT("%s      %ld × %ld - %ld × %ld")),
-                                    filedlg.GetFilename(),
+                                    m_MapFileName,
                                     map.getCol(),
                                     map.getRow(),
                                     map.getPixelWidth(),
@@ -304,6 +306,17 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
         m_NpcList.AddItem(item);
     }
+    else if(m_isEditAttribute)
+    {
+        NpcItem *item = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+        if(item != NULL)
+        {
+            NpcItemEditDialog itemEdit(this);
+            itemEdit.InitFromNpcItem(item);
+            if(itemEdit.ShowModal() == wxID_OK)
+                itemEdit.AssignToNpcItem(item);
+        }
+    }
 }
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
@@ -415,9 +428,11 @@ void MapTool::OnPlaceMode( wxCommandEvent& event )
 {
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
+    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
 
     m_isPlaceMode = true;
     m_isDeleteMode = false;
+    m_isEditAttribute = false;
 
 }
 void MapTool::OnCharacterDirection( wxCommandEvent& event )
@@ -430,15 +445,45 @@ void MapTool::OnCharacterDirection( wxCommandEvent& event )
 
     RedrawMapView();
 }
+void MapTool::OnOutputNpcFile( wxCommandEvent& event )
+{
+    wxFileDialog filedlg(this,
+                         wxT("导出为NPC文件"),
+                         exepath + wxT("\\ini\\save\\"),
+                         wxT(""),
+                         wxT("NPC文件(*.npc)|*.npc"),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT
+                         );
 
+    if(filedlg.ShowModal() == wxID_OK)
+    {
+        if(NpcListSave(filedlg.GetPath(), m_MapFileName, &m_NpcList))
+            wxMessageBox(wxT("完成"), wxT("消息"));
+        else
+            wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
+    }
+}
 void MapTool::OnDeleteMode( wxCommandEvent& event )
 {
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
     m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, true);
+    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
 
     m_isPlaceMode = false;
     m_isDeleteMode = true;
+    m_isEditAttribute = false;
 
+}
+
+void MapTool::OnEditAttributeMode( wxCommandEvent& event )
+{
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
+    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, true);
+
+    m_isPlaceMode = false;
+    m_isDeleteMode = false;
+    m_isEditAttribute = true;
 }
 
 void MapTool::CheckMapViewBeginPosition()
@@ -451,4 +496,233 @@ void MapTool::CheckMapViewBeginPosition()
     if(m_ViewBeginy + viewHeight > bmpHeight) m_ViewBeginy = bmpHeight - viewHeight;
     if(m_ViewBeginx < 0) m_ViewBeginx = 0;
     if(m_ViewBeginy < 0) m_ViewBeginy = 0;
+}
+
+//////////////////////////////
+///////////////////////////////
+//NpcItemEditDialog
+
+void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
+{
+    if(item == NULL) return;
+
+    m_Name->ChangeValue(item->Name);
+    if(item->Kind != -1)
+        m_Kind->ChangeValue(wxString::Format(wxT("%d"), item->Kind));
+    if(item->Relation != -1)
+        m_Relation->ChangeValue(wxString::Format(wxT("%d"), item->Relation));
+    if(item->PathFinder != -1)
+        m_PathFinder->ChangeValue(wxString::Format(wxT("%d"), item->PathFinder));
+    if(item->State != -1)
+        m_State->ChangeValue(wxString::Format(wxT("%d"), item->State));
+    if(item->VisionRadius != -1)
+        m_VisionRadius->ChangeValue(wxString::Format(wxT("%d"), item->VisionRadius));
+    if(item->DialogRadius != -1)
+        m_DialogRadius->ChangeValue(wxString::Format(wxT("%d"), item->DialogRadius));
+    if(item->AttackRadius != -1)
+        m_AttackRadius->ChangeValue(wxString::Format(wxT("%d"), item->AttackRadius));
+    if(item->Dir != -1)
+        m_Dir->ChangeValue(wxString::Format(wxT("%d"), item->Dir));
+    if(item->Lum != -1)
+        m_Lum->ChangeValue(wxString::Format(wxT("%d"), item->Lum));
+    if(item->Action != -1)
+        m_Action->ChangeValue(wxString::Format(wxT("%d"), item->Action));
+    if(item->WalkSpeed != -1)
+        m_WalkSpeed->ChangeValue(wxString::Format(wxT("%d"), item->WalkSpeed));
+
+
+    if(item->Evade != -1)
+        m_Evade->ChangeValue(wxString::Format(wxT("%d"), item->Evade));
+    if(item->Attack != -1)
+        m_Attack->ChangeValue(wxString::Format(wxT("%d"), item->Attack));
+    if(item->AttackLevel != -1)
+        m_AttackLevel->ChangeValue(wxString::Format(wxT("%d"), item->AttackLevel));
+    if(item->Defend != -1)
+        m_Defend->ChangeValue(wxString::Format(wxT("%d"), item->Defend));
+    if(item->Exp != -1)
+        m_Exp->ChangeValue(wxString::Format(wxT("%d"), item->Exp));
+    if(item->LevelUpExp != -1)
+        m_LevelUpExp->ChangeValue(wxString::Format(wxT("%d"), item->LevelUpExp));
+    if(item->Level != -1)
+        m_Level->ChangeValue(wxString::Format(wxT("%d"), item->Level));
+    if(item->Life != -1)
+        m_Life->ChangeValue(wxString::Format(wxT("%d"), item->Life));
+    if(item->LifeMax != -1)
+        m_LifeMax->ChangeValue(wxString::Format(wxT("%d"), item->LifeMax));
+    if(item->Thew != -1)
+        m_Thew->ChangeValue(wxString::Format(wxT("%d"), item->Thew));
+    if(item->ThewMax != -1)
+        m_ThewMax->ChangeValue(wxString::Format(wxT("%d"), item->ThewMax));
+    if(item->Mana != -1)
+        m_Mana->ChangeValue(wxString::Format(wxT("%d"), item->Mana));
+    if(item->ManaMax != -1)
+        m_ManaMax->ChangeValue(wxString::Format(wxT("%d"), item->ManaMax));
+
+
+    if(item->ExpBonus != -1)
+        m_ExpBonus->ChangeValue(wxString::Format(wxT("%d"), item->ExpBonus));
+    if(item->Idle != -1)
+        m_Idle->ChangeValue(wxString::Format(wxT("%d"), item->Idle));
+
+    if(!item->NpcIni.IsEmpty())
+    {
+        m_NpcIni->SetLabel(item->NpcIni);
+        m_NpcIni->SetToolTip(item->NpcIni);
+    }
+    if(!item->BodyIni.IsEmpty())
+    {
+        m_BodyIni->SetLabel(item->BodyIni);
+        m_BodyIni->SetToolTip(item->BodyIni);
+    }
+    if(!item->FlyIni.IsEmpty())
+    {
+        m_FlyIni->SetLabel(item->FlyIni);
+        m_FlyIni->SetToolTip(item->FlyIni);
+    }
+    if(!item->FlyIni2.IsEmpty())
+    {
+        m_FlyIni2->SetLabel(item->FlyIni2);
+        m_FlyIni2->SetToolTip(item->FlyIni2);
+    }
+    if(!item->ScriptFile.IsEmpty())
+    {
+        m_ScriptFile->SetLabel(item->ScriptFile);
+        m_ScriptFile->SetToolTip(item->ScriptFile);
+    }
+    if(!item->DeathScript.IsEmpty())
+    {
+        m_DeathScript->SetLabel(item->DeathScript);
+        m_DeathScript->SetToolTip(item->DeathScript);
+    }
+    if(!item->FixedPos.IsEmpty())
+        m_FixedPos->SetValue(item->FixedPos);
+}
+void NpcItemEditDialog::AssignToNpcItem(NpcItem *item)
+{
+    if(item == NULL) return;
+    wxString value;
+    long n_val;
+
+    value = m_Name->GetValue();
+    if(!value.IsEmpty()) item->Name = value;
+
+    value = m_Kind->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Kind = n_val;
+
+    value = m_Relation->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Relation = n_val;
+
+    value = m_PathFinder->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->PathFinder = n_val;
+
+    value = m_State->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->State = n_val;
+
+    value = m_VisionRadius->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->VisionRadius = n_val;
+
+    value = m_DialogRadius->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->DialogRadius = n_val;
+
+    value = m_AttackRadius->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->AttackRadius = n_val;
+
+    value = m_Dir->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Dir = n_val;
+
+    value = m_Lum->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Lum = n_val;
+
+    value = m_Action->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Action = n_val;
+
+    value = m_WalkSpeed->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->WalkSpeed = n_val;
+
+    value = m_Evade->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Evade = n_val;
+
+    value = m_Attack->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Attack = n_val;
+
+    value = m_AttackLevel->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->AttackLevel = n_val;
+
+    value = m_Defend->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Defend = n_val;
+
+    value = m_Exp->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Exp = n_val;
+
+    value = m_LevelUpExp->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->LevelUpExp = n_val;
+
+    value = m_Level->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Level = n_val;
+
+    value = m_Life->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Life = n_val;
+
+    value = m_LifeMax->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->LifeMax = n_val;
+
+    value = m_Thew->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Thew = n_val;
+
+    value = m_ThewMax->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->ThewMax = n_val;
+
+    value = m_Mana->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Mana = n_val;
+
+    value = m_ManaMax->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->ManaMax = n_val;
+
+    value = m_ExpBonus->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->ExpBonus = n_val;
+
+    value = m_Idle->GetValue();
+    if(!value.ToLong(&n_val)) n_val = -1;
+    item->Idle = n_val;
+
+
+    value = m_NpcIni->GetLabel();
+    item->NpcIni = value;
+    value = m_BodyIni->GetLabel();
+    item->BodyIni = value;
+    value = m_FlyIni->GetLabel();
+    item->FlyIni = value;
+    value = m_FlyIni2->GetLabel();
+    item->FlyIni2 = value;
+    value = m_ScriptFile->GetLabel();
+    item->ScriptFile = value;
+    value = m_DeathScript->GetLabel();
+    item->DeathScript = value;
+    value = m_FixedPos->GetValue();
+    item->FixedPos = value;
 }

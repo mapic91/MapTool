@@ -2351,14 +2351,14 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1396430044 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1396447607 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
 	"AsfDecode.hpp"
 	"wx/dcbuffer.h"
 
-1396425414 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396447872 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2378,6 +2378,11 @@
 	<wx/statusbr.h>
 	<wx/menu.h>
 	<wx/frame.h>
+	<wx/stattext.h>
+	<wx/combobox.h>
+	<wx/bmpcbox.h>
+	<wx/textctrl.h>
+	<wx/dialog.h>
 
 1396341118 e:\programmingworkshop\_store_\jxqy\maptool\map.h
 	"wx/string.h"
@@ -2410,7 +2415,7 @@
 1395322744 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1396425423 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1396447892 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2514,7 +2519,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396425227 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396447834 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
@@ -2565,7 +2570,7 @@
 	"wx/button.h"
 	"wx/dcclient.h"
 
-1396429193 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+1396447933 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
 	<string>
 	<list>
 	"wx/string.h"
@@ -2619,4 +2624,165 @@
 	"wx/dcmemory.h"
 	"wx/dcclient.h"
 	"wx/window.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\combobox.h
+	"wx/defs.h"
+	"wx/textctrl.h"
+	"wx/ctrlsub.h"
+	"wx/textentry.h"
+	"wx/univ/combobox.h"
+	"wx/msw/combobox.h"
+	"wx/motif/combobox.h"
+	"wx/gtk/combobox.h"
+	"wx/gtk1/combobox.h"
+	"wx/osx/combobox.h"
+	"wx/cocoa/combobox.h"
+	"wx/os2/combobox.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\ctrlsub.h
+	"wx/defs.h"
+	"wx/arrstr.h"
+	"wx/control.h"
+	"wx/msw/ctrlsub.h"
+	"wx/motif/ctrlsub.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\ctrlsub.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\ctrlsub.h
+	"wx/dynarray.h"
+	"wx/generic/ctrlsub.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\ctrlsub.h
+	"wx/dynarray.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\combobox.h
+	"wx/combo.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\combo.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/renderer.h"
+	"wx/bitmap.h"
+	"wx/textentry.h"
+	"wx/msw/combo.h"
+	"wx/generic/combo.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\renderer.h
+	"wx/gdicmn.h"
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/bitmap.h"
+	"wx/string.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\combo.h
+	"wx/timer.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\combo.h
+	"wx/dcbuffer.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\choice.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/univ/choice.h"
+	"wx/msw/wince/choicece.h"
+	"wx/msw/choice.h"
+	"wx/motif/choice.h"
+	"wx/gtk/choice.h"
+	"wx/gtk1/choice.h"
+	"wx/osx/choice.h"
+	"wx/cocoa/choice.h"
+	"wx/os2/choice.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\choice.h
+	"wx/combobox.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\wince\choicece.h
+	"wx/defs.h"
+	"wx/dynarray.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\choice.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\choice.h
+	"wx/clntdata.h"
+	"wx/dynarray.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\choice.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\choice.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\choice.h
+	"wx/control.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\choice.h
+	"wx/cocoa/NSMenu.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\choice.h
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\combobox.h
+	"wx/choice.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\combobox.h
+	"wx/defs.h"
+	"wx/object.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\combobox.h
+	"wx/containr.h"
+	"wx/choice.h"
+	"wx/textctrl.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\combobox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/textctrl.h"
+	"wx/dynarray.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\combobox.h
+	"wx/choice.h"
+	"wx/textentry.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\bmpcbox.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+	"wx/generic/bmpcbox.h"
+	"wx/msw/bmpcbox.h"
+	"wx/gtk/bmpcbox.h"
+	"wx/generic/bmpcbox.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\bmpcbox.h
+	"wx/odcombo.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\odcombo.h
+	"wx/defs.h"
+	"wx/combo.h"
+	"wx/ctrlsub.h"
+	"wx/vlbox.h"
+	"wx/timer.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\vlbox.h
+	"wx/vscroll.h"
+	"wx/bitmap.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\vscroll.h
+	"wx/panel.h"
+	"wx/position.h"
+	"wx/scrolwin.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\position.h
+	"wx/gdicmn.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\bmpcbox.h
+	"wx/combobox.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\bmpcbox.h
+	"wx/combobox.h"
 

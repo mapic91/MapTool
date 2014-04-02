@@ -39,8 +39,11 @@ class MapTool : public MapFrameBase
         void OnLoadCharater( wxCommandEvent& event );
         void OnPlaceMode( wxCommandEvent& event ) ;
         void OnCharacterDirection( wxCommandEvent& event );
+        void OnOutputNpcFile( wxCommandEvent& event );
 
 		void OnDeleteMode( wxCommandEvent& event );
+
+		void OnEditAttributeMode( wxCommandEvent& event );
 
         void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
 		void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item);
@@ -56,9 +59,9 @@ class MapTool : public MapFrameBase
         int m_ViewBeginx, m_ViewBeginy;
         //Current tile under mouse
         int m_CurTileX, m_CurTileY;
-        wxString exepath;
+        wxString exepath, m_MapFileName;
         char m_NpcCurrentDir;
-        bool m_isPlaceMode, m_isDeleteMode;
+        bool m_isPlaceMode, m_isDeleteMode, m_isEditAttribute;
 
         //Npc list
         NpcItem m_PlaceNpcData;
@@ -66,6 +69,19 @@ class MapTool : public MapFrameBase
         wxString m_NpcIniFilePath;
 
         DECLARE_EVENT_TABLE()
+};
+
+class NpcItemEditDialog: public NpcItemEditDialogBase
+{
+public:
+    NpcItemEditDialog(wxWindow *parent) :NpcItemEditDialogBase(parent){}
+    virtual ~NpcItemEditDialog(){}
+    void InitFromNpcItem(NpcItem *item);
+    void AssignToNpcItem(NpcItem *item);
+private:
+
+    void OnOk( wxCommandEvent& event ){ EndModal(wxID_OK); }
+	void OnCancle( wxCommandEvent& event ){ EndModal(wxID_CANCEL); }
 };
 
 #endif // MAPTOOL_H
