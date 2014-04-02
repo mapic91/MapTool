@@ -1,10 +1,8 @@
 #include "MapTool.h"
-#include "wx/filedlg.h"
 #include "wx/msgdlg.h"
 #include "wx/dcmemory.h"
 
 #include "wx/accel.h"
-#include "wx/stdpaths.h"
 
 using namespace std;
 
@@ -311,7 +309,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         NpcItem *item = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
         if(item != NULL)
         {
-            NpcItemEditDialog itemEdit(this);
+            NpcItemEditDialog itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4));
             itemEdit.InitFromNpcItem(item);
             if(itemEdit.ShowModal() == wxID_OK)
                 itemEdit.AssignToNpcItem(item);
