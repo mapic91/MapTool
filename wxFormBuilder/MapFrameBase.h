@@ -35,6 +35,7 @@
 #define ID_MAPDOWN 1003
 #define ID_MAPLEFT 1004
 #define ID_MAPRIGHT 1005
+#define ID_DIRECTION 1006
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -78,6 +79,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

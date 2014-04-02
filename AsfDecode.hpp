@@ -37,6 +37,7 @@ public:
                                        Palette_Colour *TransparentColor = NULL, unsigned char transmask = 0);
     unsigned char* GetBuffedFrameData(unsigned long index, long* Width = NULL, long* Height = NULL);
     wxImage GetImageFromBuffedData(unsigned long index);
+    wxImage GetDirectionImageFromBufferdData(unsigned long direction);
 
     void BufferData();
 

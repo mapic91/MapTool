@@ -32,8 +32,9 @@ class MapTool : public MapFrameBase
 		void OnMouseMove( wxMouseEvent& event );
 
         void OnLoadCharater( wxCommandEvent& event );
-
         void OnPlaceMode( wxCommandEvent& event ) ;
+        void OnCharacterDirection( wxCommandEvent& event );
+
 		void OnDeleteMode( wxCommandEvent& event );
 
         //if getImg is true return an image, else return NULL

@@ -13,6 +13,7 @@ BEGIN_EVENT_TABLE(MapTool, MapFrameBase)
     EVT_MENU(ID_MAPDOWN, MapTool::OnMapDown)
     EVT_MENU(ID_MAPLEFT, MapTool::OnMapLeft)
     EVT_MENU(ID_MAPRIGHT, MapTool::OnMapRight)
+    EVT_MENU(ID_DIRECTION, MapTool::OnCharacterDirection)
 END_EVENT_TABLE()
 
 
@@ -27,16 +28,18 @@ MapTool::MapTool(wxWindow* parent)
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
 
-    wxAcceleratorEntry ace[4];
+    wxAcceleratorEntry ace[5];
     ace[0].Set(wxACCEL_NORMAL, WXK_UP, ID_MAPUP);
     ace[1].Set(wxACCEL_NORMAL, WXK_DOWN, ID_MAPDOWN);
     ace[2].Set(wxACCEL_NORMAL, WXK_LEFT, ID_MAPLEFT);
     ace[3].Set(wxACCEL_NORMAL, WXK_RIGHT, ID_MAPRIGHT);
+    ace[4].Set(wxACCEL_NORMAL, WXK_SPACE, ID_DIRECTION);
     wxAcceleratorTable act(4, ace);
     SetAcceleratorTable(act);
 
@@ -158,38 +161,32 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
 
     if(m_isPlaceMode)
     {
-        unsigned long framecount = m_PlaceNpc.GetFramesCounts();
-        long dir = m_PlaceNpc.GetDirection();
-
-        if(framecount != 0)
+        wxImage npcImg =
+            m_PlaceNpc.GetDirectionImageFromBufferdData(m_NpcCurrentDir);
+        if(npcImg.IsOk())
         {
-            wxImage npcImg =
-                m_PlaceNpc.GetImageFromBuffedData(m_NpcCurrentDir * (framecount / dir));
-            if(npcImg.IsOk())
-            {
-                wxBitmap npcBmp(npcImg);
+            wxBitmap npcBmp(npcImg);
 
-                long npcDrawX, npcDrawY, npcOffX, npcOffY;
-                int npcWidth = npcImg.GetWidth();
-                int npcHeight = npcImg.GetHeight();
-                npcOffX = m_PlaceNpc.GetLeft();
-                npcOffY = m_PlaceNpc.GetBottom();
+            long npcDrawX, npcDrawY, npcOffX, npcOffY;
+            int npcWidth = npcImg.GetWidth();
+            int npcHeight = npcImg.GetHeight();
+            npcOffX = m_PlaceNpc.GetLeft();
+            npcOffY = m_PlaceNpc.GetBottom();
 
-                npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
-                npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
+            npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
+            npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
 
-                memdc.SelectObject(npcBmp);
+            memdc.SelectObject(npcBmp);
 
-                dc.Blit(npcDrawX,
-                        npcDrawY,
-                        npcWidth,
-                        npcHeight,
-                        &memdc,
-                        0,
-                        0,
-                        wxCOPY,
-                        true);
-            }
+            dc.Blit(npcDrawX,
+                    npcDrawY,
+                    npcWidth,
+                    npcHeight,
+                    &memdc,
+                    0,
+                    0,
+                    wxCOPY,
+                    true);
         }
     }
 
@@ -281,11 +278,17 @@ void MapTool::OnLoadCharater( wxCommandEvent& event )
     NpcIniPath += "ini\\npcres\\";
     NpcIniPath += m_NpcData.NpcIni;
 
+    wxString asffilename(wxString(FindStandAsf(NpcIniPath).c_str()));
     wxString asfpath(exepath +
                      wxT("asf\\character\\") +
-                     wxString(FindStandAsf(NpcIniPath).c_str()));
+                     asffilename);
 
-    m_PlaceNpc.ReadAsfFile(asfpath);
+    //if fail, try another floder
+    if(!m_PlaceNpc.ReadAsfFile(asfpath))
+    {
+        asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
+        m_PlaceNpc.ReadAsfFile(asfpath);
+    }
     m_PlaceNpc.BufferData();
 }
 
@@ -298,6 +301,17 @@ void MapTool::OnPlaceMode( wxCommandEvent& event )
     m_isDeleteMode = false;
 
 }
+void MapTool::OnCharacterDirection( wxCommandEvent& event )
+{
+    m_NpcCurrentDir++;
+    if(m_PlaceNpc.GetFramesCounts() != 0 && m_PlaceNpc.GetDirection() != 0)
+        m_NpcCurrentDir %= m_PlaceNpc.GetDirection();
+    else
+        m_NpcCurrentDir %= 8;
+
+    RedrawMapView();
+}
+
 void MapTool::OnDeleteMode( wxCommandEvent& event )
 {
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);

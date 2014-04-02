@@ -399,6 +399,14 @@ unsigned char* AsfDecode::GetBuffedFrameData(unsigned long index, long* Width, l
 
     return temp->data;
 }
+wxImage AsfDecode::GetDirectionImageFromBufferdData(unsigned long direction)
+{
+    if(direction >= (unsigned long)GetDirection() ||
+       GetFramesCounts() == 0 ||
+       GetDirection() == 0) return wxNullImage;
+
+    return GetImageFromBuffedData(direction * GetFramesCounts() / GetDirection());
+}
 
 wxImage AsfDecode::GetImageFromBuffedData(unsigned long index)
 {
