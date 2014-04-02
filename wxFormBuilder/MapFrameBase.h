@@ -56,6 +56,8 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_LayerTransparent;
 		wxToolBar* m_ToolBarEdit;
 		wxPanel* m_MapView;
+		wxPanel* m_MapControl;
+		wxPanel* m_panel4;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
@@ -74,6 +76,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }

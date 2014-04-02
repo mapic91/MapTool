@@ -115,6 +115,8 @@ void MapTool::RedrawMapView()
 {
     m_MapView->Refresh(false);
     m_MapView->Update();
+    m_MapControl->Refresh(false);
+    m_MapControl->Update();
 }
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
@@ -260,6 +262,34 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
     RedrawMapView();
 
     m_StatusBar->SetStatusText(msg, 0);
+}
+
+void MapTool::OnDrawMapControl( wxPaintEvent& event )
+{
+    int ctlwidth, ctlheight, mapviewwidth, mapviewheight, mapwidth, mapheight;
+
+    m_MapControl->GetClientSize(&ctlwidth, &ctlheight);
+    m_MapView->GetClientSize(&mapviewwidth, &mapviewheight);
+    mapwidth = m_MapBitmap.GetWidth();
+    mapheight = m_MapBitmap.GetHeight();
+
+    if(mapwidth == 0 || mapheight == 0) return;
+
+    wxMemoryDC memdc;
+    memdc.SelectObject(m_MapBitmap);
+    wxPaintDC dc(m_MapControl);
+
+    dc.StretchBlit(0,
+                   0,
+                   ctlwidth,
+                   ctlheight,
+                   &memdc,
+                   0,
+                   0,
+                   mapwidth,
+                   mapheight
+                   );
+
 }
 
 void MapTool::OnLoadCharater( wxCommandEvent& event )

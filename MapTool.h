@@ -31,6 +31,8 @@ class MapTool : public MapFrameBase
 
 		void OnMouseMove( wxMouseEvent& event );
 
+		void OnDrawMapControl( wxPaintEvent& event );
+
         void OnLoadCharater( wxCommandEvent& event );
         void OnPlaceMode( wxCommandEvent& event ) ;
         void OnCharacterDirection( wxCommandEvent& event );

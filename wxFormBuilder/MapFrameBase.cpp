@@ -70,10 +70,22 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer3;
-	bSizer3 = new wxBoxSizer( wxVERTICAL );
+	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_MapView = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer3->Add( m_MapView, 1, wxEXPAND | wxALL, 5 );
+	bSizer3->Add( m_MapView, 4, wxEXPAND | wxALL, 5 );
+	
+	wxBoxSizer* bSizer4;
+	bSizer4 = new wxBoxSizer( wxVERTICAL );
+	
+	m_MapControl = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizer4->Add( m_MapControl, 1, wxEXPAND | wxALL, 5 );
+	
+	m_panel4 = new wxPanel( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	bSizer4->Add( m_panel4, 1, wxEXPAND | wxALL, 5 );
+	
+	
+	bSizer3->Add( bSizer4, 1, wxEXPAND, 5 );
 	
 	
 	bSizer1->Add( bSizer3, 1, wxEXPAND, 5 );
@@ -131,6 +143,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	m_MapView->Connect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
+	m_MapControl->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
 	this->Connect( m_menuItemUP->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapUp ) );
 	this->Connect( m_menuItemDOWN->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Connect( m_menuItemLeft->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
@@ -154,6 +167,7 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	m_MapView->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
+	m_MapControl->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
 	this->Disconnect( ID_MAPUP, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapUp ) );
 	this->Disconnect( ID_MAPDOWN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Disconnect( ID_MAPLEFT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
