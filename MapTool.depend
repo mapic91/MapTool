@@ -2351,7 +2351,7 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1396404633 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1396425239 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2398,7 +2398,7 @@
 	"Map.h"
 	<fstream>
 
-1395325366 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
+1396421978 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
 	"MpcDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -2513,11 +2513,10 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396404633 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396425227 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/filedlg.h"
 	"wx/msgdlg.h"
-	"wx/dcclient.h"
 	"wx/dcmemory.h"
 	"wx/accel.h"
 	"wx/stdpaths.h"
@@ -2565,11 +2564,13 @@
 	"wx/button.h"
 	"wx/dcclient.h"
 
-1396417726 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+1396425306 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
 	<string>
 	<list>
 	"wx/string.h"
 	"wx/arrstr.h"
+	"wx/stdpaths.h"
+	"wx/filename.h"
 	"AsfDecode.hpp"
 
 1396399207 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
@@ -2579,16 +2580,19 @@
 	<cstring>
 	<fstream>
 
-1396399090 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
+1396425227 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
+	"wx/dcclient.h"
 	"mydefs.hpp"
 
-1396357458 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1396423771 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>
 	<cstring>
+	"wx/textfile.h"
+	"wx/msgdlg.h"
 
 1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\splitter.h
 	"wx/event.h"
@@ -2597,4 +2601,16 @@
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\splitter.h
 	"wx/window.h"
 	"wx/containr.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\textfile.h
+	"wx/defs.h"
+	"wx/textbuf.h"
+	"wx/file.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\textbuf.h
+	"wx/defs.h"
+	"wx/arrstr.h"
+	"wx/convauto.h"
+	"wx/string.h"
+	"wx/dynarray.h"
 

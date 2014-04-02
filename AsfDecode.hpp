@@ -3,6 +3,7 @@
 
 #include "wx/string.h"
 #include "wx/image.h"
+#include "wx/dcclient.h"
 
 #include "mydefs.hpp"
 

@@ -5,129 +5,9 @@
 #include <cstring>
 
 #include "wx/textfile.h"
+#include "wx/msgdlg.h"
 
 using namespace std;
-
-void ResetNpc(NpcData *npc)
-{
-    if(npc == NULL) return;
-    memset(npc, 0, sizeof(NpcData));
-}
-
-bool ReadNpcIni(std::string FilePath, NpcData *npc)
-{
-    if(npc == NULL) return false;
-
-    ifstream npcFile(FilePath.c_str());
-    if(!npcFile.is_open()) return false;
-
-    ResetNpc(npc);
-
-    string line, name, value;
-    size_t pos;
-    long num;
-
-    while(!npcFile.eof())
-    {
-        getline(npcFile, line);
-        pos = line.find('=');
-        if(pos == string::npos) continue;
-
-        name = line.substr(0, pos);
-        value = line.substr(pos + 1);
-        num = atoi(value.c_str());
-
-        if(name.compare("Name") == 0)
-        {
-            strcpy(npc->Name, value.c_str());
-        }
-        else if(name.compare("NpcIni") == 0)
-        {
-            strcpy(npc->NpcIni, value.c_str());
-        }
-        else if(name.compare("FlyIni") == 0)
-        {
-            strcpy(npc->FlyIni, value.c_str());
-        }
-        else if(name.compare("BodyIni") == 0)
-        {
-            strcpy(npc->BodyIni, value.c_str());
-        }
-        else if(name.compare("Kind") == 0)
-        {
-            npc->Kind = num;
-        }
-        else if(name.compare("Relation") == 0)
-        {
-            npc->Relation = num;
-        }
-        else if(name.compare("Life") == 0)
-        {
-            npc->Life = num;
-        }
-        else if(name.compare("LifeMax") == 0)
-        {
-            npc->LifeMax = num;
-        }
-        else if(name.compare("Thew") == 0)
-        {
-            npc->Thew = num;
-        }
-        else if(name.compare("ThewMax") == 0)
-        {
-            npc->ThewMax = num;
-        }
-        else if(name.compare("Mana") == 0)
-        {
-            npc->Mana = num;
-        }
-        else if(name.compare("ManaMax") == 0)
-        {
-            npc->ManaMax = num;
-        }
-        else if(name.compare("Attack") == 0)
-        {
-            npc->Attack = num;
-        }
-        else if(name.compare("Defence") == 0)
-        {
-            npc->Defence = num;
-        }
-        else if(name.compare("Evade") == 0)
-        {
-            npc->Evade = num;
-        }
-        else if(name.compare("Exp") == 0)
-        {
-            npc->Exp = num;
-        }
-        else if(name.compare("WalkSpeed") == 0)
-        {
-            npc->WalkSpeed = num;
-        }
-        else if(name.compare("Dir") == 0)
-        {
-            npc->Dir = num;
-        }
-        else if(name.compare("Lum") == 0)
-        {
-            npc->Lum = num;
-        }
-        else if(name.compare("PathFinder") == 0)
-        {
-            npc->PathFinder = (char)num;
-        }
-        else if(name.compare("DeathScript") == 0)
-        {
-            strcpy(npc->DeathScript, value.c_str());
-        }
-        else if(name.compare("ScriptFile") == 0)
-        {
-            strcpy(npc->ScriptFile, value.c_str());
-        }
-    }
-    return true;
-}
 
 string FindStandAsf(string FilePath)
 {
@@ -151,6 +31,26 @@ string FindStandAsf(string FilePath)
     }
 
     return asfpath;
+}
+bool FindAndBufferStandAsf(const wxString &exepath,const wxString &inifilename,AsfDecode *asfdec)
+{
+    string NpcIniPath(exepath.char_str());
+    NpcIniPath += "ini\\npcres\\";
+    NpcIniPath += inifilename.char_str();
+
+    wxString asffilename(wxString(FindStandAsf(NpcIniPath).c_str()));
+    wxString asfpath(exepath +
+                     wxT("asf\\character\\") +
+                     asffilename);
+
+    //if fail, try another floder
+    if(!asfdec->ReadAsfFile(asfpath))
+    {
+        asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
+        if(!asfdec->ReadAsfFile(asfpath)) return false;
+    }
+    asfdec->BufferData();
+    return true;
 }
 
 wxString ReadNpcIni(wxString FilePath)
@@ -208,47 +108,109 @@ void InitNpcItem(NpcItem *item)
     item->WalkSpeed = -1;
 }
 
-template<class T>
-void ItemList<T>::FreeData()
+bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item)
 {
-    if(m_list.empty()) return;
-    for(typename list<T>::iterator it = m_list.begin();
-            it != m_list.end(); ++it)
+    if(item == NULL) return false;
+
+    wxTextFile file;
+    file.Open(filePath, wxConvLibc);
+    if(!file.IsOpened()) return false;
+
+    InitNpcItem(item);
+
+    wxString line, name, value;
+    int pos;
+    long n_value;
+    for(line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine())
     {
-        delete *it;
+        pos = line.find(wxT("="));
+        if(pos == wxNOT_FOUND) continue;
+        name = line.Mid(0, pos);
+        value = line.Mid(pos + 1);
+        if(!value.ToLong(&n_value)) n_value = -1;
+
+        if(name.CmpNoCase(wxT("Action")) == 0)
+            item->Action = n_value;
+        else if(name.CmpNoCase(wxT("Attack")) == 0)
+            item->Attack = n_value;
+        else if(name.CmpNoCase(wxT("AttackLevel")) == 0)
+            item->AttackLevel = n_value;
+        else if(name.CmpNoCase(wxT("AttackRadius")) == 0)
+            item->AttackRadius = n_value;
+        else if(name.CmpNoCase(wxT("BodyIni")) == 0)
+            item->BodyIni = value;
+        else if(name.CmpNoCase(wxT("DeathScript")) == 0)
+            item->DeathScript = value;
+        else if(name.CmpNoCase(wxT("Defend")) == 0)
+            item->Defend = n_value;
+        else if(name.CmpNoCase(wxT("DialogRadius")) == 0)
+            item->DialogRadius = n_value;
+        else if(name.CmpNoCase(wxT("Dir")) == 0)
+            item->Dir = n_value;
+        else if(name.CmpNoCase(wxT("Evade")) == 0)
+            item->Evade = n_value;
+        else if(name.CmpNoCase(wxT("Exp")) == 0)
+            item->Exp = n_value;
+        else if(name.CmpNoCase(wxT("ExpBonus")) == 0)
+            item->ExpBonus = n_value;
+        else if(name.CmpNoCase(wxT("FixedPos")) == 0)
+            item->FixedPos = value;
+        else if(name.CmpNoCase(wxT("FlyIni")) == 0)
+            item->FlyIni = value;
+        else if(name.CmpNoCase(wxT("FlyIni2")) == 0)
+            item->FlyIni2 = value;
+        else if(name.CmpNoCase(wxT("Idle")) == 0)
+            item->Idle = n_value;
+        else if(name.CmpNoCase(wxT("Kind")) == 0)
+            item->Kind = n_value;
+        else if(name.CmpNoCase(wxT("Level")) == 0)
+            item->Level = n_value;
+        else if(name.CmpNoCase(wxT("LevelUpExp")) == 0)
+            item->LevelUpExp = n_value;
+        else if(name.CmpNoCase(wxT("Life")) == 0)
+            item->Life = n_value;
+        else if(name.CmpNoCase(wxT("LifeMax")) == 0)
+            item->LifeMax = n_value;
+        else if(name.CmpNoCase(wxT("Lum")) == 0)
+            item->Lum = n_value;
+        else if(name.CmpNoCase(wxT("Mana")) == 0)
+            item->Mana = n_value;
+        else if(name.CmpNoCase(wxT("ManaMax")) == 0)
+            item->ManaMax = n_value;
+        else if(name.CmpNoCase(wxT("MapX")) == 0)
+            item->MapX = n_value;
+        else if(name.CmpNoCase(wxT("MapY")) == 0)
+            item->MapY = n_value;
+        else if(name.CmpNoCase(wxT("Name")) == 0)
+            item->Name = value;
+        else if(name.CmpNoCase(wxT("NpcIni")) == 0)
+            item->NpcIni = value;
+        else if(name.CmpNoCase(wxT("PathFinder")) == 0)
+            item->PathFinder = n_value;
+        else if(name.CmpNoCase(wxT("Relation")) == 0)
+            item->Relation = n_value;
+        else if(name.CmpNoCase(wxT("ScriptFile")) == 0)
+            item->ScriptFile = value;
+        else if(name.CmpNoCase(wxT("State")) == 0)
+            item->State = n_value;
+        else if(name.CmpNoCase(wxT("Thew")) == 0)
+            item->Thew = n_value;
+        else if(name.CmpNoCase(wxT("ThewMax")) == 0)
+            item->ThewMax = n_value;
+        else if(name.CmpNoCase(wxT("VisionRadius")) == 0)
+            item->VisionRadius = n_value;
+        else if(name.CmpNoCase(wxT("WalkSpeed")) == 0)
+            item->WalkSpeed = n_value;
+//        else if(name.CmpNoCase(wxT("")) == 0)
+//            item-> = n_value;
     }
-    m_list.clear();
+
+    FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand));
+
+    return true;
 }
-template<class T>
-void ItemList<T>::AddItem(T item)
-{
-    if(item == NULL) return;
-    m_list.push_back(item);
-}
-template<class T>
-void ItemList<T>::DeleteItem(long mapx, long mapy)
-{
-    for(typename list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
-    {
-        if(*it->MapX == mapx && *it->MapY == mapy)
-        {
-            delete *it;
-            m_list.erase(it);
-        }
-    }
-}
-template<class T>
-bool ItemList<T>::HasItem(long mapx, long mapy)
-{
-    for(typename list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
-    {
-        if(*it->MapX == mapx && *it->MapY == mapy)
-        {
-           return true;
-        }
-    }
-    return false;
-}
+
+
 
 
 

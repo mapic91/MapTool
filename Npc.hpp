@@ -5,42 +5,10 @@
 #include <list>
 #include "wx/string.h"
 #include "wx/arrstr.h"
+#include "wx/stdpaths.h"
+#include "wx/filename.h"
 
 #include "AsfDecode.hpp"
-
-struct NpcData
-{
-    char Name[255];
-    char NpcIni[255];
-    char FlyIni[255];
-    char BodyIni[255];
-    char Kind;
-    char Relation;
-    long Life;
-    long LifeMax;
-    long Thew;
-    long ThewMax;
-    long Mana;
-    long ManaMax;
-    long Attack;
-    long Defence;
-    long Evade;
-    long Exp;
-    char WalkSpeed;
-    char Dir;
-    long Lum;
-    char PathFinder;
-    char DeathScript[255];
-    char ScriptFile[255];
-};
-
-void ResetNpc(NpcData *npc);
-bool ReadNpcIni(std::string FilePath, NpcData *npc);
-std::string FindStandAsf(std::string FilePath);
-
-//return ini file content without head
-wxString ReadNpcIni(wxString FilePath);
-
 
 struct NpcItem
 {
@@ -83,21 +51,86 @@ struct NpcItem
     AsfDecode NpcStand;
 };
 
+// find [stand] asf file in npcres ini file
+std::string FindStandAsf(std::string FilePath);
+// find [stand] asf and buffer its data
+//exepath : the end contain path seprator
+bool FindAndBufferStandAsf(const wxString &exepath, const wxString &inifilename, AsfDecode *asfdec);
+
+//return ini file content without head
+wxString ReadNpcIni(wxString FilePath);
+
+// init NpcItem to default vaule
 void InitNpcItem(NpcItem *item);
+// Read a npc ini file and initializing item
+//exepath : the end contain path seprator
+bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item);
 
 template<class T>
 class ItemList
 {
-    ItemList(){}
-    ~ItemList(){FreeData();}
+public:
+    ItemList()
+    {
+        exepath = wxStandardPaths::Get().GetExecutablePath();
+        exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
+    }
+    ~ItemList()
+    {
+        FreeData();
+    }
 
-    void AddItem(T item);
-    void DeleteItem(long mapx, long mapy);
-    int getCounts(){return m_list.size();}
-    bool HasItem(long mapx, long mapy);
+    void AddItem(T item)
+    {
+        if(item == NULL) return;
+        m_list.push_back(item);
+    }
+
+    void DeleteItem(long mapx, long mapy)
+    {
+        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+        {
+            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            {
+                delete *it;
+                m_list.erase(it);
+            }
+        }
+    }
+
+    int getCounts()
+    {
+        return m_list.size();
+    }
+
+    bool HasItem(long mapx, long mapy)
+    {
+        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+        {
+            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
 private:
-    void FreeData();
+    void FreeData()
+    {
+        if(m_list.empty()) return;
+        for(typename std::list<T>::iterator it = m_list.begin();
+                it != m_list.end(); ++it)
+        {
+            delete *it;
+        }
+        m_list.clear();
+    }
+
+
     std::list<T> m_list;
+
+    wxString exepath;
 };
 
 typedef ItemList<NpcItem*> NpcList;

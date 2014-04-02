@@ -437,7 +437,6 @@ wxImage MpcDecode::GetFrameImage(const unsigned long index)
             return wxNullImage;
         }
 
-
         colpos = 0;
         imgpos = 0;
         for(long int sidx = 0; sidx < width*height; sidx++)

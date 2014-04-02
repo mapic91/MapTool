@@ -1,7 +1,6 @@
 #include "MapTool.h"
 #include "wx/filedlg.h"
 #include "wx/msgdlg.h"
-#include "wx/dcclient.h"
 #include "wx/dcmemory.h"
 #include "wx/accel.h"
 #include "wx/stdpaths.h"
@@ -22,7 +21,7 @@ MapTool::MapTool(wxWindow* parent)
 {
     m_ViewBeginx = m_ViewBeginy = 0;
     m_CurTileX = m_CurTileY = 0;
-    m_NpcCurrentDir = 0;
+    m_PlaceNpcData.Dir = 0;
     m_isPlaceMode = true;
     m_isDeleteMode = false;
     exepath = wxStandardPaths::Get().GetExecutablePath();
@@ -42,8 +41,6 @@ MapTool::MapTool(wxWindow* parent)
     ace[4].Set(wxACCEL_NORMAL, WXK_SPACE, ID_DIRECTION);
     wxAcceleratorTable act(4, ace);
     SetAcceleratorTable(act);
-
-
 }
 
 MapTool::~MapTool()
@@ -163,35 +160,43 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
 
     if(m_isPlaceMode)
     {
-        wxImage npcImg =
-            m_PlaceNpc.GetDirectionImageFromBufferdData(m_NpcCurrentDir);
-        if(npcImg.IsOk())
-        {
-            wxBitmap npcBmp(npcImg);
-
-            long npcDrawX, npcDrawY, npcOffX, npcOffY;
-            int npcWidth = npcImg.GetWidth();
-            int npcHeight = npcImg.GetHeight();
-            npcOffX = m_PlaceNpc.GetLeft();
-            npcOffY = m_PlaceNpc.GetBottom();
-
-            npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
-            npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
-
-            memdc.SelectObject(npcBmp);
-
-            dc.Blit(npcDrawX,
-                    npcDrawY,
-                    npcWidth,
-                    npcHeight,
-                    &memdc,
-                    0,
-                    0,
-                    wxCOPY,
-                    true);
-        }
+        DrawTile(m_CurTileX, m_CurTileY, dc, &m_PlaceNpcData);
     }
+}
 
+void MapTool::DrawTile(long col, long row, wxPaintDC &dc, NpcItem *item)
+{
+    int recposx, recposy;
+    if(!map.GetPixelPosition(col, row, &recposx, &recposy)) return;
+
+    wxImage npcImg =
+        item->NpcStand.GetDirectionImageFromBufferdData(item->Dir);
+    if(npcImg.IsOk())
+    {
+        wxBitmap npcBmp(npcImg);
+
+        long npcDrawX, npcDrawY, npcOffX, npcOffY;
+        int npcWidth = npcImg.GetWidth();
+        int npcHeight = npcImg.GetHeight();
+        npcOffX = item->NpcStand.GetLeft();
+        npcOffY = item->NpcStand.GetBottom();
+
+        npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
+        npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
+
+        wxMemoryDC memdc;
+        memdc.SelectObject(npcBmp);
+
+        dc.Blit(npcDrawX,
+                npcDrawY,
+                npcWidth,
+                npcHeight,
+                &memdc,
+                0,
+                0,
+                wxCOPY,
+                true);
+    }
 }
 
 void MapTool::OnLayerTransparent( wxCommandEvent& event )
@@ -250,6 +255,22 @@ void MapTool::OnMapRight( wxCommandEvent& event )
     CheckMapViewBeginPosition();
     RedrawMapView();
 }
+void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
+{
+    NpcItem *item = new NpcItem;
+    if(m_isPlaceMode && !m_NpcIniFilePath.IsEmpty())
+    {
+        if(!ReadNpcIni(exepath, m_NpcIniFilePath, item))
+        {
+            delete item;
+            return;
+        }
+        item->MapX = m_CurTileX;
+        item->MapY = m_CurTileY;
+        m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
+        m_NpcList.AddItem(item);
+    }
+}
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
     long posx, posy;
@@ -288,7 +309,7 @@ void MapTool::OnDrawMapControl( wxPaintEvent& event )
                    0,
                    mapwidth,
                    mapheight
-                   );
+                  );
 
     int recwidth, recheight, recbegx, recbegy;
     recwidth = ctlwidth * mapviewwidth / mapwidth;
@@ -352,24 +373,8 @@ void MapTool::OnLoadCharater( wxCommandEvent& event )
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
-    ReadNpcIni(std::string(filedlg.GetPath().char_str()), &m_NpcData);
-
-    string NpcIniPath(exepath.char_str());
-    NpcIniPath += "ini\\npcres\\";
-    NpcIniPath += m_NpcData.NpcIni;
-
-    wxString asffilename(wxString(FindStandAsf(NpcIniPath).c_str()));
-    wxString asfpath(exepath +
-                     wxT("asf\\character\\") +
-                     asffilename);
-
-    //if fail, try another floder
-    if(!m_PlaceNpc.ReadAsfFile(asfpath))
-    {
-        asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
-        m_PlaceNpc.ReadAsfFile(asfpath);
-    }
-    m_PlaceNpc.BufferData();
+    m_NpcIniFilePath = filedlg.GetPath();
+    ReadNpcIni(exepath, m_NpcIniFilePath, &m_PlaceNpcData);
 }
 
 void MapTool::OnPlaceMode( wxCommandEvent& event )
@@ -383,11 +388,11 @@ void MapTool::OnPlaceMode( wxCommandEvent& event )
 }
 void MapTool::OnCharacterDirection( wxCommandEvent& event )
 {
-    m_NpcCurrentDir++;
-    if(m_PlaceNpc.GetFramesCounts() != 0 && m_PlaceNpc.GetDirection() != 0)
-        m_NpcCurrentDir %= m_PlaceNpc.GetDirection();
+    m_PlaceNpcData.Dir++;
+    if(m_PlaceNpcData.NpcStand.GetFramesCounts() != 0 && m_PlaceNpcData.NpcStand.GetDirection() != 0)
+        m_PlaceNpcData.Dir %= m_PlaceNpcData.NpcStand.GetDirection();
     else
-        m_NpcCurrentDir %= 8;
+        m_PlaceNpcData.Dir %= 8;
 
     RedrawMapView();
 }

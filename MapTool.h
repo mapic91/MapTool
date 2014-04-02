@@ -27,6 +27,7 @@ class MapTool : public MapFrameBase
 		void OnMapDown( wxCommandEvent& event ) ;
 		void OnMapLeft( wxCommandEvent& event ) ;
 		void OnMapRight( wxCommandEvent& event ) ;
+		void OnMapViewMouseLeftDown( wxMouseEvent& event );
 
 		void OnMouseMove( wxMouseEvent& event );
 
@@ -39,6 +40,8 @@ class MapTool : public MapFrameBase
 
 		void OnDeleteMode( wxCommandEvent& event );
 
+		void DrawTile(long col, long row, wxPaintDC &dc, NpcItem *item);
+
         //if getImg is true return an image, else return NULL
         wxImage* ReadMap(bool getImg = false);
         void RedrawMapView();
@@ -50,13 +53,13 @@ class MapTool : public MapFrameBase
         //Current tile under mouse
         int m_CurTileX, m_CurTileY;
         wxString exepath;
-        NpcData m_NpcData;
-        AsfDecode m_PlaceNpc;
         char m_NpcCurrentDir;
         bool m_isPlaceMode, m_isDeleteMode;
 
         //Npc list
+        NpcItem m_PlaceNpcData;
         NpcList m_NpcList;
+        wxString m_NpcIniFilePath;
 
         DECLARE_EVENT_TABLE()
 };
