@@ -2,6 +2,7 @@
 #include "wx/filedlg.h"
 #include "wx/msgdlg.h"
 #include "wx/dcmemory.h"
+
 #include "wx/accel.h"
 #include "wx/stdpaths.h"
 
@@ -67,6 +68,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getPixelWidth(),
                                     map.getPixelHeight()));
 
+    m_NpcList.Clear();
     m_MapView->Refresh(true);
     ReadMap();
     RedrawMapView();
@@ -118,12 +120,19 @@ void MapTool::RedrawMapView()
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
 {
-    wxPaintDC dc(m_MapView);
-    wxMemoryDC memdc;
+    if(!m_MapBitmap.IsOk()) return;
+
     int viewWidth, viewHeight, bmpWidth, bmpHeight;
     m_MapView->GetClientSize(&viewWidth, &viewHeight);
     bmpWidth = m_MapBitmap.GetWidth();
     bmpHeight = m_MapBitmap.GetHeight();
+
+    wxImage img(viewWidth, viewHeight, true);
+    if(m_LayerTransparent->IsChecked()) img.SetAlpha();
+    wxBitmap bufbitmap(img);
+    img.Destroy();
+    wxBufferedPaintDC dc(m_MapView, bufbitmap);
+    wxMemoryDC memdc;
 
     if(m_ViewBeginx + viewWidth > bmpWidth) m_ViewBeginx = bmpWidth - viewWidth;
     if(m_ViewBeginy + viewHeight > bmpHeight) m_ViewBeginy = bmpHeight - viewHeight;
@@ -146,25 +155,37 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             wxCOPY,
             m_LayerTransparent->IsChecked());
 
-    int recposx, recposy;
-    if(!map.GetPixelPosition(m_CurTileX, m_CurTileY, &recposx, &recposy)) return;
-
-    dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
-    wxPoint point[5];
-    point[0] = wxPoint(32, 0);
-    point[1] = wxPoint(64, 16);
-    point[2] = wxPoint(32, 32);
-    point[3] = wxPoint(0, 16);
-    point[4] = wxPoint(32, 0);
-    dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+    //Draw reactangle current positon under mouse
+    if(m_NpcList.HasItem(m_CurTileX, m_CurTileY))
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxYELLOW, 2)));
+    else
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
+    DrawRectangle(m_CurTileX, m_CurTileY, dc);
 
     if(m_isPlaceMode)
     {
         DrawTile(m_CurTileX, m_CurTileY, dc, &m_PlaceNpcData);
     }
+
+    DrawNpcs(dc);
 }
 
-void MapTool::DrawTile(long col, long row, wxPaintDC &dc, NpcItem *item)
+void MapTool::DrawRectangle(long col, long row, wxBufferedPaintDC &dc)
+{
+    int recposx, recposy;
+    if(map.GetPixelPosition(col, row, &recposx, &recposy))
+    {
+        wxPoint point[5];
+        point[0] = wxPoint(32, 0);
+        point[1] = wxPoint(64, 16);
+        point[2] = wxPoint(32, 32);
+        point[3] = wxPoint(0, 16);
+        point[4] = wxPoint(32, 0);
+        dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+    }
+}
+
+void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item)
 {
     int recposx, recposy;
     if(!map.GetPixelPosition(col, row, &recposx, &recposy)) return;
@@ -196,6 +217,18 @@ void MapTool::DrawTile(long col, long row, wxPaintDC &dc, NpcItem *item)
                 0,
                 wxCOPY,
                 true);
+    }
+}
+
+void MapTool::DrawNpcs(wxBufferedPaintDC &dc)
+{
+    int counts = m_NpcList.getCounts();
+    NpcItem *item;
+    for(int i = 0; i < counts; i++)
+    {
+        item = m_NpcList.GetItem(i);
+        if(item == NULL) continue;
+        DrawTile(item->MapX, item->MapY, dc, item);
     }
 }
 

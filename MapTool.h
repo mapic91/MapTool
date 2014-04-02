@@ -6,6 +6,8 @@
 #include "Npc.hpp"
 #include "AsfDecode.hpp"
 
+#include "wx/dcbuffer.h"
+
 class MapTool : public MapFrameBase
 {
     public:
@@ -40,7 +42,9 @@ class MapTool : public MapFrameBase
 
 		void OnDeleteMode( wxCommandEvent& event );
 
-		void DrawTile(long col, long row, wxPaintDC &dc, NpcItem *item);
+        void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
+		void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item);
+		void DrawNpcs(wxBufferedPaintDC &dc);
 
         //if getImg is true return an image, else return NULL
         wxImage* ReadMap(bool getImg = false);

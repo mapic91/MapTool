@@ -80,6 +80,14 @@ public:
         FreeData();
     }
 
+    T GetItem(int index)
+    {
+        if(index < 0 || index >= m_list.size()) return T(NULL);
+        typename std::list<T>::iterator it = m_list.begin();
+        for(int i = 0; i < index; i++, it++);
+        return *it;
+    }
+
     void AddItem(T item)
     {
         if(item == NULL) return;
@@ -114,6 +122,8 @@ public:
         }
         return false;
     }
+
+    void Clear(){FreeData();}
 
 private:
     void FreeData()
