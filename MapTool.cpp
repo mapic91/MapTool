@@ -267,6 +267,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         }
         item->MapX = m_CurTileX;
         item->MapY = m_CurTileY;
+        item->Dir = m_PlaceNpcData.Dir;
         m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
         m_NpcList.AddItem(item);
     }
