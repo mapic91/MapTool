@@ -4,6 +4,8 @@
 #include <cstdlib>
 #include <cstring>
 
+#include "wx/textfile.h"
+
 using namespace std;
 
 void ResetNpc(NpcData *npc)
@@ -151,10 +153,102 @@ string FindStandAsf(string FilePath)
     return asfpath;
 }
 
+wxString ReadNpcIni(wxString FilePath)
+{
+    wxString content;
+    wxTextFile file;
+    if(!file.Open(FilePath)) return content;
+    file.GetFirstLine();
+    while(!file.Eof())
+    {
+        content += file.GetLastLine();
+    }
+    file.Close();
 
+    return content;
+}
 
+void InitNpcItem(NpcItem *item)
+{
+    item->Action = -1;
+    item->Attack = -1;
+    item->AttackLevel = -1;
+    item->AttackRadius = -1;
+    item->BodyIni.clear();
+    item->DeathScript.clear();
+    item->Defend = -1;
+    item->DialogRadius = -1;
+    item->Dir = -1;
+    item->Evade = -1;
+    item->Exp = -1;
+    item->ExpBonus = -1;
+    item->FixedPos.clear();
+    item->FlyIni.clear();
+    item->FlyIni2.clear();
+    item->Idle = -1;
+    item->Kind = -1;
+    item->Level = -1;
+    item->LevelUpExp = -1;
+    item->Life = -1;
+    item->LifeMax =-1;
+    item->Lum = -1;
+    item->Mana = -1;
+    item->ManaMax = -1;
+    item->MapX = -1;
+    item->MapY = -1;
+    item->Name.clear();
+    item->NpcIni.clear();
+    item->PathFinder = -1;
+    item->Relation = -1;
+    item->ScriptFile.clear();
+    item->State = -1;
+    item->Thew = -1;
+    item->ThewMax = -1;
+    item->VisionRadius = -1;
+    item->WalkSpeed = -1;
+}
 
-
+template<class T>
+void ItemList<T>::FreeData()
+{
+    if(m_list.empty()) return;
+    for(typename list<T>::iterator it = m_list.begin();
+            it != m_list.end(); ++it)
+    {
+        delete *it;
+    }
+    m_list.clear();
+}
+template<class T>
+void ItemList<T>::AddItem(T item)
+{
+    if(item == NULL) return;
+    m_list.push_back(item);
+}
+template<class T>
+void ItemList<T>::DeleteItem(long mapx, long mapy)
+{
+    for(typename list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+    {
+        if(*it->MapX == mapx && *it->MapY == mapy)
+        {
+            delete *it;
+            m_list.erase(it);
+        }
+    }
+}
+template<class T>
+bool ItemList<T>::HasItem(long mapx, long mapy)
+{
+    for(typename list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+    {
+        if(*it->MapX == mapx && *it->MapY == mapy)
+        {
+           return true;
+        }
+    }
+    return false;
+}
 
 
 

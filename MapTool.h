@@ -6,7 +6,6 @@
 #include "Npc.hpp"
 #include "AsfDecode.hpp"
 
-
 class MapTool : public MapFrameBase
 {
     public:
@@ -55,6 +54,9 @@ class MapTool : public MapFrameBase
         AsfDecode m_PlaceNpc;
         char m_NpcCurrentDir;
         bool m_isPlaceMode, m_isDeleteMode;
+
+        //Npc list
+        NpcList m_NpcList;
 
         DECLARE_EVENT_TABLE()
 };

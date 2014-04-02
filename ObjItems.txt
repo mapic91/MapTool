@@ -1,0 +1,14 @@
+Damage			long
+Dir				char
+Frame			char
+Height			long
+Kind			char
+Lum				long
+MapX			long
+MapY			long
+ObjFile			string
+ObjName			string
+OffX			long
+OffY			long
+ScriptFile		string
+WavFile			string
