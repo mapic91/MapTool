@@ -309,6 +309,39 @@ void MapTool::OnDrawMapControl( wxPaintEvent& event )
 
 }
 
+void MapTool::OnMapCtrlMouseMotion( wxMouseEvent& event )
+{
+    if(!event.Dragging()) return;
+
+    int ctlwidth, ctlheight,
+        mapviewwidth, mapviewheight,
+        mapwidth, mapheight,
+        mousex, mousey;
+
+    m_MapControl->GetClientSize(&ctlwidth, &ctlheight);
+    m_MapView->GetClientSize(&mapviewwidth, &mapviewheight);
+    mapwidth = m_MapBitmap.GetWidth();
+    mapheight = m_MapBitmap.GetHeight();
+    event.GetPosition(&mousex, &mousey);
+
+    int recwidth, recheight, recbegx, recbegy;
+    recwidth = ctlwidth * mapviewwidth / mapwidth;
+    recheight = ctlheight * mapviewheight / mapheight;
+    recbegx = mousex - recwidth / 2;
+    recbegy = mousey - recheight /2;
+
+    if(recbegx + recwidth > ctlwidth) recbegx = ctlwidth - recwidth;
+    if(recbegy + recheight > ctlheight) recbegy = ctlheight - recheight;
+    if(recbegx < 0) recbegx = 0;
+    if(recbegy < 0) recbegy = 0;
+
+    m_ViewBeginx = recbegx * mapwidth / ctlwidth;
+    m_ViewBeginy = recbegy * mapheight / ctlheight;
+
+    RedrawMapView();
+
+}
+
 void MapTool::OnLoadCharater( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,

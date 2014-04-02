@@ -80,6 +80,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
