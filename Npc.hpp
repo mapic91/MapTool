@@ -203,5 +203,7 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
 
 typedef ItemList<ObjItem*> ObjList;
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist);
+bool ObjListSave(const wxString path, const wxString mapName, ObjList *list);
 
 #endif // NPC_HPP_INCLUDED

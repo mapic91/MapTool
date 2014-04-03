@@ -546,6 +546,138 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
     return true;
 }
 
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist)
+{
+    if(list == NULL ||
+       asflist == NULL) return false;
+
+    wxTextFile file;
+    file.Open(path, wxConvLibc);
+    if(!file.IsOpened()) return false;
+
+    wxString line, name, value;
+    long n_value;
+    long counts = 0;
+    for(line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine())
+    {
+        if(GetNameValue(line, name, value, &n_value))
+        {
+            if(name.CmpNoCase(wxT("Count")) == 0 && n_value != -1)
+            {
+                counts = n_value;
+                break;
+            }
+        }
+    }
+
+    ObjItem *item;;
+    for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
+    {
+        while(!file.Eof())
+        {
+            if(line.CmpNoCase(wxString::Format(wxT("[OBJ%03d]"), i)) != 0)
+                line = file.GetNextLine();
+            else break;
+        }
+
+        item = new ObjItem;
+        InitObjItem(item);
+
+        for(line = file.GetNextLine();
+            !file.Eof() && GetNameValue(line, name, value, &n_value);
+            line = file.GetNextLine())
+        {
+            AssignObjItem(name, value, n_value, item);
+        }
+
+        list->DeleteItem(item->MapX, item->MapY);
+        list->AddItem(item);
+        FindAndBufferAsf(exepath, item->ObjFile, wxT("[Common]"), &(item->ObjCommon), asflist);
+    }
+
+    return true;
+}
+bool ObjListSave(const wxString path, const wxString mapName, ObjList *list)
+{
+    if(list == NULL) return false;
+
+    wxTextFile file;
+    file.Create(path);
+    if(!file.IsOpened())
+    {
+        file.Open(path);
+        if(file.IsOpened()) file.Clear();
+        else return false;
+    }
+
+    int counts = list->getCounts();
+    file.AddLine(wxT("[Head]"));
+    file.AddLine(wxT("Map=") + mapName);
+    file.AddLine(wxString::Format(wxT("Count=%d"), counts));
+    file.AddLine(wxT(""));
+
+    ObjItem *item;
+    for(int i = 0; i < counts; i++)
+    {
+        item = list->GetItem(i);
+        if(item == NULL) return false;
+        file.AddLine(wxString::Format(wxT("[OBJ%03d]"), i));
+
+        file.AddLine(wxT("ObjName=") + item->ObjName);
+        file.AddLine(wxT("ObjFile=") + item->ObjFile);
+        file.AddLine(wxT("WavFile=") + item->WavFile);
+        file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
+
+        if(item->Kind != -1)
+            file.AddLine(wxT("Kind=") +
+                         wxString::Format(wxT("%d"), item->Kind));
+
+        if(item->Dir != -1)
+            file.AddLine(wxT("Dir=") +
+                         wxString::Format(wxT("%d"), item->Dir));
+
+        if(item->Lum != -1)
+            file.AddLine(wxT("Lum=") +
+                         wxString::Format(wxT("%d"), item->Lum));
+
+        if(item->MapX != -1)
+            file.AddLine(wxT("MapX=") +
+                         wxString::Format(wxT("%d"), item->MapX));
+
+        if(item->MapY != -1)
+            file.AddLine(wxT("MapY=") +
+                         wxString::Format(wxT("%d"), item->MapY));
+
+        if(item->OffX != -1)
+            file.AddLine(wxT("OffX=") +
+                         wxString::Format(wxT("%d"), item->OffX));
+
+        if(item->OffY != -1)
+            file.AddLine(wxT("OffY=") +
+                         wxString::Format(wxT("%d"), item->OffY));
+
+        if(item->Height != -1)
+            file.AddLine(wxT("Height=") +
+                         wxString::Format(wxT("%d"), item->Height));
+
+
+        if(item->Damage != -1)
+            file.AddLine(wxT("Damage=") +
+                         wxString::Format(wxT("%d"), item->Damage));
+
+        if(item->Frame != -1)
+            file.AddLine(wxT("Frame=") +
+                         wxString::Format(wxT("%d"), item->Frame));
+
+        file.AddLine(wxT(""));
+    }
+
+    file.Write(wxTextFileType_None, wxConvLibc);
+    file.Close();
+
+    return true;
+}
+
 bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf)
 {
     if(list == NULL) return false;

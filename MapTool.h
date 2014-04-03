@@ -386,7 +386,7 @@ private:
     {
          wxFileDialog filedlg(this,
                              wxT("选择一个脚本文件"),
-                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
+                             exepath + wxT("script\\common\\"),
                              wxT(""),
                              wxT("TXT文件(*.txt)|*.txt"),
                              wxFD_OPEN | wxFD_FILE_MUST_EXIST);
@@ -405,7 +405,7 @@ private:
     void OnEditScriptFile( wxCommandEvent& event )
     {
         wxString path = m_ScriptFile->GetLabel();
-        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+        if(!path.IsEmpty()) path = wxT("script\\common\\") + path;
         OpenFile(path);
     }
     void OnWavFile( wxCommandEvent& event )

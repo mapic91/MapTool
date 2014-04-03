@@ -626,11 +626,42 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
 }
 void MapTool::OnImportObjFile( wxCommandEvent& event )
 {
+    wxFileDialog filedlg(this,
+                         wxT("选择一个OBJ文件"),
+                         exepath + wxT("\\ini\\save\\"),
+                         wxT(""),
+                         wxT("OBJ文件(*.obj)|*.obj"),
+                         wxFD_OPEN | wxFD_FILE_MUST_EXIST
+                         );
 
+    if(filedlg.ShowModal() == wxID_OK)
+    {
+        if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList))
+        {
+            wxMessageBox(wxT("完成"), wxT("消息"));
+            RedrawMapView();
+        }
+        else
+            wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
+    }
 }
 void MapTool::OnOutputObjFile( wxCommandEvent& event )
 {
+    wxFileDialog filedlg(this,
+                         wxT("导出为OBJ文件"),
+                         exepath + wxT("\\ini\\save\\"),
+                         wxT(""),
+                         wxT("OBJ文件(*.obj)|*.obj"),
+                         wxFD_SAVE | wxFD_OVERWRITE_PROMPT
+                         );
 
+    if(filedlg.ShowModal() == wxID_OK)
+    {
+        if(ObjListSave(filedlg.GetPath(), m_MapFileName, &m_ObjList))
+            wxMessageBox(wxT("完成"), wxT("消息"));
+        else
+            wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
+    }
 }
 void MapTool::OnPlaceMode( wxCommandEvent& event )
 {
