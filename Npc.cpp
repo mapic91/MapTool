@@ -32,8 +32,15 @@ string FindStandAsf(string FilePath)
 
     return asfpath;
 }
-bool FindAndBufferStandAsf(const wxString &exepath,const wxString &inifilename,AsfDecode *asfdec)
+bool FindAndBufferStandAsf(const wxString &exepath,
+                           const wxString &inifilename,
+                           AsfDecode **asfdec,
+                           AsfImgList *asflist)
 {
+    if(asfdec == NULL ||
+       (*asfdec == NULL && asflist == NULL)
+       ) return false;
+
     string NpcIniPath(exepath.char_str());
     NpcIniPath += "ini\\npcres\\";
     NpcIniPath += inifilename.char_str();
@@ -43,13 +50,25 @@ bool FindAndBufferStandAsf(const wxString &exepath,const wxString &inifilename,A
                      wxT("asf\\character\\") +
                      asffilename);
 
+    if(asflist != NULL && !IsAsfFileIn(asffilename, asflist, asfdec))
+    {
+        AsfImg *asf_img = new AsfImg;
+        asf_img->path = asffilename;
+        asf_img->asfdec = new AsfDecode;
+        asflist->push_back(asf_img);
+
+        *asfdec = asf_img->asfdec;
+    }
+
+    if((*asfdec) == NULL) return false;
+
     //if fail, try another floder
-    if(!asfdec->ReadAsfFile(asfpath))
+    if(!(*asfdec)->ReadAsfFile(asfpath))
     {
         asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
-        if(!asfdec->ReadAsfFile(asfpath)) return false;
+        if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
     }
-    asfdec->BufferData();
+    (*asfdec)->BufferData();
     return true;
 }
 
@@ -108,7 +127,10 @@ void InitNpcItem(NpcItem *item)
     item->WalkSpeed = -1;
 }
 
-bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item)
+bool ReadNpcIni(const wxString &exepath,
+                const wxString &filePath,
+                 NpcItem *item,
+                 AsfImgList *list)
 {
     if(item == NULL) return false;
 
@@ -206,7 +228,7 @@ bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item
 //            item-> = n_value;
     }
 
-    FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand));
+    FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand), list);
 
     return true;
 }
@@ -351,18 +373,18 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
             file.AddLine(wxT("BodyIni=") + item->BodyIni);
 
         if(!item->FlyIni.IsEmpty())
-        file.AddLine(wxT("FlyIni=") + item->FlyIni);
+            file.AddLine(wxT("FlyIni=") + item->FlyIni);
 
         if(!item->FlyIni2.IsEmpty())
-        file.AddLine(wxT("FlyIni2=") + item->FlyIni2);
+            file.AddLine(wxT("FlyIni2=") + item->FlyIni2);
 
         file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
 
         if(!item->DeathScript.IsEmpty())
-        file.AddLine(wxT("DeathScript=") + item->DeathScript);
+            file.AddLine(wxT("DeathScript=") + item->DeathScript);
 
         if(!item->FixedPos.IsEmpty())
-        file.AddLine(wxT("FixedPos=") + item->FixedPos);
+            file.AddLine(wxT("FixedPos=") + item->FixedPos);
 
         file.AddLine(wxT(""));
     }
@@ -373,7 +395,30 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
     return true;
 }
 
-
+bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf)
+{
+    if(list == NULL) return false;
+    for(AsfImgListIterator it = list->begin(); it != list->end(); it++)
+    {
+        if(path.CmpNoCase((*it)->path) == 0)
+        {
+            (*outasf) = (*it)->asfdec;
+            return true;
+        }
+    }
+    return false;
+}
+void FreeAsfImgList(AsfImgList *list)
+{
+    if(list == NULL) return;
+    for(AsfImgListIterator it = list->begin(); it != list->end(); it++)
+    {
+        if((*it)->asfdec != NULL) delete (*it)->asfdec;
+        if((*it) != NULL) delete (*it);
+    }
+    list->clear();
+    list = NULL;
+}
 
 
 

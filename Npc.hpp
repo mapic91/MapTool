@@ -48,14 +48,33 @@ struct NpcItem
     long ThewMax;
     long VisionRadius;
     long WalkSpeed;
-    AsfDecode NpcStand;
+    AsfDecode *NpcStand; //Point to AsfImgList item, don't free
 };
+
+
+
+
+
+struct AsfImg
+{
+    wxString path;
+    AsfDecode *asfdec;
+};
+
+typedef std::list<AsfImg*> AsfImgList;
+typedef std::list<AsfImg*>::iterator AsfImgListIterator;
+// if in , outasf is the asf data
+bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf);
+//delete list item AsfImg*, AsfImg::asfdec, and clear list
+void FreeAsfImgList(AsfImgList *list);
 
 // find [stand] asf file in npcres ini file
 std::string FindStandAsf(std::string FilePath);
 // find [stand] asf and buffer its data
 //exepath : the end contain path seprator
-bool FindAndBufferStandAsf(const wxString &exepath, const wxString &inifilename, AsfDecode *asfdec);
+//asfdec : out  , get a point of AsfDecode data
+//asflist : AsfDecode manager list
+bool FindAndBufferStandAsf(const wxString &exepath, const wxString &inifilename, AsfDecode **asfdec, AsfImgList *asflist = NULL);
 
 //return ini file content without head
 wxString ReadNpcIni(wxString FilePath);
@@ -64,7 +83,8 @@ wxString ReadNpcIni(wxString FilePath);
 void InitNpcItem(NpcItem *item);
 // Read a npc ini file and initializing item
 //exepath : the end contain path seprator
-bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item);
+//list : if not null, npc's asfdata is add to list
+bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item, AsfImgList *list = NULL);
 
 template<class T>
 class ItemList
@@ -150,7 +170,6 @@ private:
 
 
     std::list<T> m_list;
-
     wxString exepath;
 };
 

@@ -218,14 +218,19 @@ class NpcItemEditDialogBase : public wxDialog
 		virtual void OnNpcIni( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNpcIniEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBodyIni( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnBodyIniClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnBodyIniEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFlyIni( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnFlyIniClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnFlyIniEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFlyIni2( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnFlyIni2Clear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnFlyIni2Edit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnScriptFileClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnScriptFileEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeathScript( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDeathScriptClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDeathScriptEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }

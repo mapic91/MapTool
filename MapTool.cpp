@@ -21,11 +21,14 @@ MapTool::MapTool(wxWindow* parent)
     m_ViewBeginx = m_ViewBeginy = 0;
     m_CurTileX = m_CurTileY = 0;
     m_PlaceNpcData.Dir = 0;
+    m_PlaceNpcData.NpcStand = new AsfDecode;
     m_isPlaceMode = true;
     m_isDeleteMode = false;
     m_isEditAttribute = false;
+    m_AsfImgList = new AsfImgList;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
+
 
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
@@ -45,6 +48,9 @@ MapTool::MapTool(wxWindow* parent)
 
 MapTool::~MapTool()
 {
+    FreeAsfImgList(m_AsfImgList);
+    if(m_AsfImgList != NULL) delete m_AsfImgList;
+    if(m_PlaceNpcData.NpcStand != NULL) delete m_PlaceNpcData.NpcStand;
     //dtor
 }
 
@@ -187,11 +193,13 @@ void MapTool::DrawRectangle(long col, long row, wxBufferedPaintDC &dc)
 
 void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item)
 {
+    if(item == NULL) return;
+
     int recposx, recposy;
     if(!map.GetPixelPosition(col, row, &recposx, &recposy)) return;
 
     wxImage npcImg =
-        item->NpcStand.GetDirectionImageFromBufferdData(item->Dir);
+        item->NpcStand->GetDirectionImageFromBufferdData(item->Dir);
     if(npcImg.IsOk())
     {
         wxBitmap npcBmp(npcImg);
@@ -199,8 +207,8 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item)
         long npcDrawX, npcDrawY, npcOffX, npcOffY;
         int npcWidth = npcImg.GetWidth();
         int npcHeight = npcImg.GetHeight();
-        npcOffX = item->NpcStand.GetLeft();
-        npcOffY = item->NpcStand.GetBottom();
+        npcOffX = item->NpcStand->GetLeft();
+        npcOffY = item->NpcStand->GetBottom();
 
         npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
         npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
@@ -293,7 +301,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     NpcItem *item = new NpcItem;
     if(m_isPlaceMode && !m_NpcIniFilePath.IsEmpty())
     {
-        if(!ReadNpcIni(exepath, m_NpcIniFilePath, item))
+        if(!ReadNpcIni(exepath, m_NpcIniFilePath, item, m_AsfImgList))
         {
             delete item;
             return;
@@ -309,7 +317,8 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         NpcItem *item = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
         if(item != NULL)
         {
-            NpcItemEditDialog itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4));
+            NpcItemEditDialog
+                itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_AsfImgList);
             itemEdit.InitFromNpcItem(item);
             if(itemEdit.ShowModal() == wxID_OK)
                 itemEdit.AssignToNpcItem(item);
@@ -436,8 +445,8 @@ void MapTool::OnPlaceMode( wxCommandEvent& event )
 void MapTool::OnCharacterDirection( wxCommandEvent& event )
 {
     m_PlaceNpcData.Dir++;
-    if(m_PlaceNpcData.NpcStand.GetFramesCounts() != 0 && m_PlaceNpcData.NpcStand.GetDirection() != 0)
-        m_PlaceNpcData.Dir %= m_PlaceNpcData.NpcStand.GetDirection();
+    if(m_PlaceNpcData.NpcStand->GetFramesCounts() != 0 && m_PlaceNpcData.NpcStand->GetDirection() != 0)
+        m_PlaceNpcData.Dir %= m_PlaceNpcData.NpcStand->GetDirection();
     else
         m_PlaceNpcData.Dir %= 8;
 
@@ -711,6 +720,7 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item)
 
     value = m_NpcIni->GetLabel();
     item->NpcIni = value;
+    FindAndBufferStandAsf(exepath, value, &(item->NpcStand), m_AsfImgList);
     value = m_BodyIni->GetLabel();
     item->BodyIni = value;
     value = m_FlyIni->GetLabel();

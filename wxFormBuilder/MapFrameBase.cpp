@@ -62,7 +62,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxArtProvider::GetBitmap( wxART_DELETE, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("É¾³ýÄ£Ê½"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxArtProvider::GetBitmap( wxART_LIST_VIEW, wxART_TOOLBAR ), wxNullBitmap, wxITEM_NORMAL, wxT("ÊôÐÔÉèÖÃÄ£Ê½"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxArtProvider::GetBitmap( wxART_LIST_VIEW, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("ÊôÐÔÉèÖÃÄ£Ê½"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->Realize(); 
 	
@@ -451,7 +451,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer6 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_BodyIni = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_BodyIni->SetToolTip( wxT("Ñ¡Ôñ...") );
+	m_BodyIni->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
 	
 	bSizer6->Add( m_BodyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -480,7 +480,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer7 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_FlyIni = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_FlyIni->SetToolTip( wxT("Ñ¡Ôñ...") );
+	m_FlyIni->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
 	
 	bSizer7->Add( m_FlyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -505,7 +505,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_FlyIni2 = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_FlyIni2->SetToolTip( wxT("Ñ¡Ôñ...") );
+	m_FlyIni2->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
 	
 	bSizer8->Add( m_FlyIni2, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -530,7 +530,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_ScriptFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_ScriptFile->SetToolTip( wxT("Ñ¡Ôñ...") );
+	m_ScriptFile->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
 	
 	bSizer9->Add( m_ScriptFile, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -555,7 +555,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer10 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_DeathScript = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_DeathScript->SetToolTip( wxT("Ñ¡Ôñ...") );
+	m_DeathScript->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
 	
 	bSizer10->Add( m_DeathScript, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -593,14 +593,19 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_NpcIni->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIni ), NULL, this );
 	m_NpcIniEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIniEdit ), NULL, this );
 	m_BodyIni->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIni ), NULL, this );
+	m_BodyIni->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnBodyIniClear ), NULL, this );
 	m_BodyIniEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIniEdit ), NULL, this );
 	m_FlyIni->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni ), NULL, this );
+	m_FlyIni->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnFlyIniClear ), NULL, this );
 	m_FlyIniEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIniEdit ), NULL, this );
 	m_FlyIni2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni2 ), NULL, this );
+	m_FlyIni2->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnFlyIni2Clear ), NULL, this );
 	m_FlyIni2Edit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni2Edit ), NULL, this );
 	m_ScriptFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFile ), NULL, this );
+	m_ScriptFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnScriptFileClear ), NULL, this );
 	m_ScriptFileEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFileEdit ), NULL, this );
 	m_DeathScript->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
+	m_DeathScript->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancle->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnCancle ), NULL, this );
@@ -612,14 +617,19 @@ NpcItemEditDialogBase::~NpcItemEditDialogBase()
 	m_NpcIni->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIni ), NULL, this );
 	m_NpcIniEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIniEdit ), NULL, this );
 	m_BodyIni->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIni ), NULL, this );
+	m_BodyIni->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnBodyIniClear ), NULL, this );
 	m_BodyIniEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIniEdit ), NULL, this );
 	m_FlyIni->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni ), NULL, this );
+	m_FlyIni->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnFlyIniClear ), NULL, this );
 	m_FlyIniEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIniEdit ), NULL, this );
 	m_FlyIni2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni2 ), NULL, this );
+	m_FlyIni2->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnFlyIni2Clear ), NULL, this );
 	m_FlyIni2Edit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnFlyIni2Edit ), NULL, this );
 	m_ScriptFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFile ), NULL, this );
+	m_ScriptFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnScriptFileClear ), NULL, this );
 	m_ScriptFileEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFileEdit ), NULL, this );
 	m_DeathScript->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
+	m_DeathScript->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnCancle ), NULL, this );

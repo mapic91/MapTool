@@ -998,7 +998,7 @@
                                     <property name="bitmap">Load From Art Provider; wxART_LIST_VIEW; wxART_TOOLBAR</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_EDITATTRIBUTE</property>
-                                    <property name="kind">wxITEM_NORMAL</property>
+                                    <property name="kind">wxITEM_CHECK</property>
                                     <property name="label">tool</property>
                                     <property name="name">m_ToolEditAttribute</property>
                                     <property name="permission">protected</property>
@@ -7263,7 +7263,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -7290,7 +7290,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnBodyIniClear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
@@ -7707,7 +7707,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -7734,7 +7734,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnFlyIniClear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
@@ -8151,7 +8151,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -8178,7 +8178,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnFlyIni2Clear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
@@ -8595,7 +8595,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -8622,7 +8622,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnScriptFileClear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
@@ -9039,7 +9039,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -9066,7 +9066,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnDeathScriptClear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>

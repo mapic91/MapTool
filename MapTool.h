@@ -9,6 +9,7 @@
 #include "wx/dcbuffer.h"
 #include "wx/filedlg.h"
 #include "wx/stdpaths.h"
+#include "wx/msgdlg.h"
 
 class MapTool : public MapFrameBase
 {
@@ -68,6 +69,7 @@ private:
     //Npc list
     NpcItem m_PlaceNpcData;
     NpcList m_NpcList;
+    AsfImgList *m_AsfImgList;
     wxString m_NpcIniFilePath;
 
     DECLARE_EVENT_TABLE()
@@ -76,16 +78,20 @@ private:
 class NpcItemEditDialog: public NpcItemEditDialogBase
 {
 public:
-    NpcItemEditDialog(wxWindow *parent, const wxString mapname) :NpcItemEditDialogBase(parent)
+    NpcItemEditDialog(wxWindow *parent,
+                      const wxString mapname,
+                      AsfImgList *list)
+    :NpcItemEditDialogBase(parent)
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
+        m_AsfImgList = list;
 
         INI_MASK = wxT("INI文件(*.ini)|*.ini");
-        INI_MASK = wxT("TXT文件(*.txt)|*.txt");
+        TXT_MASK = wxT("TXT文件(*.txt)|*.txt");
         INI_MESSGEG = wxT("选择一个INI文件");
-        STYLE = wxFD_OPEN | wxFD_FILE_MUST_EXIST;
+        STYLE = wxFD_OPEN;
     }
     virtual ~NpcItemEditDialog() {}
     void InitFromNpcItem(NpcItem *item);
@@ -118,7 +124,9 @@ private:
     }
     void OnNpcIniEdit( wxCommandEvent& event )
     {
-
+        wxString path = m_NpcIni->GetLabel();
+        if(!path.IsEmpty()) path = wxT("ini\\npcres\\") + path;
+        OpenFile(path);
     }
     void OnBodyIni( wxCommandEvent& event )
     {
@@ -137,6 +145,9 @@ private:
     }
     void OnBodyIniEdit( wxCommandEvent& event )
     {
+        wxString path = m_BodyIni->GetLabel();
+        if(!path.IsEmpty()) path = wxT("ini\\obj\\") + path;
+        OpenFile(path);
     }
     void OnFlyIni( wxCommandEvent& event )
     {
@@ -155,6 +166,9 @@ private:
     }
     void OnFlyIniEdit( wxCommandEvent& event )
     {
+        wxString path = m_FlyIni->GetLabel();
+        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
+        OpenFile(path);
     }
     void OnFlyIni2( wxCommandEvent& event )
     {
@@ -173,6 +187,9 @@ private:
     }
     void OnFlyIni2Edit( wxCommandEvent& event )
     {
+        wxString path = m_FlyIni2->GetLabel();
+        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
+        OpenFile(path);
     }
     void OnScriptFile( wxCommandEvent& event )
     {
@@ -191,6 +208,9 @@ private:
     }
     void OnScriptFileEdit( wxCommandEvent& event )
     {
+        wxString path = m_ScriptFile->GetLabel();
+        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+        OpenFile(path);
     }
     void OnDeathScript( wxCommandEvent& event )
     {
@@ -209,11 +229,63 @@ private:
     }
     void OnDeathScriptEdit( wxCommandEvent& event )
     {
+        wxString path = m_DeathScript->GetLabel();
+        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+        OpenFile(path);
     }
+
+    void OnBodyIniClear( wxMouseEvent& event )
+    {
+        m_BodyIni->SetLabel(wxT(""));
+        m_BodyIni->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnFlyIniClear( wxMouseEvent& event )
+    {
+        m_FlyIni->SetLabel(wxT(""));
+        m_FlyIni->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnFlyIni2Clear( wxMouseEvent& event )
+    {
+        m_FlyIni2->SetLabel(wxT(""));
+        m_FlyIni2->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnScriptFileClear( wxMouseEvent& event )
+    {
+        m_ScriptFile->SetLabel(wxT(""));
+        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnDeathScriptClear( wxMouseEvent& event )
+    {
+        m_DeathScript->SetLabel(wxT(""));
+        m_DeathScript->SetToolTip(wxT("左键选择，右键清除"));
+    }
+
+
+
+    void OpenFile(wxString relatePath)
+    {
+        if(relatePath.IsEmpty())
+        {
+            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
+            return;
+        }
+        if(wxFileName::FileExists(exepath + relatePath))
+        {
+            wxExecute(wxT("explorer \"") + exepath + relatePath + wxT("\""));
+        }
+        else
+        {
+            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
+            return;
+        }
+    }
+
+
 
     wxString INI_MASK,INI_MESSGEG, TXT_MASK;
     long STYLE;
     wxString exepath, m_mapName;
+    AsfImgList *m_AsfImgList;
 };
 
 #endif // MAPTOOL_H
