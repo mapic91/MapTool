@@ -37,6 +37,8 @@ WalkSpeed		char
 
 /////////////////////////
 ////////////////////////
+MapX			long
+MapY			long
 
 –’√˚------Name        
 ¿‡–Õ------Kind       

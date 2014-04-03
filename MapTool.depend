@@ -2580,7 +2580,7 @@
 	"wx/filename.h"
 	"AsfDecode.hpp"
 
-1396399207 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
+1396495289 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
 	"AsfDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -2593,7 +2593,7 @@
 	"wx/dcclient.h"
 	"mydefs.hpp"
 
-1396492483 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1396495129 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>

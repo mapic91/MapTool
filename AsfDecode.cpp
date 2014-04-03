@@ -34,6 +34,7 @@ wxString AsfDecode::GetFilePath()
 }
 bool AsfDecode::ReadAsfFile()
 {
+    FreeBufferData();
     if(FilePath.IsEmpty()) return false;
     else
     {

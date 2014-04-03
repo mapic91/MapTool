@@ -30,6 +30,25 @@ string FindStandAsf(string FilePath)
         }
     }
 
+    if(asfpath.empty())
+    {
+        file.close();
+        file.open(FilePath.c_str());
+        size_t posequal, posasf;
+        while(!file.eof())
+        {
+            getline(file, line);
+            posasf = line.find(".asf");
+            posequal = line.find("=");
+            if(posasf != string::npos && posequal != string::npos)
+            {
+                asfpath = line.substr(posequal + 1);
+                break;
+            }
+        }
+    }
+    file.close();
+
     return asfpath;
 }
 bool FindAndBufferStandAsf(const wxString &exepath,
@@ -38,8 +57,8 @@ bool FindAndBufferStandAsf(const wxString &exepath,
                            AsfImgList *asflist)
 {
     if(asfdec == NULL ||
-       (*asfdec == NULL && asflist == NULL)
-       ) return false;
+            (*asfdec == NULL && asflist == NULL)
+      ) return false;
 
     string NpcIniPath(exepath.char_str());
     NpcIniPath += "ini\\npcres\\";
@@ -129,8 +148,8 @@ void InitNpcItem(NpcItem *item)
 
 bool ReadNpcIni(const wxString &exepath,
                 const wxString &filePath,
-                 NpcItem *item,
-                 AsfImgList *list)
+                NpcItem *item,
+                AsfImgList *list)
 {
     if(item == NULL) return false;
 
@@ -294,6 +313,14 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
         if(item->Dir != -1)
             file.AddLine(wxT("Dir=") +
                          wxString::Format(wxT("%d"), item->Dir));
+
+        if(item->MapX != -1)
+            file.AddLine(wxT("MapX=") +
+                         wxString::Format(wxT("%d"), item->MapX));
+
+        if(item->MapY != -1)
+            file.AddLine(wxT("MapY=") +
+                         wxString::Format(wxT("%d"), item->MapY));
 
         if(item->Lum != -1)
             file.AddLine(wxT("Lum=") +
