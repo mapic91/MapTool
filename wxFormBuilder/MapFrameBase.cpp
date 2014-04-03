@@ -58,6 +58,12 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2->Add( m_toolBar1, 1, wxEXPAND, 5 );
 	
 	m_ToolBarEdit = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
+	m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_HOME, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("NPC编辑模式"), wxEmptyString, NULL ); 
+	
+	m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_FOLDER, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("OBJ编辑模式"), wxEmptyString, NULL ); 
+	
+	m_ToolBarEdit->AddSeparator(); 
+	
 	m_ToolBarEdit->AddTool( ID_TOOLPLACE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_DOWN, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("放置模式"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxArtProvider::GetBitmap( wxART_DELETE, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("删除模式"), wxEmptyString, NULL ); 
@@ -123,6 +129,37 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_menubar3->Append( m_MenuFile, wxT("地图") ); 
 	
+	m_menu3 = new wxMenu();
+	wxMenuItem* m_menuItem11;
+	m_menuItem11 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("加载物品") ) + wxT('\t') + wxT("CTRL+W"), wxT("加载一个物品等待放置"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem11 );
+	
+	wxMenuItem* m_menuItem12;
+	m_menuItem12 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("下一方向") ) + wxT('\t') + wxT("Space"), wxT("物品的方向(Dir)"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem12 );
+	
+	m_menu3->AppendSeparator();
+	
+	wxMenuItem* m_menuItem13;
+	m_menuItem13 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导入OBJ文件") ) + wxT('\t') + wxT("CTRL+L"), wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem13 );
+	
+	wxMenuItem* m_menuItem14;
+	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导出OBJ文件") ) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem14 );
+	
+	m_menu3->AppendSeparator();
+	
+	wxMenuItem* m_menuItem15;
+	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("物品数量") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem15 );
+	
+	wxMenuItem* m_menuItem16;
+	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("清空物品") ) , wxT("清空地图上所有OBJ"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem16 );
+	
+	m_menubar3->Append( m_menu3, wxT("物品(OBJ)") ); 
+	
 	m_MenuCharacter = new wxMenu();
 	wxMenuItem* m_menuItem5;
 	m_menuItem5 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("加载人物") ) + wxT('\t') + wxT("CTRL+R"), wxT("加载一个人物等待放置"), wxITEM_NORMAL );
@@ -145,11 +182,11 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItem9;
-	m_menuItem9 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("NPC数量") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem9 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("人物数量") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem9 );
 	
 	wxMenuItem* m_menuItem10;
-	m_menuItem10 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("清空NPC") ) , wxT("清空地图上所有NPC"), wxITEM_NORMAL );
+	m_menuItem10 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("清空人物") ) , wxT("清空地图上所有NPC"), wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem10 );
 	
 	m_menubar3->Append( m_MenuCharacter, wxT("人物( NPC )") ); 
@@ -168,6 +205,8 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_Trap->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
 	m_Barrer->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
 	m_LayerTransparent->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayerTransparent ), NULL, this );
+	this->Connect( ID_NPCMODE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnNpcMode ) );
+	this->Connect( ID_OBJMODE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnObjMode ) );
 	this->Connect( ID_TOOLPLACE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnPlaceMode ) );
 	this->Connect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	this->Connect( ID_EDITATTRIBUTE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnEditAttributeMode ) );
@@ -182,6 +221,12 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItemDOWN->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Connect( m_menuItemLeft->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Connect( m_menuItemRIGHT->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
+	this->Connect( m_menuItem11->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
+	this->Connect( m_menuItem12->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
+	this->Connect( m_menuItem13->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
+	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
+	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Connect( m_menuItem8->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
@@ -201,6 +246,8 @@ MapFrameBase::~MapFrameBase()
 	m_Trap->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnTrap ), NULL, this );
 	m_Barrer->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnBarrer ), NULL, this );
 	m_LayerTransparent->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayerTransparent ), NULL, this );
+	this->Disconnect( ID_NPCMODE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnNpcMode ) );
+	this->Disconnect( ID_OBJMODE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnObjMode ) );
 	this->Disconnect( ID_TOOLPLACE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnPlaceMode ) );
 	this->Disconnect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	this->Disconnect( ID_EDITATTRIBUTE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnEditAttributeMode ) );
@@ -215,6 +262,12 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( ID_MAPDOWN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Disconnect( ID_MAPLEFT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Disconnect( ID_MAPRIGHT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Disconnect( ID_DIRECTION, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
@@ -518,7 +571,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer7, 1, wxEXPAND, 5 );
 	
-	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("----------ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText34->Wrap( -1 );
 	gSizer1->Add( m_staticText34, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -543,7 +596,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer8, 1, wxEXPAND, 5 );
 	
-	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("----------Idle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("Idle"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText36->Wrap( -1 );
 	gSizer1->Add( m_staticText36, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -568,7 +621,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer9, 1, wxEXPAND, 5 );
 	
-	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("----------FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
 	gSizer1->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -661,5 +714,214 @@ NpcItemEditDialogBase::~NpcItemEditDialogBase()
 	m_DeathScriptEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnCancle ), NULL, this );
+	
+}
+
+ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxHORIZONTAL );
+	
+	wxBoxSizer* bSizer13;
+	bSizer13 = new wxBoxSizer( wxVERTICAL );
+	
+	wxGridSizer* gSizer2;
+	gSizer2 = new wxGridSizer( 0, 2, 0, 0 );
+	
+	m_staticText40 = new wxStaticText( this, wxID_ANY, wxT("名称--------ObjName"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText40->Wrap( -1 );
+	gSizer2->Add( m_staticText40, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_ObjName = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_ObjName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("类型--------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText41->Wrap( -1 );
+	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Kind, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("方向--------Dir"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText42->Wrap( -1 );
+	gSizer2->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Dir, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("伤害--------Damage"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText43->Wrap( -1 );
+	gSizer2->Add( m_staticText43, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Damage = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Damage, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("帧----------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText44->Wrap( -1 );
+	gSizer2->Add( m_staticText44, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Frame = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Frame, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText45 = new wxStaticText( this, wxID_ANY, wxT("高----------Height"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText45->Wrap( -1 );
+	gSizer2->Add( m_staticText45, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Height = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Height, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText52 = new wxStaticText( this, wxID_ANY, wxT("亮度--------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText52->Wrap( -1 );
+	gSizer2->Add( m_staticText52, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_Lum = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer2->Add( m_Lum, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	
+	bSizer13->Add( gSizer2, 1, wxEXPAND, 5 );
+	
+	
+	bSizer12->Add( bSizer13, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer15;
+	bSizer15 = new wxBoxSizer( wxVERTICAL );
+	
+	wxGridSizer* gSizer3;
+	gSizer3 = new wxGridSizer( 0, 2, 0, 0 );
+	
+	m_staticText46 = new wxStaticText( this, wxID_ANY, wxT("物体图像----ObjFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText46->Wrap( -1 );
+	gSizer3->Add( m_staticText46, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	wxBoxSizer* bSizer17;
+	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_ObjFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_ObjFile->SetToolTip( wxT("选择...") );
+	
+	bSizer17->Add( m_ObjFile, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_button22 = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer17->Add( m_button22, 0, wxALL, 5 );
+	
+	
+	gSizer3->Add( bSizer17, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText47 = new wxStaticText( this, wxID_ANY, wxT("脚本文件----ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText47->Wrap( -1 );
+	gSizer3->Add( m_staticText47, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	wxBoxSizer* bSizer18;
+	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_ScriptFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_ScriptFile->SetToolTip( wxT("左键选择，右键清除") );
+	
+	bSizer18->Add( m_ScriptFile, 1, wxALL, 5 );
+	
+	m_button23 = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer18->Add( m_button23, 0, wxALL, 5 );
+	
+	
+	gSizer3->Add( bSizer18, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText48 = new wxStaticText( this, wxID_ANY, wxT("声音文件----WavFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText48->Wrap( -1 );
+	gSizer3->Add( m_staticText48, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	wxBoxSizer* bSizer19;
+	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_WavFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_WavFile->SetToolTip( wxT("左键选择，右键清除") );
+	
+	bSizer19->Add( m_WavFile, 1, wxALL, 5 );
+	
+	m_button24 = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	bSizer19->Add( m_button24, 0, wxALL, 5 );
+	
+	
+	gSizer3->Add( bSizer19, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText49 = new wxStaticText( this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText49->Wrap( -1 );
+	m_staticText49->Hide();
+	
+	gSizer3->Add( m_staticText49, 0, wxALL, 5 );
+	
+	m_comboBox41 = new wxComboBox( this, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_comboBox41->Hide();
+	
+	gSizer3->Add( m_comboBox41, 0, wxALL, 5 );
+	
+	m_staticText50 = new wxStaticText( this, wxID_ANY, wxT("OffX"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText50->Wrap( -1 );
+	gSizer3->Add( m_staticText50, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_OffX = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer3->Add( m_OffX, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("OffY"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText51->Wrap( -1 );
+	gSizer3->Add( m_staticText51, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_OffY = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer3->Add( m_OffY, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	
+	bSizer15->Add( gSizer3, 1, wxEXPAND, 5 );
+	
+	
+	bSizer12->Add( bSizer15, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer16;
+	bSizer16 = new wxBoxSizer( wxVERTICAL );
+	
+	
+	bSizer16->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_OK = new wxButton( this, wxID_ANY, wxT("确定"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( m_OK, 0, wxALL, 5 );
+	
+	m_Cancel = new wxButton( this, wxID_ANY, wxT("取消"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer16->Add( m_Cancel, 0, wxALL, 5 );
+	
+	
+	bSizer12->Add( bSizer16, 0, wxEXPAND, 5 );
+	
+	
+	this->SetSizer( bSizer12 );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+	
+	// Connect Events
+	m_ObjFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );
+	m_button22->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditObjFile ), NULL, this );
+	m_ScriptFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnScriptFile ), NULL, this );
+	m_ScriptFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearScriptFile ), NULL, this );
+	m_button23->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditScriptFile ), NULL, this );
+	m_WavFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnWavFile ), NULL, this );
+	m_WavFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearWavFile ), NULL, this );
+	m_button24->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOpenWavFile ), NULL, this );
+	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOk ), NULL, this );
+	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnCancle ), NULL, this );
+}
+
+ObjItemEditDialogBase::~ObjItemEditDialogBase()
+{
+	// Disconnect Events
+	m_ObjFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );
+	m_button22->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditObjFile ), NULL, this );
+	m_ScriptFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnScriptFile ), NULL, this );
+	m_ScriptFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearScriptFile ), NULL, this );
+	m_button23->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditScriptFile ), NULL, this );
+	m_WavFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnWavFile ), NULL, this );
+	m_WavFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearWavFile ), NULL, this );
+	m_button24->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOpenWavFile ), NULL, this );
+	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOk ), NULL, this );
+	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnCancle ), NULL, this );
 	
 }

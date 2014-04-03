@@ -12,3 +12,23 @@ OffX			long
 OffY			long
 ScriptFile		string
 WavFile			string
+
+////////////////////
+///////////////////
+MapX			long
+MapY			long
+
+名称--------ObjName
+类型--------Kind
+方向--------Dir
+伤害--------Damage
+帧----------Frame
+高----------Height
+亮度--------Lum
+
+物体图像----ObjFile
+脚本文件----ScriptFile
+声音文件----WavFile
+
+------------OffX
+------------OffY

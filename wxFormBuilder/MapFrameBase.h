@@ -35,15 +35,17 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define ID_TOOLPLACE 1000
-#define ID_TOOLDELETE 1001
-#define ID_EDITATTRIBUTE 1002
-#define ID_TOOLMOVE 1003
-#define ID_MAPUP 1004
-#define ID_MAPDOWN 1005
-#define ID_MAPLEFT 1006
-#define ID_MAPRIGHT 1007
-#define ID_DIRECTION 1008
+#define ID_NPCMODE 1000
+#define ID_OBJMODE 1001
+#define ID_TOOLPLACE 1002
+#define ID_TOOLDELETE 1003
+#define ID_EDITATTRIBUTE 1004
+#define ID_TOOLMOVE 1005
+#define ID_MAPUP 1006
+#define ID_MAPDOWN 1007
+#define ID_MAPLEFT 1008
+#define ID_MAPRIGHT 1009
+#define ID_DIRECTION 1010
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -72,6 +74,7 @@ class MapFrameBase : public wxFrame
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
+		wxMenu* m_menu3;
 		wxMenu* m_MenuCharacter;
 		
 		// Virtual event handlers, overide them in your derived class
@@ -83,6 +86,8 @@ class MapFrameBase : public wxFrame
 		virtual void OnTrap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBarrer( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerTransparent( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnNpcMode( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnObjMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPlaceMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEditAttributeMode( wxCommandEvent& event ) { event.Skip(); }
@@ -97,6 +102,12 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLoadObject( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnObjectDirection( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnImportObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }
@@ -246,6 +257,66 @@ class NpcItemEditDialogBase : public wxDialog
 		
 		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,600 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~NpcItemEditDialogBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class ObjItemEditDialogBase
+///////////////////////////////////////////////////////////////////////////////
+class ObjItemEditDialogBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxStaticText* m_staticText40;
+		wxComboBox* m_ObjName;
+		wxStaticText* m_staticText41;
+		wxComboBox* m_Kind;
+		wxStaticText* m_staticText42;
+		wxComboBox* m_Dir;
+		wxStaticText* m_staticText43;
+		wxComboBox* m_Damage;
+		wxStaticText* m_staticText44;
+		wxComboBox* m_Frame;
+		wxStaticText* m_staticText45;
+		wxComboBox* m_Height;
+		wxStaticText* m_staticText52;
+		wxComboBox* m_Lum;
+		wxStaticText* m_staticText46;
+		wxButton* m_ObjFile;
+		wxButton* m_button22;
+		wxStaticText* m_staticText47;
+		wxButton* m_ScriptFile;
+		wxButton* m_button23;
+		wxStaticText* m_staticText48;
+		wxButton* m_WavFile;
+		wxButton* m_button24;
+		wxStaticText* m_staticText49;
+		wxComboBox* m_comboBox41;
+		wxStaticText* m_staticText50;
+		wxComboBox* m_OffX;
+		wxStaticText* m_staticText51;
+		wxComboBox* m_OffY;
+		wxButton* m_OK;
+		wxButton* m_Cancel;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEditObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearScriptFile( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnEditScriptFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnWavFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearWavFile( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnOpenWavFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		ObjItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,252 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		~ObjItemEditDialogBase();
 	
 };
 

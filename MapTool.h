@@ -40,6 +40,21 @@ private:
     void OnDrawMapControl( wxPaintEvent& event );
     void OnMapCtrlMouseMotion( wxMouseEvent& event );
 
+    void OnNpcMode( wxCommandEvent& event )
+    {
+        m_isNpc = true;
+        m_isObj = false;
+        m_ToolBarEdit->ToggleTool(ID_NPCMODE, true);
+        m_ToolBarEdit->ToggleTool(ID_OBJMODE, false);
+    }
+    void OnObjMode( wxCommandEvent& event )
+    {
+        m_isNpc = false;
+        m_isObj = true;
+        m_ToolBarEdit->ToggleTool(ID_NPCMODE, false);
+        m_ToolBarEdit->ToggleTool(ID_OBJMODE, true);
+    }
+
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
     void OnPlaceMode( wxCommandEvent& event ) ;
@@ -51,11 +66,32 @@ private:
         wxMessageBox(wxString::Format(wxT("NPC 数量：Count = %d"), m_NpcList.getCounts()),
                      wxT("消息"));
     }
-	void OnClearNpc( wxCommandEvent& event )
-	{
-	    m_NpcList.Clear();
-        FreeAsfImgList(m_AsfImgList);
-	}
+    void OnClearNpc( wxCommandEvent& event )
+    {
+        m_NpcList.Clear();
+        FreeAsfImgList(m_NpcAsfImgList);
+    }
+
+
+    //OBJ
+    void OnLoadObject( wxCommandEvent& event );
+    void OnObjectDirection( wxCommandEvent& event )
+    {
+        OnCharacterDirection(event);
+    }
+    void OnImportObjFile( wxCommandEvent& event );
+    void OnOutputObjFile( wxCommandEvent& event );
+    void OnShowObjCount( wxCommandEvent& event )
+    {
+        wxMessageBox(wxString::Format(wxT("OBJ 数量：Count = %d"), m_ObjList.getCounts()),
+                     wxT("消息"));
+    }
+    void OnClearObj( wxCommandEvent& event )
+    {
+        m_ObjList.Clear();
+        FreeAsfImgList(m_ObjAsfImgList);
+    }
+
 
     void OnDeleteMode( wxCommandEvent& event );
 
@@ -64,8 +100,8 @@ private:
     void OnEditAttributeMode( wxCommandEvent& event );
 
     void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
-    void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item);
-    void DrawNpcs(wxBufferedPaintDC &dc);
+    void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcitem, ObjItem *objitem = NULL);
+    void DrawObjsNpcs(wxBufferedPaintDC &dc);
 
     //if getImg is true return an image, else return NULL
     wxImage* ReadMap(bool getImg = false);
@@ -81,11 +117,14 @@ private:
     char m_NpcCurrentDir;
     bool m_isPlaceMode, m_isDeleteMode, m_isEditAttribute, m_isMoveMode;
 
-    //Npc list
+    //Npc obj list
     NpcItem m_PlaceNpcData, *m_MoveNpcItem;
+    ObjItem m_PlaceObjData, *m_MoveObjItem;
     NpcList m_NpcList;
-    AsfImgList *m_AsfImgList;
-    wxString m_NpcIniFilePath;
+    ObjList m_ObjList;
+    AsfImgList *m_NpcAsfImgList, *m_ObjAsfImgList;
+    wxString m_NpcIniFilePath, m_ObjIniFilePath;
+    bool m_isObj, m_isNpc;
 
     DECLARE_EVENT_TABLE()
 };
@@ -96,12 +135,12 @@ public:
     NpcItemEditDialog(wxWindow *parent,
                       const wxString mapname,
                       AsfImgList *list)
-    :NpcItemEditDialogBase(parent)
+        :NpcItemEditDialogBase(parent)
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
-        m_AsfImgList = list;
+        m_NpcAsfImgList = list;
 
         INI_MASK = wxT("INI文件(*.ini)|*.ini");
         TXT_MASK = wxT("TXT文件(*.txt)|*.txt");
@@ -209,7 +248,7 @@ private:
     void OnScriptFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             INI_MESSGEG,
+                             wxT("选择一个脚本文件"),
                              exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
                              wxT(""),
                              TXT_MASK,
@@ -230,7 +269,7 @@ private:
     void OnDeathScript( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             INI_MESSGEG,
+                             wxT("选择一个脚本文件"),
                              exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
                              wxT(""),
                              TXT_MASK,
@@ -300,7 +339,130 @@ private:
     wxString INI_MASK,INI_MESSGEG, TXT_MASK;
     long STYLE;
     wxString exepath, m_mapName;
-    AsfImgList *m_AsfImgList;
+    AsfImgList *m_NpcAsfImgList;
+};
+
+class ObjItemEditDialog: public ObjItemEditDialogBase
+{
+public:
+
+    ObjItemEditDialog(wxWindow *parent,
+                      const wxString mapname,
+                      AsfImgList *list)
+        :ObjItemEditDialogBase(parent)
+    {
+        exepath = wxStandardPaths::Get().GetExecutablePath();
+        exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
+        m_mapName = mapname;
+        m_ObjAsfImgList = list;
+    }
+    virtual ~ObjItemEditDialog() {}
+    void InitFromObjItem(ObjItem *item);
+    void AssignToObjItem(ObjItem *item);
+private:
+
+    void OnObjFile( wxCommandEvent& event )
+    {
+        wxFileDialog filedlg(this,
+                             wxT("选择一个INI文件"),
+                             exepath + wxT("ini\\objres\\"),
+                             wxT(""),
+                             wxT("INI文件(*.ini)|*.ini"),
+                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+        if(filedlg.ShowModal() == wxID_OK)
+        {
+            m_ObjFile->SetLabel(filedlg.GetFilename());
+            m_ObjFile->SetToolTip(filedlg.GetFilename());
+        }
+    }
+    void OnEditObjFile( wxCommandEvent& event )
+    {
+        wxString path = m_ObjFile->GetLabel();
+        if(!path.IsEmpty()) path = wxT("ini\\objres\\") + path;
+        OpenFile(path);
+    }
+    void OnScriptFile( wxCommandEvent& event )
+    {
+         wxFileDialog filedlg(this,
+                             wxT("选择一个脚本文件"),
+                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
+                             wxT(""),
+                             wxT("TXT文件(*.txt)|*.txt"),
+                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+        if(filedlg.ShowModal() == wxID_OK)
+        {
+            m_ScriptFile->SetLabel(filedlg.GetFilename());
+            m_ScriptFile->SetToolTip(filedlg.GetFilename());
+        }
+    }
+    void OnClearScriptFile( wxMouseEvent& event )
+    {
+        m_ScriptFile->SetLabel(wxT(""));
+        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnEditScriptFile( wxCommandEvent& event )
+    {
+        wxString path = m_ScriptFile->GetLabel();
+        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+        OpenFile(path);
+    }
+    void OnWavFile( wxCommandEvent& event )
+    {
+        wxFileDialog filedlg(this,
+                             wxT("选择声音文件"),
+                             exepath + wxT("sound\\"),
+                             wxT(""),
+                             wxT("WAV文件(*.wav)|*.wav"),
+                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+        if(filedlg.ShowModal() == wxID_OK)
+        {
+            m_WavFile->SetLabel(filedlg.GetFilename());
+            m_WavFile->SetToolTip(filedlg.GetFilename());
+        }
+    }
+    void OnClearWavFile( wxMouseEvent& event )
+    {
+        m_WavFile->SetLabel(wxT(""));
+        m_WavFile->SetToolTip(wxT("左键选择，右键清除"));
+    }
+    void OnOpenWavFile( wxCommandEvent& event )
+    {
+        wxString path = m_WavFile->GetLabel();
+        if(!path.IsEmpty()) path = wxT("sound\\") + path;
+        OpenFile(path);
+    }
+    void OnOk( wxCommandEvent& event )
+    {
+        EndModal(wxID_OK);
+    }
+    void OnCancle( wxCommandEvent& event )
+    {
+        EndModal(wxID_CANCEL);
+    }
+
+    void OpenFile(wxString relatePath)
+    {
+        if(relatePath.IsEmpty())
+        {
+            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
+            return;
+        }
+        if(wxFileName::FileExists(exepath + relatePath))
+        {
+            wxExecute(wxT("explorer \"") + exepath + relatePath + wxT("\""));
+        }
+        else
+        {
+            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
+            return;
+        }
+    }
+
+    wxString exepath, m_mapName;
+    AsfImgList *m_ObjAsfImgList;
 };
 
 #endif // MAPTOOL_H

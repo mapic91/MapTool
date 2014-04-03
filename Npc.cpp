@@ -9,7 +9,7 @@
 
 using namespace std;
 
-string FindStandAsf(string FilePath)
+string FindAsfInIni(const string FilePath, const std::string match)
 {
     string asfpath;
     ifstream file(FilePath.c_str());
@@ -20,7 +20,7 @@ string FindStandAsf(string FilePath)
     while(!file.eof())
     {
         getline(file, line);
-        if(line.compare("[Stand]") == 0)
+        if(line.compare(match) == 0)
         {
             getline(file, line);
             pos = line.find('=');
@@ -51,23 +51,32 @@ string FindStandAsf(string FilePath)
 
     return asfpath;
 }
-bool FindAndBufferStandAsf(const wxString &exepath,
+bool FindAndBufferAsf(const wxString &exepath,
                            const wxString &inifilename,
+                           const wxString &match,
                            AsfDecode **asfdec,
                            AsfImgList *asflist)
 {
     if(asfdec == NULL ||
-            (*asfdec == NULL && asflist == NULL)
-      ) return false;
+        (*asfdec == NULL && asflist == NULL) //asfdecode missing
+       ) return false;
 
-    string NpcIniPath(exepath.char_str());
-    NpcIniPath += "ini\\npcres\\";
-    NpcIniPath += inifilename.char_str();
+    string IniPath(exepath.char_str());
+    wxString asfpath;
+    if(match.CmpNoCase(wxT("[Stand]")) == 0)
+    {
+        IniPath += "ini\\npcres\\";
+        asfpath = exepath + wxT("asf\\character\\");
+    }
+    else if(match.CmpNoCase(wxT("[Common]")) == 0)
+    {
+        IniPath += "ini\\objres\\";
+        asfpath = exepath + wxT("asf\\object\\");
+    }
+    IniPath += inifilename.char_str();
 
-    wxString asffilename(wxString(FindStandAsf(NpcIniPath).c_str()));
-    wxString asfpath(exepath +
-                     wxT("asf\\character\\") +
-                     asffilename);
+    wxString asffilename(wxString(FindAsfInIni(IniPath, string(match.char_str())).c_str()));
+    asfpath += asffilename;
 
     if(asflist != NULL && !IsAsfFileIn(asffilename, asflist, asfdec))
     {
@@ -84,26 +93,15 @@ bool FindAndBufferStandAsf(const wxString &exepath,
     //if fail, try another floder
     if(!(*asfdec)->ReadAsfFile(asfpath))
     {
-        asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
-        if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
+        if(match.CmpNoCase(wxT("[Stand]")) == 0)//try another path
+        {
+            asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
+            if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
+        }
+        else return false;
     }
     (*asfdec)->BufferData();
     return true;
-}
-
-wxString ReadNpcIni(wxString FilePath)
-{
-    wxString content;
-    wxTextFile file;
-    if(!file.Open(FilePath)) return content;
-    file.GetFirstLine();
-    while(!file.Eof())
-    {
-        content += file.GetLastLine();
-    }
-    file.Close();
-
-    return content;
 }
 
 void InitNpcItem(NpcItem *item)
@@ -145,34 +143,69 @@ void InitNpcItem(NpcItem *item)
     item->VisionRadius = -1;
     item->WalkSpeed = -1;
 }
+void InitObjItem(ObjItem *item)
+{
+    item->Damage = -1;
+    item->Dir = -1;
+    item->Frame = -1;
+    item->Height = -1;
+    item->Kind = -1;
+    item->Lum = -1;
+    item->MapX = -1;
+    item->MapY = -1;
+    item->ObjFile.clear();
+    item->ObjName.clear();
+    item->OffX = -1;
+    item->OffY = -1;
+    item->ScriptFile.clear();
+    item->WavFile.clear();
+}
 
-bool ReadNpcIni(const wxString &exepath,
+bool ReadIni(const wxString &exepath,
                 const wxString &filePath,
-                NpcItem *item,
+                NpcItem *npcitem,
+                ObjItem *objitem,
                 AsfImgList *list)
 {
-    if(item == NULL) return false;
+    if((npcitem == NULL && objitem == NULL)||
+       (npcitem != NULL && objitem != NULL)
+       ) return false;
 
     wxTextFile file;
     file.Open(filePath, wxConvLibc);
     if(!file.IsOpened()) return false;
 
-    InitNpcItem(item);
+    if(npcitem != NULL)
+    {
+        InitNpcItem(npcitem);
+    }
+    else if(objitem != NULL)
+    {
+        InitObjItem(objitem);
+    }
 
     wxString line, name, value;
     long n_value;
     for(line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine())
     {
         if(GetNameValue(line, name, value, &n_value))
-            AssignItem(name, value, n_value, item);
-    }
+        {
+            if(npcitem != NULL)
+                AssignNpcItem(name, value, n_value, npcitem);
+            else if(objitem != NULL)
+                AssignObjItem(name, value, n_value, objitem);
+        }
 
-    FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand), list);
+    }
+    if(npcitem != NULL)
+        FindAndBufferAsf(exepath, npcitem->NpcIni, wxT("[Stand]"), &(npcitem->NpcStand), list);
+    else if(objitem != NULL)
+        FindAndBufferAsf(exepath, objitem->ObjFile, wxT("[Common]"), &(objitem->ObjCommon), list);
 
     return true;
 }
 
-void AssignItem(const wxString &name, const wxString &value, long n_value, NpcItem *item)
+void AssignNpcItem(const wxString &name, const wxString &value, long n_value, NpcItem *item)
 {
     if(name.CmpNoCase(wxT("Action")) == 0)
         item->Action = n_value;
@@ -250,6 +283,38 @@ void AssignItem(const wxString &name, const wxString &value, long n_value, NpcIt
 //        else if(name.CmpNoCase(wxT("")) == 0)
 //            item-> = n_value;
 }
+void AssignObjItem(const wxString &name, const wxString &value, long n_value, ObjItem *item)
+{
+    if(name.CmpNoCase(wxT("Damage")) == 0)
+        item->Damage = n_value;
+    if(name.CmpNoCase(wxT("Dir")) == 0)
+        item->Dir = n_value;
+    if(name.CmpNoCase(wxT("Frame")) == 0)
+        item->Frame = n_value;
+    if(name.CmpNoCase(wxT("Height")) == 0)
+        item->Height = n_value;
+    if(name.CmpNoCase(wxT("Kind")) == 0)
+        item->Kind = n_value;
+    if(name.CmpNoCase(wxT("Lum")) == 0)
+        item->Lum = n_value;
+    if(name.CmpNoCase(wxT("MapX")) == 0)
+        item->MapX = n_value;
+    if(name.CmpNoCase(wxT("MapY")) == 0)
+        item->MapY = n_value;
+    if(name.CmpNoCase(wxT("ObjFile")) == 0)
+        item->ObjFile = value;
+    if(name.CmpNoCase(wxT("ObjName")) == 0)
+        item->ObjName = value;
+    if(name.CmpNoCase(wxT("OffX")) == 0)
+        item->OffX = n_value;
+    if(name.CmpNoCase(wxT("OffY")) == 0)
+        item->OffY = n_value;
+    if(name.CmpNoCase(wxT("ScriptFile")) == 0)
+        item->ScriptFile = value;
+    if(name.CmpNoCase(wxT("WavFile")) == 0)
+        item->WavFile = value;
+}
+
 bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value)
 {
     int pos;
@@ -301,12 +366,12 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
             !file.Eof() && GetNameValue(line, name, value, &n_value);
             line = file.GetNextLine())
         {
-            AssignItem(name, value, n_value, item);
+            AssignNpcItem(name, value, n_value, item);
         }
 
         list->DeleteItem(item->MapX, item->MapY);
         list->AddItem(item);
-        FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand), asflist);
+        FindAndBufferAsf(exepath, item->NpcIni, wxT("[Stand]"), &(item->NpcStand), asflist);
     }
 
     return true;

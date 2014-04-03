@@ -50,11 +50,24 @@ struct NpcItem
     long WalkSpeed;
     AsfDecode *NpcStand; //Point to AsfImgList item, don't free
 };
-
-
-
-
-
+struct ObjItem
+{
+    long Damage;
+    long Dir;
+    long Frame;
+    long Height;
+    long Kind;
+    long Lum;
+    long MapX;
+    long MapY;
+    wxString ObjFile;
+    wxString ObjName;
+    long OffX;
+    long OffY;
+    wxString ScriptFile;
+    wxString WavFile;
+    AsfDecode *ObjCommon; //Point to AsfObjImgList item, don't free
+};
 struct AsfImg
 {
     wxString path;
@@ -69,23 +82,30 @@ bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf);
 void FreeAsfImgList(AsfImgList *list);
 
 // find [stand] asf file in npcres ini file
-std::string FindStandAsf(std::string FilePath);
+std::string FindAsfInIni(const std::string FilePath, const std::string match);
 // find [stand] asf and buffer its data
 //exepath : the end contain path seprator
 //asfdec : out  , get a point of AsfDecode data
 //asflist : AsfDecode manager list
-bool FindAndBufferStandAsf(const wxString &exepath, const wxString &inifilename, AsfDecode **asfdec, AsfImgList *asflist = NULL);
-
-//return ini file content without head
-wxString ReadNpcIni(wxString FilePath);
+bool FindAndBufferAsf(const wxString &exepath,
+                      const wxString &inifilename,
+                      const wxString &match,
+                      AsfDecode **asfdec,
+                      AsfImgList *asflist = NULL);
 
 // init NpcItem to default vaule
 void InitNpcItem(NpcItem *item);
+void InitObjItem(ObjItem *item);
 // Read a npc ini file and initializing item
 //exepath : the end contain path seprator
 //list : if not null, npc's asfdata is add to list
-bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item, AsfImgList *list = NULL);
-void AssignItem(const wxString &name, const wxString &value, long n_value, NpcItem *item);
+bool ReadIni(const wxString &exepath,
+             const wxString &filePath,
+             NpcItem *npcitem = NULL,
+             ObjItem *objitem = NULL,
+             AsfImgList *list = NULL);
+void AssignNpcItem(const wxString &name, const wxString &value, long n_value, NpcItem *item);
+void AssignObjItem(const wxString &name, const wxString &value, long n_value, ObjItem *item);
 bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value);
 
 template<class T>
@@ -156,7 +176,10 @@ public:
         return false;
     }
 
-    void Clear(){FreeData();}
+    void Clear()
+    {
+        FreeData();
+    }
 
 private:
     void FreeData()
@@ -178,5 +201,7 @@ private:
 typedef ItemList<NpcItem*> NpcList;
 bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist);
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
+
+typedef ItemList<ObjItem*> ObjList;
 
 #endif // NPC_HPP_INCLUDED
