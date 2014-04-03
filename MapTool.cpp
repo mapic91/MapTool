@@ -25,10 +25,11 @@ MapTool::MapTool(wxWindow* parent)
     m_isPlaceMode = true;
     m_isDeleteMode = false;
     m_isEditAttribute = false;
+    m_isMoveMode = false;
     m_AsfImgList = new AsfImgList;
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
-
+    m_MoveNpcItem = NULL;
 
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV1.1 - by Ð¡ÊÔµ¶½£  2014.03.22"));
@@ -312,6 +313,14 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
         m_NpcList.AddItem(item);
     }
+    else if(m_isDeleteMode)
+    {
+        m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
+    }
+    else if(m_isMoveMode)
+    {
+        m_MoveNpcItem = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+    }
     else if(m_isEditAttribute)
     {
         NpcItem *item = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
@@ -333,6 +342,14 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
 
     if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &m_CurTileX, &m_CurTileY))
         msg = wxString::Format(wxT("[%ld,%ld]"), m_CurTileX, m_CurTileY);
+
+    if(m_isMoveMode && m_MoveNpcItem != NULL && event.Dragging())
+    {
+        if(m_CurTileX >=0 && m_CurTileX < map.getCol())
+            m_MoveNpcItem->MapX = m_CurTileX;
+        if(m_CurTileY >= 0 && m_CurTileY < map.getRow())
+            m_MoveNpcItem->MapY = m_CurTileY;
+    }
 
     RedrawMapView();
 
@@ -430,18 +447,6 @@ void MapTool::OnLoadCharater( wxCommandEvent& event )
     m_NpcIniFilePath = filedlg.GetPath();
     ReadNpcIni(exepath, m_NpcIniFilePath, &m_PlaceNpcData);
 }
-
-void MapTool::OnPlaceMode( wxCommandEvent& event )
-{
-    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
-    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
-    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
-
-    m_isPlaceMode = true;
-    m_isDeleteMode = false;
-    m_isEditAttribute = false;
-
-}
 void MapTool::OnCharacterDirection( wxCommandEvent& event )
 {
     m_PlaceNpcData.Dir++;
@@ -470,27 +475,53 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
             wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
+void MapTool::OnPlaceMode( wxCommandEvent& event )
+{
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
+    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
+    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLMOVE, false);
+
+    m_isPlaceMode = true;
+    m_isDeleteMode = false;
+    m_isEditAttribute = false;
+    m_isMoveMode = false;
+}
 void MapTool::OnDeleteMode( wxCommandEvent& event )
 {
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
     m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, true);
     m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLMOVE, false);
 
     m_isPlaceMode = false;
     m_isDeleteMode = true;
     m_isEditAttribute = false;
-
+    m_isMoveMode = false;
 }
-
 void MapTool::OnEditAttributeMode( wxCommandEvent& event )
 {
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
     m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
     m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, true);
+    m_ToolBarEdit->ToggleTool(ID_TOOLMOVE, false);
 
     m_isPlaceMode = false;
     m_isDeleteMode = false;
     m_isEditAttribute = true;
+    m_isMoveMode = false;
+}
+void MapTool::OnMoveMode( wxCommandEvent& event )
+{
+    m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLDELETE, false);
+    m_ToolBarEdit->ToggleTool(ID_EDITATTRIBUTE, false);
+    m_ToolBarEdit->ToggleTool(ID_TOOLMOVE, true);
+
+    m_isPlaceMode = false;
+    m_isDeleteMode = false;
+    m_isEditAttribute = false;
+    m_isMoveMode = true;
 }
 
 void MapTool::CheckMapViewBeginPosition()

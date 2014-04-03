@@ -1015,6 +1015,27 @@
                                     <event name="OnToolRClicked"></event>
                                     <event name="OnUpdateUI"></event>
                                 </object>
+                                <object class="tool" expanded="1">
+                                    <property name="bitmap">Load From Art Provider; wxART_GO_TO_PARENT; wxART_TOOLBAR</property>
+                                    <property name="context_menu">0</property>
+                                    <property name="id">ID_TOOLMOVE</property>
+                                    <property name="kind">wxITEM_CHECK</property>
+                                    <property name="label">tool</property>
+                                    <property name="name">m_tool4</property>
+                                    <property name="permission">protected</property>
+                                    <property name="statusbar"></property>
+                                    <property name="tooltip"></property>
+                                    <event name="OnAuiToolBarBeginDrag"></event>
+                                    <event name="OnAuiToolBarMiddleClick"></event>
+                                    <event name="OnAuiToolBarOverflowClick"></event>
+                                    <event name="OnAuiToolBarRightClick"></event>
+                                    <event name="OnAuiToolBarToolDropDown"></event>
+                                    <event name="OnMenuSelection"></event>
+                                    <event name="OnToolClicked">OnMoveMode</event>
+                                    <event name="OnToolEnter"></event>
+                                    <event name="OnToolRClicked"></event>
+                                    <event name="OnUpdateUI"></event>
+                                </object>
                             </object>
                         </object>
                     </object>

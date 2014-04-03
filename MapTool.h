@@ -46,6 +46,8 @@ private:
 
     void OnDeleteMode( wxCommandEvent& event );
 
+    void OnMoveMode( wxCommandEvent& event );
+
     void OnEditAttributeMode( wxCommandEvent& event );
 
     void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
@@ -64,10 +66,10 @@ private:
     int m_CurTileX, m_CurTileY;
     wxString exepath, m_MapFileName;
     char m_NpcCurrentDir;
-    bool m_isPlaceMode, m_isDeleteMode, m_isEditAttribute;
+    bool m_isPlaceMode, m_isDeleteMode, m_isEditAttribute, m_isMoveMode;
 
     //Npc list
-    NpcItem m_PlaceNpcData;
+    NpcItem m_PlaceNpcData, *m_MoveNpcItem;
     NpcList m_NpcList;
     AsfImgList *m_AsfImgList;
     wxString m_NpcIniFilePath;

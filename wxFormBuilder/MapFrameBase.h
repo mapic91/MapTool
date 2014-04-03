@@ -38,11 +38,12 @@
 #define ID_TOOLPLACE 1000
 #define ID_TOOLDELETE 1001
 #define ID_EDITATTRIBUTE 1002
-#define ID_MAPUP 1003
-#define ID_MAPDOWN 1004
-#define ID_MAPLEFT 1005
-#define ID_MAPRIGHT 1006
-#define ID_DIRECTION 1007
+#define ID_TOOLMOVE 1003
+#define ID_MAPUP 1004
+#define ID_MAPDOWN 1005
+#define ID_MAPLEFT 1006
+#define ID_MAPRIGHT 1007
+#define ID_DIRECTION 1008
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -85,6 +86,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnPlaceMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEditAttributeMode( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMoveMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMouseLeftDown( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
