@@ -74,8 +74,10 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getRow(),
                                     map.getPixelWidth(),
                                     map.getPixelHeight()));
-
+    //clear npcs
     m_NpcList.Clear();
+    FreeAsfImgList(m_AsfImgList);
+
     m_MapView->Refresh(true);
     ReadMap();
     RedrawMapView();
@@ -211,8 +213,8 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *item)
         npcOffX = item->NpcStand->GetLeft();
         npcOffY = item->NpcStand->GetBottom();
 
-        npcDrawX = recposx + 32 - npcOffX - m_ViewBeginx;
-        npcDrawY = recposy + 64 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
+        npcDrawX = recposx + 33 - npcOffX - m_ViewBeginx;
+        npcDrawY = recposy + 58 - npcOffY + (32 - npcHeight) - m_ViewBeginy;
 
         wxMemoryDC memdc;
         memdc.SelectObject(npcBmp);
@@ -333,6 +335,10 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
                 itemEdit.AssignToNpcItem(item);
         }
     }
+}
+void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
+{
+    if(m_isMoveMode) m_MoveNpcItem = NULL;
 }
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
@@ -456,6 +462,27 @@ void MapTool::OnCharacterDirection( wxCommandEvent& event )
         m_PlaceNpcData.Dir %= 8;
 
     RedrawMapView();
+}
+void MapTool::OnImportNpcFile( wxCommandEvent& event )
+{
+    wxFileDialog filedlg(this,
+                         wxT("选择一个NPC文件"),
+                         exepath + wxT("\\ini\\save\\"),
+                         wxT(""),
+                         wxT("NPC文件(*.npc)|*.npc"),
+                         wxFD_OPEN | wxFD_FILE_MUST_EXIST
+                         );
+
+    if(filedlg.ShowModal() == wxID_OK)
+    {
+        if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_AsfImgList))
+        {
+            wxMessageBox(wxT("完成"), wxT("消息"));
+            RedrawMapView();
+        }
+        else
+            wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
+    }
 }
 void MapTool::OnOutputNpcFile( wxCommandEvent& event )
 {

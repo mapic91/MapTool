@@ -160,91 +160,11 @@ bool ReadNpcIni(const wxString &exepath,
     InitNpcItem(item);
 
     wxString line, name, value;
-    int pos;
     long n_value;
     for(line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine())
     {
-        pos = line.find(wxT("="));
-        if(pos == wxNOT_FOUND) continue;
-        name = line.Mid(0, pos);
-        value = line.Mid(pos + 1);
-        if(!value.ToLong(&n_value)) n_value = -1;
-
-        if(name.CmpNoCase(wxT("Action")) == 0)
-            item->Action = n_value;
-        else if(name.CmpNoCase(wxT("Attack")) == 0)
-            item->Attack = n_value;
-        else if(name.CmpNoCase(wxT("AttackLevel")) == 0)
-            item->AttackLevel = n_value;
-        else if(name.CmpNoCase(wxT("AttackRadius")) == 0)
-            item->AttackRadius = n_value;
-        else if(name.CmpNoCase(wxT("BodyIni")) == 0)
-            item->BodyIni = value;
-        else if(name.CmpNoCase(wxT("DeathScript")) == 0)
-            item->DeathScript = value;
-        else if(name.CmpNoCase(wxT("Defend")) == 0 ||
-                name.CmpNoCase(wxT("Defence")) == 0)
-            item->Defend = n_value;
-        else if(name.CmpNoCase(wxT("DialogRadius")) == 0)
-            item->DialogRadius = n_value;
-        else if(name.CmpNoCase(wxT("Dir")) == 0)
-            item->Dir = n_value;
-        else if(name.CmpNoCase(wxT("Evade")) == 0)
-            item->Evade = n_value;
-        else if(name.CmpNoCase(wxT("Exp")) == 0)
-            item->Exp = n_value;
-        else if(name.CmpNoCase(wxT("ExpBonus")) == 0)
-            item->ExpBonus = n_value;
-        else if(name.CmpNoCase(wxT("FixedPos")) == 0)
-            item->FixedPos = value;
-        else if(name.CmpNoCase(wxT("FlyIni")) == 0)
-            item->FlyIni = value;
-        else if(name.CmpNoCase(wxT("FlyIni2")) == 0)
-            item->FlyIni2 = value;
-        else if(name.CmpNoCase(wxT("Idle")) == 0)
-            item->Idle = n_value;
-        else if(name.CmpNoCase(wxT("Kind")) == 0)
-            item->Kind = n_value;
-        else if(name.CmpNoCase(wxT("Level")) == 0)
-            item->Level = n_value;
-        else if(name.CmpNoCase(wxT("LevelUpExp")) == 0)
-            item->LevelUpExp = n_value;
-        else if(name.CmpNoCase(wxT("Life")) == 0)
-            item->Life = n_value;
-        else if(name.CmpNoCase(wxT("LifeMax")) == 0)
-            item->LifeMax = n_value;
-        else if(name.CmpNoCase(wxT("Lum")) == 0)
-            item->Lum = n_value;
-        else if(name.CmpNoCase(wxT("Mana")) == 0)
-            item->Mana = n_value;
-        else if(name.CmpNoCase(wxT("ManaMax")) == 0)
-            item->ManaMax = n_value;
-        else if(name.CmpNoCase(wxT("MapX")) == 0)
-            item->MapX = n_value;
-        else if(name.CmpNoCase(wxT("MapY")) == 0)
-            item->MapY = n_value;
-        else if(name.CmpNoCase(wxT("Name")) == 0)
-            item->Name = value;
-        else if(name.CmpNoCase(wxT("NpcIni")) == 0)
-            item->NpcIni = value;
-        else if(name.CmpNoCase(wxT("PathFinder")) == 0)
-            item->PathFinder = n_value;
-        else if(name.CmpNoCase(wxT("Relation")) == 0)
-            item->Relation = n_value;
-        else if(name.CmpNoCase(wxT("ScriptFile")) == 0)
-            item->ScriptFile = value;
-        else if(name.CmpNoCase(wxT("State")) == 0)
-            item->State = n_value;
-        else if(name.CmpNoCase(wxT("Thew")) == 0)
-            item->Thew = n_value;
-        else if(name.CmpNoCase(wxT("ThewMax")) == 0)
-            item->ThewMax = n_value;
-        else if(name.CmpNoCase(wxT("VisionRadius")) == 0)
-            item->VisionRadius = n_value;
-        else if(name.CmpNoCase(wxT("WalkSpeed")) == 0)
-            item->WalkSpeed = n_value;
-//        else if(name.CmpNoCase(wxT("")) == 0)
-//            item-> = n_value;
+        if(GetNameValue(line, name, value, &n_value))
+            AssignItem(name, value, n_value, item);
     }
 
     FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand), list);
@@ -252,6 +172,145 @@ bool ReadNpcIni(const wxString &exepath,
     return true;
 }
 
+void AssignItem(const wxString &name, const wxString &value, long n_value, NpcItem *item)
+{
+    if(name.CmpNoCase(wxT("Action")) == 0)
+        item->Action = n_value;
+    else if(name.CmpNoCase(wxT("Attack")) == 0)
+        item->Attack = n_value;
+    else if(name.CmpNoCase(wxT("AttackLevel")) == 0)
+        item->AttackLevel = n_value;
+    else if(name.CmpNoCase(wxT("AttackRadius")) == 0)
+        item->AttackRadius = n_value;
+    else if(name.CmpNoCase(wxT("BodyIni")) == 0)
+        item->BodyIni = value;
+    else if(name.CmpNoCase(wxT("DeathScript")) == 0)
+        item->DeathScript = value;
+    else if(name.CmpNoCase(wxT("Defend")) == 0 ||
+            name.CmpNoCase(wxT("Defence")) == 0)
+        item->Defend = n_value;
+    else if(name.CmpNoCase(wxT("DialogRadius")) == 0)
+        item->DialogRadius = n_value;
+    else if(name.CmpNoCase(wxT("Dir")) == 0)
+        item->Dir = n_value;
+    else if(name.CmpNoCase(wxT("Evade")) == 0)
+        item->Evade = n_value;
+    else if(name.CmpNoCase(wxT("Exp")) == 0)
+        item->Exp = n_value;
+    else if(name.CmpNoCase(wxT("ExpBonus")) == 0)
+        item->ExpBonus = n_value;
+    else if(name.CmpNoCase(wxT("FixedPos")) == 0)
+        item->FixedPos = value;
+    else if(name.CmpNoCase(wxT("FlyIni")) == 0)
+        item->FlyIni = value;
+    else if(name.CmpNoCase(wxT("FlyIni2")) == 0)
+        item->FlyIni2 = value;
+    else if(name.CmpNoCase(wxT("Idle")) == 0)
+        item->Idle = n_value;
+    else if(name.CmpNoCase(wxT("Kind")) == 0)
+        item->Kind = n_value;
+    else if(name.CmpNoCase(wxT("Level")) == 0)
+        item->Level = n_value;
+    else if(name.CmpNoCase(wxT("LevelUpExp")) == 0)
+        item->LevelUpExp = n_value;
+    else if(name.CmpNoCase(wxT("Life")) == 0)
+        item->Life = n_value;
+    else if(name.CmpNoCase(wxT("LifeMax")) == 0)
+        item->LifeMax = n_value;
+    else if(name.CmpNoCase(wxT("Lum")) == 0)
+        item->Lum = n_value;
+    else if(name.CmpNoCase(wxT("Mana")) == 0)
+        item->Mana = n_value;
+    else if(name.CmpNoCase(wxT("ManaMax")) == 0)
+        item->ManaMax = n_value;
+    else if(name.CmpNoCase(wxT("MapX")) == 0)
+        item->MapX = n_value;
+    else if(name.CmpNoCase(wxT("MapY")) == 0)
+        item->MapY = n_value;
+    else if(name.CmpNoCase(wxT("Name")) == 0)
+        item->Name = value;
+    else if(name.CmpNoCase(wxT("NpcIni")) == 0)
+        item->NpcIni = value;
+    else if(name.CmpNoCase(wxT("PathFinder")) == 0)
+        item->PathFinder = n_value;
+    else if(name.CmpNoCase(wxT("Relation")) == 0)
+        item->Relation = n_value;
+    else if(name.CmpNoCase(wxT("ScriptFile")) == 0)
+        item->ScriptFile = value;
+    else if(name.CmpNoCase(wxT("State")) == 0)
+        item->State = n_value;
+    else if(name.CmpNoCase(wxT("Thew")) == 0)
+        item->Thew = n_value;
+    else if(name.CmpNoCase(wxT("ThewMax")) == 0)
+        item->ThewMax = n_value;
+    else if(name.CmpNoCase(wxT("VisionRadius")) == 0)
+        item->VisionRadius = n_value;
+    else if(name.CmpNoCase(wxT("WalkSpeed")) == 0)
+        item->WalkSpeed = n_value;
+//        else if(name.CmpNoCase(wxT("")) == 0)
+//            item-> = n_value;
+}
+bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value)
+{
+    int pos;
+    pos = line.find(wxT("="));
+    if(pos == wxNOT_FOUND) return false;
+    name = line.Mid(0, pos);
+    value = line.Mid(pos + 1);
+    if(!value.ToLong(n_value)) (*n_value) = -1;
+    return true;
+}
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist)
+{
+    if(list == NULL ||
+       asflist == NULL) return false;
+
+    wxTextFile file;
+    file.Open(path, wxConvLibc);
+    if(!file.IsOpened()) return false;
+
+    wxString line, name, value;
+    long n_value;
+    long counts = 0;
+    for(line = file.GetFirstLine(); !file.Eof(); line = file.GetNextLine())
+    {
+        if(GetNameValue(line, name, value, &n_value))
+        {
+            if(name.CmpNoCase(wxT("Count")) == 0 && n_value != -1)
+            {
+                counts = n_value;
+                break;
+            }
+        }
+    }
+
+    NpcItem *item;;
+    for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
+    {
+        while(!file.Eof())
+        {
+            if(line.CmpNoCase(wxString::Format(wxT("[NPC%03d]"), i)) != 0)
+                line = file.GetNextLine();
+            else break;
+        }
+
+        item = new NpcItem;
+        InitNpcItem(item);
+
+        for(line = file.GetNextLine();
+            !file.Eof() && GetNameValue(line, name, value, &n_value);
+            line = file.GetNextLine())
+        {
+            AssignItem(name, value, n_value, item);
+        }
+
+        list->DeleteItem(item->MapX, item->MapY);
+        list->AddItem(item);
+        FindAndBufferStandAsf(exepath, item->NpcIni, &(item->NpcStand), asflist);
+    }
+
+    return true;
+}
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
 {
     if(list == NULL) return false;

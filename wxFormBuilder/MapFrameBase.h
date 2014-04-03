@@ -88,6 +88,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnEditAttributeMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMoveMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMouseLeftDown( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnMapViewMouseLeftUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
@@ -98,6 +99,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		
 	

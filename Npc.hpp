@@ -85,6 +85,8 @@ void InitNpcItem(NpcItem *item);
 //exepath : the end contain path seprator
 //list : if not null, npc's asfdata is add to list
 bool ReadNpcIni(const wxString &exepath, const wxString &filePath, NpcItem *item, AsfImgList *list = NULL);
+void AssignItem(const wxString &name, const wxString &value, long n_value, NpcItem *item);
+bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value);
 
 template<class T>
 class ItemList
@@ -174,6 +176,7 @@ private:
 };
 
 typedef ItemList<NpcItem*> NpcList;
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist);
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
 
 #endif // NPC_HPP_INCLUDED

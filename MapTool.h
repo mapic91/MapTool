@@ -33,6 +33,7 @@ private:
     void OnMapLeft( wxCommandEvent& event ) ;
     void OnMapRight( wxCommandEvent& event ) ;
     void OnMapViewMouseLeftDown( wxMouseEvent& event );
+    void OnMapViewMouseLeftUp( wxMouseEvent& event );
 
     void OnMouseMove( wxMouseEvent& event );
 
@@ -42,6 +43,7 @@ private:
     void OnLoadCharater( wxCommandEvent& event );
     void OnPlaceMode( wxCommandEvent& event ) ;
     void OnCharacterDirection( wxCommandEvent& event );
+    void OnImportNpcFile( wxCommandEvent& event );
     void OnOutputNpcFile( wxCommandEvent& event );
 
     void OnDeleteMode( wxCommandEvent& event );
