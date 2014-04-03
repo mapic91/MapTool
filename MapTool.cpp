@@ -224,30 +224,40 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcit
     int recposx, recposy;
     if(!map.GetPixelPosition(col, row, &recposx, &recposy)) return;
 
-    long tDrawX, tDrawY, tOffX = 0, tOffY = 0;
+    long tDrawX = 0, tDrawY = 0, tOffX = 0, tOffY = 0;
     wxImage timg;
+    int tWidth = 0, tHeight = 0;
     if(npcitem != NULL)
     {
         timg = npcitem->NpcStand->GetDirectionImageFromBufferdData(npcitem->Dir);
+        tWidth = timg.GetWidth();
+        tHeight = timg.GetHeight();
         tOffX = npcitem->NpcStand->GetLeft();
         tOffY = npcitem->NpcStand->GetBottom();
+
+        //tDrawX = recposx + 33 - tOffX - m_ViewBeginx;
+        //tDrawY = recposy + 58 - tOffY + (32 - tHeight) - m_ViewBeginy;
+
+        //Tile beg at tile middle(32,16)
+        tDrawX = recposx + 32 - tOffX - m_ViewBeginx;
+        tDrawY = recposy + 16 - tOffY - m_ViewBeginy;
     }
     else if(objitem != NULL)
     {
         timg = objitem->ObjCommon->GetDirectionImageFromBufferdData(objitem->Dir);
+        tWidth = timg.GetWidth();
+        tHeight = timg.GetHeight();
         tOffX = objitem->ObjCommon->GetLeft();
         tOffY = objitem->ObjCommon->GetBottom();
+
+        //Tile beg at tile middle(32,16)
+        tDrawX = recposx + 32 - tOffX + objitem->OffX - m_ViewBeginx;
+        tDrawY = recposy + 16 - tOffY + objitem->OffY - m_ViewBeginy;
     }
 
     if(timg.IsOk())
     {
         wxBitmap tbmp(timg);
-
-        int tWidth = timg.GetWidth();
-        int tHeight = timg.GetHeight();
-
-        tDrawX = recposx + 33 - tOffX - m_ViewBeginx;
-        tDrawY = recposy + 58 - tOffY + (32 - tHeight) - m_ViewBeginy;
 
         wxMemoryDC memdc;
         memdc.SelectObject(tbmp);
