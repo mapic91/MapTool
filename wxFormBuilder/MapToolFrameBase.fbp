@@ -1714,7 +1714,7 @@
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
-                        <property name="help"></property>
+                        <property name="help">人物的方向(Dir)</property>
                         <property name="id">ID_DIRECTION</property>
                         <property name="kind">wxITEM_NORMAL</property>
                         <property name="label">下一方向</property>
@@ -1724,6 +1724,10 @@
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnCharacterDirection</event>
                         <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="name">m_separator1</property>
+                        <property name="permission">none</property>
                     </object>
                     <object class="wxMenuItem" expanded="1">
                         <property name="bitmap"></property>
@@ -1747,12 +1751,46 @@
                         <property name="help"></property>
                         <property name="id">wxID_ANY</property>
                         <property name="kind">wxITEM_NORMAL</property>
-                        <property name="label">导出为NPC文件</property>
+                        <property name="label">导出NPC文件</property>
                         <property name="name">m_menuItem7</property>
                         <property name="permission">none</property>
                         <property name="shortcut">CTRL+N</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnOutputNpcFile</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="name">m_separator2</property>
+                        <property name="permission">none</property>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">NPC数量</property>
+                        <property name="name">m_menuItem9</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnShowNpcCounts</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help">清空地图上所有NPC</property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">清空NPC</property>
+                        <property name="name">m_menuItem10</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnClearNpc</event>
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>

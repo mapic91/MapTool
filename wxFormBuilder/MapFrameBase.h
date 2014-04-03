@@ -101,6 +101,8 @@ class MapFrameBase : public wxFrame
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputNpcFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowNpcCounts( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearNpc( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

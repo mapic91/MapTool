@@ -40,11 +40,22 @@ private:
     void OnDrawMapControl( wxPaintEvent& event );
     void OnMapCtrlMouseMotion( wxMouseEvent& event );
 
+    //NPC
     void OnLoadCharater( wxCommandEvent& event );
     void OnPlaceMode( wxCommandEvent& event ) ;
     void OnCharacterDirection( wxCommandEvent& event );
     void OnImportNpcFile( wxCommandEvent& event );
     void OnOutputNpcFile( wxCommandEvent& event );
+    void OnShowNpcCounts( wxCommandEvent& event )
+    {
+        wxMessageBox(wxString::Format(wxT("NPC 数量：Count = %d"), m_NpcList.getCounts()),
+                     wxT("消息"));
+    }
+	void OnClearNpc( wxCommandEvent& event )
+	{
+	    m_NpcList.Clear();
+        FreeAsfImgList(m_AsfImgList);
+	}
 
     void OnDeleteMode( wxCommandEvent& event );
 
