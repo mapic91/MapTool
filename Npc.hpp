@@ -133,12 +133,14 @@ public:
         for(int i = 0; i < index; i++, it++);
         return *it;
     }
-    T GetItem(long mapx, long mapy)
+    T GetItem(long mapx, long mapy, long *index = NULL)
     {
-        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+        long pos = 0;
+        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it, pos++)
         {
             if((*it)->MapX == mapx && (*it)->MapY == mapy)
             {
+                if(index != NULL) (*index) = pos;
                 return *it;
             }
         }

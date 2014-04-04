@@ -38,6 +38,8 @@ MapTool::MapTool(wxWindow* parent)
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
+    m_NpcObjPath = exepath + wxT("ini\\save\\");
+
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     m_ToolBarEdit->ToggleTool(ID_NPCMODE, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
@@ -454,11 +456,13 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     {
         if(m_isNpc)
         {
-            NpcItem *npcitem = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+            long npcitemidx;
+            NpcItem *npcitem = m_NpcList.GetItem(m_CurTileX, m_CurTileY, &npcitemidx);
             if(npcitem != NULL)
             {
                 NpcItemEditDialog
                 itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList, npcitem);
+                itemEdit.SetTitle(wxString::Format(wxT("NPC%03d"), npcitemidx));
                 itemEdit.InitFromNpcItem(npcitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToNpcItem(npcitem);
@@ -466,11 +470,13 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         }
         else if(m_isObj)
         {
-            ObjItem *objitem = m_ObjList.GetItem(m_CurTileX, m_CurTileY);
+            long objitemidx;
+            ObjItem *objitem = m_ObjList.GetItem(m_CurTileX, m_CurTileY, &objitemidx);
             if(objitem != NULL)
             {
                 ObjItemEditDialog
                 itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList, objitem);
+                itemEdit.SetTitle(wxString::Format(wxT("OBJ%03d"), objitemidx));
                 itemEdit.InitFromObjItem(objitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToObjItem(objitem);
@@ -650,7 +656,7 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
                          wxT("选择一个NPC文件"),
-                         exepath + wxT("\\ini\\save\\"),
+                         m_NpcObjPath,
                          wxT(""),
                          wxT("NPC文件(*.npc)|*.npc"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
@@ -658,6 +664,8 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
 
     if(filedlg.ShowModal() == wxID_OK)
     {
+        m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
+
         if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcAsfImgList))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
@@ -671,7 +679,7 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
                          wxT("导出为NPC文件"),
-                         exepath + wxT("\\ini\\save\\"),
+                         m_NpcObjPath,
                          wxT(""),
                          wxT("NPC文件(*.npc)|*.npc"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
@@ -679,6 +687,8 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
 
     if(filedlg.ShowModal() == wxID_OK)
     {
+        m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
+
         if(NpcListSave(filedlg.GetPath(), m_MapFileName, &m_NpcList))
             wxMessageBox(wxT("完成"), wxT("消息"));
         else
@@ -689,7 +699,7 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
                          wxT("选择一个OBJ文件"),
-                         exepath + wxT("\\ini\\save\\"),
+                         m_NpcObjPath,
                          wxT(""),
                          wxT("OBJ文件(*.obj)|*.obj"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
@@ -697,6 +707,8 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
 
     if(filedlg.ShowModal() == wxID_OK)
     {
+        m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
+
         if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
@@ -710,7 +722,7 @@ void MapTool::OnOutputObjFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
                          wxT("导出为OBJ文件"),
-                         exepath + wxT("\\ini\\save\\"),
+                         m_NpcObjPath,
                          wxT(""),
                          wxT("OBJ文件(*.obj)|*.obj"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
@@ -718,6 +730,8 @@ void MapTool::OnOutputObjFile( wxCommandEvent& event )
 
     if(filedlg.ShowModal() == wxID_OK)
     {
+        m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
+
         if(ObjListSave(filedlg.GetPath(), m_MapFileName, &m_ObjList))
             wxMessageBox(wxT("完成"), wxT("消息"));
         else

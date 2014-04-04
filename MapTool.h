@@ -133,6 +133,9 @@ private:
     wxString m_NpcIniFilePath, m_ObjIniFilePath;
     bool m_isObj, m_isNpc;
 
+    //File dialog path
+    wxString m_NpcObjPath;
+
     DECLARE_EVENT_TABLE()
 };
 
