@@ -20,10 +20,10 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 	
 	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
-	m_OpenMap = new wxButton( m_toolBar1, wxID_ANY, wxT("打开地图..."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toolBar1->AddControl( m_OpenMap );
-	m_SaveToPng = new wxButton( m_toolBar1, wxID_ANY, wxT("存为PNG..."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_toolBar1->AddControl( m_SaveToPng );
+	m_toolBar1->AddTool( ID_OPENMAP, wxT("tool"), wxArtProvider::GetBitmap( wxART_FILE_OPEN, wxART_TOOLBAR ), wxNullBitmap, wxITEM_NORMAL, wxT("打开地图..."), wxT("CTRL+O"), NULL ); 
+	
+	m_toolBar1->AddSeparator(); 
+	
 	m_toolBar1->AddSeparator(); 
 	
 	m_toolBar1->AddSeparator(); 
@@ -58,9 +58,9 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2->Add( m_toolBar1, 1, wxEXPAND, 5 );
 	
 	m_ToolBarEdit = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
-	m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_HOME, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("NPC编辑模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_HOME, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("人物编辑模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_FOLDER, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("OBJ编辑模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_FOLDER, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("物品编辑模式"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->AddSeparator(); 
 	
@@ -70,7 +70,11 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxArtProvider::GetBitmap( wxART_LIST_VIEW, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("属性设置模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_TO_PARENT, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_TO_PARENT, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("移动模式"), wxEmptyString, NULL ); 
+	
+	m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_BOOK, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("显示人物"), wxEmptyString, NULL ); 
+	
+	m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxArtProvider::GetBitmap( wxART_TIP, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("显示物品"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->Realize(); 
 	
@@ -111,6 +115,16 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_StatusBar = this->CreateStatusBar( 1, wxST_SIZEGRIP, wxID_ANY );
 	m_menubar3 = new wxMenuBar( 0 );
 	m_MenuFile = new wxMenu();
+	wxMenuItem* m_menuItemOpenMap;
+	m_menuItemOpenMap = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("打开地图...") ) + wxT('\t') + wxT("CTRL+O"), wxEmptyString, wxITEM_NORMAL );
+	m_MenuFile->Append( m_menuItemOpenMap );
+	
+	wxMenuItem* m_menuItemSavePng;
+	m_menuItemSavePng = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("存为PNG...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_MenuFile->Append( m_menuItemSavePng );
+	
+	m_MenuFile->AppendSeparator();
+	
 	wxMenuItem* m_menuItemUP;
 	m_menuItemUP = new wxMenuItem( m_MenuFile, ID_MAPUP, wxString( wxT("地图上移\tUp") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemUP );
@@ -127,38 +141,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItemRIGHT = new wxMenuItem( m_MenuFile, ID_MAPRIGHT, wxString( wxT("地图右移\tRight") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemRIGHT );
 	
-	m_menubar3->Append( m_MenuFile, wxT("地图") ); 
-	
-	m_menu3 = new wxMenu();
-	wxMenuItem* m_menuItem11;
-	m_menuItem11 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("加载物品") ) + wxT('\t') + wxT("CTRL+W"), wxT("加载一个物品等待放置"), wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem11 );
-	
-	wxMenuItem* m_menuItem12;
-	m_menuItem12 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("下一方向") ) + wxT('\t') + wxT("Space"), wxT("物品的方向(Dir)"), wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem12 );
-	
-	m_menu3->AppendSeparator();
-	
-	wxMenuItem* m_menuItem13;
-	m_menuItem13 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导入OBJ文件") ) + wxT('\t') + wxT("CTRL+L"), wxEmptyString, wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem13 );
-	
-	wxMenuItem* m_menuItem14;
-	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导出OBJ文件") ) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem14 );
-	
-	m_menu3->AppendSeparator();
-	
-	wxMenuItem* m_menuItem15;
-	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("物品数量") ) , wxEmptyString, wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem15 );
-	
-	wxMenuItem* m_menuItem16;
-	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("清空物品") ) , wxT("清空地图上所有OBJ"), wxITEM_NORMAL );
-	m_menu3->Append( m_menuItem16 );
-	
-	m_menubar3->Append( m_menu3, wxT("物品(OBJ)") ); 
+	m_menubar3->Append( m_MenuFile, wxT("地图(MAP)") ); 
 	
 	m_MenuCharacter = new wxMenu();
 	wxMenuItem* m_menuItem5;
@@ -191,14 +174,44 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_menubar3->Append( m_MenuCharacter, wxT("人物( NPC )") ); 
 	
+	m_menu3 = new wxMenu();
+	wxMenuItem* m_menuItem11;
+	m_menuItem11 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("加载物品") ) + wxT('\t') + wxT("CTRL+W"), wxT("加载一个物品等待放置"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem11 );
+	
+	wxMenuItem* m_menuItem12;
+	m_menuItem12 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("下一方向") ) + wxT('\t') + wxT("Space"), wxT("物品的方向(Dir)"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem12 );
+	
+	m_menu3->AppendSeparator();
+	
+	wxMenuItem* m_menuItem13;
+	m_menuItem13 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导入OBJ文件") ) + wxT('\t') + wxT("CTRL+L"), wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem13 );
+	
+	wxMenuItem* m_menuItem14;
+	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("导出OBJ文件") ) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem14 );
+	
+	m_menu3->AppendSeparator();
+	
+	wxMenuItem* m_menuItem15;
+	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("物品数量") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem15 );
+	
+	wxMenuItem* m_menuItem16;
+	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("清空物品") ) , wxT("清空地图上所有OBJ"), wxITEM_NORMAL );
+	m_menu3->Append( m_menuItem16 );
+	
+	m_menubar3->Append( m_menu3, wxT("物品(OBJ)") ); 
+	
 	this->SetMenuBar( m_menubar3 );
 	
 	
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	m_OpenMap->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ), NULL, this );
-	m_SaveToPng->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::SaveToPNG ), NULL, this );
+	this->Connect( ID_OPENMAP, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ) );
 	m_Layer1->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
 	m_Layer2->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
 	m_Layer3->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
@@ -211,35 +224,38 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	this->Connect( ID_EDITATTRIBUTE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnEditAttributeMode ) );
 	this->Connect( ID_TOOLMOVE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnMoveMode ) );
+	this->Connect( ID_SHOWNPC, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnShowNpcCheck ) );
+	this->Connect( ID_SHOWOBJ, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnShowObjCheck ) );
 	m_MapView->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftDown ), NULL, this );
 	m_MapView->Connect( wxEVT_LEFT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftUp ), NULL, this );
 	m_MapView->Connect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
 	m_MapControl->Connect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMapCtrlMouseMotion ), NULL, this );
 	m_MapControl->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
+	this->Connect( m_menuItemOpenMap->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OpenMap ) );
+	this->Connect( m_menuItemSavePng->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::SaveToPNG ) );
 	this->Connect( m_menuItemUP->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapUp ) );
 	this->Connect( m_menuItemDOWN->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Connect( m_menuItemLeft->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Connect( m_menuItemRIGHT->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
-	this->Connect( m_menuItem11->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
-	this->Connect( m_menuItem12->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
-	this->Connect( m_menuItem13->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
-	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
-	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
-	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Connect( m_menuItem8->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
 	this->Connect( m_menuItem7->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputNpcFile ) );
 	this->Connect( m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowNpcCounts ) );
 	this->Connect( m_menuItem10->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearNpc ) );
+	this->Connect( m_menuItem11->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
+	this->Connect( m_menuItem12->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
+	this->Connect( m_menuItem13->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
+	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
+	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 }
 
 MapFrameBase::~MapFrameBase()
 {
 	// Disconnect Events
-	m_OpenMap->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ), NULL, this );
-	m_SaveToPng->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MapFrameBase::SaveToPNG ), NULL, this );
+	this->Disconnect( ID_OPENMAP, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OpenMap ) );
 	m_Layer1->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer1 ), NULL, this );
 	m_Layer2->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer2 ), NULL, this );
 	m_Layer3->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MapFrameBase::OnLayer3 ), NULL, this );
@@ -252,28 +268,32 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( ID_TOOLDELETE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnDeleteMode ) );
 	this->Disconnect( ID_EDITATTRIBUTE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnEditAttributeMode ) );
 	this->Disconnect( ID_TOOLMOVE, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnMoveMode ) );
+	this->Disconnect( ID_SHOWNPC, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnShowNpcCheck ) );
+	this->Disconnect( ID_SHOWOBJ, wxEVT_COMMAND_TOOL_CLICKED, wxCommandEventHandler( MapFrameBase::OnShowObjCheck ) );
 	m_MapView->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftDown ), NULL, this );
 	m_MapView->Disconnect( wxEVT_LEFT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftUp ), NULL, this );
 	m_MapView->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
 	m_MapControl->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMapCtrlMouseMotion ), NULL, this );
 	m_MapControl->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OpenMap ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::SaveToPNG ) );
 	this->Disconnect( ID_MAPUP, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapUp ) );
 	this->Disconnect( ID_MAPDOWN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Disconnect( ID_MAPLEFT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Disconnect( ID_MAPRIGHT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
-	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Disconnect( ID_DIRECTION, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputNpcFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowNpcCounts ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearNpc ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	
 }
 

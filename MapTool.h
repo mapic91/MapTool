@@ -99,6 +99,9 @@ private:
 
     void OnEditAttributeMode( wxCommandEvent& event );
 
+    void OnShowNpcCheck( wxCommandEvent& event ) { RedrawMapView(); }
+    void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
+
     void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
     void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcitem, ObjItem *objitem = NULL);
     void DrawObjsNpcs(wxBufferedPaintDC &dc);

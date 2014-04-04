@@ -40,6 +40,8 @@ MapTool::MapTool(wxWindow* parent)
 
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     m_ToolBarEdit->ToggleTool(ID_NPCMODE, true);
+    m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
+    m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
     this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
     this->SetIcon(wxICON(aaaa));
@@ -93,7 +95,9 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getPixelHeight()));
     //clear npcs
     m_NpcList.Clear();
+    m_ObjList.Clear();
     FreeAsfImgList(m_NpcAsfImgList);
+    FreeAsfImgList(m_ObjAsfImgList);
 
     m_MapView->Refresh(true);
     ReadMap();
@@ -106,7 +110,7 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
                          wxT("存为PNG"),
                          wxEmptyString,
                          wxEmptyString,
-                         wxT("MAP文件(*.png)|*.png"),
+                         wxT("PNG文件(*.png)|*.png"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if(filedlg.ShowModal() != wxID_OK) return;
@@ -184,7 +188,7 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
 
     //Draw reactangle current positon under mouse
     if(m_NpcList.HasItem(m_CurTileX, m_CurTileY) ||
-       m_ObjList.HasItem(m_CurTileX, m_CurTileY))
+            m_ObjList.HasItem(m_CurTileX, m_CurTileY))
         dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxYELLOW, 2)));
     else
         dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
@@ -276,23 +280,31 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcit
 
 void MapTool::DrawObjsNpcs(wxBufferedPaintDC &dc)
 {
-    int counts = m_NpcList.getCounts();
-    NpcItem *npcitem;
-    for(int i = 0; i < counts; i++)
+    int counts;
+    if(m_ToolBarEdit->GetToolState(ID_SHOWNPC))
     {
-        npcitem = m_NpcList.GetItem(i);
-        if(npcitem == NULL) continue;
-        DrawTile(npcitem->MapX, npcitem->MapY, dc, npcitem);
+        counts = m_NpcList.getCounts();
+        NpcItem *npcitem;
+        for(int i = 0; i < counts; i++)
+        {
+            npcitem = m_NpcList.GetItem(i);
+            if(npcitem == NULL) continue;
+            DrawTile(npcitem->MapX, npcitem->MapY, dc, npcitem);
+        }
     }
 
-    counts = m_ObjList.getCounts();
-    ObjItem *objitem;
-    for(int j = 0; j < counts; j++)
+    if(m_ToolBarEdit->GetToolState(ID_SHOWOBJ))
     {
-        objitem = m_ObjList.GetItem(j);
-        if(objitem == NULL) continue;
-        DrawTile(objitem->MapX, objitem->MapY, dc, NULL, objitem);
+        counts = m_ObjList.getCounts();
+        ObjItem *objitem;
+        for(int j = 0; j < counts; j++)
+        {
+            objitem = m_ObjList.GetItem(j);
+            if(objitem == NULL) continue;
+            DrawTile(objitem->MapX, objitem->MapY, dc, NULL, objitem);
+        }
     }
+
 }
 
 void MapTool::OnLayerTransparent( wxCommandEvent& event )
@@ -407,7 +419,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(npcitem != NULL)
             {
                 NpcItemEditDialog
-                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList, npcitem);
+                itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList, npcitem);
                 itemEdit.InitFromNpcItem(npcitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToNpcItem(npcitem);
@@ -419,7 +431,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(objitem != NULL)
             {
                 ObjItemEditDialog
-                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList, objitem);
+                itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList, objitem);
                 itemEdit.InitFromObjItem(objitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToObjItem(objitem);
@@ -603,7 +615,7 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
                          wxT(""),
                          wxT("NPC文件(*.npc)|*.npc"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
-                         );
+                        );
 
     if(filedlg.ShowModal() == wxID_OK)
     {
@@ -624,7 +636,7 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
                          wxT(""),
                          wxT("NPC文件(*.npc)|*.npc"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
-                         );
+                        );
 
     if(filedlg.ShowModal() == wxID_OK)
     {
@@ -642,7 +654,7 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
                          wxT(""),
                          wxT("OBJ文件(*.obj)|*.obj"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
-                         );
+                        );
 
     if(filedlg.ShowModal() == wxID_OK)
     {
@@ -663,7 +675,7 @@ void MapTool::OnOutputObjFile( wxCommandEvent& event )
                          wxT(""),
                          wxT("OBJ文件(*.obj)|*.obj"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
-                         );
+                        );
 
     if(filedlg.ShowModal() == wxID_OK)
     {

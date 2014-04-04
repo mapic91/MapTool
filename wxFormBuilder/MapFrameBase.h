@@ -11,16 +11,15 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/string.h>
-#include <wx/button.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/checkbox.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/checkbox.h>
 #include <wx/toolbar.h>
-#include <wx/bitmap.h>
-#include <wx/image.h>
-#include <wx/icon.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/splitter.h>
@@ -30,22 +29,26 @@
 #include <wx/stattext.h>
 #include <wx/combobox.h>
 #include <wx/bmpcbox.h>
+#include <wx/button.h>
 #include <wx/textctrl.h>
 #include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define ID_NPCMODE 1000
-#define ID_OBJMODE 1001
-#define ID_TOOLPLACE 1002
-#define ID_TOOLDELETE 1003
-#define ID_EDITATTRIBUTE 1004
-#define ID_TOOLMOVE 1005
-#define ID_MAPUP 1006
-#define ID_MAPDOWN 1007
-#define ID_MAPLEFT 1008
-#define ID_MAPRIGHT 1009
-#define ID_DIRECTION 1010
+#define ID_OPENMAP 1000
+#define ID_NPCMODE 1001
+#define ID_OBJMODE 1002
+#define ID_TOOLPLACE 1003
+#define ID_TOOLDELETE 1004
+#define ID_EDITATTRIBUTE 1005
+#define ID_TOOLMOVE 1006
+#define ID_SHOWNPC 1007
+#define ID_SHOWOBJ 1008
+#define ID_MAPUP 1009
+#define ID_MAPDOWN 1010
+#define ID_MAPLEFT 1011
+#define ID_MAPRIGHT 1012
+#define ID_DIRECTION 1013
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -56,8 +59,6 @@ class MapFrameBase : public wxFrame
 	
 	protected:
 		wxToolBar* m_toolBar1;
-		wxButton* m_OpenMap;
-		wxButton* m_SaveToPng;
 		wxCheckBox* m_Layer1;
 		wxCheckBox* m_Layer2;
 		wxCheckBox* m_Layer3;
@@ -74,12 +75,11 @@ class MapFrameBase : public wxFrame
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
-		wxMenu* m_menu3;
 		wxMenu* m_MenuCharacter;
+		wxMenu* m_menu3;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
-		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer1( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer2( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer3( wxCommandEvent& event ) { event.Skip(); }
@@ -92,28 +92,31 @@ class MapFrameBase : public wxFrame
 		virtual void OnDeleteMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEditAttributeMode( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMoveMode( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowNpcCheck( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowObjCheck( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMouseLeftDown( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMouseLeftUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
+		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnLoadObject( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnObjectDirection( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnImportObjFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowNpcCounts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearNpc( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLoadObject( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnObjectDirection( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnImportObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
