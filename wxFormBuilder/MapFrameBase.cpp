@@ -19,8 +19,8 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxBoxSizer* bSizer2;
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 	
-	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
-	m_toolBar1->AddTool( ID_OPENMAP, wxT("tool"), wxArtProvider::GetBitmap( wxART_FILE_OPEN, wxART_TOOLBAR ), wxNullBitmap, wxITEM_NORMAL, wxT("打开地图..."), wxT("CTRL+O"), NULL ); 
+	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxTB_HORIZONTAL ); 
+	m_toolBar1->AddTool( ID_OPENMAP, wxT("tool"), wxICON( OPENFILE ), wxNullBitmap, wxITEM_NORMAL, wxT("打开地图..."), wxT("CTRL+O"), NULL ); 
 	
 	m_toolBar1->AddSeparator(); 
 	
@@ -57,24 +57,24 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	bSizer2->Add( m_toolBar1, 1, wxEXPAND, 5 );
 	
-	m_ToolBarEdit = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL ); 
-	m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_HOME, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("人物编辑模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxTB_HORIZONTAL ); 
+	m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxICON( NPC ), wxNullBitmap, wxITEM_CHECK, wxT("人物编辑模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_FOLDER, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("物品编辑模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxICON( OBJ ), wxNullBitmap, wxITEM_CHECK, wxT("物品编辑模式"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->AddSeparator(); 
 	
-	m_ToolBarEdit->AddTool( ID_TOOLPLACE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_DOWN, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("放置模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_TOOLPLACE, wxT("tool"), wxICON( PLACE ), wxNullBitmap, wxITEM_CHECK, wxT("放置模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxArtProvider::GetBitmap( wxART_DELETE, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("删除模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxICON( DELETE ), wxNullBitmap, wxITEM_CHECK, wxT("删除模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxArtProvider::GetBitmap( wxART_LIST_VIEW, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("属性设置模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxICON( ATTRIBUTE ), wxNullBitmap, wxITEM_CHECK, wxT("属性设置模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxArtProvider::GetBitmap( wxART_GO_TO_PARENT, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("移动模式"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxICON( MOVE ), wxNullBitmap, wxITEM_CHECK, wxT("移动模式"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxArtProvider::GetBitmap( wxART_HELP_BOOK, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("显示人物"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxICON( VIEWNPC ), wxNullBitmap, wxITEM_CHECK, wxT("显示人物"), wxEmptyString, NULL ); 
 	
-	m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxArtProvider::GetBitmap( wxART_TIP, wxART_TOOLBAR ), wxNullBitmap, wxITEM_CHECK, wxT("显示物品"), wxEmptyString, NULL ); 
+	m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxICON( VIEWOBJ ), wxNullBitmap, wxITEM_CHECK, wxT("显示物品"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->Realize(); 
 	

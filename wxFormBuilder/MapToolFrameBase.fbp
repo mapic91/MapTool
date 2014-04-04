@@ -154,7 +154,7 @@
                                 <property name="resize">Resizable</property>
                                 <property name="separation">5</property>
                                 <property name="show">1</property>
-                                <property name="size"></property>
+                                <property name="size">-1,-1</property>
                                 <property name="style">wxTB_HORIZONTAL</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
@@ -186,7 +186,7 @@
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
                                 <object class="tool" expanded="1">
-                                    <property name="bitmap">Load From Art Provider; wxART_FILE_OPEN; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; OPENFILE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_OPENMAP</property>
                                     <property name="kind">wxITEM_NORMAL</property>
@@ -779,7 +779,7 @@
                                 <property name="resize">Resizable</property>
                                 <property name="separation">5</property>
                                 <property name="show">1</property>
-                                <property name="size"></property>
+                                <property name="size">-1,-1</property>
                                 <property name="style">wxTB_HORIZONTAL</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
@@ -811,7 +811,7 @@
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_GO_HOME; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; NPC; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_NPCMODE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -832,7 +832,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_HELP_FOLDER; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; OBJ; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_OBJMODE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -856,7 +856,7 @@
                                     <property name="permission">protected</property>
                                 </object>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_GO_DOWN; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; PLACE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_TOOLPLACE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -877,7 +877,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_DELETE; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; DELETE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_TOOLDELETE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -898,7 +898,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_LIST_VIEW; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; ATTRIBUTE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_EDITATTRIBUTE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -919,7 +919,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="0">
-                                    <property name="bitmap">Load From Art Provider; wxART_GO_TO_PARENT; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; MOVE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_TOOLMOVE</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -940,7 +940,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="1">
-                                    <property name="bitmap">Load From Art Provider; wxART_HELP_BOOK; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; VIEWNPC; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_SHOWNPC</property>
                                     <property name="kind">wxITEM_CHECK</property>
@@ -961,7 +961,7 @@
                                     <event name="OnUpdateUI"></event>
                                 </object>
                                 <object class="tool" expanded="1">
-                                    <property name="bitmap">Load From Art Provider; wxART_TIP; wxART_TOOLBAR</property>
+                                    <property name="bitmap">Load From Icon Resource; VIEWOBJ; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_SHOWOBJ</property>
                                     <property name="kind">wxITEM_CHECK</property>

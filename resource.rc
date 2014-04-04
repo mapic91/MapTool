@@ -1,3 +1,12 @@
-aaaa ICON "map.ico"
+aaaa ICON "ICO/map.ico"
+OPENFILE ICON "ICO/OpenFile.ico"
+NPC ICON "ICO/Npc.ico"
+OBJ ICON "ICO/Obj.ico"
+PLACE ICON "ICO/Place.ico"
+DELETE ICON "ICO/Delete.ico"
+ATTRIBUTE ICON "Ico/Attribute.ico"
+MOVE ICON "ICO/Move.ico"
+VIEWNPC ICON "ICO/ViewNpc.ico"
+VIEWOBJ ICON "ICO/ViewObj.ico"
 
 #include "wx/msw/wx.rc"
