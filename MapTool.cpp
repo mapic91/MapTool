@@ -505,6 +505,8 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         }
 
     }
+
+    RedrawMapView();
 }
 void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 {
