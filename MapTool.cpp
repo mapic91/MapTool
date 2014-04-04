@@ -204,6 +204,21 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
     }
 
     DrawObjsNpcs(dc);
+
+    //Draw npc obj position
+    if(!m_isPlaceMode)
+    {
+        if(m_isNpc && m_ToolBarEdit->GetToolState(ID_SHOWNPC))
+        {
+            dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxBLUE, 2)));
+            DrawNpcPosition(dc);
+        }
+        if(m_isObj && m_ToolBarEdit->GetToolState(ID_SHOWOBJ))
+        {
+            dc.SetPen(*(wxThePenList->FindOrCreatePen(wxColour(0, 255, 255), 2)));
+            DrawObjPostion(dc);
+        }
+    }
 }
 
 void MapTool::DrawRectangle(long col, long row, wxBufferedPaintDC &dc)
@@ -305,6 +320,30 @@ void MapTool::DrawObjsNpcs(wxBufferedPaintDC &dc)
         }
     }
 
+}
+
+void MapTool::DrawNpcPosition(wxBufferedPaintDC &dc)
+{
+    int counts = m_NpcList.getCounts();
+    NpcItem *npcitem;
+    for(int i = 0; i < counts; i++)
+    {
+        npcitem = m_NpcList.GetItem(i);
+        if(npcitem == NULL) continue;
+        DrawRectangle(npcitem->MapX, npcitem->MapY, dc);
+    }
+}
+
+void MapTool::DrawObjPostion(wxBufferedPaintDC &dc)
+{
+    int counts = m_ObjList.getCounts();
+    ObjItem *objitem;
+    for(int j = 0; j < counts; j++)
+    {
+        objitem = m_ObjList.GetItem(j);
+        if(objitem == NULL) continue;
+        DrawRectangle(objitem->MapX, objitem->MapY, dc);
+    }
 }
 
 void MapTool::OnLayerTransparent( wxCommandEvent& event )
@@ -696,6 +735,8 @@ void MapTool::OnPlaceMode( wxCommandEvent& event )
     m_isDeleteMode = false;
     m_isEditAttribute = false;
     m_isMoveMode = false;
+
+    RedrawMapView();
 }
 void MapTool::OnDeleteMode( wxCommandEvent& event )
 {
@@ -708,6 +749,8 @@ void MapTool::OnDeleteMode( wxCommandEvent& event )
     m_isDeleteMode = true;
     m_isEditAttribute = false;
     m_isMoveMode = false;
+
+    RedrawMapView();
 }
 void MapTool::OnEditAttributeMode( wxCommandEvent& event )
 {
@@ -720,6 +763,8 @@ void MapTool::OnEditAttributeMode( wxCommandEvent& event )
     m_isDeleteMode = false;
     m_isEditAttribute = true;
     m_isMoveMode = false;
+
+    RedrawMapView();
 }
 void MapTool::OnMoveMode( wxCommandEvent& event )
 {
@@ -732,6 +777,8 @@ void MapTool::OnMoveMode( wxCommandEvent& event )
     m_isDeleteMode = false;
     m_isEditAttribute = false;
     m_isMoveMode = true;
+
+    RedrawMapView();
 }
 
 void MapTool::CheckMapViewBeginPosition()

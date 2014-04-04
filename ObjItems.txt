@@ -30,5 +30,5 @@ MapY			long
 脚本文件----ScriptFile
 声音文件----WavFile
 
-------------OffX
-------------OffY
+右偏移------OffX
+下偏移------OffY

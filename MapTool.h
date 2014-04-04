@@ -46,6 +46,7 @@ private:
         m_isObj = false;
         m_ToolBarEdit->ToggleTool(ID_NPCMODE, true);
         m_ToolBarEdit->ToggleTool(ID_OBJMODE, false);
+        RedrawMapView();
     }
     void OnObjMode( wxCommandEvent& event )
     {
@@ -53,6 +54,7 @@ private:
         m_isObj = true;
         m_ToolBarEdit->ToggleTool(ID_NPCMODE, false);
         m_ToolBarEdit->ToggleTool(ID_OBJMODE, true);
+        RedrawMapView();
     }
 
     //NPC
@@ -105,6 +107,8 @@ private:
     void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
     void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcitem, ObjItem *objitem = NULL);
     void DrawObjsNpcs(wxBufferedPaintDC &dc);
+    void DrawNpcPosition(wxBufferedPaintDC &dc);
+    void DrawObjPostion(wxBufferedPaintDC &dc);
 
     //if getImg is true return an image, else return NULL
     wxImage* ReadMap(bool getImg = false);

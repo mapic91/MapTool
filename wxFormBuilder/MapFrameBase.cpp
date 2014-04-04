@@ -883,14 +883,14 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer3->Add( m_comboBox41, 0, wxALL, 5 );
 	
-	m_staticText50 = new wxStaticText( this, wxID_ANY, wxT("OffX"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText50 = new wxStaticText( this, wxID_ANY, wxT("ÓÒÆ«ÒÆ------OffX"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText50->Wrap( -1 );
 	gSizer3->Add( m_staticText50, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_OffX = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	gSizer3->Add( m_OffX, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("OffY"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("ÏÂÆ«ÒÆ------OffY"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText51->Wrap( -1 );
 	gSizer3->Add( m_staticText51, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
