@@ -46,7 +46,7 @@ MapY			long
 关系------Relation   
 寻路------PathFinder  
 状态------State       
-
+（新剑）--ShowName
 视野半径--VisionRadius
 对话半径--DialogRadius
 攻击半径--AttackRadius

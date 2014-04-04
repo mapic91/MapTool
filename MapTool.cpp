@@ -837,6 +837,7 @@ void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
     if(item == NULL) return;
 
     m_Name->ChangeValue(item->Name);
+    m_ShowName->ChangeValue(item->ShowName);
     if(item->Kind != -1)
         m_Kind->ChangeValue(wxString::Format(wxT("%d"), item->Kind));
     if(item->Relation != -1)
@@ -935,6 +936,9 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item)
 
     value = m_Name->GetValue();
     if(!value.IsEmpty()) item->Name = value;
+
+    value = m_ShowName->GetValue();
+    if(!value.IsEmpty()) item->ShowName = value;
 
     value = m_Kind->GetValue();
     if(!value.ToLong(&n_val)) n_val = -1;

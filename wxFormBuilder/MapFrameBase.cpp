@@ -72,6 +72,8 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxICON( MOVE ), wxNullBitmap, wxITEM_CHECK, wxT("移动模式"), wxEmptyString, NULL ); 
 	
+	m_ToolBarEdit->AddSeparator(); 
+	
 	m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxICON( VIEWNPC ), wxNullBitmap, wxITEM_CHECK, wxT("显示人物"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxICON( VIEWOBJ ), wxNullBitmap, wxITEM_CHECK, wxT("显示物品"), wxEmptyString, NULL ); 
@@ -381,16 +383,14 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_comboBox10, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText11 = new wxStaticText( this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText11 = new wxStaticText( this, wxID_ANY, wxT("（新剑）--ShowName"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText11->Wrap( -1 );
-	m_staticText11->Hide();
+	m_staticText11->SetToolTip( wxT("月影传说中没有，新剑侠情缘中有") );
 	
 	gSizer1->Add( m_staticText11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_comboBox11 = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_comboBox11->Hide();
-	
-	gSizer1->Add( m_comboBox11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_ShowName = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	gSizer1->Add( m_ShowName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText12 = new wxStaticText( this, wxID_ANY, wxT("经验------Exp "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText12->Wrap( -1 );
@@ -531,7 +531,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer5->Add( m_NpcIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_NpcIniEdit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_NpcIniEdit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer5->Add( m_NpcIniEdit, 0, wxALL, 5 );
 	
 	
@@ -556,7 +556,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer6->Add( m_BodyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_BodyIniEdit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_BodyIniEdit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer6->Add( m_BodyIniEdit, 0, wxALL, 5 );
 	
 	
@@ -585,7 +585,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer7->Add( m_FlyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_FlyIniEdit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FlyIniEdit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer7->Add( m_FlyIniEdit, 0, wxALL, 5 );
 	
 	
@@ -610,7 +610,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer8->Add( m_FlyIni2, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_FlyIni2Edit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FlyIni2Edit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer8->Add( m_FlyIni2Edit, 0, wxALL, 5 );
 	
 	
@@ -635,7 +635,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer9->Add( m_ScriptFile, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_ScriptFileEdit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_ScriptFileEdit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer9->Add( m_ScriptFileEdit, 0, wxALL, 5 );
 	
 	
@@ -660,7 +660,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer10->Add( m_DeathScript, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_DeathScriptEdit = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_DeathScriptEdit = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer10->Add( m_DeathScriptEdit, 0, wxALL, 5 );
 	
 	
@@ -830,7 +830,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer17->Add( m_ObjFile, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_button22 = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_button22 = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer17->Add( m_button22, 0, wxALL, 5 );
 	
 	
@@ -848,7 +848,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer18->Add( m_ScriptFile, 1, wxALL, 5 );
 	
-	m_button23 = new wxButton( this, wxID_ANY, wxT("编辑"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_button23 = new wxButton( this, wxID_ANY, wxT("打开"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer18->Add( m_button23, 0, wxALL, 5 );
 	
 	

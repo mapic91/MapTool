@@ -168,7 +168,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxStaticText* m_staticText10;
 		wxComboBox* m_comboBox10;
 		wxStaticText* m_staticText11;
-		wxComboBox* m_comboBox11;
+		wxComboBox* m_ShowName;
 		wxStaticText* m_staticText12;
 		wxBitmapComboBox* m_Exp;
 		wxStaticText* m_staticText13;

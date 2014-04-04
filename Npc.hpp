@@ -44,6 +44,7 @@ struct NpcItem
     long PathFinder;
     long Relation;
     wxString ScriptFile;
+    wxString ShowName;
     long State;
     long Thew;
     long ThewMax;
@@ -161,6 +162,7 @@ public:
             {
                 delete *it;
                 m_list.erase(it);
+                return;
             }
         }
     }

@@ -449,7 +449,13 @@ private:
     void OnEditScriptFile( wxCommandEvent& event )
     {
         wxString path = m_ScriptFile->GetLabel();
-        if(!path.IsEmpty()) path = wxT("script\\common\\") + path;
+        if(!path.IsEmpty())
+        {
+            if(wxFileName::FileExists(exepath + wxT("script\\common\\") + path))
+                path = wxT("script\\common\\") + path;
+            else
+                path = wxT("script\\map\\") + m_mapName + wxT("\\") + path;
+        }
         OpenFile(path);
     }
     void OnWavFile( wxCommandEvent& event )

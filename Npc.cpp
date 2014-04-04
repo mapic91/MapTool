@@ -136,6 +136,7 @@ void InitNpcItem(NpcItem *item)
     item->PathFinder = -1;
     item->Relation = -1;
     item->ScriptFile.clear();
+    item->ShowName.clear();
     item->State = -1;
     item->Thew = -1;
     item->ThewMax = -1;
@@ -233,6 +234,9 @@ bool SaveIni(const wxString &filePath, NpcItem *npcitem, ObjItem *objitem)
 void SaveNpcItem(wxTextFile &file, NpcItem *item)
 {
     file.AddLine(wxT("Name=") + item->Name);
+
+    if(!item->ShowName.IsEmpty())
+        file.AddLine(wxT("ShowName=") + item->ShowName);
 
     if(item->Kind != -1)
         file.AddLine(wxT("Kind=") +
@@ -481,6 +485,8 @@ void AssignNpcItem(const wxString &name, const wxString &value, long n_value, Np
         item->Relation = n_value;
     else if(name.CmpNoCase(wxT("ScriptFile")) == 0)
         item->ScriptFile = value;
+    else if(name.CmpNoCase(wxT("ShowName")) == 0)
+        item->ShowName = value;
     else if(name.CmpNoCase(wxT("State")) == 0)
         item->State = n_value;
     else if(name.CmpNoCase(wxT("Thew")) == 0)
