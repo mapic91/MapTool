@@ -7,6 +7,7 @@
 #include "wx/arrstr.h"
 #include "wx/stdpaths.h"
 #include "wx/filename.h"
+#include "wx/textfile.h"
 
 #include "AsfDecode.hpp"
 
@@ -104,6 +105,9 @@ bool ReadIni(const wxString &exepath,
              NpcItem *npcitem = NULL,
              ObjItem *objitem = NULL,
              AsfImgList *list = NULL);
+bool SaveIni(const wxString &filePath, NpcItem *npcitem = NULL, ObjItem *objitem = NULL);
+void SaveNpcItem(wxTextFile &file, NpcItem *item);
+void SaveObjItem(wxTextFile &file, ObjItem *item);
 void AssignNpcItem(const wxString &name, const wxString &value, long n_value, NpcItem *item);
 void AssignObjItem(const wxString &name, const wxString &value, long n_value, ObjItem *item);
 bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value);

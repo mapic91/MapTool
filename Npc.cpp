@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "wx/textfile.h"
 #include "wx/msgdlg.h"
 
 using namespace std;
@@ -52,14 +51,14 @@ string FindAsfInIni(const string FilePath, const std::string match)
     return asfpath;
 }
 bool FindAndBufferAsf(const wxString &exepath,
-                           const wxString &inifilename,
-                           const wxString &match,
-                           AsfDecode **asfdec,
-                           AsfImgList *asflist)
+                      const wxString &inifilename,
+                      const wxString &match,
+                      AsfDecode **asfdec,
+                      AsfImgList *asflist)
 {
     if(asfdec == NULL ||
-        (*asfdec == NULL && asflist == NULL) //asfdecode missing
-       ) return false;
+            (*asfdec == NULL && asflist == NULL) //asfdecode missing
+      ) return false;
 
     string IniPath(exepath.char_str());
     wxString asfpath;
@@ -162,14 +161,14 @@ void InitObjItem(ObjItem *item)
 }
 
 bool ReadIni(const wxString &exepath,
-                const wxString &filePath,
-                NpcItem *npcitem,
-                ObjItem *objitem,
-                AsfImgList *list)
+             const wxString &filePath,
+             NpcItem *npcitem,
+             ObjItem *objitem,
+             AsfImgList *list)
 {
     if((npcitem == NULL && objitem == NULL)||
-       (npcitem != NULL && objitem != NULL)
-       ) return false;
+            (npcitem != NULL && objitem != NULL)
+      ) return false;
 
     wxTextFile file;
     file.Open(filePath, wxConvLibc);
@@ -203,6 +202,218 @@ bool ReadIni(const wxString &exepath,
         FindAndBufferAsf(exepath, objitem->ObjFile, wxT("[Common]"), &(objitem->ObjCommon), list);
 
     return true;
+}
+
+bool SaveIni(const wxString &filePath, NpcItem *npcitem, ObjItem *objitem)
+{
+    if(npcitem == NULL && objitem == NULL) return false;
+
+    wxTextFile file;
+    file.Create(filePath);
+    if(!file.IsOpened())
+    {
+        file.Open(filePath);
+        if(file.IsOpened()) file.Clear();
+        else return false;
+    }
+
+    file.AddLine(wxT("[INIT]"));
+
+    if(npcitem != NULL)
+        SaveNpcItem(file, npcitem);
+    else if(objitem != NULL)
+        SaveObjItem(file, objitem);
+
+    file.Write(wxTextFileType_None, wxConvLibc);
+    file.Close();
+
+    return true;
+}
+
+void SaveNpcItem(wxTextFile &file, NpcItem *item)
+{
+    file.AddLine(wxT("Name=") + item->Name);
+
+    if(item->Kind != -1)
+        file.AddLine(wxT("Kind=") +
+                     wxString::Format(wxT("%d"), item->Kind));
+
+    file.AddLine(wxT("NpcIni=") + item->NpcIni);
+
+    if(item->Relation != -1)
+        file.AddLine(wxT("Relation=") +
+                     wxString::Format(wxT("%d"), item->Relation));
+
+    if(item->PathFinder != -1)
+        file.AddLine(wxT("PathFinder=") +
+                     wxString::Format(wxT("%d"), item->PathFinder));
+
+    if(item->State != -1)
+        file.AddLine(wxT("State=") +
+                     wxString::Format(wxT("%d"), item->State));
+
+    if(item->VisionRadius != -1)
+        file.AddLine(wxT("VisionRadius=") +
+                     wxString::Format(wxT("%d"), item->VisionRadius));
+
+    if(item->DialogRadius != -1)
+        file.AddLine(wxT("DialogRadius=") +
+                     wxString::Format(wxT("%d"), item->DialogRadius));
+
+    if(item->AttackRadius != -1)
+        file.AddLine(wxT("AttackRadius=") +
+                     wxString::Format(wxT("%d"), item->AttackRadius));
+
+    if(item->Dir != -1)
+        file.AddLine(wxT("Dir=") +
+                     wxString::Format(wxT("%d"), item->Dir));
+
+    if(item->MapX != -1)
+        file.AddLine(wxT("MapX=") +
+                     wxString::Format(wxT("%d"), item->MapX));
+
+    if(item->MapY != -1)
+        file.AddLine(wxT("MapY=") +
+                     wxString::Format(wxT("%d"), item->MapY));
+
+    if(item->Lum != -1)
+        file.AddLine(wxT("Lum=") +
+                     wxString::Format(wxT("%d"), item->Lum));
+
+    if(item->Action != -1)
+        file.AddLine(wxT("Action=") +
+                     wxString::Format(wxT("%d"), item->Action));
+
+    if(item->WalkSpeed != -1)
+        file.AddLine(wxT("WalkSpeed=") +
+                     wxString::Format(wxT("%d"), item->WalkSpeed));
+
+    if(item->Evade != -1)
+        file.AddLine(wxT("Evade=") +
+                     wxString::Format(wxT("%d"), item->Evade));
+
+    if(item->Attack != -1)
+        file.AddLine(wxT("Attack=") +
+                     wxString::Format(wxT("%d"), item->Attack));
+
+    if(item->AttackLevel != -1)
+        file.AddLine(wxT("AttackLevel=") +
+                     wxString::Format(wxT("%d"), item->AttackLevel));
+
+    if(item->Defend != -1)
+        file.AddLine(wxT("Defend=") +
+                     wxString::Format(wxT("%d"), item->Defend));
+
+    if(item->Exp != -1)
+        file.AddLine(wxT("Exp=") +
+                     wxString::Format(wxT("%d"), item->Exp));
+
+    if(item->LevelUpExp != -1)
+        file.AddLine(wxT("LevelUpExp=") +
+                     wxString::Format(wxT("%d"), item->LevelUpExp));
+
+    if(item->Level != -1)
+        file.AddLine(wxT("Level=") +
+                     wxString::Format(wxT("%d"), item->Level));
+
+    if(item->Life != -1)
+        file.AddLine(wxT("Life=") +
+                     wxString::Format(wxT("%d"), item->Life));
+
+    if(item->LifeMax != -1)
+        file.AddLine(wxT("LifeMax=") +
+                     wxString::Format(wxT("%d"), item->LifeMax));
+
+    if(item->Thew != -1)
+        file.AddLine(wxT("Thew=") +
+                     wxString::Format(wxT("%d"), item->Thew));
+
+    if(item->ThewMax != -1)
+        file.AddLine(wxT("ThewMax=") +
+                     wxString::Format(wxT("%d"), item->ThewMax));
+
+    if(item->Mana != -1)
+        file.AddLine(wxT("Mana=") +
+                     wxString::Format(wxT("%d"), item->Mana));
+
+    if(item->ManaMax != -1)
+        file.AddLine(wxT("ManaMax=") +
+                     wxString::Format(wxT("%d"), item->ManaMax));
+
+    if(item->ExpBonus != -1)
+        file.AddLine(wxT("ExpBonus=") +
+                     wxString::Format(wxT("%d"), item->ExpBonus));
+
+    if(item->Idle != -1)
+        file.AddLine(wxT("Idle=") +
+                     wxString::Format(wxT("%d"), item->Idle));
+
+
+
+    if(!item->BodyIni.IsEmpty())
+        file.AddLine(wxT("BodyIni=") + item->BodyIni);
+
+    if(!item->FlyIni.IsEmpty())
+        file.AddLine(wxT("FlyIni=") + item->FlyIni);
+
+    if(!item->FlyIni2.IsEmpty())
+        file.AddLine(wxT("FlyIni2=") + item->FlyIni2);
+
+    file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
+
+    if(!item->DeathScript.IsEmpty())
+        file.AddLine(wxT("DeathScript=") + item->DeathScript);
+
+    if(!item->FixedPos.IsEmpty())
+        file.AddLine(wxT("FixedPos=") + item->FixedPos);
+}
+void SaveObjItem(wxTextFile &file, ObjItem *item)
+{
+    file.AddLine(wxT("ObjName=") + item->ObjName);
+    file.AddLine(wxT("ObjFile=") + item->ObjFile);
+    file.AddLine(wxT("WavFile=") + item->WavFile);
+    file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
+
+    if(item->Kind != -1)
+        file.AddLine(wxT("Kind=") +
+                     wxString::Format(wxT("%d"), item->Kind));
+
+    if(item->Dir != -1)
+        file.AddLine(wxT("Dir=") +
+                     wxString::Format(wxT("%d"), item->Dir));
+
+    if(item->Lum != -1)
+        file.AddLine(wxT("Lum=") +
+                     wxString::Format(wxT("%d"), item->Lum));
+
+    if(item->MapX != -1)
+        file.AddLine(wxT("MapX=") +
+                     wxString::Format(wxT("%d"), item->MapX));
+
+    if(item->MapY != -1)
+        file.AddLine(wxT("MapY=") +
+                     wxString::Format(wxT("%d"), item->MapY));
+
+    if(item->OffX != -1)
+        file.AddLine(wxT("OffX=") +
+                     wxString::Format(wxT("%d"), item->OffX));
+
+    if(item->OffY != -1)
+        file.AddLine(wxT("OffY=") +
+                     wxString::Format(wxT("%d"), item->OffY));
+
+    if(item->Height != -1)
+        file.AddLine(wxT("Height=") +
+                     wxString::Format(wxT("%d"), item->Height));
+
+
+    if(item->Damage != -1)
+        file.AddLine(wxT("Damage=") +
+                     wxString::Format(wxT("%d"), item->Damage));
+
+    if(item->Frame != -1)
+        file.AddLine(wxT("Frame=") +
+                     wxString::Format(wxT("%d"), item->Frame));
 }
 
 void AssignNpcItem(const wxString &name, const wxString &value, long n_value, NpcItem *item)
@@ -328,7 +539,7 @@ bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n
 bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist)
 {
     if(list == NULL ||
-       asflist == NULL) return false;
+            asflist == NULL) return false;
 
     wxTextFile file;
     file.Open(path, wxConvLibc);
@@ -363,8 +574,8 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
         InitNpcItem(item);
 
         for(line = file.GetNextLine();
-            !file.Eof() && GetNameValue(line, name, value, &n_value);
-            line = file.GetNextLine())
+                !file.Eof() && GetNameValue(line, name, value, &n_value);
+                line = file.GetNextLine())
         {
             AssignNpcItem(name, value, n_value, item);
         }
@@ -402,140 +613,7 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
         if(item == NULL) return false;
         file.AddLine(wxString::Format(wxT("[NPC%03d]"), i));
 
-        file.AddLine(wxT("Name=") + item->Name);
-
-        if(item->Kind != -1)
-            file.AddLine(wxT("Kind=") +
-                         wxString::Format(wxT("%d"), item->Kind));
-
-        file.AddLine(wxT("NpcIni=") + item->NpcIni);
-
-        if(item->Relation != -1)
-            file.AddLine(wxT("Relation=") +
-                         wxString::Format(wxT("%d"), item->Relation));
-
-        if(item->PathFinder != -1)
-            file.AddLine(wxT("PathFinder=") +
-                         wxString::Format(wxT("%d"), item->PathFinder));
-
-        if(item->State != -1)
-            file.AddLine(wxT("State=") +
-                         wxString::Format(wxT("%d"), item->State));
-
-        if(item->VisionRadius != -1)
-            file.AddLine(wxT("VisionRadius=") +
-                         wxString::Format(wxT("%d"), item->VisionRadius));
-
-        if(item->DialogRadius != -1)
-            file.AddLine(wxT("DialogRadius=") +
-                         wxString::Format(wxT("%d"), item->DialogRadius));
-
-        if(item->AttackRadius != -1)
-            file.AddLine(wxT("AttackRadius=") +
-                         wxString::Format(wxT("%d"), item->AttackRadius));
-
-        if(item->Dir != -1)
-            file.AddLine(wxT("Dir=") +
-                         wxString::Format(wxT("%d"), item->Dir));
-
-        if(item->MapX != -1)
-            file.AddLine(wxT("MapX=") +
-                         wxString::Format(wxT("%d"), item->MapX));
-
-        if(item->MapY != -1)
-            file.AddLine(wxT("MapY=") +
-                         wxString::Format(wxT("%d"), item->MapY));
-
-        if(item->Lum != -1)
-            file.AddLine(wxT("Lum=") +
-                         wxString::Format(wxT("%d"), item->Lum));
-
-        if(item->Action != -1)
-            file.AddLine(wxT("Action=") +
-                         wxString::Format(wxT("%d"), item->Action));
-
-        if(item->WalkSpeed != -1)
-            file.AddLine(wxT("WalkSpeed=") +
-                         wxString::Format(wxT("%d"), item->WalkSpeed));
-
-        if(item->Evade != -1)
-            file.AddLine(wxT("Evade=") +
-                         wxString::Format(wxT("%d"), item->Evade));
-
-        if(item->Attack != -1)
-            file.AddLine(wxT("Attack=") +
-                         wxString::Format(wxT("%d"), item->Attack));
-
-        if(item->AttackLevel != -1)
-            file.AddLine(wxT("AttackLevel=") +
-                         wxString::Format(wxT("%d"), item->AttackLevel));
-
-        if(item->Defend != -1)
-            file.AddLine(wxT("Defend=") +
-                         wxString::Format(wxT("%d"), item->Defend));
-
-        if(item->Exp != -1)
-            file.AddLine(wxT("Exp=") +
-                         wxString::Format(wxT("%d"), item->Exp));
-
-        if(item->LevelUpExp != -1)
-            file.AddLine(wxT("LevelUpExp=") +
-                         wxString::Format(wxT("%d"), item->LevelUpExp));
-
-        if(item->Level != -1)
-            file.AddLine(wxT("Level=") +
-                         wxString::Format(wxT("%d"), item->Level));
-
-        if(item->Life != -1)
-            file.AddLine(wxT("Life=") +
-                         wxString::Format(wxT("%d"), item->Life));
-
-        if(item->LifeMax != -1)
-            file.AddLine(wxT("LifeMax=") +
-                         wxString::Format(wxT("%d"), item->LifeMax));
-
-        if(item->Thew != -1)
-            file.AddLine(wxT("Thew=") +
-                         wxString::Format(wxT("%d"), item->Thew));
-
-        if(item->ThewMax != -1)
-            file.AddLine(wxT("ThewMax=") +
-                         wxString::Format(wxT("%d"), item->ThewMax));
-
-        if(item->Mana != -1)
-            file.AddLine(wxT("Mana=") +
-                         wxString::Format(wxT("%d"), item->Mana));
-
-        if(item->ManaMax != -1)
-            file.AddLine(wxT("ManaMax=") +
-                         wxString::Format(wxT("%d"), item->ManaMax));
-
-        if(item->ExpBonus != -1)
-            file.AddLine(wxT("ExpBonus=") +
-                         wxString::Format(wxT("%d"), item->ExpBonus));
-
-        if(item->Idle != -1)
-            file.AddLine(wxT("Idle=") +
-                         wxString::Format(wxT("%d"), item->Idle));
-
-
-
-        if(!item->BodyIni.IsEmpty())
-            file.AddLine(wxT("BodyIni=") + item->BodyIni);
-
-        if(!item->FlyIni.IsEmpty())
-            file.AddLine(wxT("FlyIni=") + item->FlyIni);
-
-        if(!item->FlyIni2.IsEmpty())
-            file.AddLine(wxT("FlyIni2=") + item->FlyIni2);
-
-        file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
-
-        if(!item->DeathScript.IsEmpty())
-            file.AddLine(wxT("DeathScript=") + item->DeathScript);
-
-        if(!item->FixedPos.IsEmpty())
-            file.AddLine(wxT("FixedPos=") + item->FixedPos);
+        SaveNpcItem(file, item);
 
         file.AddLine(wxT(""));
     }
@@ -549,7 +627,7 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
 bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist)
 {
     if(list == NULL ||
-       asflist == NULL) return false;
+            asflist == NULL) return false;
 
     wxTextFile file;
     file.Open(path, wxConvLibc);
@@ -584,8 +662,8 @@ bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list,
         InitObjItem(item);
 
         for(line = file.GetNextLine();
-            !file.Eof() && GetNameValue(line, name, value, &n_value);
-            line = file.GetNextLine())
+                !file.Eof() && GetNameValue(line, name, value, &n_value);
+                line = file.GetNextLine())
         {
             AssignObjItem(name, value, n_value, item);
         }
@@ -623,51 +701,7 @@ bool ObjListSave(const wxString path, const wxString mapName, ObjList *list)
         if(item == NULL) return false;
         file.AddLine(wxString::Format(wxT("[OBJ%03d]"), i));
 
-        file.AddLine(wxT("ObjName=") + item->ObjName);
-        file.AddLine(wxT("ObjFile=") + item->ObjFile);
-        file.AddLine(wxT("WavFile=") + item->WavFile);
-        file.AddLine(wxT("ScriptFile=") + item->ScriptFile);
-
-        if(item->Kind != -1)
-            file.AddLine(wxT("Kind=") +
-                         wxString::Format(wxT("%d"), item->Kind));
-
-        if(item->Dir != -1)
-            file.AddLine(wxT("Dir=") +
-                         wxString::Format(wxT("%d"), item->Dir));
-
-        if(item->Lum != -1)
-            file.AddLine(wxT("Lum=") +
-                         wxString::Format(wxT("%d"), item->Lum));
-
-        if(item->MapX != -1)
-            file.AddLine(wxT("MapX=") +
-                         wxString::Format(wxT("%d"), item->MapX));
-
-        if(item->MapY != -1)
-            file.AddLine(wxT("MapY=") +
-                         wxString::Format(wxT("%d"), item->MapY));
-
-        if(item->OffX != -1)
-            file.AddLine(wxT("OffX=") +
-                         wxString::Format(wxT("%d"), item->OffX));
-
-        if(item->OffY != -1)
-            file.AddLine(wxT("OffY=") +
-                         wxString::Format(wxT("%d"), item->OffY));
-
-        if(item->Height != -1)
-            file.AddLine(wxT("Height=") +
-                         wxString::Format(wxT("%d"), item->Height));
-
-
-        if(item->Damage != -1)
-            file.AddLine(wxT("Damage=") +
-                         wxString::Format(wxT("%d"), item->Damage));
-
-        if(item->Frame != -1)
-            file.AddLine(wxT("Frame=") +
-                         wxString::Format(wxT("%d"), item->Frame));
+        SaveObjItem(file, item);
 
         file.AddLine(wxT(""));
     }

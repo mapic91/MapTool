@@ -2351,7 +2351,7 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1396529995 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1396570340 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2361,7 +2361,7 @@
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
 
-1396527143 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1396569682 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2418,7 +2418,7 @@
 1395322744 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1396530512 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1396569692 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2522,7 +2522,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1396529407 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1396535906 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/msgdlg.h"
 	"wx/dcmemory.h"
@@ -2571,13 +2571,14 @@
 	"wx/button.h"
 	"wx/dcclient.h"
 
-1396529427 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+1396569733 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
 	<string>
 	<list>
 	"wx/string.h"
 	"wx/arrstr.h"
 	"wx/stdpaths.h"
 	"wx/filename.h"
+	"wx/textfile.h"
 	"AsfDecode.hpp"
 
 1396495289 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
@@ -2593,12 +2594,11 @@
 	"wx/dcclient.h"
 	"mydefs.hpp"
 
-1396530476 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1396569944 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>
 	<cstring>
-	"wx/textfile.h"
 	"wx/msgdlg.h"
 
 1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\splitter.h

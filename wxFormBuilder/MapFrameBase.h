@@ -228,6 +228,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxStaticText* m_staticText43;
 		wxButton* m_DeathScript;
 		wxButton* m_DeathScriptEdit;
+		wxButton* m_button26;
 		wxButton* m_OK;
 		wxButton* m_Cancle;
 		
@@ -249,6 +250,7 @@ class NpcItemEditDialogBase : public wxDialog
 		virtual void OnDeathScript( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeathScriptClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDeathScriptEdit( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSaveNpcIniFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }
 		
@@ -297,6 +299,7 @@ class ObjItemEditDialogBase : public wxDialog
 		wxComboBox* m_OffX;
 		wxStaticText* m_staticText51;
 		wxComboBox* m_OffY;
+		wxButton* m_button25;
 		wxButton* m_OK;
 		wxButton* m_Cancel;
 		
@@ -309,6 +312,7 @@ class ObjItemEditDialogBase : public wxDialog
 		virtual void OnWavFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearWavFile( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOpenWavFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSaveObjIniFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }
 		

@@ -134,13 +134,15 @@ class NpcItemEditDialog: public NpcItemEditDialogBase
 public:
     NpcItemEditDialog(wxWindow *parent,
                       const wxString mapname,
-                      AsfImgList *list)
+                      AsfImgList *list,
+                      NpcItem *item)
         :NpcItemEditDialogBase(parent)
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
         m_NpcAsfImgList = list;
+        m_item = item;
 
         INI_MASK = wxT("INI文件(*.ini)|*.ini");
         TXT_MASK = wxT("TXT文件(*.txt)|*.txt");
@@ -315,6 +317,27 @@ private:
     }
 
 
+    void OnSaveNpcIniFile( wxCommandEvent& event )
+    {
+        wxFileDialog filedlg(this,
+                             wxT("保存INI"),
+                             exepath + wxT("ini\\npc\\"),
+                             wxT(""),
+                             INI_MASK,
+                             wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+        if(filedlg.ShowModal() == wxID_OK)
+        {
+            NpcItem item;
+            InitNpcItem(&item);
+            AssignToNpcItem(&item);
+            item.MapX = m_item->MapX;
+            item.MapY = m_item->MapY;
+            SaveIni(filedlg.GetPath(), &item);
+        }
+    }
+
+
 
     void OpenFile(wxString relatePath)
     {
@@ -340,6 +363,7 @@ private:
     long STYLE;
     wxString exepath, m_mapName;
     AsfImgList *m_NpcAsfImgList;
+    NpcItem *m_item;
 };
 
 class ObjItemEditDialog: public ObjItemEditDialogBase
@@ -348,13 +372,15 @@ public:
 
     ObjItemEditDialog(wxWindow *parent,
                       const wxString mapname,
-                      AsfImgList *list)
+                      AsfImgList *list,
+                      ObjItem *objitem)
         :ObjItemEditDialogBase(parent)
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
         m_ObjAsfImgList = list;
+        m_item = objitem;
     }
     virtual ~ObjItemEditDialog() {}
     void InitFromObjItem(ObjItem *item);
@@ -442,6 +468,25 @@ private:
     {
         EndModal(wxID_CANCEL);
     }
+    void OnSaveObjIniFile( wxCommandEvent& event )
+    {
+        wxFileDialog filedlg(this,
+                             wxT("保存INI"),
+                             exepath + wxT("ini\\obj\\"),
+                             wxT(""),
+                             wxT("INI文件(*.ini)|*.ini"),
+                             wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+
+        if(filedlg.ShowModal() == wxID_OK)
+        {
+            ObjItem item;
+            InitObjItem(&item);
+            AssignToObjItem(&item);
+            item.MapX = m_item->MapX;
+            item.MapY = m_item->MapY;
+            SaveIni(filedlg.GetPath(), NULL, &item);
+        }
+    }
 
     void OpenFile(wxString relatePath)
     {
@@ -463,6 +508,7 @@ private:
 
     wxString exepath, m_mapName;
     AsfImgList *m_ObjAsfImgList;
+    ObjItem *m_item;
 };
 
 #endif // MAPTOOL_H

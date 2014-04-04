@@ -407,7 +407,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(npcitem != NULL)
             {
                 NpcItemEditDialog
-                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList);
+                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList, npcitem);
                 itemEdit.InitFromNpcItem(npcitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToNpcItem(npcitem);
@@ -419,7 +419,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(objitem != NULL)
             {
                 ObjItemEditDialog
-                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList);
+                    itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList, objitem);
                 itemEdit.InitFromObjItem(objitem);
                 if(itemEdit.ShowModal() == wxID_OK)
                     itemEdit.AssignToObjItem(objitem);

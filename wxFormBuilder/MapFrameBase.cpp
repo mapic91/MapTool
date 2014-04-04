@@ -652,6 +652,11 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 	
+	m_button26 = new wxButton( this, wxID_ANY, wxT("保存..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_button26->SetToolTip( wxT("存为INI文件") );
+	
+	bSizer11->Add( m_button26, 0, wxALL, 5 );
+	
 	
 	bSizer11->Add( 0, 0, 1, wxEXPAND, 5 );
 	
@@ -688,6 +693,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_DeathScript->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
 	m_DeathScript->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
+	m_button26->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnSaveNpcIniFile ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancle->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnCancle ), NULL, this );
 }
@@ -712,6 +718,7 @@ NpcItemEditDialogBase::~NpcItemEditDialogBase()
 	m_DeathScript->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
 	m_DeathScript->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
+	m_button26->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnSaveNpcIniFile ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancle->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnCancle ), NULL, this );
 	
@@ -879,6 +886,11 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer16;
 	bSizer16 = new wxBoxSizer( wxVERTICAL );
 	
+	m_button25 = new wxButton( this, wxID_ANY, wxT("保存..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_button25->SetToolTip( wxT("存为INI文件") );
+	
+	bSizer16->Add( m_button25, 0, wxALL, 5 );
+	
 	
 	bSizer16->Add( 0, 0, 1, wxEXPAND, 5 );
 	
@@ -906,6 +918,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_WavFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnWavFile ), NULL, this );
 	m_WavFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearWavFile ), NULL, this );
 	m_button24->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOpenWavFile ), NULL, this );
+	m_button25->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnSaveObjIniFile ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnCancle ), NULL, this );
 }
@@ -921,6 +934,7 @@ ObjItemEditDialogBase::~ObjItemEditDialogBase()
 	m_WavFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnWavFile ), NULL, this );
 	m_WavFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearWavFile ), NULL, this );
 	m_button24->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOpenWavFile ), NULL, this );
+	m_button25->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnSaveObjIniFile ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnCancle ), NULL, this );
 	
