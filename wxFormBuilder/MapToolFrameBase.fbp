@@ -1773,7 +1773,7 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">物品(OBJ)</property>
                     <property name="name">m_menu3</property>
                     <property name="permission">protected</property>

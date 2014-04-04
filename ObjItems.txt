@@ -1,7 +1,7 @@
 Damage			long
 Dir				char
 Frame			char
-Height			long
+Height			long//
 Kind			char
 Lum				long
 MapX			long

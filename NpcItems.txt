@@ -29,6 +29,7 @@ NpcIni			string
 PathFinder		char
 Relation		char
 ScriptFile		string
+(ShowName)		string - ÐÂ½£
 State			char
 Thew			long
 ThewMax			long

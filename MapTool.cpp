@@ -45,7 +45,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V1.1 - by 小试刀剑  2014.03.22"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.0 - by 小试刀剑  2014.04.04"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -117,10 +117,17 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
 
     if(filedlg.ShowModal() != wxID_OK) return;
     wxImage *img = ReadMap(true);
-    img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
-    delete img;
+    if(img != NULL &&
+       img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG))
+    {
+        wxMessageBox(wxT("完成"), wxT("消息"));
+    }
+    else
+    {
+        wxMessageBox(wxT("失败"), wxT("错误"), wxOK|wxCENTER|wxICON_ERROR);
+    }
 
-    wxMessageBox(wxT("完成"), wxT("消息"));
+    if(img != NULL) delete img;
 }
 
 wxImage* MapTool::ReadMap(bool getImg)
@@ -206,24 +213,11 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
     }
 
     DrawObjsNpcs(dc);
+    DrawObjsNpcsPosition(dc);
 
-    //Draw npc obj position
-    if(!m_isPlaceMode)
-    {
-        if(m_isNpc && m_ToolBarEdit->GetToolState(ID_SHOWNPC))
-        {
-            dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxBLUE, 2)));
-            DrawNpcPosition(dc);
-        }
-        if(m_isObj && m_ToolBarEdit->GetToolState(ID_SHOWOBJ))
-        {
-            dc.SetPen(*(wxThePenList->FindOrCreatePen(wxColour(0, 255, 255), 2)));
-            DrawObjPostion(dc);
-        }
-    }
 }
 
-void MapTool::DrawRectangle(long col, long row, wxBufferedPaintDC &dc)
+void MapTool::DrawRectangle(long col, long row, wxDC &dc, bool currentView)
 {
     int recposx, recposy;
     if(map.GetPixelPosition(col, row, &recposx, &recposy))
@@ -234,11 +228,16 @@ void MapTool::DrawRectangle(long col, long row, wxBufferedPaintDC &dc)
         point[2] = wxPoint(32, 32);
         point[3] = wxPoint(0, 16);
         point[4] = wxPoint(32, 0);
-        dc.DrawLines(5, point, recposx - m_ViewBeginx, recposy - m_ViewBeginy);
+        if(currentView)
+        {
+            recposx -= m_ViewBeginx;
+            recposy -= m_ViewBeginy;
+        }
+        dc.DrawLines(5, point, recposx, recposy);
     }
 }
 
-void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcitem, ObjItem *objitem)
+void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *objitem, bool currentView)
 {
     if(npcitem == NULL && objitem == NULL) return;
 
@@ -260,8 +259,8 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcit
         //tDrawY = recposy + 58 - tOffY + (32 - tHeight) - m_ViewBeginy;
 
         //Tile beg at tile middle(32,16)
-        tDrawX = recposx + 32 - tOffX - m_ViewBeginx;
-        tDrawY = recposy + 16 - tOffY - m_ViewBeginy;
+        tDrawX = recposx + 32 - tOffX;
+        tDrawY = recposy + 16 - tOffY;
     }
     else if(objitem != NULL)
     {
@@ -272,8 +271,14 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcit
         tOffY = objitem->ObjCommon->GetBottom();
 
         //Tile beg at tile middle(32,16)
-        tDrawX = recposx + 32 - tOffX + objitem->OffX - m_ViewBeginx;
-        tDrawY = recposy + 16 - tOffY + objitem->OffY - m_ViewBeginy;
+        tDrawX = recposx + 32 - tOffX + objitem->OffX;
+        tDrawY = recposy + 16 - tOffY + objitem->OffY;
+    }
+
+    if(currentView)
+    {
+        tDrawX -= m_ViewBeginx;
+        tDrawY -= m_ViewBeginy;
     }
 
     if(timg.IsOk())
@@ -295,7 +300,7 @@ void MapTool::DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcit
     }
 }
 
-void MapTool::DrawObjsNpcs(wxBufferedPaintDC &dc)
+void MapTool::DrawObjsNpcs(wxDC &dc, bool currentView)
 {
     int counts;
     if(m_ToolBarEdit->GetToolState(ID_SHOWNPC))
@@ -306,7 +311,7 @@ void MapTool::DrawObjsNpcs(wxBufferedPaintDC &dc)
         {
             npcitem = m_NpcList.GetItem(i);
             if(npcitem == NULL) continue;
-            DrawTile(npcitem->MapX, npcitem->MapY, dc, npcitem);
+            DrawTile(npcitem->MapX, npcitem->MapY, dc, npcitem, NULL, currentView);
         }
     }
 
@@ -318,13 +323,29 @@ void MapTool::DrawObjsNpcs(wxBufferedPaintDC &dc)
         {
             objitem = m_ObjList.GetItem(j);
             if(objitem == NULL) continue;
-            DrawTile(objitem->MapX, objitem->MapY, dc, NULL, objitem);
+            DrawTile(objitem->MapX, objitem->MapY, dc, NULL, objitem, currentView);
         }
     }
 
 }
+void MapTool::DrawObjsNpcsPosition(wxDC &dc, bool currentView)
+{
+    if(!m_isPlaceMode)
+    {
+        if(m_isNpc && m_ToolBarEdit->GetToolState(ID_SHOWNPC))
+        {
+            dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxBLUE, 2)));
+            DrawNpcPosition(dc, currentView);
+        }
+        if(m_isObj && m_ToolBarEdit->GetToolState(ID_SHOWOBJ))
+        {
+            dc.SetPen(*(wxThePenList->FindOrCreatePen(wxColour(0, 255, 255), 2)));
+            DrawObjPostion(dc, currentView);
+        }
+    }
+}
 
-void MapTool::DrawNpcPosition(wxBufferedPaintDC &dc)
+void MapTool::DrawNpcPosition(wxDC &dc, bool currentView)
 {
     int counts = m_NpcList.getCounts();
     NpcItem *npcitem;
@@ -332,11 +353,11 @@ void MapTool::DrawNpcPosition(wxBufferedPaintDC &dc)
     {
         npcitem = m_NpcList.GetItem(i);
         if(npcitem == NULL) continue;
-        DrawRectangle(npcitem->MapX, npcitem->MapY, dc);
+        DrawRectangle(npcitem->MapX, npcitem->MapY, dc, currentView);
     }
 }
 
-void MapTool::DrawObjPostion(wxBufferedPaintDC &dc)
+void MapTool::DrawObjPostion(wxDC &dc, bool currentView)
 {
     int counts = m_ObjList.getCounts();
     ObjItem *objitem;
@@ -344,7 +365,7 @@ void MapTool::DrawObjPostion(wxBufferedPaintDC &dc)
     {
         objitem = m_ObjList.GetItem(j);
         if(objitem == NULL) continue;
-        DrawRectangle(objitem->MapX, objitem->MapY, dc);
+        DrawRectangle(objitem->MapX, objitem->MapY, dc, currentView);
     }
 }
 

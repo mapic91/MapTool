@@ -104,11 +104,19 @@ private:
     void OnShowNpcCheck( wxCommandEvent& event ) { RedrawMapView(); }
     void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
 
-    void DrawRectangle(long col, long row, wxBufferedPaintDC &dc);
-    void DrawTile(long col, long row, wxBufferedPaintDC &dc, NpcItem *npcitem, ObjItem *objitem = NULL);
-    void DrawObjsNpcs(wxBufferedPaintDC &dc);
-    void DrawNpcPosition(wxBufferedPaintDC &dc);
-    void DrawObjPostion(wxBufferedPaintDC &dc);
+    //currentView: if true dc is the current mapview client,
+    // else dc is the entire map
+    void DrawRectangle(long col, long row, wxDC &dc, bool currentView = true);
+    void DrawTile(long col,
+                  long row,
+                  wxDC &dc,
+                  NpcItem *npcitem,
+                  ObjItem *objitem = NULL,
+                  bool currentView = true);
+    void DrawObjsNpcs(wxDC &dc, bool currentView = true);
+    void DrawObjsNpcsPosition(wxDC &dc, bool currentView = true);
+    void DrawNpcPosition(wxDC &dc, bool currentView = true);
+    void DrawObjPostion(wxDC &dc, bool currentView = true);
 
     //if getImg is true return an image, else return NULL
     wxImage* ReadMap(bool getImg = false);
