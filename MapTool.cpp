@@ -45,7 +45,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.0 - by 小试刀剑  2014.04.04"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.1 - by 小试刀剑  2014.05.24"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -118,7 +118,7 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
     if(filedlg.ShowModal() != wxID_OK) return;
     wxImage *img = ReadMap(true);
     if(img != NULL &&
-       img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG))
+            img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG))
     {
         wxMessageBox(wxT("完成"), wxT("消息"));
     }
@@ -520,34 +520,37 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 }
 void MapTool::OnMouseMove( wxMouseEvent& event )
 {
-    long posx, posy;
+    long posx, posy, lasttilex = m_CurTileX, lasttiley = m_CurTileY;
     wxString msg;
     event.GetPosition(&posx, &posy);
 
-    if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &m_CurTileX, &m_CurTileY))
+    if(map.GetTilePosition(posx + m_ViewBeginx, posy + m_ViewBeginy, &m_CurTileX, &m_CurTileY) &&
+       (lasttilex != m_CurTileX || lasttiley != m_CurTileY) )
+    {
         msg = wxString::Format(wxT("[%ld,%ld]"), m_CurTileX, m_CurTileY);
 
-    if(m_isMoveMode && event.Dragging())
-    {
-        if(m_CurTileX >=0 && m_CurTileX < map.getCol())
+        if(m_isMoveMode && event.Dragging())
         {
-            if(m_isNpc && m_MoveNpcItem != NULL)
-                m_MoveNpcItem->MapX = m_CurTileX;
-            else if(m_isObj && m_MoveObjItem != NULL)
-                m_MoveObjItem->MapX = m_CurTileX;
+            if(m_CurTileX >=0 && m_CurTileX < map.getCol())
+            {
+                if(m_isNpc && m_MoveNpcItem != NULL)
+                    m_MoveNpcItem->MapX = m_CurTileX;
+                else if(m_isObj && m_MoveObjItem != NULL)
+                    m_MoveObjItem->MapX = m_CurTileX;
+            }
+            if(m_CurTileY >= 0 && m_CurTileY < map.getRow())
+            {
+                if(m_isNpc && m_MoveNpcItem != NULL)
+                    m_MoveNpcItem->MapY = m_CurTileY;
+                else if(m_isObj && m_MoveObjItem != NULL)
+                    m_MoveObjItem->MapY = m_CurTileY;
+            }
         }
-        if(m_CurTileY >= 0 && m_CurTileY < map.getRow())
-        {
-            if(m_isNpc && m_MoveNpcItem != NULL)
-                m_MoveNpcItem->MapY = m_CurTileY;
-            else if(m_isObj && m_MoveObjItem != NULL)
-                m_MoveObjItem->MapY = m_CurTileY;
-        }
+
+        RedrawMapView();
+
+        m_StatusBar->SetStatusText(msg, 0);
     }
-
-    RedrawMapView();
-
-    m_StatusBar->SetStatusText(msg, 0);
 }
 
 void MapTool::OnDrawMapControl( wxPaintEvent& event )
@@ -841,9 +844,27 @@ void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
     m_Name->ChangeValue(item->Name);
     m_ShowName->ChangeValue(item->ShowName);
     if(item->Kind != -1)
-        m_Kind->ChangeValue(wxString::Format(wxT("%d"), item->Kind));
+    {
+        int sel = item->Kind;
+        switch(sel)
+        {
+        case 4:
+            sel = 3;
+            break;
+        case 5:
+            sel = 2;
+            break;
+        case 6:
+            sel = 4;
+            break;
+        case 7:
+            sel = 5;
+            break;
+        }
+        m_Kind->SetSelection(sel);
+    }
     if(item->Relation != -1)
-        m_Relation->ChangeValue(wxString::Format(wxT("%d"), item->Relation));
+        m_Relation->SetSelection(item->Relation);
     if(item->PathFinder != -1)
         m_PathFinder->ChangeValue(wxString::Format(wxT("%d"), item->PathFinder));
     if(item->State != -1)
@@ -855,11 +876,11 @@ void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
     if(item->AttackRadius != -1)
         m_AttackRadius->ChangeValue(wxString::Format(wxT("%d"), item->AttackRadius));
     if(item->Dir != -1)
-        m_Dir->ChangeValue(wxString::Format(wxT("%d"), item->Dir));
+        m_Dir->SetSelection(item->Dir);
     if(item->Lum != -1)
         m_Lum->ChangeValue(wxString::Format(wxT("%d"), item->Lum));
     if(item->Action != -1)
-        m_Action->ChangeValue(wxString::Format(wxT("%d"), item->Action));
+        m_Action->SetSelection(item->Action);
     if(item->WalkSpeed != -1)
         m_WalkSpeed->ChangeValue(wxString::Format(wxT("%d"), item->WalkSpeed));
 
@@ -942,12 +963,30 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item)
     value = m_ShowName->GetValue();
     if(!value.IsEmpty()) item->ShowName = value;
 
-    value = m_Kind->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Kind->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
+    else
+    {
+        switch(n_val)
+        {
+        case 2:
+            n_val = 5;
+            break;
+        case 3:
+            n_val = 4;
+            break;
+        case 4:
+            n_val = 6;
+            break;
+        case 5:
+            n_val = 7;
+            break;
+        }
+    }
     item->Kind = n_val;
 
-    value = m_Relation->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Relation->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
     item->Relation = n_val;
 
     value = m_PathFinder->GetValue();
@@ -970,16 +1009,16 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item)
     if(!value.ToLong(&n_val)) n_val = -1;
     item->AttackRadius = n_val;
 
-    value = m_Dir->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Dir->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
     item->Dir = n_val;
 
     value = m_Lum->GetValue();
     if(!value.ToLong(&n_val)) n_val = -1;
     item->Lum = n_val;
 
-    value = m_Action->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Action->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
     item->Action = n_val;
 
     value = m_WalkSpeed->GetValue();
@@ -1070,9 +1109,9 @@ void ObjItemEditDialog::InitFromObjItem(ObjItem *item)
 
     m_ObjName->ChangeValue(item->ObjName);
     if(item->Kind != -1)
-        m_Kind->ChangeValue(wxString::Format(wxT("%d"), item->Kind));
+        m_Kind->SetSelection(item->Kind);
     if(item->Dir != -1)
-        m_Dir->ChangeValue(wxString::Format(wxT("%d"), item->Dir));
+        m_Dir->SetSelection(item->Dir);
     if(item->Damage != -1)
         m_Damage->ChangeValue(wxString::Format(wxT("%d"), item->Damage));
     if(item->Frame != -1)
@@ -1112,12 +1151,12 @@ void ObjItemEditDialog::AssignToObjItem(ObjItem *item)
     value = m_ObjName->GetValue();
     if(!value.IsEmpty()) item->ObjName = value;
 
-    value = m_Kind->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Kind->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
     item->Kind = n_val;
 
-    value = m_Dir->GetValue();
-    if(!value.ToLong(&n_val)) n_val = -1;
+    n_val = m_Dir->GetSelection();
+    if(n_val == wxNOT_FOUND) n_val = -1;
     item->Dir = n_val;
 
     value = m_Damage->GetValue();

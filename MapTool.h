@@ -412,7 +412,7 @@ private:
                              exepath + wxT("ini\\objres\\"),
                              wxT(""),
                              wxT("INI文件(*.ini)|*.ini"),
-                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+                             wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
         {
@@ -433,7 +433,7 @@ private:
                              exepath + wxT("script\\common\\"),
                              wxT(""),
                              wxT("TXT文件(*.txt)|*.txt"),
-                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+                             wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
         {
@@ -465,7 +465,7 @@ private:
                              exepath + wxT("sound\\"),
                              wxT(""),
                              wxT("WAV文件(*.wav)|*.wav"),
-                             wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+                             wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
         {

@@ -2409,7 +2409,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;普通类&quot; &quot;战斗类&quot; &quot;事件类&quot; &quot;地上动物类&quot; &quot;怕人动物类&quot; &quot;飞翔动物类&quot; &quot;&quot; &quot;&quot; &quot;&quot;</property>
+                                <property name="choices">&quot;普通类&quot; &quot;战斗类&quot; &quot;事件类&quot; &quot;地上动物类&quot; &quot;怕人动物类&quot; &quot;飞翔动物类&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -2442,7 +2442,7 @@
                                 <property name="selection">-1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
-                                <property name="style"></property>
+                                <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
                                 <property name="tooltip"></property>
@@ -2757,7 +2757,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;友好&quot; &quot;敌对&quot; &quot;中立&quot; &quot;&quot;</property>
+                                <property name="choices">&quot;友好&quot; &quot;敌对&quot; &quot;中立&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -2790,7 +2790,7 @@
                                 <property name="selection">-1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
-                                <property name="style"></property>
+                                <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
                                 <property name="tooltip"></property>
@@ -5193,7 +5193,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;&quot; &quot;&quot;</property>
+                                <property name="choices">&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -5226,7 +5226,7 @@
                                 <property name="selection">-1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
-                                <property name="style"></property>
+                                <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
                                 <property name="tooltip"></property>
@@ -5922,7 +5922,7 @@
                                 <property name="selection">-1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
-                                <property name="style"></property>
+                                <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
                                 <property name="tooltip"></property>
@@ -10007,15 +10007,15 @@
                                         <property name="selection">-1</property>
                                         <property name="show">1</property>
                                         <property name="size"></property>
-                                        <property name="style"></property>
+                                        <property name="style">wxCB_READONLY</property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip"></property>
+                                        <property name="tooltip">0-植物和装饰类（新剑仅装饰类）&#x0A;1-宝箱和动画类（新剑还包括植物类）&#x0A;2-尸体类&#x0A;3-循环音效&#x0A;4-随机音效&#x0A;5-门类</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
                                         <property name="validator_variable"></property>
-                                        <property name="value"></property>
+                                        <property name="value">植物和装饰类（新剑仅装饰类）</property>
                                         <property name="window_extra_style"></property>
                                         <property name="window_name"></property>
                                         <property name="window_style"></property>
@@ -10181,7 +10181,7 @@
                                         <property name="selection">-1</property>
                                         <property name="show">1</property>
                                         <property name="size"></property>
-                                        <property name="style"></property>
+                                        <property name="style">wxCB_READONLY</property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
                                         <property name="tooltip"></property>

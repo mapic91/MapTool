@@ -333,16 +333,13 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText3->Wrap( -1 );
 	gSizer1->Add( m_staticText3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Kind->Append( wxT("普通类") );
 	m_Kind->Append( wxT("战斗类") );
 	m_Kind->Append( wxT("事件类") );
 	m_Kind->Append( wxT("地上动物类") );
 	m_Kind->Append( wxT("怕人动物类") );
 	m_Kind->Append( wxT("飞翔动物类") );
-	m_Kind->Append( wxEmptyString );
-	m_Kind->Append( wxEmptyString );
-	m_Kind->Append( wxEmptyString );
 	m_Kind->SetMinSize( wxSize( 110,-1 ) );
 	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -362,11 +359,10 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText5->Wrap( -1 );
 	gSizer1->Add( m_staticText5, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Relation = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Relation = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Relation->Append( wxT("友好") );
 	m_Relation->Append( wxT("敌对") );
 	m_Relation->Append( wxT("中立") );
-	m_Relation->Append( wxEmptyString );
 	m_Relation->SetMinSize( wxSize( 110,-1 ) );
 	m_Relation->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -549,7 +545,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText19->Wrap( -1 );
 	gSizer1->Add( m_staticText19, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Dir->Append( wxT("0") );
 	m_Dir->Append( wxT("1") );
 	m_Dir->Append( wxT("2") );
@@ -558,8 +554,6 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Dir->Append( wxT("5") );
 	m_Dir->Append( wxT("6") );
 	m_Dir->Append( wxT("7") );
-	m_Dir->Append( wxEmptyString );
-	m_Dir->Append( wxEmptyString );
 	m_Dir->SetMinSize( wxSize( 110,-1 ) );
 	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -599,7 +593,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText23->Wrap( -1 );
 	gSizer1->Add( m_staticText23, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Action = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Action = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Action->Append( wxT("站立") );
 	m_Action->Append( wxT("走动（随机）") );
 	m_Action->Append( wxT("走动（循环）") );
@@ -928,13 +922,14 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText41->Wrap( -1 );
 	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Kind = new wxComboBox( this, wxID_ANY, wxT("植物和装饰类（新剑仅装饰类）"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Kind->Append( wxT("植物和装饰类（新剑仅装饰类）") );
 	m_Kind->Append( wxT("宝箱和动画类（新剑还包括植物类）") );
 	m_Kind->Append( wxT("尸体类") );
 	m_Kind->Append( wxT("循环音效") );
 	m_Kind->Append( wxT("随机音效") );
 	m_Kind->Append( wxT("门类") );
+	m_Kind->SetToolTip( wxT("0-植物和装饰类（新剑仅装饰类）\n1-宝箱和动画类（新剑还包括植物类）\n2-尸体类\n3-循环音效\n4-随机音效\n5-门类") );
 	m_Kind->SetMinSize( wxSize( 110,-1 ) );
 	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -944,7 +939,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText42->Wrap( -1 );
 	gSizer2->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Dir->Append( wxT("0") );
 	m_Dir->Append( wxT("1") );
 	m_Dir->Append( wxT("2") );
