@@ -314,48 +314,94 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Name = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	gSizer1->Add( m_Name, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_Name->SetMinSize( wxSize( 110,-1 ) );
+	m_Name->SetMaxSize( wxSize( 110,-1 ) );
+	
+	gSizer1->Add( m_Name, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("闪避------Evade"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
 	gSizer1->Add( m_staticText2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Evade = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Evade->SetMinSize( wxSize( 110,-1 ) );
+	m_Evade->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Evade, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("类型------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText3->Wrap( -1 );
 	gSizer1->Add( m_staticText3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	gSizer1->Add( m_Kind, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Kind->Append( wxT("普通类") );
+	m_Kind->Append( wxT("战斗类") );
+	m_Kind->Append( wxT("事件类") );
+	m_Kind->Append( wxT("地上动物类") );
+	m_Kind->Append( wxT("怕人动物类") );
+	m_Kind->Append( wxT("飞翔动物类") );
+	m_Kind->Append( wxEmptyString );
+	m_Kind->Append( wxEmptyString );
+	m_Kind->Append( wxEmptyString );
+	m_Kind->SetMinSize( wxSize( 110,-1 ) );
+	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
+	
+	gSizer1->Add( m_Kind, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("攻击力----Attack "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText4->Wrap( -1 );
 	gSizer1->Add( m_staticText4, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Attack = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Attack->SetMinSize( wxSize( 110,-1 ) );
+	m_Attack->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Attack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("关系------Relation"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText5->Wrap( -1 );
 	gSizer1->Add( m_staticText5, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Relation = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Relation = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Relation->Append( wxT("友好") );
+	m_Relation->Append( wxT("敌对") );
+	m_Relation->Append( wxT("中立") );
+	m_Relation->Append( wxEmptyString );
+	m_Relation->SetMinSize( wxSize( 110,-1 ) );
+	m_Relation->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Relation, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT("攻击等级--AttackLevel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText6->Wrap( -1 );
 	gSizer1->Add( m_staticText6, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_AttackLevel = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_AttackLevel = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_AttackLevel->Append( wxT("1") );
+	m_AttackLevel->Append( wxT("2") );
+	m_AttackLevel->Append( wxT("3") );
+	m_AttackLevel->Append( wxT("4") );
+	m_AttackLevel->Append( wxT("5") );
+	m_AttackLevel->Append( wxT("6") );
+	m_AttackLevel->Append( wxT("7") );
+	m_AttackLevel->Append( wxT("8") );
+	m_AttackLevel->Append( wxT("9") );
+	m_AttackLevel->Append( wxT("10") );
+	m_AttackLevel->SetMinSize( wxSize( 110,-1 ) );
+	m_AttackLevel->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_AttackLevel, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT("寻路------PathFinder"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText7->Wrap( -1 );
 	gSizer1->Add( m_staticText7, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_PathFinder = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_PathFinder = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_PathFinder->Append( wxT("0") );
+	m_PathFinder->Append( wxT("1") );
+	m_PathFinder->SetMinSize( wxSize( 110,-1 ) );
+	m_PathFinder->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_PathFinder, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText8 = new wxStaticText( this, wxID_ANY, wxT("防御------Defend"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -363,13 +409,20 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText8, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Defend = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Defend->SetMinSize( wxSize( 110,-1 ) );
+	m_Defend->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Defend, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("状态------State"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
 	gSizer1->Add( m_staticText9, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_State = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_State = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_State->Append( wxT("0") );
+	m_State->SetMinSize( wxSize( 110,-1 ) );
+	m_State->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_State, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText10 = new wxStaticText( this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -390,6 +443,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ShowName = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_ShowName->SetMinSize( wxSize( 110,-1 ) );
+	m_ShowName->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_ShowName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText12 = new wxStaticText( this, wxID_ANY, wxT("经验------Exp "), wxDefaultPosition, wxDefaultSize, 0 );
@@ -397,41 +453,85 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText12, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Exp = new wxBitmapComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Exp->SetMinSize( wxSize( 110,-1 ) );
+	m_Exp->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Exp, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText13 = new wxStaticText( this, wxID_ANY, wxT("视野半径--VisionRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText13->Wrap( -1 );
 	gSizer1->Add( m_staticText13, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_VisionRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_VisionRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_VisionRadius->Append( wxT("10") );
+	m_VisionRadius->Append( wxT("15") );
+	m_VisionRadius->Append( wxT("20") );
+	m_VisionRadius->Append( wxT("25") );
+	m_VisionRadius->SetMinSize( wxSize( 110,-1 ) );
+	m_VisionRadius->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_VisionRadius, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText14 = new wxStaticText( this, wxID_ANY, wxT("升级经验--LevelUpExp"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText14->Wrap( -1 );
 	gSizer1->Add( m_staticText14, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_LevelUpExp = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_LevelUpExp = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_LevelUpExp->Append( wxT("0") );
+	m_LevelUpExp->Append( wxT("50") );
+	m_LevelUpExp->Append( wxT("100") );
+	m_LevelUpExp->Append( wxT("150") );
+	m_LevelUpExp->Append( wxT("200") );
+	m_LevelUpExp->SetMinSize( wxSize( 110,-1 ) );
+	m_LevelUpExp->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_LevelUpExp, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText15 = new wxStaticText( this, wxID_ANY, wxT("对话半径--DialogRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText15->Wrap( -1 );
 	gSizer1->Add( m_staticText15, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_DialogRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_DialogRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_DialogRadius->Append( wxT("1") );
+	m_DialogRadius->Append( wxT("2") );
+	m_DialogRadius->Append( wxT("3") );
+	m_DialogRadius->Append( wxT("4") );
+	m_DialogRadius->Append( wxT("5") );
+	m_DialogRadius->SetMinSize( wxSize( 110,-1 ) );
+	m_DialogRadius->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_DialogRadius, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT("等级------Level"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText16->Wrap( -1 );
 	gSizer1->Add( m_staticText16, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Level = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Level = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Level->Append( wxT("10") );
+	m_Level->Append( wxT("20") );
+	m_Level->Append( wxT("30") );
+	m_Level->Append( wxT("40") );
+	m_Level->Append( wxT("50") );
+	m_Level->Append( wxT("60") );
+	m_Level->Append( wxT("70") );
+	m_Level->SetMinSize( wxSize( 110,-1 ) );
+	m_Level->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Level, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText17 = new wxStaticText( this, wxID_ANY, wxT("攻击半径--AttackRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText17->Wrap( -1 );
 	gSizer1->Add( m_staticText17, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_AttackRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_AttackRadius = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_AttackRadius->Append( wxT("1") );
+	m_AttackRadius->Append( wxT("5") );
+	m_AttackRadius->Append( wxT("10") );
+	m_AttackRadius->Append( wxT("15") );
+	m_AttackRadius->Append( wxT("20") );
+	m_AttackRadius->SetMinSize( wxSize( 110,-1 ) );
+	m_AttackRadius->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_AttackRadius, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText18 = new wxStaticText( this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -449,7 +549,20 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText19->Wrap( -1 );
 	gSizer1->Add( m_staticText19, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Dir->Append( wxT("0") );
+	m_Dir->Append( wxT("1") );
+	m_Dir->Append( wxT("2") );
+	m_Dir->Append( wxT("3") );
+	m_Dir->Append( wxT("4") );
+	m_Dir->Append( wxT("5") );
+	m_Dir->Append( wxT("6") );
+	m_Dir->Append( wxT("7") );
+	m_Dir->Append( wxEmptyString );
+	m_Dir->Append( wxEmptyString );
+	m_Dir->SetMinSize( wxSize( 110,-1 ) );
+	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Dir, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText20 = new wxStaticText( this, wxID_ANY, wxT("生命------Life"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -457,6 +570,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText20, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Life = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Life->SetMinSize( wxSize( 110,-1 ) );
+	m_Life->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Life, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText21 = new wxStaticText( this, wxID_ANY, wxT("亮度------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -464,6 +580,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText21, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Lum = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Lum->SetMinSize( wxSize( 110,-1 ) );
+	m_Lum->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Lum, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText22 = new wxStaticText( this, wxID_ANY, wxT("最大生命--LifeMax"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -471,13 +590,22 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText22, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_LifeMax = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_LifeMax->SetMinSize( wxSize( 110,-1 ) );
+	m_LifeMax->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_LifeMax, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText23 = new wxStaticText( this, wxID_ANY, wxT("动作------Action"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText23->Wrap( -1 );
 	gSizer1->Add( m_staticText23, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Action = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Action = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Action->Append( wxT("站立") );
+	m_Action->Append( wxT("走动（随机）") );
+	m_Action->Append( wxT("走动（循环）") );
+	m_Action->SetMinSize( wxSize( 110,-1 ) );
+	m_Action->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Action, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText24 = new wxStaticText( this, wxID_ANY, wxT("体力------Thew"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -485,13 +613,24 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText24, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Thew = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Thew->SetMinSize( wxSize( 110,-1 ) );
+	m_Thew->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Thew, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText25 = new wxStaticText( this, wxID_ANY, wxT("行走速度--WalkSpeed"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText25->Wrap( -1 );
 	gSizer1->Add( m_staticText25, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_WalkSpeed = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_WalkSpeed = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_WalkSpeed->Append( wxT("1") );
+	m_WalkSpeed->Append( wxT("2") );
+	m_WalkSpeed->Append( wxT("3") );
+	m_WalkSpeed->Append( wxT("4") );
+	m_WalkSpeed->Append( wxT("5") );
+	m_WalkSpeed->SetMinSize( wxSize( 110,-1 ) );
+	m_WalkSpeed->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_WalkSpeed, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText26 = new wxStaticText( this, wxID_ANY, wxT("最大体力--ThewMax"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -499,6 +638,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText26, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ThewMax = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_ThewMax->SetMinSize( wxSize( 110,-1 ) );
+	m_ThewMax->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_ThewMax, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText27 = new wxStaticText( this, wxID_ANY, wxT("MyLabel"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -517,6 +659,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText28, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Mana = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Mana->SetMinSize( wxSize( 110,-1 ) );
+	m_Mana->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Mana, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText29 = new wxStaticText( this, wxID_ANY, wxT("人物图像--NpcIni"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -542,6 +687,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText30, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ManaMax = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_ManaMax->SetMinSize( wxSize( 110,-1 ) );
+	m_ManaMax->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_ManaMax, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText31 = new wxStaticText( this, wxID_ANY, wxT("尸体图像--BodyIni"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -596,6 +744,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText34, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ExpBonus = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_ExpBonus->SetMinSize( wxSize( 110,-1 ) );
+	m_ExpBonus->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_ExpBonus, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText35 = new wxStaticText( this, wxID_ANY, wxT("攻击2-----FlyIni2"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -621,6 +772,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText36, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Idle = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Idle->SetMinSize( wxSize( 110,-1 ) );
+	m_Idle->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_Idle, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("对话脚本--ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -646,6 +800,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_FixedPos = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_FixedPos->SetMinSize( wxSize( 110,-1 ) );
+	m_FixedPos->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer1->Add( m_FixedPos, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("死亡脚本--DeathScript"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -762,20 +919,43 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText40, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ObjName = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_ObjName->SetMinSize( wxSize( 110,-1 ) );
+	m_ObjName->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_ObjName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("类型--------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText41->Wrap( -1 );
 	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Kind = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Kind->Append( wxT("植物和装饰类（新剑仅装饰类）") );
+	m_Kind->Append( wxT("宝箱和动画类（新剑还包括植物类）") );
+	m_Kind->Append( wxT("尸体类") );
+	m_Kind->Append( wxT("循环音效") );
+	m_Kind->Append( wxT("随机音效") );
+	m_Kind->Append( wxT("门类") );
+	m_Kind->SetMinSize( wxSize( 110,-1 ) );
+	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Kind, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("方向--------Dir"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
 	gSizer2->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
+	m_Dir->Append( wxT("0") );
+	m_Dir->Append( wxT("1") );
+	m_Dir->Append( wxT("2") );
+	m_Dir->Append( wxT("3") );
+	m_Dir->Append( wxT("4") );
+	m_Dir->Append( wxT("5") );
+	m_Dir->Append( wxT("6") );
+	m_Dir->Append( wxT("7") );
+	m_Dir->SetMinSize( wxSize( 110,-1 ) );
+	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Dir, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("伤害--------Damage"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -783,6 +963,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText43, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Damage = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Damage->SetMinSize( wxSize( 110,-1 ) );
+	m_Damage->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Damage, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("帧----------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -790,6 +973,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText44, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Frame = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Frame->SetMinSize( wxSize( 110,-1 ) );
+	m_Frame->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Frame, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText45 = new wxStaticText( this, wxID_ANY, wxT("高----------Height"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -797,6 +983,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText45, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Height = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Height->SetMinSize( wxSize( 110,-1 ) );
+	m_Height->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Height, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText52 = new wxStaticText( this, wxID_ANY, wxT("亮度--------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -804,6 +993,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText52, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Lum = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_Lum->SetMinSize( wxSize( 110,-1 ) );
+	m_Lum->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer2->Add( m_Lum, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	
@@ -888,6 +1080,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer3->Add( m_staticText50, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_OffX = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_OffX->SetMinSize( wxSize( 110,-1 ) );
+	m_OffX->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer3->Add( m_OffX, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("下偏移------OffY"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -895,6 +1090,9 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer3->Add( m_staticText51, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_OffY = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_OffY->SetMinSize( wxSize( 110,-1 ) );
+	m_OffY->SetMaxSize( wxSize( 110,-1 ) );
+	
 	gSizer3->Add( m_OffY, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	

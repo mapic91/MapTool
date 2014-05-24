@@ -88,25 +88,25 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="1">
+            <object class="wxBoxSizer" expanded="0">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer1</property>
                 <property name="orient">wxVERTICAL</property>
                 <property name="permission">none</property>
-                <object class="sizeritem" expanded="1">
+                <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">0</property>
-                    <object class="wxBoxSizer" expanded="1">
+                    <object class="wxBoxSizer" expanded="0">
                         <property name="minimum_size"></property>
                         <property name="name">bSizer2</property>
                         <property name="orient">wxVERTICAL</property>
                         <property name="permission">none</property>
-                        <object class="sizeritem" expanded="1">
+                        <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
                             <property name="flag">wxEXPAND</property>
                             <property name="proportion">1</property>
-                            <object class="wxToolBar" expanded="1">
+                            <object class="wxToolBar" expanded="0">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -185,7 +185,7 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="tool" expanded="1">
+                                <object class="tool" expanded="0">
                                     <property name="bitmap">Load From Icon Resource; OPENFILE; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_OPENMAP</property>
@@ -206,7 +206,7 @@
                                     <event name="OnToolRClicked"></event>
                                     <event name="OnUpdateUI"></event>
                                 </object>
-                                <object class="toolSeparator" expanded="1">
+                                <object class="toolSeparator" expanded="0">
                                     <property name="permission">protected</property>
                                 </object>
                                 <object class="toolSeparator" expanded="0">
@@ -939,10 +939,10 @@
                                     <event name="OnToolRClicked"></event>
                                     <event name="OnUpdateUI"></event>
                                 </object>
-                                <object class="toolSeparator" expanded="1">
+                                <object class="toolSeparator" expanded="0">
                                     <property name="permission">protected</property>
                                 </object>
-                                <object class="tool" expanded="1">
+                                <object class="tool" expanded="0">
                                     <property name="bitmap">Load From Icon Resource; VIEWNPC; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_SHOWNPC</property>
@@ -963,7 +963,7 @@
                                     <event name="OnToolRClicked"></event>
                                     <event name="OnUpdateUI"></event>
                                 </object>
-                                <object class="tool" expanded="1">
+                                <object class="tool" expanded="0">
                                     <property name="bitmap">Load From Icon Resource; VIEWOBJ; [-1; -1]</property>
                                     <property name="context_menu">0</property>
                                     <property name="id">ID_SHOWOBJ</property>
@@ -2046,7 +2046,7 @@
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
                             <property name="flag">wxALL|wxALIGN_CENTER_VERTICAL</property>
-                            <property name="proportion">1</property>
+                            <property name="proportion">0</property>
                             <object class="wxComboBox" expanded="0">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
@@ -2078,10 +2078,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Name</property>
                                 <property name="pane_border">1</property>
@@ -2252,10 +2252,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Evade</property>
                                 <property name="pane_border">1</property>
@@ -2393,7 +2393,7 @@
                         </object>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
-                            <property name="flag">wxALL|wxALIGN_CENTER_VERTICAL</property>
+                            <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
                             <property name="proportion">0</property>
                             <object class="wxComboBox" expanded="0">
                                 <property name="BottomDockable">1</property>
@@ -2409,7 +2409,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;普通类&quot; &quot;战斗类&quot; &quot;事件类&quot; &quot;地上动物类&quot; &quot;怕人动物类&quot; &quot;飞翔动物类&quot; &quot;&quot; &quot;&quot; &quot;&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -2426,10 +2426,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Kind</property>
                                 <property name="pane_border">1</property>
@@ -2600,10 +2600,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Attack</property>
                                 <property name="pane_border">1</property>
@@ -2757,7 +2757,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;友好&quot; &quot;敌对&quot; &quot;中立&quot; &quot;&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -2774,10 +2774,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Relation</property>
                                 <property name="pane_border">1</property>
@@ -2931,7 +2931,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;8&quot; &quot;9&quot; &quot;10&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -2948,10 +2948,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_AttackLevel</property>
                                 <property name="pane_border">1</property>
@@ -3105,7 +3105,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;0&quot; &quot;1&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -3122,10 +3122,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_PathFinder</property>
                                 <property name="pane_border">1</property>
@@ -3296,10 +3296,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Defend</property>
                                 <property name="pane_border">1</property>
@@ -3453,7 +3453,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;0&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -3470,10 +3470,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_State</property>
                                 <property name="pane_border">1</property>
@@ -3818,10 +3818,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_ShowName</property>
                                 <property name="pane_border">1</property>
@@ -3992,10 +3992,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Exp</property>
                                 <property name="pane_border">1</property>
@@ -4149,7 +4149,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;10&quot; &quot;15&quot; &quot;20&quot; &quot;25&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -4166,10 +4166,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_VisionRadius</property>
                                 <property name="pane_border">1</property>
@@ -4323,7 +4323,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;0&quot; &quot;50&quot; &quot;100&quot; &quot;150&quot; &quot;200&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -4340,10 +4340,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_LevelUpExp</property>
                                 <property name="pane_border">1</property>
@@ -4497,7 +4497,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -4514,10 +4514,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_DialogRadius</property>
                                 <property name="pane_border">1</property>
@@ -4671,7 +4671,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;10&quot; &quot;20&quot; &quot;30&quot; &quot;40&quot; &quot;50&quot; &quot;60&quot; &quot;70&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -4688,10 +4688,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Level</property>
                                 <property name="pane_border">1</property>
@@ -4845,7 +4845,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;1&quot; &quot;5&quot; &quot;10&quot; &quot;15&quot; &quot;20&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -4862,10 +4862,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_AttackRadius</property>
                                 <property name="pane_border">1</property>
@@ -5193,7 +5193,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot; &quot;&quot; &quot;&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -5210,10 +5210,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Dir</property>
                                 <property name="pane_border">1</property>
@@ -5384,10 +5384,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Life</property>
                                 <property name="pane_border">1</property>
@@ -5558,10 +5558,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Lum</property>
                                 <property name="pane_border">1</property>
@@ -5732,10 +5732,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_LifeMax</property>
                                 <property name="pane_border">1</property>
@@ -5889,7 +5889,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;站立&quot; &quot;走动（随机）&quot; &quot;走动（循环）&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -5906,10 +5906,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Action</property>
                                 <property name="pane_border">1</property>
@@ -6080,10 +6080,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Thew</property>
                                 <property name="pane_border">1</property>
@@ -6237,7 +6237,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices"></property>
+                                <property name="choices">&quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -6254,10 +6254,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_WalkSpeed</property>
                                 <property name="pane_border">1</property>
@@ -6428,10 +6428,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_ThewMax</property>
                                 <property name="pane_border">1</property>
@@ -6776,10 +6776,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Mana</property>
                                 <property name="pane_border">1</property>
@@ -7220,10 +7220,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_ManaMax</property>
                                 <property name="pane_border">1</property>
@@ -8108,10 +8108,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_ExpBonus</property>
                                 <property name="pane_border">1</property>
@@ -8552,10 +8552,10 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_Idle</property>
                                 <property name="pane_border">1</property>
@@ -8995,11 +8995,11 @@
                                 <property name="id">wxID_ANY</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
-                                <property name="maximum_size"></property>
+                                <property name="maximum_size">110,-1</property>
                                 <property name="maxlength"></property>
                                 <property name="min_size"></property>
                                 <property name="minimize_button">0</property>
-                                <property name="minimum_size"></property>
+                                <property name="minimum_size">110,-1</property>
                                 <property name="moveable">1</property>
                                 <property name="name">m_FixedPos</property>
                                 <property name="pane_border">1</property>
@@ -9817,10 +9817,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_ObjName</property>
                                         <property name="pane_border">1</property>
@@ -9974,7 +9974,7 @@
                                         <property name="caption"></property>
                                         <property name="caption_visible">1</property>
                                         <property name="center_pane">0</property>
-                                        <property name="choices"></property>
+                                        <property name="choices">&quot;植物和装饰类（新剑仅装饰类）&quot; &quot;宝箱和动画类（新剑还包括植物类）&quot; &quot;尸体类&quot; &quot;循环音效&quot; &quot;随机音效&quot; &quot;门类&quot;</property>
                                         <property name="close_button">1</property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
@@ -9991,10 +9991,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Kind</property>
                                         <property name="pane_border">1</property>
@@ -10148,7 +10148,7 @@
                                         <property name="caption"></property>
                                         <property name="caption_visible">1</property>
                                         <property name="center_pane">0</property>
-                                        <property name="choices"></property>
+                                        <property name="choices">&quot;0&quot; &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot; &quot;6&quot; &quot;7&quot;</property>
                                         <property name="close_button">1</property>
                                         <property name="context_help"></property>
                                         <property name="context_menu">1</property>
@@ -10165,10 +10165,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Dir</property>
                                         <property name="pane_border">1</property>
@@ -10339,10 +10339,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Damage</property>
                                         <property name="pane_border">1</property>
@@ -10513,10 +10513,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Frame</property>
                                         <property name="pane_border">1</property>
@@ -10687,10 +10687,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Height</property>
                                         <property name="pane_border">1</property>
@@ -10861,10 +10861,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_Lum</property>
                                         <property name="pane_border">1</property>
@@ -12044,10 +12044,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_OffX</property>
                                         <property name="pane_border">1</property>
@@ -12218,10 +12218,10 @@
                                         <property name="id">wxID_ANY</property>
                                         <property name="max_size"></property>
                                         <property name="maximize_button">0</property>
-                                        <property name="maximum_size"></property>
+                                        <property name="maximum_size">110,-1</property>
                                         <property name="min_size"></property>
                                         <property name="minimize_button">0</property>
-                                        <property name="minimum_size"></property>
+                                        <property name="minimum_size">110,-1</property>
                                         <property name="moveable">1</property>
                                         <property name="name">m_OffY</property>
                                         <property name="pane_border">1</property>
