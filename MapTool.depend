@@ -2351,7 +2351,7 @@
 1386829465 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1400920731 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1401867551 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2361,7 +2361,7 @@
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
 
-1396595791 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1406279767 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2376,6 +2376,8 @@
 	<wx/toolbar.h>
 	<wx/sizer.h>
 	<wx/panel.h>
+	<wx/listctrl.h>
+	<wx/notebook.h>
 	<wx/splitter.h>
 	<wx/statusbr.h>
 	<wx/menu.h>
@@ -2387,7 +2389,7 @@
 	<wx/textctrl.h>
 	<wx/dialog.h>
 
-1396341118 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+1401867551 e:\programmingworkshop\_store_\jxqy\maptool\map.h
 	"wx/string.h"
 	"wx/image.h"
 	"MpcDecode.hpp"
@@ -2399,7 +2401,7 @@
 
 1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1396342664 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1401867551 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2418,7 +2420,7 @@
 1396581059 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1400920262 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1406279771 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2522,7 +2524,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1400920766 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1406280041 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"wx/msgdlg.h"
 	"wx/dcmemory.h"
@@ -2786,4 +2788,65 @@
 
 1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\bmpcbox.h
 	"wx/combobox.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\notebook.h
+	"wx/defs.h"
+	"wx/bookctrl.h"
+	"wx/univ/notebook.h"
+	"wx/msw/notebook.h"
+	"wx/generic/notebook.h"
+	"wx/gtk/notebook.h"
+	"wx/gtk1/notebook.h"
+	"wx/osx/notebook.h"
+	"wx/cocoa/notebook.h"
+	"wx/os2/notebook.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\bookctrl.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/dynarray.h"
+	"wx/withimages.h"
+	"wx/notebook.h"
+	"wx/choicebk.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\withimages.h
+	"wx/defs.h"
+	"wx/icon.h"
+	"wx/imaglist.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\choicebk.h
+	"wx/defs.h"
+	"wx/bookctrl.h"
+	"wx/choice.h"
+	"wx/containr.h"
+
+1384175917 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\notebook.h
+	"wx/arrstr.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\notebook.h
+	"wx/control.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\notebook.h
+	"wx/event.h"
+	"wx/control.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\notebook.h
+	"wx/list.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\notebook.h
+	"wx/list.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\notebook.h
+	"wx/event.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\notebook.h
+	"wx/cocoa/NSTabView.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\nstabview.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/cocoa/ObjcRef.h"
+
+1384175916 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\notebook.h
+	"wx/control.h"
 

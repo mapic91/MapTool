@@ -555,6 +555,8 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
 
 void MapTool::OnDrawMapControl( wxPaintEvent& event )
 {
+	if(m_MapFileName.IsEmpty()){event.Skip(); return;}
+
     int ctlwidth, ctlheight, mapviewwidth, mapviewheight, mapwidth, mapheight;
 
     m_MapControl->GetClientSize(&ctlwidth, &ctlheight);
@@ -600,7 +602,7 @@ void MapTool::OnDrawMapControl( wxPaintEvent& event )
 
 void MapTool::OnMapCtrlMouseMotion( wxMouseEvent& event )
 {
-    if(!event.Dragging()) return;
+    if(!event.Dragging() || m_MapFileName.IsEmpty()) return;
 
     int ctlwidth, ctlheight,
         mapviewwidth, mapviewheight,

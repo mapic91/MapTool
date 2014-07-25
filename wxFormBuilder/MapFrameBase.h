@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 26 2014)
+// C++ code generated with wxFormBuilder (version Jun  5 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -22,6 +22,8 @@
 #include <wx/toolbar.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
+#include <wx/listctrl.h>
+#include <wx/notebook.h>
 #include <wx/splitter.h>
 #include <wx/statusbr.h>
 #include <wx/menu.h>
@@ -59,6 +61,7 @@ class MapFrameBase : public wxFrame
 	
 	protected:
 		wxToolBar* m_toolBar1;
+		wxToolBarToolBase* m_tool7; 
 		wxCheckBox* m_Layer1;
 		wxCheckBox* m_Layer2;
 		wxCheckBox* m_Layer3;
@@ -66,12 +69,25 @@ class MapFrameBase : public wxFrame
 		wxCheckBox* m_Barrer;
 		wxCheckBox* m_LayerTransparent;
 		wxToolBar* m_ToolBarEdit;
+		wxToolBarToolBase* m_tool5; 
+		wxToolBarToolBase* m_tool6; 
+		wxToolBarToolBase* m_ToolPlace; 
+		wxToolBarToolBase* m_ToolDelete; 
+		wxToolBarToolBase* m_ToolEditAttribute; 
+		wxToolBarToolBase* m_tool4; 
+		wxToolBarToolBase* m_tool8; 
+		wxToolBarToolBase* m_tool9; 
 		wxSplitterWindow* m_splitter2;
 		wxPanel* m_MapView;
 		wxPanel* m_panel10;
 		wxSplitterWindow* m_splitter4;
 		wxPanel* m_MapControl;
 		wxPanel* m_panel12;
+		wxNotebook* m_notebook1;
+		wxPanel* m_panel5;
+		wxListCtrl* m_NpcList;
+		wxPanel* m_panel6;
+		wxListCtrl* m_ObjList;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
