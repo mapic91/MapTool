@@ -105,8 +105,10 @@ private:
     void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
 
     //ListData
+    void OnListCtrlLeftDClick( wxMouseEvent& event );
     void RefreshNpcList();
     void RefreshObjList();
+    void ShowTile(int tileX, int tileY);
 
     //currentView: if true dc is the current mapview client,
     // else dc is the entire map

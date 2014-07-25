@@ -135,6 +135,7 @@ public:
         return *it;
     }
 
+	//Returned array must deleted use delete[]
     T* GetAllItem()
     {
     	size_t num = m_list.size();

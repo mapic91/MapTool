@@ -208,14 +208,6 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             wxCOPY,
             m_LayerTransparent->IsChecked());
 
-    //Draw reactangle current positon under mouse
-    if(m_NpcList.HasItem(m_CurTileX, m_CurTileY) ||
-            m_ObjList.HasItem(m_CurTileX, m_CurTileY))
-        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxYELLOW, 2)));
-    else
-        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
-    DrawRectangle(m_CurTileX, m_CurTileY, dc);
-
     //Draw PlaceMode
     if(m_isPlaceMode)
     {
@@ -228,6 +220,13 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
     DrawObjsNpcs(dc);
     DrawObjsNpcsPosition(dc);
 
+	//Draw reactangle current positon under mouse
+    if(m_NpcList.HasItem(m_CurTileX, m_CurTileY) ||
+            m_ObjList.HasItem(m_CurTileX, m_CurTileY))
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxYELLOW, 2)));
+    else
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
+    DrawRectangle(m_CurTileX, m_CurTileY, dc);
 }
 
 void MapTool::DrawRectangle(long col, long row, wxDC &dc, bool currentView)
@@ -849,7 +848,43 @@ void MapTool::CheckMapViewBeginPosition()
     if(m_ViewBeginx < 0) m_ViewBeginx = 0;
     if(m_ViewBeginy < 0) m_ViewBeginy = 0;
 }
-
+void MapTool::OnListCtrlLeftDClick(wxMouseEvent& event)
+{
+	int id = event.GetId();
+	int itemidx, mapX, mapY;
+	bool found = false;
+	if(id == MYID_NPCLISTCTRL)
+	{
+		NpcItem *item;
+		itemidx = (int)m_npcListCtrl->GetFocusedItem();
+		if(itemidx != -1)
+		{
+            item = m_NpcList.GetItem(itemidx);
+            if(item)
+			{
+				found = true;
+				mapX = item->MapX;
+				mapY = item->MapY;
+			}
+		}
+	}
+	else if(id == MYID_OBJLISTCTRL)
+	{
+		ObjItem *item;
+		itemidx = m_objListCtrl->GetFocusedItem();
+		if(itemidx != -1)
+		{
+			item = m_ObjList.GetItem(itemidx);
+			if(item)
+			{
+				found = true;
+				mapX = item->MapX;
+				mapY = item->MapY;
+			}
+		}
+	}
+	if(found) ShowTile(mapX, mapY);
+}
 void MapTool::RefreshNpcList()
 {
     NpcItem **items = m_NpcList.GetAllItem();
@@ -875,6 +910,21 @@ void MapTool::RefreshObjList()
 		m_objListCtrl->SetItem(i, 2, wxString::Format("%ld", items[i]->MapY));
 	}
 	delete[] items;
+}
+void MapTool::ShowTile(int tileX, int tileY)
+{
+	int pixelX, pixelY;
+	if(map.GetPixelPosition((int)tileX, (int)tileY, &pixelX, &pixelY))
+	{
+		int viewWidth, viewHeight;
+		m_MapView->GetClientSize(&viewWidth, &viewHeight);
+		m_ViewBeginx = pixelX - viewWidth / 2;
+		m_ViewBeginy = pixelY - viewHeight / 2;
+		CheckMapViewBeginPosition();
+		m_CurTileX = tileX;
+		m_CurTileY = tileY;
+		RedrawMapView();
+	}
 }
 
 

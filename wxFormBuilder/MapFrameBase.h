@@ -10,6 +10,8 @@
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
+class wxListView;
+
 #include <wx/string.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -46,11 +48,13 @@
 #define ID_TOOLMOVE 1006
 #define ID_SHOWNPC 1007
 #define ID_SHOWOBJ 1008
-#define ID_MAPUP 1009
-#define ID_MAPDOWN 1010
-#define ID_MAPLEFT 1011
-#define ID_MAPRIGHT 1012
-#define ID_DIRECTION 1013
+#define MYID_NPCLISTCTRL 1009
+#define MYID_OBJLISTCTRL 1010
+#define ID_MAPUP 1011
+#define ID_MAPDOWN 1012
+#define ID_MAPLEFT 1013
+#define ID_MAPRIGHT 1014
+#define ID_DIRECTION 1015
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -85,9 +89,9 @@ class MapFrameBase : public wxFrame
 		wxPanel* m_panelList;
 		wxNotebook* m_ListData;
 		wxPanel* m_panel5;
-		wxListCtrl* m_npcListCtrl;
+		wxListView* m_npcListCtrl;
 		wxPanel* m_panel6;
-		wxListCtrl* m_objListCtrl;
+		wxListView* m_objListCtrl;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
@@ -116,6 +120,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnListCtrlLeftDClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
