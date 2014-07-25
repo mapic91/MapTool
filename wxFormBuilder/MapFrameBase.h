@@ -77,17 +77,17 @@ class MapFrameBase : public wxFrame
 		wxToolBarToolBase* m_tool4; 
 		wxToolBarToolBase* m_tool8; 
 		wxToolBarToolBase* m_tool9; 
-		wxSplitterWindow* m_splitter2;
+		wxSplitterWindow* m_mapViewWindow;
 		wxPanel* m_MapView;
-		wxPanel* m_panel10;
+		wxPanel* m_SideCtrl;
 		wxSplitterWindow* m_splitter4;
 		wxPanel* m_MapControl;
-		wxPanel* m_panel12;
-		wxNotebook* m_notebook1;
+		wxPanel* m_panelList;
+		wxNotebook* m_ListData;
 		wxPanel* m_panel5;
-		wxListCtrl* m_NpcList;
+		wxListCtrl* m_npcListCtrl;
 		wxPanel* m_panel6;
-		wxListCtrl* m_ObjList;
+		wxListCtrl* m_objListCtrl;
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
@@ -141,10 +141,10 @@ class MapFrameBase : public wxFrame
 		
 		~MapFrameBase();
 		
-		void m_splitter2OnIdle( wxIdleEvent& )
+		void m_mapViewWindowOnIdle( wxIdleEvent& )
 		{
-			m_splitter2->SetSashPosition( -200 );
-			m_splitter2->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter2OnIdle ), NULL, this );
+			m_mapViewWindow->SetSashPosition( -200 );
+			m_mapViewWindow->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_mapViewWindowOnIdle ), NULL, this );
 		}
 		
 		void m_splitter4OnIdle( wxIdleEvent& )

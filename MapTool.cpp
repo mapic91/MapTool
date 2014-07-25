@@ -58,6 +58,15 @@ MapTool::MapTool(wxWindow* parent)
     ace[4].Set(wxACCEL_NORMAL, WXK_SPACE, ID_DIRECTION);
     wxAcceleratorTable act(4, ace);
     SetAcceleratorTable(act);
+
+    //List config
+    m_ListData->Show(false);
+    m_npcListCtrl->AppendColumn(wxT("序号"), wxLIST_FORMAT_LEFT, 50);
+    m_npcListCtrl->AppendColumn(wxT("X"), wxLIST_FORMAT_LEFT, 50);
+    m_npcListCtrl->AppendColumn(wxT("Y"), wxLIST_FORMAT_LEFT, 50);
+    m_objListCtrl->AppendColumn(wxT("序号"), wxLIST_FORMAT_LEFT, 50);
+    m_objListCtrl->AppendColumn(wxT("X"), wxLIST_FORMAT_LEFT, 50);
+    m_objListCtrl->AppendColumn(wxT("Y"), wxLIST_FORMAT_LEFT, 50);
 }
 
 MapTool::~MapTool()
@@ -100,6 +109,10 @@ void MapTool::OpenMap(wxCommandEvent& event)
     m_ObjList.Clear();
     FreeAsfImgList(m_NpcAsfImgList);
     FreeAsfImgList(m_ObjAsfImgList);
+
+    //Show view
+    m_ListData->Show(true);
+	m_panelList->Layout();
 
     m_MapView->Refresh(true);
     ReadMap();
@@ -698,6 +711,7 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
+            RefreshNpcList();
         }
         else
             wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
@@ -741,6 +755,7 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
+            RefreshObjList();
         }
         else
             wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
@@ -834,6 +849,34 @@ void MapTool::CheckMapViewBeginPosition()
     if(m_ViewBeginx < 0) m_ViewBeginx = 0;
     if(m_ViewBeginy < 0) m_ViewBeginy = 0;
 }
+
+void MapTool::RefreshNpcList()
+{
+    NpcItem **items = m_NpcList.GetAllItem();
+    m_npcListCtrl->DeleteAllItems();
+    for(int i = 0; items[i] != NULL; i++)
+	{
+		m_npcListCtrl->InsertItem(i, "");
+		m_npcListCtrl->SetItem(i, 0, wxString::Format("%03d", i));
+		m_npcListCtrl->SetItem(i, 1, wxString::Format("%ld", items[i]->MapX));
+		m_npcListCtrl->SetItem(i, 2, wxString::Format("%ld", items[i]->MapY));
+	}
+	delete[] items;
+}
+void MapTool::RefreshObjList()
+{
+	ObjItem **items = m_ObjList.GetAllItem();
+	m_objListCtrl->DeleteAllItems();
+	for(int i = 0; items[i] != NULL; i++)
+	{
+		m_objListCtrl->InsertItem(i, "");
+		m_objListCtrl->SetItem(i, 0, wxString::Format("%03d", i));
+		m_objListCtrl->SetItem(i, 1, wxString::Format("%ld", items[i]->MapX));
+		m_objListCtrl->SetItem(i, 2, wxString::Format("%ld", items[i]->MapY));
+	}
+	delete[] items;
+}
+
 
 //////////////////////////////
 ///////////////////////////////

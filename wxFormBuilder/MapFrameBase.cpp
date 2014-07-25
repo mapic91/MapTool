@@ -85,66 +85,66 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	bSizer1->Add( bSizer2, 0, wxEXPAND, 5 );
 	
-	m_splitter2 = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
-	m_splitter2->SetSashGravity( 1 );
-	m_splitter2->Connect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter2OnIdle ), NULL, this );
-	m_splitter2->SetMinimumPaneSize( 1 );
+	m_mapViewWindow = new wxSplitterWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_mapViewWindow->SetSashGravity( 1 );
+	m_mapViewWindow->Connect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_mapViewWindowOnIdle ), NULL, this );
+	m_mapViewWindow->SetMinimumPaneSize( 1 );
 	
-	m_MapView = new wxPanel( m_splitter2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	m_panel10 = new wxPanel( m_splitter2, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_MapView = new wxPanel( m_mapViewWindow, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_SideCtrl = new wxPanel( m_mapViewWindow, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer6;
 	bSizer6 = new wxBoxSizer( wxVERTICAL );
 	
-	m_splitter4 = new wxSplitterWindow( m_panel10, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
+	m_splitter4 = new wxSplitterWindow( m_SideCtrl, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxSP_3D );
 	m_splitter4->Connect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter4OnIdle ), NULL, this );
 	m_splitter4->SetMinimumPaneSize( 1 );
 	
 	m_MapControl = new wxPanel( m_splitter4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	m_panel12 = new wxPanel( m_splitter4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelList = new wxPanel( m_splitter4, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer19;
 	bSizer19 = new wxBoxSizer( wxVERTICAL );
 	
-	m_notebook1 = new wxNotebook( m_panel12, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panel5 = new wxPanel( m_notebook1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_ListData = new wxNotebook( m_panelList, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panel5 = new wxPanel( m_ListData, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer20;
 	bSizer20 = new wxBoxSizer( wxVERTICAL );
 	
-	m_NpcList = new wxListCtrl( m_panel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
-	bSizer20->Add( m_NpcList, 1, wxALL|wxEXPAND, 5 );
+	m_npcListCtrl = new wxListCtrl( m_panel5, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	bSizer20->Add( m_npcListCtrl, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	m_panel5->SetSizer( bSizer20 );
 	m_panel5->Layout();
 	bSizer20->Fit( m_panel5 );
-	m_notebook1->AddPage( m_panel5, wxT("NPC"), true );
-	m_panel6 = new wxPanel( m_notebook1, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_ListData->AddPage( m_panel5, wxT("NPC"), false );
+	m_panel6 = new wxPanel( m_ListData, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer21;
 	bSizer21 = new wxBoxSizer( wxVERTICAL );
 	
-	m_ObjList = new wxListCtrl( m_panel6, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
-	bSizer21->Add( m_ObjList, 1, wxALL|wxEXPAND, 5 );
+	m_objListCtrl = new wxListCtrl( m_panel6, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_REPORT|wxLC_SINGLE_SEL );
+	bSizer21->Add( m_objListCtrl, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	m_panel6->SetSizer( bSizer21 );
 	m_panel6->Layout();
 	bSizer21->Fit( m_panel6 );
-	m_notebook1->AddPage( m_panel6, wxT("OBJ"), false );
+	m_ListData->AddPage( m_panel6, wxT("OBJ"), true );
 	
-	bSizer19->Add( m_notebook1, 1, wxEXPAND | wxALL, 5 );
+	bSizer19->Add( m_ListData, 1, wxALL|wxEXPAND, 5 );
 	
 	
-	m_panel12->SetSizer( bSizer19 );
-	m_panel12->Layout();
-	bSizer19->Fit( m_panel12 );
-	m_splitter4->SplitHorizontally( m_MapControl, m_panel12, 100 );
+	m_panelList->SetSizer( bSizer19 );
+	m_panelList->Layout();
+	bSizer19->Fit( m_panelList );
+	m_splitter4->SplitHorizontally( m_MapControl, m_panelList, 100 );
 	bSizer6->Add( m_splitter4, 1, wxEXPAND, 5 );
 	
 	
-	m_panel10->SetSizer( bSizer6 );
-	m_panel10->Layout();
-	bSizer6->Fit( m_panel10 );
-	m_splitter2->SplitVertically( m_MapView, m_panel10, -200 );
-	bSizer1->Add( m_splitter2, 1, wxEXPAND, 5 );
+	m_SideCtrl->SetSizer( bSizer6 );
+	m_SideCtrl->Layout();
+	bSizer6->Fit( m_SideCtrl );
+	m_mapViewWindow->SplitVertically( m_MapView, m_SideCtrl, -200 );
+	bSizer1->Add( m_mapViewWindow, 1, wxEXPAND, 5 );
 	
 	
 	this->SetSizer( bSizer1 );

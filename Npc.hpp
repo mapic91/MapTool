@@ -134,6 +134,20 @@ public:
         for(int i = 0; i < index; i++, it++);
         return *it;
     }
+
+    T* GetAllItem()
+    {
+    	size_t num = m_list.size();
+    	T *items = new T[num + 1];
+    	items[num] = NULL;
+    	long pos = 0;
+    	for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
+		{
+			items[pos++] = *it;
+		}
+		return items;
+    }
+
     T GetItem(long mapx, long mapy, long *index = NULL)
     {
         long pos = 0;

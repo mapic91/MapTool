@@ -104,6 +104,10 @@ private:
     void OnShowNpcCheck( wxCommandEvent& event ) { RedrawMapView(); }
     void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
 
+    //ListData
+    void RefreshNpcList();
+    void RefreshObjList();
+
     //currentView: if true dc is the current mapview client,
     // else dc is the entire map
     void DrawRectangle(long col, long row, wxDC &dc, bool currentView = true);
