@@ -99,6 +99,7 @@ class MapFrameBase : public wxFrame
 		wxMenu* m_menu3;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OpenMap( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer1( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayer2( wxCommandEvent& event ) { event.Skip(); }
@@ -121,6 +122,8 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnListCtrlLeftDClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnListCtrlRightDown( wxListEvent& event ) { event.Skip(); }
+		virtual void OnListItemSelected( wxListEvent& event ) { event.Skip(); }
 		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }

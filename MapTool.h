@@ -18,6 +18,15 @@ public:
     virtual ~MapTool();
 protected:
 private:
+
+	enum MYID {
+		ID_SHOWNPCKEY = 10000,
+		ID_SHOWOBJKEY,
+		ID_ATTRIBUTELISTITEM,
+		ID_DELETELISTITEM
+	};
+
+	void OnClose( wxCloseEvent& event );
     void OpenMap(wxCommandEvent& event);
     void SaveToPNG(wxCommandEvent& event);
     void OnLayer1( wxCommandEvent& event ) ;
@@ -57,6 +66,9 @@ private:
         RedrawMapView();
     }
 
+    void ShowNpcItemEditor(long npcitemidx);
+    void ShowObjItemEditor(long objitemidx);
+
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
     void OnPlaceMode( wxCommandEvent& event ) ;
@@ -72,8 +84,8 @@ private:
     {
         m_NpcList.Clear();
         FreeAsfImgList(m_NpcAsfImgList);
+        RefreshNpcList();
     }
-
 
     //OBJ
     void OnLoadObject( wxCommandEvent& event );
@@ -92,6 +104,7 @@ private:
     {
         m_ObjList.Clear();
         FreeAsfImgList(m_ObjAsfImgList);
+        RefreshObjList();
     }
 
 
@@ -103,12 +116,33 @@ private:
 
     void OnShowNpcCheck( wxCommandEvent& event ) { RedrawMapView(); }
     void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
+    void OnShowNpcCheckKey( wxCommandEvent& event)
+    {
+    	m_ToolBarEdit->ToggleTool(ID_SHOWNPC, !m_ToolBarEdit->GetToolState(ID_SHOWNPC));
+    	RedrawMapView();
+    }
+    void OnShowObjCheckKey( wxCommandEvent& event)
+    {
+    	m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, !m_ToolBarEdit->GetToolState(ID_SHOWOBJ));
+    	RedrawMapView();
+    }
 
     //ListData
     void OnListCtrlLeftDClick( wxMouseEvent& event );
+    void OnListCtrlRightDown( wxListEvent& event );
+    void OnListItemSelected( wxListEvent& event );
     void RefreshNpcList();
     void RefreshObjList();
     void ShowTile(int tileX, int tileY);
+    void DeleteListItem( wxCommandEvent& event);
+    void AttributeListItem( wxCommandEvent& event);
+    void ShowAttributeListItem();
+    void UpdateListItem(int index, int listType = NPCLIST);
+    void UpdateListItem(NpcItem *item);
+    void UpdateListItem(ObjItem *item);
+    enum  {NPCLIST, OBJLIST};
+    int m_curList, m_curListIndex;
+    bool m_placeModeNotDraw;
 
     //currentView: if true dc is the current mapview client,
     // else dc is the entire map

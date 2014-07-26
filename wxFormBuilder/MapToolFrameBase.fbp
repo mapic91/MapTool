@@ -62,7 +62,7 @@
             <event name="OnAuiPaneRestore"></event>
             <event name="OnAuiRender"></event>
             <event name="OnChar"></event>
-            <event name="OnClose"></event>
+            <event name="OnClose">OnClose</event>
             <event name="OnEnterWindow"></event>
             <event name="OnEraseBackground"></event>
             <event name="OnHibernate"></event>
@@ -819,7 +819,7 @@
                                     <property name="name">m_tool5</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">人物编辑模式</property>
+                                    <property name="tooltip">人物编辑模式（F2）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -840,7 +840,7 @@
                                     <property name="name">m_tool6</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">物品编辑模式</property>
+                                    <property name="tooltip">物品编辑模式（F3）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -864,7 +864,7 @@
                                     <property name="name">m_ToolPlace</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">放置模式</property>
+                                    <property name="tooltip">放置模式（P）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -885,7 +885,7 @@
                                     <property name="name">m_ToolDelete</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">删除模式</property>
+                                    <property name="tooltip">删除模式（D）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -906,7 +906,7 @@
                                     <property name="name">m_ToolEditAttribute</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">属性设置模式</property>
+                                    <property name="tooltip">属性设置模式（A）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -927,7 +927,7 @@
                                     <property name="name">m_tool4</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">移动模式</property>
+                                    <property name="tooltip">移动模式（M）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -951,7 +951,7 @@
                                     <property name="name">m_tool8</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">显示人物</property>
+                                    <property name="tooltip">显示人物（N）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -972,7 +972,7 @@
                                     <property name="name">m_tool9</property>
                                     <property name="permission">protected</property>
                                     <property name="statusbar"></property>
-                                    <property name="tooltip">显示物品</property>
+                                    <property name="tooltip">显示物品（O）</property>
                                     <event name="OnAuiToolBarBeginDrag"></event>
                                     <event name="OnAuiToolBarMiddleClick"></event>
                                     <event name="OnAuiToolBarOverflowClick"></event>
@@ -1730,8 +1730,8 @@
                                                                                     <event name="OnListItemDeselected"></event>
                                                                                     <event name="OnListItemFocused"></event>
                                                                                     <event name="OnListItemMiddleClick"></event>
-                                                                                    <event name="OnListItemRightClick"></event>
-                                                                                    <event name="OnListItemSelected"></event>
+                                                                                    <event name="OnListItemRightClick">OnListCtrlRightDown</event>
+                                                                                    <event name="OnListItemSelected">OnListItemSelected</event>
                                                                                     <event name="OnListKeyDown"></event>
                                                                                     <event name="OnMiddleDClick"></event>
                                                                                     <event name="OnMiddleDown"></event>
@@ -1921,8 +1921,8 @@
                                                                                     <event name="OnListItemDeselected"></event>
                                                                                     <event name="OnListItemFocused"></event>
                                                                                     <event name="OnListItemMiddleClick"></event>
-                                                                                    <event name="OnListItemRightClick"></event>
-                                                                                    <event name="OnListItemSelected"></event>
+                                                                                    <event name="OnListItemRightClick">OnListCtrlRightDown</event>
+                                                                                    <event name="OnListItemSelected">OnListItemSelected</event>
                                                                                     <event name="OnListKeyDown"></event>
                                                                                     <event name="OnMiddleDClick"></event>
                                                                                     <event name="OnMiddleDown"></event>

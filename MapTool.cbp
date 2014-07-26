@@ -115,28 +115,71 @@
 					<Add option="-s" />
 					<Add option="-static-libgcc" />
 					<Add option="-static-libstdc++" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_stc.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_richtext.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_xrc.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_adv.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_html.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxbase30u_xml.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_core.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxbase30u.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxpng.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxjpeg.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxtiff.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxzlib.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxexpat.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_aui.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxbase30u_net.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_gl.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_media.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_propgrid.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_ribbon.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_webview.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxregexu.a" />
-					<Add library="$(#wx.lib)\gcc_dll\libwxscintilla.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_stc.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_richtext.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_xrc.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_adv.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_html.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u_xml.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_core.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxpng.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxjpeg.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxtiff.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxzlib.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxexpat.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_aui.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u_net.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_gl.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_media.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_propgrid.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_ribbon.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_webview.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxregexu.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxscintilla.a" />
+					<Add directory="$(#wx.lib)/gcc_lib" />
+				</Linker>
+			</Target>
+			<Target title="Release-static-x64">
+				<Option output="bin/Release-static/MapTool_x64" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release_x64/" />
+				<Option type="0" />
+				<Option compiler="gnu_gcc_compiler_w64_-_x86_64" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
+					<Add directory="$(#wx.lib)/gcc_lib/mswu" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(#wx.lib)/gcc_lib/mswu" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-static-libgcc" />
+					<Add option="-static-libstdc++" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_stc.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_richtext.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_xrc.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_adv.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_html.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u_xml.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_core.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxpng.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxjpeg.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxtiff.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxzlib.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxexpat.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_aui.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u_net.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_gl.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_media.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_propgrid.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_ribbon.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30u_webview.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxregexu.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxscintilla.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
 				</Linker>
 			</Target>

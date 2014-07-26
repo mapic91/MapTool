@@ -181,6 +181,14 @@ public:
             }
         }
     }
+    void DeleteItem(int index)
+    {
+    	if(index < 0 || index >= m_list.size()) return;
+        typename std::list<T>::iterator it = m_list.begin();
+        for(int i = 0; i < index; i++, it++);
+    	delete *it;
+		m_list.erase(it);
+    }
 
     int getCounts()
     {
