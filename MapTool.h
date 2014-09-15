@@ -153,6 +153,7 @@ private:
                   NpcItem *npcitem,
                   ObjItem *objitem = NULL,
                   bool currentView = true);
+	bool IsDrawObjsNpcs();
     void DrawObjsNpcs(wxDC &dc, bool currentView = true);
     void DrawObjsNpcsPosition(wxDC &dc, bool currentView = true);
     void DrawNpcPosition(wxDC &dc, bool currentView = true);

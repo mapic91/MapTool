@@ -50,7 +50,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.2 - by 小试刀剑  2014.07.26"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.2.1 - by 小试刀剑  2014.09.15"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -157,15 +157,32 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
 
     if(filedlg.ShowModal() != wxID_OK) return;
     wxImage *img = ReadMap(true);
-    if(img != NULL &&
-            img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG))
+    bool success = false;
+    if(img != NULL)
     {
-        wxMessageBox(wxT("完成"), wxT("消息"));
+        if(IsDrawObjsNpcs())
+		{
+			wxBitmap bmp(*img);
+			wxMemoryDC dc(bmp);
+			if(dc.IsOk())
+			{
+				DrawObjsNpcs(dc, false);
+				dc.SelectObject(wxNullBitmap);
+				success = bmp.SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
+			}
+			else
+				success = false;
+		}
+		else
+		{
+			success = img->SaveFile(filedlg.GetPath(), wxBITMAP_TYPE_PNG);
+		}
     }
-    else
-    {
-        wxMessageBox(wxT("失败"), wxT("错误"), wxOK|wxCENTER|wxICON_ERROR);
-    }
+
+    if(success)
+		wxMessageBox(wxT("完成"), wxT("消息"));
+	else
+		wxMessageBox(wxT("失败"), wxT("错误"), wxOK|wxCENTER|wxICON_ERROR);
 
     if(img != NULL) delete img;
 }
@@ -344,6 +361,11 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
                 wxCOPY,
                 true);
     }
+}
+bool MapTool::IsDrawObjsNpcs()
+{
+	return m_ToolBarEdit->GetToolState(ID_SHOWNPC) ||
+		m_ToolBarEdit->GetToolState(ID_SHOWOBJ);
 }
 
 void MapTool::DrawObjsNpcs(wxDC &dc, bool currentView)
