@@ -37,7 +37,7 @@
 				</Linker>
 			</Target>
 			<Target title="Debug-static">
-				<Option output="D:/Games/Sworda/MapTooldbg" prefix_auto="1" extension_auto="1" />
+				<Option output="D:/Games/Sword/MapTooldbg" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -67,7 +67,7 @@
 				</Linker>
 			</Target>
 			<Target title="Release-dll">
-				<Option output="D:/Games/maptool/MapTool" prefix_auto="1" extension_auto="1" />
+				<Option output="D:/Games/Sword/MapTool" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="0" />
 				<Option compiler="gcc" />

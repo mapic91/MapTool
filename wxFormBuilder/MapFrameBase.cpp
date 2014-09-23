@@ -268,6 +268,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_MapView->Connect( wxEVT_LEFT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftUp ), NULL, this );
 	m_MapView->Connect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
+	m_MapView->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseRightUp ), NULL, this );
 	m_MapControl->Connect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMapCtrlMouseMotion ), NULL, this );
 	m_MapControl->Connect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
 	m_npcListCtrl->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MapFrameBase::OnListCtrlLeftDClick ), NULL, this );
@@ -319,6 +320,7 @@ MapFrameBase::~MapFrameBase()
 	m_MapView->Disconnect( wxEVT_LEFT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseLeftUp ), NULL, this );
 	m_MapView->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMouseMove ), NULL, this );
 	m_MapView->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnMapDraw ), NULL, this );
+	m_MapView->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( MapFrameBase::OnMapViewMouseRightUp ), NULL, this );
 	m_MapControl->Disconnect( wxEVT_MOTION, wxMouseEventHandler( MapFrameBase::OnMapCtrlMouseMotion ), NULL, this );
 	m_MapControl->Disconnect( wxEVT_PAINT, wxPaintEventHandler( MapFrameBase::OnDrawMapControl ), NULL, this );
 	m_npcListCtrl->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( MapFrameBase::OnListCtrlLeftDClick ), NULL, this );
@@ -842,11 +844,22 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText42->Wrap( -1 );
 	gSizer1->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
+	wxBoxSizer* bSizer22;
+	bSizer22 = new wxBoxSizer( wxHORIZONTAL );
+	
 	m_FixedPos = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_FixedPos->SetMinSize( wxSize( 110,-1 ) );
 	m_FixedPos->SetMaxSize( wxSize( 110,-1 ) );
 	
-	gSizer1->Add( m_FixedPos, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer22->Add( m_FixedPos, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_FixedPosEdit = new wxButton( this, wxID_ANY, wxT("设置"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FixedPosEdit->SetToolTip( wxT("\"ESC\"键取消上次设置，\"Enter\"键完成设置，鼠标右键取消设置。\n最多设置8个点。") );
+	
+	bSizer22->Add( m_FixedPosEdit, 0, wxALL, 5 );
+	
+	
+	gSizer1->Add( bSizer22, 1, wxEXPAND, 5 );
 	
 	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("死亡脚本--DeathScript"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText43->Wrap( -1 );
@@ -910,6 +923,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_ScriptFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFile ), NULL, this );
 	m_ScriptFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnScriptFileClear ), NULL, this );
 	m_ScriptFileEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFileEdit ), NULL, this );
+	m_FixedPosEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnSetFixedPos ), NULL, this );
 	m_DeathScript->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
 	m_DeathScript->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );
@@ -935,6 +949,7 @@ NpcItemEditDialogBase::~NpcItemEditDialogBase()
 	m_ScriptFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFile ), NULL, this );
 	m_ScriptFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnScriptFileClear ), NULL, this );
 	m_ScriptFileEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnScriptFileEdit ), NULL, this );
+	m_FixedPosEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnSetFixedPos ), NULL, this );
 	m_DeathScript->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScript ), NULL, this );
 	m_DeathScript->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( NpcItemEditDialogBase::OnDeathScriptClear ), NULL, this );
 	m_DeathScriptEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnDeathScriptEdit ), NULL, this );

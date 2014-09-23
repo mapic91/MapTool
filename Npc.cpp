@@ -221,7 +221,13 @@ bool SaveIni(const wxString &filePath, NpcItem *npcitem, ObjItem *objitem)
     file.AddLine(wxT("[INIT]"));
 
     if(npcitem != NULL)
-        SaveNpcItem(file, npcitem);
+	{
+		//FixedPos can't save
+		wxString fixPos = npcitem->FixedPos;
+		npcitem->FixedPos = wxEmptyString;
+		SaveNpcItem(file, npcitem);
+		npcitem->FixedPos = fixPos;
+	}
     else if(objitem != NULL)
         SaveObjItem(file, objitem);
 

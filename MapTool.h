@@ -11,6 +11,8 @@
 #include "wx/stdpaths.h"
 #include "wx/msgdlg.h"
 
+class NpcItemEditDialog;
+
 class MapTool : public MapFrameBase
 {
 public:
@@ -19,14 +21,18 @@ public:
 protected:
 private:
 
-	enum MYID {
-		ID_SHOWNPCKEY = 10000,
-		ID_SHOWOBJKEY,
-		ID_ATTRIBUTELISTITEM,
-		ID_DELETELISTITEM
-	};
+    enum MYID
+    {
+        ID_SHOWNPCKEY = 10000,
+        ID_SHOWOBJKEY,
+        ID_ATTRIBUTELISTITEM,
+        ID_DELETELISTITEM,
+        ID_SETFIXPOSUNDO,
+        ID_SETFIXPOSCOMPLETE,
+    };
 
-	void OnClose( wxCloseEvent& event );
+	void FrameOnChar( wxKeyEvent& event );
+    void OnClose( wxCloseEvent& event );
     void OpenMap(wxCommandEvent& event);
     void SaveToPNG(wxCommandEvent& event);
     void OnLayer1( wxCommandEvent& event ) ;
@@ -43,6 +49,7 @@ private:
     void OnMapRight( wxCommandEvent& event ) ;
     void OnMapViewMouseLeftDown( wxMouseEvent& event );
     void OnMapViewMouseLeftUp( wxMouseEvent& event );
+    void OnMapViewMouseRightUp( wxMouseEvent& event );
 
     void OnMouseMove( wxMouseEvent& event );
 
@@ -68,6 +75,7 @@ private:
 
     void ShowNpcItemEditor(long npcitemidx);
     void ShowObjItemEditor(long objitemidx);
+    void NpcItemEditShowModle(NpcItemEditDialog *dialog, NpcItem *npcitem);
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
@@ -107,24 +115,29 @@ private:
         RefreshObjList();
     }
 
-
     void OnDeleteMode( wxCommandEvent& event );
 
     void OnMoveMode( wxCommandEvent& event );
 
     void OnEditAttributeMode( wxCommandEvent& event );
 
-    void OnShowNpcCheck( wxCommandEvent& event ) { RedrawMapView(); }
-    void OnShowObjCheck( wxCommandEvent& event ) { RedrawMapView(); }
+    void OnShowNpcCheck( wxCommandEvent& event )
+    {
+        RedrawMapView();
+    }
+    void OnShowObjCheck( wxCommandEvent& event )
+    {
+        RedrawMapView();
+    }
     void OnShowNpcCheckKey( wxCommandEvent& event)
     {
-    	m_ToolBarEdit->ToggleTool(ID_SHOWNPC, !m_ToolBarEdit->GetToolState(ID_SHOWNPC));
-    	RedrawMapView();
+        m_ToolBarEdit->ToggleTool(ID_SHOWNPC, !m_ToolBarEdit->GetToolState(ID_SHOWNPC));
+        RedrawMapView();
     }
     void OnShowObjCheckKey( wxCommandEvent& event)
     {
-    	m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, !m_ToolBarEdit->GetToolState(ID_SHOWOBJ));
-    	RedrawMapView();
+        m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, !m_ToolBarEdit->GetToolState(ID_SHOWOBJ));
+        RedrawMapView();
     }
 
     //ListData
@@ -153,7 +166,7 @@ private:
                   NpcItem *npcitem,
                   ObjItem *objitem = NULL,
                   bool currentView = true);
-	bool IsDrawObjsNpcs();
+    bool IsDrawObjsNpcs();
     void DrawObjsNpcs(wxDC &dc, bool currentView = true);
     void DrawObjsNpcsPosition(wxDC &dc, bool currentView = true);
     void DrawNpcPosition(wxDC &dc, bool currentView = true);
@@ -164,6 +177,8 @@ private:
     void RedrawMapView();
     void CheckMapViewBeginPosition();
 
+    bool ToTilePositionFromWindowPositon(int windowX, int windowY, int *tileX, int *tileY);
+
     wxBitmap m_MapBitmap;
     Map map;
     int m_ViewBeginx, m_ViewBeginy;
@@ -172,6 +187,7 @@ private:
     wxString exepath, m_MapFileName;
     char m_NpcCurrentDir;
     bool m_isPlaceMode, m_isDeleteMode, m_isEditAttribute, m_isMoveMode;
+    NpcItemEditDialog *m_npcItemEdit;
 
     //Npc obj list
     NpcItem m_PlaceNpcData, *m_MoveNpcItem;
@@ -185,6 +201,16 @@ private:
     //File dialog path
     wxString m_NpcObjPath;
 
+    //FixPos
+	void StartFixPosEdit(NpcItem *npcitem);
+    void EndFixPosEdit(bool isCancle = false);
+    void DrawEditFixPos(wxDC& dc);
+    void CorrectFixedPos(NpcItem *item);
+    bool m_isEditFixPos;
+    NpcItem *m_fixPosEditItem;
+    std::list<wxPoint> m_fixPosPoints;
+    typedef std::list<wxPoint>::iterator FixPosListIterator;
+
     DECLARE_EVENT_TABLE()
 };
 
@@ -197,11 +223,12 @@ public:
                       NpcItem *item)
         :NpcItemEditDialogBase(parent)
     {
-        exepath = wxStandardPaths::Get().GetExecutablePath();
-        exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
         m_NpcAsfImgList = list;
         m_item = item;
+
+        exepath = wxStandardPaths::Get().GetExecutablePath();
+        exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
         INI_MASK = wxT("INI文件(*.ini)|*.ini");
         TXT_MASK = wxT("TXT文件(*.txt)|*.txt");
@@ -209,17 +236,84 @@ public:
         STYLE = wxFD_OPEN;
     }
     virtual ~NpcItemEditDialog() {}
+
+    static wxString ToFixPosString(std::list<wxPoint> &list)
+    {
+        if(list.size() < 2) return wxEmptyString;
+        wxString str;
+        typedef std::list<wxPoint>::iterator Itor;
+        int count = 0;
+        int x, y;
+        for(Itor it = list.begin(); it != list.end() && count < 8; it++, count++)
+        {
+        	Map::GetTilePosition(&x, &y, it->x, it->y);
+            str += PrintPosition(x);
+            str += PrintPosition(y);
+        }
+        for(int i = 0; i < 8 - count; i++)
+		{
+			str += wxT("0000000000000000");
+		}
+        return str;
+    }
+
+    static wxString PrintPosition(int pos)
+    {
+        wxString tempstr = wxString::Format(wxT("%02X000000"),pos);
+		return tempstr;
+    }
+
+    //Returned must deleted
+    static std::list<wxPoint> *ToFixPosList(const wxString& str)
+    {
+    	if(str.Length() != 128) return NULL;
+    	std::list<wxPoint> *list = new std::list<wxPoint>;
+    	wxString tempx, tempy;
+    	long x,y;
+    	int px, py;
+    	bool failed = false;
+    	for(int i = 0; i < 8; i++)
+		{
+			tempx = str.Mid(i * 16, 2);
+			tempy = str.Mid(i * 16 + 8, 2);
+			if(!tempx.ToLong(&x, 16) || !tempy.ToLong(&y, 16))
+			{
+				failed = true;
+				break;
+			}
+			if(x == 0 || y == 0) break;
+			Map::GetTileCenterPixelPosition(&px, &py, x, y);
+			list->push_back(wxPoint((int)px,(int)py));
+		}
+		if(failed)
+		{
+			delete list;
+			return NULL;
+		}
+		return list;
+    }
+
     void InitFromNpcItem(NpcItem *item);
     void AssignToNpcItem(NpcItem *item);
+    void SetFixPos(wxString str)
+    {
+        m_FixedPos->SetValue(str);
+    }
+    enum {OK, CANCEL, FIXPOSEDIT};
 private:
 
     void OnOk( wxCommandEvent& event )
     {
-        EndModal(wxID_OK);
+        EndModal(OK);
     }
     void OnCancle( wxCommandEvent& event )
     {
-        EndModal(wxID_CANCEL);
+        EndModal(CANCEL);
+    }
+
+    virtual void OnSetFixedPos( wxCommandEvent& event )
+    {
+        EndModal(FIXPOSEDIT);
     }
 
     void OnNpcIni( wxCommandEvent& event )
@@ -375,7 +469,6 @@ private:
         m_DeathScript->SetToolTip(wxT("左键选择，右键清除"));
     }
 
-
     void OnSaveNpcIniFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
@@ -396,8 +489,6 @@ private:
         }
     }
 
-
-
     void OpenFile(wxString relatePath)
     {
         if(relatePath.IsEmpty())
@@ -415,8 +506,6 @@ private:
             return;
         }
     }
-
-
 
     wxString INI_MASK,INI_MESSGEG, TXT_MASK;
     long STYLE;
@@ -469,7 +558,7 @@ private:
     }
     void OnScriptFile( wxCommandEvent& event )
     {
-         wxFileDialog filedlg(this,
+        wxFileDialog filedlg(this,
                              wxT("选择一个脚本文件"),
                              exepath + wxT("script\\common\\"),
                              wxT(""),

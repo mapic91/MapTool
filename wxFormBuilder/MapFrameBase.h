@@ -119,6 +119,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapViewMouseLeftUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMouseMove( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapDraw( wxPaintEvent& event ) { event.Skip(); }
+		virtual void OnMapViewMouseRightUp( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnListCtrlLeftDClick( wxMouseEvent& event ) { event.Skip(); }
@@ -252,6 +253,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxButton* m_ScriptFileEdit;
 		wxStaticText* m_staticText42;
 		wxTextCtrl* m_FixedPos;
+		wxButton* m_FixedPosEdit;
 		wxStaticText* m_staticText43;
 		wxButton* m_DeathScript;
 		wxButton* m_DeathScriptEdit;
@@ -274,6 +276,7 @@ class NpcItemEditDialogBase : public wxDialog
 		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnScriptFileClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnScriptFileEdit( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSetFixedPos( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeathScript( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDeathScriptClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDeathScriptEdit( wxCommandEvent& event ) { event.Skip(); }

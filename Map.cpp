@@ -212,14 +212,39 @@ void Map::DrawLayer(int index, wxImage* img)
     }
 }
 
+unsigned char Map::GetTileBarrerCode(int tileX, int tileY)
+{
+    if(tileX < 0 || tileX > mCol ||
+            tileY < 0 || tileY > mRow) return 0;
+
+    return tiles[tileY * mCol + tileX].barrer_type;
+}
+
+bool Map::IsTileBarrer(int tileX, int tileY)
+{
+    unsigned char type = GetTileBarrerCode(tileX, tileY);
+    return (type == 0x80 || type == 0xA0);
+}
+
+bool Map::IsTileBarrerTrans(int tileX, int tileY)
+{
+    unsigned char type = GetTileBarrerCode(tileX, tileY);
+    return (type == 0x40 || type == 0x60);
+}
+
 bool Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
 {
+    if(pixelX > mPixelWidth ||
+            pixelY > mPixelHeight) return false;
+
+    return GetTilePosition(tileX, tileY, pixelX, pixelY);
+}
+bool Map::GetTilePosition(int *tileX, int *tileY,int pixelX, int pixelY)
+{
     if(tileX == NULL ||
-       tileY == NULL ||
-       pixelX < 0 ||
-       pixelX > mPixelWidth ||
-       pixelY < 0 ||
-       pixelY > mPixelHeight) return false;
+            tileY == NULL ||
+            pixelX < 0 ||
+            pixelY < 0 ) return false;
 
     //first caculating even row position, considering each tile is 64 * 32 rectangle
     int nx, ny;
@@ -257,16 +282,24 @@ bool Map::GetTilePosition(int pixelX, int pixelY, int *tileX, int *tileY)
 
     *tileX = nx;
     *tileY = ny;
+
     return true;
 }
+
 bool Map::GetPixelPosition(int Column, int Row, int *pixelX, int *pixelY)
 {
-     if(pixelX == NULL ||
-       pixelY == NULL ||
-       Column < 0 ||
-       Column > mCol ||
-       Row < 0 ||
-       Row > mRow) return false;
+    if(Column > mCol ||
+            Row > mRow) return false;
+
+	return GetPixelPosition(pixelX, pixelY, Column, Row);
+}
+
+bool Map::GetPixelPosition(int* pixelX, int* pixelY, int Column, int Row)
+{
+    if(pixelX == NULL ||
+            pixelY == NULL ||
+            Column < 0 ||
+            Row < 0 ) return false;
 
     long basex, basey;
     basex = (Row%2) * 32 + 64 * Column;
@@ -277,6 +310,29 @@ bool Map::GetPixelPosition(int Column, int Row, int *pixelX, int *pixelY)
 
     return true;
 }
+
+bool Map::GetTileCenterPixelPosition(int Column, int Row, int* pixelX, int* pixelY)
+{
+    if(GetPixelPosition(Column, Row, pixelX, pixelY))
+    {
+        *pixelX += 32;
+        *pixelY += 16;
+        return true;
+    }
+    return false;
+}
+
+bool Map::GetTileCenterPixelPosition(int* pixelX, int* pixelY, int Column, int Row)
+{
+	if(GetPixelPosition(pixelX, pixelY,Column, Row))
+    {
+        *pixelX += 32;
+        *pixelY += 16;
+        return true;
+    }
+    return false;
+}
+
 void Map::DrawTile(long Column, long Row,
                    long TileWidth, long TileHeight,
                    unsigned char* TileData, wxImage *img)

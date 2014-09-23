@@ -55,6 +55,7 @@ class Map
                 false - out of map size, Column,Row is unchanged
         **/
         bool GetTilePosition(int pixelX, int pixelY, int *Column, int *Row);
+        bool static GetTilePosition(int *Column, int *Row,int pixelX, int pixelY);
         /**
         input: the map's tile position
         output: the map's corresponding pixel position(top-left)
@@ -62,7 +63,13 @@ class Map
                 false - out of map size, pixelX,pixelY is unchanged
         **/
         bool GetPixelPosition(int Column, int Row, int *pixelX, int *pixelY);
+        bool static GetPixelPosition(int *pixelX, int *pixelY,int Column, int Row);
+        bool GetTileCenterPixelPosition(int Column, int Row, int *pixelX, int *pixelY);
+        bool static GetTileCenterPixelPosition(int *pixelX, int *pixelY,int Column, int Row);
 
+		bool IsTileBarrer(int tileX, int tileY);
+		bool IsTileBarrerTrans(int tileX, int tileY);
+		unsigned char GetTileBarrerCode(int tileX, int tileY);
 
         bool ReadFile(const wxString FilePath);
     protected:
