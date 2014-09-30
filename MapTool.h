@@ -11,7 +11,20 @@
 #include "wx/stdpaths.h"
 #include "wx/msgdlg.h"
 
+#include <map>
+
 class NpcItemEditDialog;
+struct LevelDetial;
+extern std::map<int, LevelDetial> *g_NpcLevelList;
+
+
+struct LevelDetial
+{
+    int Life;
+    int Attack;
+    int Defend;
+    int Evade;
+};
 
 class MapTool : public MapFrameBase
 {
@@ -31,7 +44,7 @@ private:
         ID_SETFIXPOSCOMPLETE,
     };
 
-	void FrameOnChar( wxKeyEvent& event );
+    void FrameOnChar( wxKeyEvent& event );
     void OnClose( wxCloseEvent& event );
     void OpenMap(wxCommandEvent& event);
     void SaveToPNG(wxCommandEvent& event);
@@ -202,7 +215,7 @@ private:
     wxString m_NpcObjPath;
 
     //FixPos
-	void StartFixPosEdit(NpcItem *npcitem);
+    void StartFixPosEdit(NpcItem *npcitem);
     void EndFixPosEdit(bool isCancle = false);
     void DrawEditFixPos(wxDC& dc);
     void CorrectFixedPos(NpcItem *item);
@@ -246,51 +259,51 @@ public:
         int x, y;
         for(Itor it = list.begin(); it != list.end() && count < 8; it++, count++)
         {
-        	Map::GetTilePosition(&x, &y, it->x, it->y);
+            Map::GetTilePosition(&x, &y, it->x, it->y);
             str += PrintPosition(x);
             str += PrintPosition(y);
         }
         for(int i = 0; i < 8 - count; i++)
-		{
-			str += wxT("0000000000000000");
-		}
+        {
+            str += wxT("0000000000000000");
+        }
         return str;
     }
 
     static wxString PrintPosition(int pos)
     {
         wxString tempstr = wxString::Format(wxT("%02X000000"),pos);
-		return tempstr;
+        return tempstr;
     }
 
     //Returned must deleted
     static std::list<wxPoint> *ToFixPosList(const wxString& str)
     {
-    	if(str.Length() != 128) return NULL;
-    	std::list<wxPoint> *list = new std::list<wxPoint>;
-    	wxString tempx, tempy;
-    	long x,y;
-    	int px, py;
-    	bool failed = false;
-    	for(int i = 0; i < 8; i++)
-		{
-			tempx = str.Mid(i * 16, 2);
-			tempy = str.Mid(i * 16 + 8, 2);
-			if(!tempx.ToLong(&x, 16) || !tempy.ToLong(&y, 16))
-			{
-				failed = true;
-				break;
-			}
-			if(x == 0 || y == 0) break;
-			Map::GetTileCenterPixelPosition(&px, &py, x, y);
-			list->push_back(wxPoint((int)px,(int)py));
-		}
-		if(failed)
-		{
-			delete list;
-			return NULL;
-		}
-		return list;
+        if(str.Length() != 128) return NULL;
+        std::list<wxPoint> *list = new std::list<wxPoint>;
+        wxString tempx, tempy;
+        long x,y;
+        int px, py;
+        bool failed = false;
+        for(int i = 0; i < 8; i++)
+        {
+            tempx = str.Mid(i * 16, 2);
+            tempy = str.Mid(i * 16 + 8, 2);
+            if(!tempx.ToLong(&x, 16) || !tempy.ToLong(&y, 16))
+            {
+                failed = true;
+                break;
+            }
+            if(x == 0 || y == 0) break;
+            Map::GetTileCenterPixelPosition(&px, &py, x, y);
+            list->push_back(wxPoint((int)px,(int)py));
+        }
+        if(failed)
+        {
+            delete list;
+            return NULL;
+        }
+        return list;
     }
 
     void InitFromNpcItem(NpcItem *item);
@@ -309,6 +322,23 @@ private:
     void OnCancle( wxCommandEvent& event )
     {
         EndModal(CANCEL);
+    }
+
+    virtual void OnLevelChange( wxCommandEvent& event )
+    {
+        wxString value = event.GetString();
+        long val;
+        if(m_FillNpcLevelDetail->GetValue() &&
+                value.ToLong(&val) &&
+                g_NpcLevelList->count(val))
+        {
+            LevelDetial &detail = g_NpcLevelList->at(val);
+            m_Evade->ChangeValue(wxString::Format(wxT("%d"), detail.Evade));
+            m_Attack->ChangeValue(wxString::Format(wxT("%d"), detail.Attack));
+            m_Defend->ChangeValue(wxString::Format(wxT("%d"), detail.Defend));
+            m_Life->ChangeValue(wxString::Format(wxT("%d"), detail.Life));
+            m_LifeMax->ChangeValue(wxString::Format(wxT("%d"), detail.Life));
+        }
     }
 
     virtual void OnSetFixedPos( wxCommandEvent& event )

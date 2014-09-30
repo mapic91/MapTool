@@ -16,6 +16,7 @@ class wxWidgets_templateApp : public wxApp
 {
     public:
         virtual bool OnInit();
+        virtual int OnExit();
 };
 
 #endif // WXWIDGETS_TEMPLATEAPP_H

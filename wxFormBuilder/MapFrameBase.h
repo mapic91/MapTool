@@ -204,6 +204,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxComboBox* m_DialogRadius;
 		wxStaticText* m_staticText16;
 		wxComboBox* m_Level;
+		wxCheckBox* m_FillNpcLevelDetail;
 		wxStaticText* m_staticText17;
 		wxComboBox* m_AttackRadius;
 		wxStaticText* m_staticText18;
@@ -262,6 +263,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxButton* m_Cancle;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnLevelChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNpcIni( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNpcIniEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBodyIni( wxCommandEvent& event ) { event.Skip(); }
@@ -286,6 +288,28 @@ class NpcItemEditDialogBase : public wxDialog
 		
 	
 	public:
+		wxString m_Validat8; 
+		wxString m_Validat9; 
+		wxString m_Validat10; 
+		wxString m_Validat1; 
+		wxString m_Validat11; 
+		wxString m_Validat2; 
+		wxString m_Validat12; 
+		wxString m_Validat3; 
+		wxString m_Validat13; 
+		wxString m_Validat4; 
+		wxString m_Validat14; 
+		wxString m_Validat5; 
+		wxString m_Validat15; 
+		wxString m_Validat6; 
+		wxString m_Validat16; 
+		wxString m_Validat17; 
+		wxString m_Validat7; 
+		wxString m_Validat18; 
+		wxString m_Validat19; 
+		wxString m_Validat20; 
+		wxString m_Validat21; 
+		wxString m_Validat22; 
 		
 		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,600 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~NpcItemEditDialogBase();
@@ -348,6 +372,12 @@ class ObjItemEditDialogBase : public wxDialog
 		
 	
 	public:
+		wxString m_Validat1; 
+		wxString m_Validat2; 
+		wxString m_Validat3; 
+		wxString m_Validat4; 
+		wxString m_Validat5; 
+		wxString m_Validat6; 
 		
 		ObjItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,252 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ObjItemEditDialogBase();

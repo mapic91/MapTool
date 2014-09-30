@@ -553,6 +553,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText16->Wrap( -1 );
 	gSizer1->Add( m_staticText16, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
+	wxBoxSizer* bSizer23;
+	bSizer23 = new wxBoxSizer( wxHORIZONTAL );
+	
 	m_Level = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 );
 	m_Level->Append( wxT("10") );
 	m_Level->Append( wxT("20") );
@@ -564,7 +567,16 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Level->SetMinSize( wxSize( 110,-1 ) );
 	m_Level->SetMaxSize( wxSize( 110,-1 ) );
 	
-	gSizer1->Add( m_Level, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer23->Add( m_Level, 1, wxALL|wxALIGN_CENTER_VERTICAL, 3 );
+	
+	m_FillNpcLevelDetail = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_FillNpcLevelDetail->SetValue(true); 
+	m_FillNpcLevelDetail->SetToolTip( wxT("同时更新 Evade  Attack  Defend  Life  LifeMax\n需要文件 ini\\level\\level-npc.ini") );
+	
+	bSizer23->Add( m_FillNpcLevelDetail, 0, wxALL|wxEXPAND, 0 );
+	
+	
+	gSizer1->Add( bSizer23, 1, wxEXPAND, 5 );
 	
 	m_staticText17 = new wxStaticText( this, wxID_ANY, wxT("攻击半径--AttackRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText17->Wrap( -1 );
@@ -784,8 +796,10 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer7, 1, wxEXPAND, 5 );
 	
-	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("额外经验----ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText34->Wrap( -1 );
+	m_staticText34->SetToolTip( wxT("击杀敌人获得的额外经验") );
+	
 	gSizer1->Add( m_staticText34, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_ExpBonus = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
@@ -812,8 +826,10 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer8, 1, wxEXPAND, 5 );
 	
-	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("Idle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("攻击间隔（帧）--Idle"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText36->Wrap( -1 );
+	m_staticText36->SetToolTip( wxT("每次攻击间隔多少帧") );
+	
 	gSizer1->Add( m_staticText36, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Idle = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
@@ -840,7 +856,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( bSizer9, 1, wxEXPAND, 5 );
 	
-	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("固定路径----FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
 	gSizer1->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -909,6 +925,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	m_Level->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NpcItemEditDialogBase::OnLevelChange ), NULL, this );
 	m_NpcIni->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIni ), NULL, this );
 	m_NpcIniEdit->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIniEdit ), NULL, this );
 	m_BodyIni->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIni ), NULL, this );
@@ -935,6 +952,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 NpcItemEditDialogBase::~NpcItemEditDialogBase()
 {
 	// Disconnect Events
+	m_Level->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NpcItemEditDialogBase::OnLevelChange ), NULL, this );
 	m_NpcIni->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIni ), NULL, this );
 	m_NpcIniEdit->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnNpcIniEdit ), NULL, this );
 	m_BodyIni->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( NpcItemEditDialogBase::OnBodyIni ), NULL, this );
@@ -987,13 +1005,14 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Kind = new wxComboBox( this, wxID_ANY, wxT("植物和装饰类（新剑仅装饰类）"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	m_Kind->Append( wxT("植物和装饰类（新剑仅装饰类）") );
-	m_Kind->Append( wxT("宝箱和动画类（新剑还包括植物类）") );
+	m_Kind->Append( wxT("宝物和装饰类（新剑仅装饰类）") );
+	m_Kind->Append( wxT("宝箱和动画类（新剑还包括宝物类）") );
 	m_Kind->Append( wxT("尸体类") );
 	m_Kind->Append( wxT("循环音效") );
 	m_Kind->Append( wxT("随机音效") );
 	m_Kind->Append( wxT("门类") );
-	m_Kind->SetToolTip( wxT("0-植物和装饰类（新剑仅装饰类）\n1-宝箱和动画类（新剑还包括植物类）\n2-尸体类\n3-循环音效\n4-随机音效\n5-门类") );
+	m_Kind->Append( wxT("陷阱") );
+	m_Kind->SetToolTip( wxT("0-宝物和装饰类（新剑仅装饰类）\n1-宝箱和动画类（新剑还包括宝物类）\n2-尸体类\n3-循环音效\n4-随机音效\n5-门类\n6-陷阱（Damage定义伤害值）") );
 	m_Kind->SetMinSize( wxSize( 110,-1 ) );
 	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -1019,6 +1038,8 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("伤害--------Damage"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText43->Wrap( -1 );
+	m_staticText43->SetToolTip( wxT("当类型为陷阱时的伤害值") );
+	
 	gSizer2->Add( m_staticText43, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Damage = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
@@ -1027,7 +1048,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer2->Add( m_Damage, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("帧----------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("起始帧------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText44->Wrap( -1 );
 	gSizer2->Add( m_staticText44, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
