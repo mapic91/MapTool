@@ -22,7 +22,6 @@ void AsfDecode::Init()
 {
     memset(&FileHead,0, sizeof(AsfFileHead));
     memset(&PaletteData, 0, sizeof(PaletteData));
-    first = NULL;
 }
 void AsfDecode::SetAsfFile(const wxString AsfFilePath)
 {
@@ -383,36 +382,19 @@ unsigned char* AsfDecode::GetDecodedFrameData(unsigned long index, long* Width, 
     else return NULL;
 }
 
-unsigned char* AsfDecode::GetBuffedFrameData(unsigned long index, long* Width, long* Height)
-{
-    if(index >= GetFramesCounts()) return NULL;
-
-    Frame_Data *temp = first;
-    for(unsigned long i = 0; i < index; i++)
-    {
-        if(temp == NULL) return NULL;
-        temp = temp->next;
-    }
-
-    if(temp == NULL) return NULL;
-    if(Width != NULL) *Width = temp->width;
-    if(Height != NULL) *Height = temp->height;
-
-    return temp->data;
-}
-wxImage AsfDecode::GetDirectionImageFromBufferdData(unsigned long direction)
+wxBitmap AsfDecode::GetDirectionBitmapFromBufferdData(unsigned long direction)
 {
     if(direction >= (unsigned long)GetDirection() ||
        GetFramesCounts() == 0 ||
-       GetDirection() == 0) return wxNullImage;
-
-    return GetImageFromBuffedData(direction * GetFramesCounts() / GetDirection());
+       GetDirection() == 0) return wxNullBitmap;
+	int index = direction * GetFramesCounts() / GetDirection();
+	std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
+	for(int i = 0; i <=index; i++, it++);
+    return (*(*it));
 }
 
-wxImage AsfDecode::GetImageFromBuffedData(unsigned long index)
+wxImage AsfDecode::GetImageFromRgbaData(unsigned char *data, int width, int height)
 {
-    long width, height;
-    unsigned char *data = GetBuffedFrameData(index, &width, &height);
     if(data == NULL) return wxNullImage;
 
     wxImage img;
@@ -440,37 +422,26 @@ wxImage AsfDecode::GetImageFromBuffedData(unsigned long index)
 void AsfDecode::BufferData()
 {
     FreeBufferData();
-    Frame_Data *temp;
     long width, height;
+    unsigned char* data;
     if(GetFramesCounts() == 0) return;
-    first = new Frame_Data;
-    temp = first;
     for(unsigned long i = 0; i < GetFramesCounts(); i++)
     {
-        temp->data = GetDecodedFrameData(i, &width, &height, PIC_RGBA);
-        temp->width = width;
-        temp->height = height;
-        if(i != GetFramesCounts() - 1)
-        {
-            temp->next = new Frame_Data;
-            temp = temp->next;
-        }
-        else //last one
-        {
-            temp->next = NULL;
-        }
+        data = GetDecodedFrameData(i, &width, &height, PIC_RGBA);
+		wxImage image = GetImageFromRgbaData(data, (int)width, (int)height);
+		free(data);
+		wxBitmap *bmp = new wxBitmap(image);
+		BufferdFrame.push_back(bmp);
     }
 }
 
 void AsfDecode::FreeBufferData()
 {
-    Frame_Data *temp;
-    while(first != NULL)
-    {
-        temp = first->next;
-        if(first->data != NULL) free(first->data);
-        delete first;
-        first = temp;
-    }
-    first = NULL;
+    for(std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
+		it != BufferdFrame.end();
+		it++)
+	{
+		delete (*it);
+	}
+	BufferdFrame.clear();
 }

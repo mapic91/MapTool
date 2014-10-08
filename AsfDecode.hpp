@@ -7,6 +7,8 @@
 
 #include "mydefs.hpp"
 
+#include <list>
+
 class AsfDecode
 {
 public:
@@ -36,9 +38,8 @@ public:
     unsigned char* GetDecodedFrameData(unsigned long index, long* Width = NULL, long* Height = NULL,
                                        COLOUR_MODLE mod = PIC_RGB,bool *isTransparent = NULL,
                                        Palette_Colour *TransparentColor = NULL, unsigned char transmask = 0);
-    unsigned char* GetBuffedFrameData(unsigned long index, long* Width = NULL, long* Height = NULL);
-    wxImage GetImageFromBuffedData(unsigned long index);
-    wxImage GetDirectionImageFromBufferdData(unsigned long direction);
+    wxImage GetImageFromRgbaData(unsigned char *data, int width, int height);
+    wxBitmap GetDirectionBitmapFromBufferdData(unsigned long direction);
 
     void BufferData();
 
@@ -47,7 +48,8 @@ public:
 private:
     void FreeBufferData();
 
-    Frame_Data *first;
+    //Frame_Data *first;
+    std::list<wxBitmap*> BufferdFrame;
     AsfFileHead FileHead;
     wxString FilePath;
     unsigned long FrameDataBegPos;

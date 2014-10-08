@@ -53,7 +53,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.4 - by 小试刀剑  2014.09.30"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.4.1 - by 小试刀剑  2014.10.8"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -362,13 +362,13 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
     if(!map.GetPixelPosition(col, row, &recposx, &recposy)) return;
 
     long tDrawX = 0, tDrawY = 0, tOffX = 0, tOffY = 0;
-    wxImage timg;
+    wxBitmap tbmp;
     int tWidth = 0, tHeight = 0;
     if(npcitem != NULL)
     {
-        timg = npcitem->NpcStand->GetDirectionImageFromBufferdData(npcitem->Dir);
-        tWidth = timg.GetWidth();
-        tHeight = timg.GetHeight();
+        tbmp = npcitem->NpcStand->GetDirectionBitmapFromBufferdData(npcitem->Dir);
+        tWidth = tbmp.GetWidth();
+        tHeight = tbmp.GetHeight();
         tOffX = npcitem->NpcStand->GetLeft();
         tOffY = npcitem->NpcStand->GetBottom();
 
@@ -381,9 +381,9 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
     }
     else if(objitem != NULL)
     {
-        timg = objitem->ObjCommon->GetDirectionImageFromBufferdData(objitem->Dir);
-        tWidth = timg.GetWidth();
-        tHeight = timg.GetHeight();
+        tbmp = objitem->ObjCommon->GetDirectionBitmapFromBufferdData(objitem->Dir);
+        tWidth = tbmp.GetWidth();
+        tHeight = tbmp.GetHeight();
         tOffX = objitem->ObjCommon->GetLeft();
         tOffY = objitem->ObjCommon->GetBottom();
 
@@ -398,10 +398,8 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
         tDrawY -= m_ViewBeginy;
     }
 
-    if(timg.IsOk())
+    if(tbmp.IsOk())
     {
-        wxBitmap tbmp(timg);
-
         wxMemoryDC memdc;
         memdc.SelectObject(tbmp);
 
