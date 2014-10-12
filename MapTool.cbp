@@ -21,6 +21,7 @@
 					<Add directory="$(#wx.lib)/gcc_dll/mswud" />
 				</ResourceCompiler>
 				<Linker>
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_stc.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_richtext.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_xrc.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_adv.a" />
@@ -33,6 +34,15 @@
 					<Add library="$(#wx.lib)\gcc_dll\libwxtiffd.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxzlibd.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxexpatd.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_aui.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxbase30u_net.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_gl.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_media.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_propgrid.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_ribbon.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30ud_webview.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxregexud.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxscintillad.a" />
 					<Add directory="$(#wx.lib)/gcc_dll" />
 				</Linker>
 			</Target>
@@ -51,6 +61,7 @@
 					<Add directory="$(#wx.lib)/gcc_lib/mswud" />
 				</ResourceCompiler>
 				<Linker>
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_stc.a" />
 					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_richtext.a" />
 					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_xrc.a" />
 					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_adv.a" />
@@ -63,6 +74,15 @@
 					<Add library="$(#wx.lib)\gcc_lib\libwxtiffd.a" />
 					<Add library="$(#wx.lib)\gcc_lib\libwxzlibd.a" />
 					<Add library="$(#wx.lib)\gcc_lib\libwxexpatd.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_aui.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxbase30u_net.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_gl.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_media.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_propgrid.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_ribbon.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxmsw30ud_webview.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxregexud.a" />
+					<Add library="$(#wx.lib)\gcc_lib\libwxscintillad.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
 				</Linker>
 			</Target>
@@ -82,6 +102,7 @@
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_stc.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_richtext.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_xrc.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_adv.a" />
@@ -94,6 +115,15 @@
 					<Add library="$(#wx.lib)\gcc_dll\libwxtiff.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxzlib.a" />
 					<Add library="$(#wx.lib)\gcc_dll\libwxexpat.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_aui.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxbase30u_net.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_gl.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_media.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_propgrid.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_ribbon.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxmsw30u_webview.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxregexu.a" />
+					<Add library="$(#wx.lib)\gcc_dll\libwxscintilla.a" />
 					<Add directory="$(#wx.lib)/gcc_dll" />
 				</Linker>
 			</Target>
