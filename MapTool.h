@@ -528,7 +528,11 @@ private:
         }
         if(wxFileName::FileExists(exepath + relatePath))
         {
-            wxExecute(wxT("explorer \"") + exepath + relatePath + wxT("\""));
+        	wxString program = wxT("explorer");
+        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
+				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
+				program = exepath + wxT("JxqyScriptEditor.exe");
+            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
         }
         else
         {
@@ -681,7 +685,11 @@ private:
         }
         if(wxFileName::FileExists(exepath + relatePath))
         {
-            wxExecute(wxT("explorer \"") + exepath + relatePath + wxT("\""));
+        	wxString program = wxT("explorer");
+        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
+				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
+				program = exepath + wxT("JxqyScriptEditor.exe");
+            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
         }
         else
         {

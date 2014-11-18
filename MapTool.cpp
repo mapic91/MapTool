@@ -53,7 +53,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV2.4.1 - by Ğ¡ÊÔµ¶½£  2014.10.8"));
+    this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV2.4.2 - by Ğ¡ÊÔµ¶½£  2014.11.18"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
