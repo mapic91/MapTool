@@ -387,7 +387,16 @@ wxBitmap AsfDecode::GetDirectionBitmapFromBufferdData(unsigned long direction)
     if(direction >= (unsigned long)GetDirection() ||
        GetFramesCounts() == 0 ||
        GetDirection() == 0) return wxNullBitmap;
-	int index = direction * GetFramesCounts() / GetDirection();
+	int index;
+	if(GetDirection() < 1)
+	{
+		index = 0;
+	}
+	else
+	{
+		index = direction * GetFramesCounts() / GetDirection();
+	}
+	if(index < 0 || index >= GetFramesCounts()) return wxNullBitmap;
 	std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
 	for(int i = 0; i < index; i++, it++);
     return (*(*it));
