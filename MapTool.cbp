@@ -256,6 +256,8 @@
 		<Unit filename="App.h" />
 		<Unit filename="AsfDecode.cpp" />
 		<Unit filename="AsfDecode.hpp" />
+		<Unit filename="ClipBoard.cpp" />
+		<Unit filename="ClipBoard.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="MapTool.cpp" />

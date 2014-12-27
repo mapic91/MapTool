@@ -51,6 +51,9 @@ struct NpcItem
     long VisionRadius;
     long WalkSpeed;
     AsfDecode *NpcStand; //Point to AsfImgList item, don't free
+
+	NpcItem() {NpcStand = NULL;}
+    void CopyFrom(const NpcItem *item);
 };
 struct ObjItem
 {
@@ -69,6 +72,9 @@ struct ObjItem
     wxString ScriptFile;
     wxString WavFile;
     AsfDecode *ObjCommon; //Point to AsfObjImgList item, don't free
+
+	ObjItem(){ObjCommon = NULL;}
+    void CopyFrom(const ObjItem *item);
 };
 struct AsfImg
 {
@@ -129,7 +135,7 @@ public:
 
     T GetItem(int index)
     {
-        if(index < 0 || index >= m_list.size()) return T(NULL);
+        if(index < 0 || index >= (int)m_list.size()) return T(NULL);
         typename std::list<T>::iterator it = m_list.begin();
         for(int i = 0; i < index; i++, it++);
         return *it;
@@ -183,7 +189,7 @@ public:
     }
     void DeleteItem(int index)
     {
-    	if(index < 0 || index >= m_list.size()) return;
+    	if(index < 0 || index >= (int)m_list.size()) return;
         typename std::list<T>::iterator it = m_list.begin();
         for(int i = 0; i < index; i++, it++);
     	delete *it;

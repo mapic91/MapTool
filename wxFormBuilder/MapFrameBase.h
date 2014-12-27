@@ -55,6 +55,10 @@ class wxListView;
 #define ID_MAPLEFT 1013
 #define ID_MAPRIGHT 1014
 #define ID_DIRECTION 1015
+#define MYID_MAPVIEW_COPY 1016
+#define MYID_MAPVIEW_CUT 1017
+#define MYID_MAPVIEW_PASTE 1018
+#define MYID_MAPVIEW_DETIAL 1019
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -97,6 +101,7 @@ class MapFrameBase : public wxFrame
 		wxMenu* m_MenuFile;
 		wxMenu* m_MenuCharacter;
 		wxMenu* m_menu3;
+		wxMenu* m_menuMapView;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
@@ -142,6 +147,10 @@ class MapFrameBase : public wxFrame
 		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapViewCopy( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapViewCut( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapViewPaste( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapViewDetail( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
@@ -160,6 +169,11 @@ class MapFrameBase : public wxFrame
 		{
 			m_splitter4->SetSashPosition( 100 );
 			m_splitter4->Disconnect( wxEVT_IDLE, wxIdleEventHandler( MapFrameBase::m_splitter4OnIdle ), NULL, this );
+		}
+		
+		void MapFrameBaseOnContextMenu( wxMouseEvent &event )
+		{
+			this->PopupMenu( m_menuMapView, event.GetPosition() );
 		}
 	
 };

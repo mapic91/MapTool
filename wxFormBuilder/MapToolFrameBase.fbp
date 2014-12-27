@@ -2352,6 +2352,71 @@
                     </object>
                 </object>
             </object>
+            <object class="wxMenu" expanded="1">
+                <property name="label">MapView</property>
+                <property name="name">m_menuMapView</property>
+                <property name="permission">protected</property>
+                <object class="wxMenuItem" expanded="1">
+                    <property name="bitmap"></property>
+                    <property name="checked">0</property>
+                    <property name="enabled">1</property>
+                    <property name="help">设置为放置源</property>
+                    <property name="id">MYID_MAPVIEW_COPY</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">复制</property>
+                    <property name="name">m_menuItemCopy</property>
+                    <property name="permission">none</property>
+                    <property name="shortcut"></property>
+                    <property name="unchecked_bitmap"></property>
+                    <event name="OnMenuSelection">OnMapViewCopy</event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="wxMenuItem" expanded="1">
+                    <property name="bitmap"></property>
+                    <property name="checked">0</property>
+                    <property name="enabled">1</property>
+                    <property name="help">设置为放置源并删除</property>
+                    <property name="id">MYID_MAPVIEW_CUT</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">剪切</property>
+                    <property name="name">m_menuItemCut</property>
+                    <property name="permission">none</property>
+                    <property name="shortcut"></property>
+                    <property name="unchecked_bitmap"></property>
+                    <event name="OnMenuSelection">OnMapViewCut</event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="wxMenuItem" expanded="1">
+                    <property name="bitmap"></property>
+                    <property name="checked">0</property>
+                    <property name="enabled">1</property>
+                    <property name="help"></property>
+                    <property name="id">MYID_MAPVIEW_PASTE</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">粘贴</property>
+                    <property name="name">m_menuItemPaste</property>
+                    <property name="permission">none</property>
+                    <property name="shortcut"></property>
+                    <property name="unchecked_bitmap"></property>
+                    <event name="OnMenuSelection">OnMapViewPaste</event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="wxMenuItem" expanded="1">
+                    <property name="bitmap"></property>
+                    <property name="checked">0</property>
+                    <property name="enabled">1</property>
+                    <property name="help"></property>
+                    <property name="id">MYID_MAPVIEW_DETIAL</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">详细...</property>
+                    <property name="name">m_menuItemDetail</property>
+                    <property name="permission">none</property>
+                    <property name="shortcut"></property>
+                    <property name="unchecked_bitmap"></property>
+                    <event name="OnMenuSelection">OnMapViewDetail</event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+            </object>
         </object>
         <object class="Dialog" expanded="0">
             <property name="aui_managed">0</property>

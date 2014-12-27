@@ -244,6 +244,25 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	this->SetMenuBar( m_menubar3 );
 	
+	m_menuMapView = new wxMenu();
+	wxMenuItem* m_menuItemCopy;
+	m_menuItemCopy = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_COPY, wxString( wxT("复制") ) , wxT("设置为放置源"), wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItemCopy );
+	
+	wxMenuItem* m_menuItemCut;
+	m_menuItemCut = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CUT, wxString( wxT("剪切") ) , wxT("设置为放置源并删除"), wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItemCut );
+	
+	wxMenuItem* m_menuItemPaste;
+	m_menuItemPaste = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_PASTE, wxString( wxT("粘贴") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItemPaste );
+	
+	wxMenuItem* m_menuItemDetail;
+	m_menuItemDetail = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DETIAL, wxString( wxT("详细...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItemDetail );
+	
+	this->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MapFrameBase::MapFrameBaseOnContextMenu ), NULL, this ); 
+	
 	
 	this->Centre( wxBOTH );
 	
@@ -295,6 +314,10 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
+	this->Connect( m_menuItemCopy->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCopy ) );
+	this->Connect( m_menuItemCut->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCut ) );
+	this->Connect( m_menuItemPaste->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewPaste ) );
+	this->Connect( m_menuItemDetail->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewDetail ) );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -347,7 +370,12 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
+	this->Disconnect( MYID_MAPVIEW_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCopy ) );
+	this->Disconnect( MYID_MAPVIEW_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCut ) );
+	this->Disconnect( MYID_MAPVIEW_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewPaste ) );
+	this->Disconnect( MYID_MAPVIEW_DETIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewDetail ) );
 	
+	delete m_menuMapView; 
 }
 
 NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )

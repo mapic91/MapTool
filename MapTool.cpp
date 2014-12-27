@@ -37,6 +37,8 @@ MapTool::MapTool(wxWindow* parent)
     m_ObjAsfImgList = new AsfImgList;
     m_MoveNpcItem = NULL;
     m_MoveObjItem = NULL;
+    m_selectedNpcItem = NULL;
+    m_selectedObjItem = NULL;
     m_isNpc = true;
     m_isObj = false;
     m_placeModeNotDraw = false;
@@ -103,18 +105,18 @@ MapTool::~MapTool()
 }
 void MapTool::FrameOnChar( wxKeyEvent& event )
 {
-	int keyCode = event.GetKeyCode();
-	if(m_isEditFixPos)
-	{
-		if(keyCode == WXK_RETURN)EndFixPosEdit();
-		else if(keyCode == WXK_ESCAPE)
-		{
-			if(m_fixPosPoints.size() > 1)
-			m_fixPosPoints.pop_back();
-			RedrawMapView();
-		}
-	}
-	event.Skip();
+    int keyCode = event.GetKeyCode();
+    if(m_isEditFixPos)
+    {
+        if(keyCode == WXK_RETURN)EndFixPosEdit();
+        else if(keyCode == WXK_ESCAPE)
+        {
+            if(m_fixPosPoints.size() > 1)
+                m_fixPosPoints.pop_back();
+            RedrawMapView();
+        }
+    }
+    event.Skip();
 }
 void MapTool::OnClose(wxCloseEvent& event)
 {
@@ -153,6 +155,9 @@ void MapTool::OpenMap(wxCommandEvent& event)
     m_ObjList.Clear();
     FreeAsfImgList(m_NpcAsfImgList);
     FreeAsfImgList(m_ObjAsfImgList);
+
+    //Clear clipboard
+    m_clipBoard.Clear();
 
     //Show view
     m_ListData->Show(true);
@@ -272,9 +277,9 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
             m_LayerTransparent->IsChecked());
 
     if(m_isEditFixPos)
-	{
-		//Do nothing
-	}
+    {
+        //Do nothing
+    }
     else if(m_isPlaceMode)//Draw PlaceMode
     {
         if(m_placeModeNotDraw)
@@ -293,34 +298,34 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
     DrawObjsNpcs(dc);
     DrawObjsNpcsPosition(dc);
 
-	NpcItem *curItem = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
-	if(!m_isPlaceMode &&
-		!m_isEditFixPos &&
-		curItem && !curItem->FixedPos.IsEmpty())
-	{
-		std::list<wxPoint> *posList = NpcItemEditDialog::ToFixPosList(curItem->FixedPos);
-		if(posList)
-		{
-			dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
-			size_t count = posList->size();
-			wxPoint pos[count];
-			int index = 0;
-			for(std::list<wxPoint>::iterator it = posList->begin();
-				it != posList->end(); it++)
-			{
-				pos[index++] = wxPoint(it->x, it->y);
-			}
-			delete posList;
+    NpcItem *curItem = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+    if(!m_isPlaceMode &&
+            !m_isEditFixPos &&
+            curItem && !curItem->FixedPos.IsEmpty())
+    {
+        std::list<wxPoint> *posList = NpcItemEditDialog::ToFixPosList(curItem->FixedPos);
+        if(posList)
+        {
+            dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
+            size_t count = posList->size();
+            wxPoint pos[count];
+            int index = 0;
+            for(std::list<wxPoint>::iterator it = posList->begin();
+                    it != posList->end(); it++)
+            {
+                pos[index++] = wxPoint(it->x, it->y);
+            }
+            delete posList;
 
-			dc.DrawLines(count, pos, -m_ViewBeginx, -m_ViewBeginy);
-		}
-	}
+            dc.DrawLines(count, pos, -m_ViewBeginx, -m_ViewBeginy);
+        }
+    }
 
     //Draw reactangle current positon under mouse
     if(map.IsTileBarrer(m_CurTileX, m_CurTileY))
-		dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxRED, 2)));
-	else if(map.IsTileBarrerTrans(m_CurTileX, m_CurTileY))
-		dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxBLUE, 2)));
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxRED, 2)));
+    else if(map.IsTileBarrerTrans(m_CurTileX, m_CurTileY))
+        dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxBLUE, 2)));
     else if(curItem ||
             m_ObjList.HasItem(m_CurTileX, m_CurTileY))
         dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxYELLOW, 2)));
@@ -328,10 +333,10 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
         dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
     DrawRectangle(m_CurTileX, m_CurTileY, dc);
 
-	if(m_isEditFixPos)
-	{
-		DrawEditFixPos(dc);
-	}
+    if(m_isEditFixPos)
+    {
+        DrawEditFixPos(dc);
+    }
 }
 
 void MapTool::DrawRectangle(long col, long row, wxDC &dc, bool currentView)
@@ -417,44 +422,44 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
 
 void MapTool::DrawEditFixPos(wxDC& dc)
 {
-	size_t size = m_fixPosPoints.size() + 1;
-	wxPoint point[size];
-	typedef std::list<wxPoint>::iterator Itor;
-	int i = 0;
-	for(Itor it = m_fixPosPoints.begin();
-		it != m_fixPosPoints.end(); it++, i++)
-	{
-		point[i] = *it;
-	}
-	int x, y;
-	if(map.GetTileCenterPixelPosition(m_CurTileX, m_CurTileY, &x, &y))
-	{
-		point[size - 1] = wxPoint(x, y);
-		dc.DrawLines(size, point, -m_ViewBeginx, -m_ViewBeginy);
-	}
+    size_t size = m_fixPosPoints.size() + 1;
+    wxPoint point[size];
+    typedef std::list<wxPoint>::iterator Itor;
+    int i = 0;
+    for(Itor it = m_fixPosPoints.begin();
+            it != m_fixPosPoints.end(); it++, i++)
+    {
+        point[i] = *it;
+    }
+    int x, y;
+    if(map.GetTileCenterPixelPosition(m_CurTileX, m_CurTileY, &x, &y))
+    {
+        point[size - 1] = wxPoint(x, y);
+        dc.DrawLines(size, point, -m_ViewBeginx, -m_ViewBeginy);
+    }
 
 }
 
 void MapTool::CorrectFixedPos(NpcItem* item)
 {
-	if(item && item->FixedPos.length() == 128)
-	{
-		wxString tmp = NpcItemEditDialog::PrintPosition(item->MapX) +
-			NpcItemEditDialog::PrintPosition(item->MapY);
-		item->FixedPos = tmp + item->FixedPos.Mid(16);
-	}
+    if(item && item->FixedPos.length() == 128)
+    {
+        wxString tmp = NpcItemEditDialog::PrintPosition(item->MapX) +
+                       NpcItemEditDialog::PrintPosition(item->MapY);
+        item->FixedPos = tmp + item->FixedPos.Mid(16);
+    }
 }
 
 bool MapTool::IsDrawObjsNpcs()
 {
     return (
-			m_ToolBarEdit->GetToolState(ID_SHOWNPC) ||
-			 m_ToolBarEdit->GetToolState(ID_SHOWOBJ)
-		    ) &&
+               m_ToolBarEdit->GetToolState(ID_SHOWNPC) ||
+               m_ToolBarEdit->GetToolState(ID_SHOWOBJ)
+           ) &&
            (
-			m_NpcList.getCounts() ||
-			m_ObjList.getCounts()
-			);
+               m_NpcList.getCounts() ||
+               m_ObjList.getCounts()
+           );
 }
 
 void MapTool::DrawObjsNpcs(wxDC &dc, bool currentView)
@@ -601,10 +606,10 @@ void MapTool::OnMapRight( wxCommandEvent& event )
 }
 void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
 {
-	if(m_isEditFixPos)
-	{
-		//Do nothing
-	}
+    if(m_isEditFixPos)
+    {
+        //Do nothing
+    }
     else if(m_isPlaceMode)
     {
         if(m_isNpc && !m_NpcIniFilePath.IsEmpty())
@@ -618,18 +623,10 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             npcitem->MapX = m_CurTileX;
             npcitem->MapY = m_CurTileY;
             npcitem->Dir = m_PlaceNpcData.Dir;
-            if(m_NpcList.HasItem(m_CurTileX, m_CurTileY))
-			{
-				int ret = wxMessageBox(wxT("替换当前NPC？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
-				if(ret == wxYES)
-				{
-					m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
-					m_NpcList.AddItem(npcitem);
-				}
-			}
-            else m_NpcList.AddItem(npcitem);
-
-            RefreshNpcList();
+            if(!AddItem(npcitem))
+            {
+                delete npcitem;
+            }
         }
         else if(m_isObj && !m_ObjIniFilePath.IsEmpty())
         {
@@ -642,18 +639,10 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             objitem->MapX = m_CurTileX;
             objitem->MapY = m_CurTileY;
             objitem->Dir = m_PlaceObjData.Dir;
-            if(m_ObjList.HasItem(m_CurTileX, m_CurTileY))
-			{
-				int ret = wxMessageBox(wxT("替换当前OBJ？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
-				if(ret == wxYES)
-				{
-					m_ObjList.DeleteItem(m_CurTileX, m_CurTileY);
-					m_ObjList.AddItem(objitem);
-				}
-			}
-			else m_ObjList.AddItem(objitem);
-
-            RefreshObjList();
+            if(!AddItem(objitem))
+            {
+                delete objitem;
+            }
         }
     }
     else if(m_isDeleteMode)
@@ -680,33 +669,78 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     {
         if(m_isNpc)
         {
-            long npcitemidx;
+            long npcitemidx = 0;
             NpcItem *npcitem = m_NpcList.GetItem(m_CurTileX, m_CurTileY, &npcitemidx);
-            if(npcitem) ShowNpcItemEditor(npcitemidx);
+            ShowNpcItemEditor(npcitem, npcitemidx);
         }
         else if(m_isObj)
         {
-            long objitemidx;
+            long objitemidx = 0;
             ObjItem *objitem = m_ObjList.GetItem(m_CurTileX, m_CurTileY, &objitemidx);
-            if(objitem) ShowObjItemEditor(objitemidx);
+            ShowObjItemEditor(objitem, objitemidx);
         }
     }
 
     RedrawMapView();
 }
 
+bool MapTool::AddItem(NpcItem *item)
+{
+    if(!item) return false;
+    if(m_NpcList.HasItem(item->MapX, item->MapY))
+    {
+        int ret = wxMessageBox(wxT("替换当前NPC？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
+        if(ret == wxYES)
+        {
+            m_NpcList.DeleteItem(item->MapX, item->MapY);
+            m_NpcList.AddItem(item);
+        }
+        else return false;
+    }
+    else m_NpcList.AddItem(item);
+    RefreshNpcList();
+    return true;
+}
+
+bool MapTool::AddItem(ObjItem *item)
+{
+    if(!item) return false;
+    if(m_ObjList.HasItem(item->MapX, item->MapY))
+    {
+        int ret = wxMessageBox(wxT("替换当前OBJ？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
+        if(ret == wxYES)
+        {
+            m_ObjList.DeleteItem(item->MapX, item->MapY);
+            m_ObjList.AddItem(item);
+        }
+        else return false;
+    }
+    else m_ObjList.AddItem(item);
+    RefreshObjList();
+    return true;
+}
+
 void MapTool::ShowNpcItemEditor(long npcitemidx)
 {
     NpcItem* npcitem = m_NpcList.GetItem(npcitemidx);
-    if(npcitem != NULL)
+    ShowNpcItemEditor(npcitem, npcitemidx);
+}
+
+void MapTool::ShowNpcItemEditor(NpcItem* item, long index)
+{
+    if(item != NULL)
     {
         if(m_npcItemEdit) delete m_npcItemEdit;
-        m_npcItemEdit = new NpcItemEditDialog(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_NpcAsfImgList, npcitem);
-        m_npcItemEdit->SetTitle(wxString::Format(wxT("NPC%03d"), npcitemidx));
-        m_npcItemEdit->InitFromNpcItem(npcitem);
-        NpcItemEditShowModle(m_npcItemEdit, npcitem);
+        m_npcItemEdit = new NpcItemEditDialog(this,
+                                              m_MapFileName.Mid(0, m_MapFileName.size() - 4),
+                                              m_NpcAsfImgList,
+                                              item);
+        m_npcItemEdit->SetTitle(wxString::Format(wxT("NPC%03d"), index));
+        m_npcItemEdit->InitFromNpcItem(item);
+        NpcItemEditShowModle(m_npcItemEdit, item);
     }
 }
+
 void MapTool::NpcItemEditShowModle(NpcItemEditDialog* dialog, NpcItem *npcitem)
 {
     int ret = dialog->ShowModal();
@@ -719,16 +753,24 @@ void MapTool::NpcItemEditShowModle(NpcItemEditDialog* dialog, NpcItem *npcitem)
 void MapTool::ShowObjItemEditor(long objitemidx)
 {
     ObjItem* objitem = m_ObjList.GetItem(objitemidx);
-    if(objitem != NULL)
+    ShowObjItemEditor(objitem, objitemidx);
+}
+
+void MapTool::ShowObjItemEditor(ObjItem* item, long index)
+{
+    if(item != NULL)
     {
-        ObjItemEditDialog
-        itemEdit(this, m_MapFileName.Mid(0, m_MapFileName.size() - 4), m_ObjAsfImgList, objitem);
-        itemEdit.SetTitle(wxString::Format(wxT("OBJ%03d"), objitemidx));
-        itemEdit.InitFromObjItem(objitem);
+        ObjItemEditDialog itemEdit(this,
+                                   m_MapFileName.Mid(0, m_MapFileName.size() - 4),
+                                   m_ObjAsfImgList,
+                                   item);
+        itemEdit.SetTitle(wxString::Format(wxT("OBJ%03d"), index));
+        itemEdit.InitFromObjItem(item);
         if(itemEdit.ShowModal() == wxID_OK)
-            itemEdit.AssignToObjItem(objitem);
+            itemEdit.AssignToObjItem(item);
     }
 }
+
 void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 {
     long posX, posY;
@@ -768,12 +810,45 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
     }
 
 }
+
+void MapTool::SetMapViewPopupMenuState(bool hasItem, bool canPaste)
+{
+    m_menuMapView->Enable(MYID_MAPVIEW_COPY, hasItem);
+    m_menuMapView->Enable(MYID_MAPVIEW_CUT, hasItem);
+    m_menuMapView->Enable(MYID_MAPVIEW_PASTE, canPaste);
+    m_menuMapView->Enable(MYID_MAPVIEW_DETIAL, hasItem);
+}
+
+
 void MapTool::OnMapViewMouseRightUp(wxMouseEvent& event)
 {
-	if(m_isEditFixPos)
-	{
-		EndFixPosEdit(true);
-	}
+    if(m_isEditFixPos)
+    {
+        EndFixPosEdit(true);
+    }
+    else if(!m_MapFileName.IsEmpty())// Map is loaded
+    {
+        if(m_isNpc)
+        {
+            NpcItem *item = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+            if(item)
+            {
+                m_selectedNpcItem = item;
+            }
+            SetMapViewPopupMenuState(item, m_clipBoard.GetNpcItem());
+            PopupMenu(m_menuMapView);
+        }
+        else if(m_isObj)
+        {
+            ObjItem *item = m_ObjList.GetItem(m_CurTileX, m_CurTileY);
+            if(item)
+            {
+                m_selectedObjItem = item;
+            }
+            SetMapViewPopupMenuState(item, m_clipBoard.GetObjItem());
+            PopupMenu(m_menuMapView);
+        }
+    }
 }
 
 bool MapTool::ToTilePositionFromWindowPositon(int windowX, int windowY, int* tileX, int* tileY)
@@ -792,10 +867,10 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
     {
         msg = wxString::Format(wxT("[%ld,%ld]"), m_CurTileX, m_CurTileY);
 
-		if(m_isEditFixPos)
-		{
-			//Do nothing
-		}
+        if(m_isEditFixPos)
+        {
+            //Do nothing
+        }
         else if(m_isMoveMode && event.Dragging())
         {
             if(m_CurTileX >=0 && m_CurTileX < map.getCol())
@@ -1138,7 +1213,7 @@ void MapTool::OnListCtrlLeftDClick(wxMouseEvent& event)
 }
 void MapTool::OnListCtrlRightDown(wxListEvent& event)
 {
-	if(m_isEditFixPos) return;
+    if(m_isEditFixPos) return;
 
     int id = event.GetId();
     if(id == MYID_NPCLISTCTRL)
@@ -1286,7 +1361,7 @@ void MapTool::AttributeListItem(wxCommandEvent& event)
 }
 void MapTool::ShowAttributeListItem()
 {
-	if(m_isEditFixPos) return;
+    if(m_isEditFixPos) return;
 
     if(m_curList == NPCLIST)
     {
@@ -1706,9 +1781,91 @@ void ObjItemEditDialog::AssignToObjItem(ObjItem *item)
 
 }
 
+void MapTool::OnMapViewCopy(wxCommandEvent& event)
+{
+    if(m_isNpc)
+    {
+        m_clipBoard.Copy(m_selectedNpcItem);
+    }
+    else if(m_isObj)
+    {
+        m_clipBoard.Copy(m_selectedObjItem);
+    }
+}
 
+void MapTool::OnMapViewCut(wxCommandEvent& event)
+{
+    if(m_isNpc)
+    {
+        if(m_selectedNpcItem)
+        {
+        	m_clipBoard.Copy(m_selectedNpcItem);
+            m_NpcList.DeleteItem(m_selectedNpcItem->MapX, m_selectedNpcItem->MapY);
+        }
 
+    }
+    else if(m_isObj)
+    {
+        if(m_selectedObjItem)
+        {
+        	m_clipBoard.Copy(m_selectedObjItem);
+            m_ObjList.DeleteItem(m_selectedObjItem->MapX, m_selectedObjItem->MapY);
+        }
+    }
+}
 
+void MapTool::OnMapViewPaste(wxCommandEvent& event)
+{
+    if(m_isNpc)
+    {
+    	NpcItem *data = m_clipBoard.GetNpcItem();
+    	if(!data) return;
+        NpcItem *item = new NpcItem;
+        item->CopyFrom(data);
+        item->MapX = m_CurTileX;
+        item->MapY = m_CurTileY;
+        if(!AddItem(item))
+        {
+            delete item;
+        }
+    }
+    else if(m_isObj)
+    {
+    	ObjItem *data = m_clipBoard.GetObjItem();
+    	if(!data) return;
+        ObjItem *item = new ObjItem;
+        item->CopyFrom(data);
+        item->MapX = m_CurTileX;
+        item->MapY = m_CurTileY;
+        if(!AddItem(item))
+        {
+            delete item;
+        }
+    }
+}
 
-
-
+void MapTool::OnMapViewDetail(wxCommandEvent& event)
+{
+    if(m_isNpc)
+    {
+        if(m_selectedNpcItem)
+        {
+            long index = 0;
+            NpcItem *item = m_NpcList.GetItem(m_selectedNpcItem->MapX,
+                                              m_selectedNpcItem->MapY,
+                                              &index);
+            ShowNpcItemEditor(item, index);
+        }
+    }
+    else if(m_isObj)
+    {
+        if(m_selectedObjItem)
+        {
+            long index = 0;
+            ObjItem *item = m_ObjList.GetItem(m_selectedObjItem->MapX,
+                                              m_selectedObjItem->MapY,
+                                              &index);
+            ShowObjItemEditor(item, index);
+        }
+    }
+}

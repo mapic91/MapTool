@@ -103,8 +103,72 @@ bool FindAndBufferAsf(const wxString &exepath,
     return true;
 }
 
+void NpcItem::CopyFrom(const NpcItem* item)
+{
+	if(item == NULL) return;
+	Action = item->Action;
+    Attack = item->Attack;
+    AttackLevel = item->AttackLevel;
+    AttackRadius = item->AttackRadius;
+    BodyIni = item->BodyIni;
+    DeathScript = item->DeathScript;
+    Defend = item->Defend;
+    DialogRadius = item->DialogRadius;
+    Dir = item->Dir;
+    Evade = item->Evade;
+    Exp = item->Exp;
+    ExpBonus = item->ExpBonus;
+    FixedPos = item->FixedPos;
+    FlyIni = item->FlyIni;
+    FlyIni2 = item->FlyIni2;
+    Idle = item->Idle;
+    Kind = item->Kind;
+    Level = item->Level;
+    LevelUpExp = item->LevelUpExp;
+    Life = item->Life;
+    LifeMax = item->LifeMax;
+    Lum  = item->Lum;
+    Mana = item->Mana;
+    ManaMax = item->ManaMax;
+    MapX = item->MapX;
+    MapY = item->MapY;
+    Name = item->Name;
+    NpcIni = item->NpcIni;
+    PathFinder = item->PathFinder;
+    Relation = item->Relation;
+    ScriptFile = item->ScriptFile;
+    ShowName = item->ShowName;
+    State = item->State;
+    Thew = item->Thew;
+    ThewMax = item->ThewMax;
+    VisionRadius = item->VisionRadius;
+    WalkSpeed = item->WalkSpeed;
+    NpcStand = item->NpcStand;
+}
+
+void ObjItem::CopyFrom(const ObjItem* item)
+{
+	if(item == NULL) return;
+	Damage = item->Damage;
+    Dir = item->Dir;
+    Frame = item->Frame;
+    Height = item->Height;
+    Kind = item->Kind;
+    Lum = item->Lum;
+    MapX = item->MapX;
+    MapY = item->MapY;
+    ObjFile = item->ObjFile;
+    ObjName = item->ObjName;
+    OffX = item->OffX;
+    OffY = item->OffY;
+    ScriptFile = item->ScriptFile;
+    WavFile = item->WavFile;
+    ObjCommon = item->ObjCommon;
+}
+
 void InitNpcItem(NpcItem *item)
 {
+	if(!item) return;
     item->Action = -1;
     item->Attack = -1;
     item->AttackLevel = -1;
@@ -145,6 +209,7 @@ void InitNpcItem(NpcItem *item)
 }
 void InitObjItem(ObjItem *item)
 {
+	if(!item) return;
     item->Damage = -1;
     item->Dir = -1;
     item->Frame = -1;

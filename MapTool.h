@@ -5,6 +5,7 @@
 #include "Map.h"
 #include "Npc.hpp"
 #include "AsfDecode.hpp"
+#include "ClipBoard.h"
 
 #include "wx/dcbuffer.h"
 #include "wx/filedlg.h"
@@ -87,8 +88,17 @@ private:
     }
 
     void ShowNpcItemEditor(long npcitemidx);
+    void ShowNpcItemEditor(NpcItem *item, long index = -1);
     void ShowObjItemEditor(long objitemidx);
+    void ShowObjItemEditor(ObjItem *item, long index = -1);
     void NpcItemEditShowModle(NpcItemEditDialog *dialog, NpcItem *npcitem);
+
+	//Map view
+	virtual void OnMapViewCopy( wxCommandEvent& event );
+	virtual void OnMapViewCut( wxCommandEvent& event );
+	virtual void OnMapViewPaste( wxCommandEvent& event );
+	virtual void OnMapViewDetail( wxCommandEvent& event );
+	void SetMapViewPopupMenuState(bool hasItem, bool canPaste);
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
@@ -203,13 +213,21 @@ private:
     NpcItemEditDialog *m_npcItemEdit;
 
     //Npc obj list
-    NpcItem m_PlaceNpcData, *m_MoveNpcItem;
-    ObjItem m_PlaceObjData, *m_MoveObjItem;
+    bool AddItem(NpcItem *item);
+    bool AddItem(ObjItem *item);
+    NpcItem m_PlaceNpcData, // Npc to place
+			*m_MoveNpcItem, // Npc in move
+			*m_selectedNpcItem; //Selected npc on right click in map view
+    ObjItem m_PlaceObjData, // Obj to place
+			*m_MoveObjItem, // Obj in move
+			*m_selectedObjItem; // Selected obj on right click in map view
+	ClipBoard m_clipBoard;
     NpcList m_NpcList;
     ObjList m_ObjList;
     AsfImgList *m_NpcAsfImgList, *m_ObjAsfImgList;
     wxString m_NpcIniFilePath, m_ObjIniFilePath;
-    bool m_isObj, m_isNpc;
+    bool m_isObj, //Is in obj edit mode.
+		 m_isNpc; //Is in npc edit mode.
 
     //File dialog path
     wxString m_NpcObjPath;
