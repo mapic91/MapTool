@@ -44,6 +44,7 @@ MapTool::MapTool(wxWindow* parent)
     m_placeModeNotDraw = false;
     m_npcItemEdit = NULL;
     m_isEditFixPos = false;
+    m_popupMenuShowed = false;
 
     exepath = wxStandardPaths::Get().GetExecutablePath();
     exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
