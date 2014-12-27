@@ -105,8 +105,8 @@ bool FindAndBufferAsf(const wxString &exepath,
 
 void NpcItem::CopyFrom(const NpcItem* item)
 {
-	if(item == NULL) return;
-	Action = item->Action;
+    if(item == NULL) return;
+    Action = item->Action;
     Attack = item->Attack;
     AttackLevel = item->AttackLevel;
     AttackRadius = item->AttackRadius;
@@ -148,8 +148,8 @@ void NpcItem::CopyFrom(const NpcItem* item)
 
 void ObjItem::CopyFrom(const ObjItem* item)
 {
-	if(item == NULL) return;
-	Damage = item->Damage;
+    if(item == NULL) return;
+    Damage = item->Damage;
     Dir = item->Dir;
     Frame = item->Frame;
     Height = item->Height;
@@ -168,7 +168,7 @@ void ObjItem::CopyFrom(const ObjItem* item)
 
 void InitNpcItem(NpcItem *item)
 {
-	if(!item) return;
+    if(!item) return;
     item->Action = -1;
     item->Attack = -1;
     item->AttackLevel = -1;
@@ -209,7 +209,7 @@ void InitNpcItem(NpcItem *item)
 }
 void InitObjItem(ObjItem *item)
 {
-	if(!item) return;
+    if(!item) return;
     item->Damage = -1;
     item->Dir = -1;
     item->Frame = -1;
@@ -286,13 +286,13 @@ bool SaveIni(const wxString &filePath, NpcItem *npcitem, ObjItem *objitem)
     file.AddLine(wxT("[INIT]"));
 
     if(npcitem != NULL)
-	{
-		//FixedPos can't save
-		wxString fixPos = npcitem->FixedPos;
-		npcitem->FixedPos = wxEmptyString;
-		SaveNpcItem(file, npcitem);
-		npcitem->FixedPos = fixPos;
-	}
+    {
+        //FixedPos can't save
+        wxString fixPos = npcitem->FixedPos;
+        npcitem->FixedPos = wxEmptyString;
+        SaveNpcItem(file, npcitem);
+        npcitem->FixedPos = fixPos;
+    }
     else if(objitem != NULL)
         SaveObjItem(file, objitem);
 
@@ -802,6 +802,20 @@ bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf)
     }
     return false;
 }
+AsfImg* AddImg(AsfImgList &list, const wxString &asfFilePath)
+{
+    AsfDecode *decode = new AsfDecode;
+    if(decode->ReadAsfFile(asfFilePath))
+    {
+        decode->BufferData();
+    }
+    AsfImg *asf_img = new AsfImg;
+    asf_img->path = wxFileName::FileName(asfFilePath).GetFullName();
+    asf_img->asfdec = decode;
+    list.push_back(asf_img);
+    return asf_img;
+}
+
 void FreeAsfImgList(AsfImgList *list)
 {
     if(list == NULL) return;

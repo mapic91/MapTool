@@ -59,6 +59,7 @@ class wxListView;
 #define MYID_MAPVIEW_CUT 1017
 #define MYID_MAPVIEW_PASTE 1018
 #define MYID_MAPVIEW_DETIAL 1019
+#define MYID_MAPVIEW_DELETE 1020
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -147,10 +148,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMapViewCopy( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMapViewCut( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMapViewPaste( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnMapViewDetail( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnMapViewMenu( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:

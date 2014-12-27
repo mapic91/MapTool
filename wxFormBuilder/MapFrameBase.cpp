@@ -257,9 +257,15 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItemPaste = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_PASTE, wxString( wxT("Õ³Ìù") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemPaste );
 	
+	m_menuMapView->AppendSeparator();
+	
 	wxMenuItem* m_menuItemDetail;
 	m_menuItemDetail = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DETIAL, wxString( wxT("ÏêÏ¸...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemDetail );
+	
+	wxMenuItem* m_menuItemDelete;
+	m_menuItemDelete = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DELETE, wxString( wxT("É¾³ý") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItemDelete );
 	
 	this->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MapFrameBase::MapFrameBaseOnContextMenu ), NULL, this ); 
 	
@@ -314,10 +320,11 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
-	this->Connect( m_menuItemCopy->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCopy ) );
-	this->Connect( m_menuItemCut->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCut ) );
-	this->Connect( m_menuItemPaste->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewPaste ) );
-	this->Connect( m_menuItemDetail->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewDetail ) );
+	this->Connect( m_menuItemCopy->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Connect( m_menuItemCut->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Connect( m_menuItemPaste->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Connect( m_menuItemDetail->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Connect( m_menuItemDelete->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -370,10 +377,11 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
-	this->Disconnect( MYID_MAPVIEW_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCopy ) );
-	this->Disconnect( MYID_MAPVIEW_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewCut ) );
-	this->Disconnect( MYID_MAPVIEW_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewPaste ) );
-	this->Disconnect( MYID_MAPVIEW_DETIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewDetail ) );
+	this->Disconnect( MYID_MAPVIEW_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Disconnect( MYID_MAPVIEW_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Disconnect( MYID_MAPVIEW_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Disconnect( MYID_MAPVIEW_DETIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Disconnect( MYID_MAPVIEW_DELETE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	
 	delete m_menuMapView; 
 }

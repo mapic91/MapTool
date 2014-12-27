@@ -55,7 +55,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.4.2 - by 小试刀剑  2014.11.18"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.5 - by 小试刀剑  2014.12.27"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -150,6 +150,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
                                     map.getRow(),
                                     map.getPixelWidth(),
                                     map.getPixelHeight()));
+
     //clear npcs
     m_NpcList.Clear();
     m_ObjList.Clear();
@@ -610,6 +611,12 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     {
         //Do nothing
     }
+    else if(m_popupMenuShowed)
+	{
+		// pou up menu of map view is show
+		// ingnore this event once
+		m_popupMenuShowed = false;
+	}
     else if(m_isPlaceMode)
     {
         if(m_isNpc && !m_NpcIniFilePath.IsEmpty())
@@ -808,7 +815,6 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
             m_MoveObjItem = NULL;
         }
     }
-
 }
 
 void MapTool::SetMapViewPopupMenuState(bool hasItem, bool canPaste)
@@ -817,8 +823,14 @@ void MapTool::SetMapViewPopupMenuState(bool hasItem, bool canPaste)
     m_menuMapView->Enable(MYID_MAPVIEW_CUT, hasItem);
     m_menuMapView->Enable(MYID_MAPVIEW_PASTE, canPaste);
     m_menuMapView->Enable(MYID_MAPVIEW_DETIAL, hasItem);
+    m_menuMapView->Enable(MYID_MAPVIEW_DELETE, hasItem);
 }
 
+void MapTool::PopupMapViewMenu()
+{
+	m_popupMenuShowed = true;
+	PopupMenu(m_menuMapView);
+}
 
 void MapTool::OnMapViewMouseRightUp(wxMouseEvent& event)
 {
@@ -836,7 +848,7 @@ void MapTool::OnMapViewMouseRightUp(wxMouseEvent& event)
                 m_selectedNpcItem = item;
             }
             SetMapViewPopupMenuState(item, m_clipBoard.GetNpcItem());
-            PopupMenu(m_menuMapView);
+            PopupMapViewMenu();
         }
         else if(m_isObj)
         {
@@ -846,7 +858,7 @@ void MapTool::OnMapViewMouseRightUp(wxMouseEvent& event)
                 m_selectedObjItem = item;
             }
             SetMapViewPopupMenuState(item, m_clipBoard.GetObjItem());
-            PopupMenu(m_menuMapView);
+            PopupMapViewMenu();
         }
     }
 }
@@ -1342,19 +1354,35 @@ void MapTool::ShowTile(int tileX, int tileY)
 }
 void MapTool::DeleteListItem(wxCommandEvent& event)
 {
+	if(!PromptDelection())
+	{
+		return;
+	}
     if(m_curList == NPCLIST)
     {
-        m_NpcList.DeleteItem(m_curListIndex);
-        RefreshNpcList();
+        DeleteNpcItem(m_curListIndex);
     }
     else if(m_curList == OBJLIST)
     {
-        m_ObjList.DeleteItem(m_curListIndex);
-        RefreshObjList();
+        DeleteObjItem(m_curListIndex);
     }
     m_placeModeNotDraw = true;
-    RedrawMapView();
 }
+
+void MapTool::DeleteNpcItem(int index)
+{
+	m_NpcList.DeleteItem(index);
+	RefreshNpcList();
+	RedrawMapView();
+}
+
+void MapTool::DeleteObjItem(int index)
+{
+	m_ObjList.DeleteItem(index);
+	RefreshObjList();
+	RedrawMapView();
+}
+
 void MapTool::AttributeListItem(wxCommandEvent& event)
 {
     ShowAttributeListItem();
@@ -1781,6 +1809,29 @@ void ObjItemEditDialog::AssignToObjItem(ObjItem *item)
 
 }
 
+void MapTool::OnMapViewMenu(wxCommandEvent& event)
+{
+	m_popupMenuShowed = false;
+	switch(event.GetId())
+	{
+	case MYID_MAPVIEW_COPY:
+		OnMapViewCopy(event);
+		break;
+	case MYID_MAPVIEW_CUT:
+		OnMapViewCut(event);
+		break;
+	case MYID_MAPVIEW_PASTE:
+		OnMapViewPaste(event);
+		break;
+	case MYID_MAPVIEW_DETIAL:
+		OnMapViewDetail(event);
+		break;
+	case MYID_MAPVIEW_DELETE:
+		OnMapViewDelete(event);
+		break;
+	}
+}
+
 void MapTool::OnMapViewCopy(wxCommandEvent& event)
 {
     if(m_isNpc)
@@ -1869,3 +1920,47 @@ void MapTool::OnMapViewDetail(wxCommandEvent& event)
         }
     }
 }
+
+void MapTool::OnMapViewDelete(wxCommandEvent& event)
+{
+	if(!PromptDelection())
+	{
+		return;
+	}
+	if(m_isNpc)
+    {
+        if(m_selectedNpcItem)
+        {
+            long index = 0;
+            NpcItem *item = m_NpcList.GetItem(m_selectedNpcItem->MapX,
+                                              m_selectedNpcItem->MapY,
+                                              &index);
+            if(item)
+			{
+				DeleteNpcItem((int)index);
+			}
+        }
+    }
+    else if(m_isObj)
+    {
+        if(m_selectedObjItem)
+        {
+            long index = 0;
+            ObjItem *item = m_ObjList.GetItem(m_selectedObjItem->MapX,
+                                              m_selectedObjItem->MapY,
+                                              &index);
+            if(item)
+			{
+				DeleteObjItem((int)index);
+			}
+        }
+    }
+}
+
+bool MapTool::PromptDelection()
+{
+	return(wxMessageBox(wxT("确定删除？"),
+						wxMessageBoxCaptionStr,
+						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES);
+}
+

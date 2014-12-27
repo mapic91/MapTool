@@ -28,6 +28,7 @@ void ClipBoard::Copy(const NpcItem* item)
 {
 	m_isNpcItemSet = (bool)item;
 	m_npcItem.CopyFrom(item);
+	m_npcItem.FixedPos = wxEmptyString;
 }
 
 void ClipBoard::Copy(const ObjItem* item)

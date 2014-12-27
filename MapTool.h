@@ -94,11 +94,14 @@ private:
     void NpcItemEditShowModle(NpcItemEditDialog *dialog, NpcItem *npcitem);
 
 	//Map view
+	virtual void OnMapViewMenu( wxCommandEvent& event );
 	virtual void OnMapViewCopy( wxCommandEvent& event );
 	virtual void OnMapViewCut( wxCommandEvent& event );
 	virtual void OnMapViewPaste( wxCommandEvent& event );
 	virtual void OnMapViewDetail( wxCommandEvent& event );
+	virtual void OnMapViewDelete( wxCommandEvent& event );
 	void SetMapViewPopupMenuState(bool hasItem, bool canPaste);
+	void PopupMapViewMenu();
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
@@ -114,7 +117,6 @@ private:
     void OnClearNpc( wxCommandEvent& event )
     {
         m_NpcList.Clear();
-        FreeAsfImgList(m_NpcAsfImgList);
         RefreshNpcList();
     }
 
@@ -134,7 +136,6 @@ private:
     void OnClearObj( wxCommandEvent& event )
     {
         m_ObjList.Clear();
-        FreeAsfImgList(m_ObjAsfImgList);
         RefreshObjList();
     }
 
@@ -200,6 +201,8 @@ private:
     void RedrawMapView();
     void CheckMapViewBeginPosition();
 
+    bool PromptDelection();
+
     bool ToTilePositionFromWindowPositon(int windowX, int windowY, int *tileX, int *tileY);
 
     wxBitmap m_MapBitmap;
@@ -215,6 +218,8 @@ private:
     //Npc obj list
     bool AddItem(NpcItem *item);
     bool AddItem(ObjItem *item);
+    void DeleteNpcItem(int index);
+    void DeleteObjItem(int index);
     NpcItem m_PlaceNpcData, // Npc to place
 			*m_MoveNpcItem, // Npc in move
 			*m_selectedNpcItem; //Selected npc on right click in map view
@@ -222,6 +227,7 @@ private:
 			*m_MoveObjItem, // Obj in move
 			*m_selectedObjItem; // Selected obj on right click in map view
 	ClipBoard m_clipBoard;
+	bool m_popupMenuShowed;
     NpcList m_NpcList;
     ObjList m_ObjList;
     AsfImgList *m_NpcAsfImgList, *m_ObjAsfImgList;

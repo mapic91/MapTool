@@ -86,6 +86,8 @@ typedef std::list<AsfImg*> AsfImgList;
 typedef std::list<AsfImg*>::iterator AsfImgListIterator;
 // if in , outasf is the asf data
 bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf);
+// Add img to list
+AsfImg* AddImg(AsfImgList &list, const wxString &asfFilePath);
 //delete list item AsfImg*, AsfImg::asfdec, and clear list
 void FreeAsfImgList(AsfImgList *list);
 
