@@ -109,6 +109,7 @@ class MapFrameBase : public wxFrame
 		wxMenu* m_MenuFile;
 		wxMenu* m_MenuCharacter;
 		wxMenu* m_menu3;
+		wxMenu* m_menu5;
 		wxMenu* m_menuMapView;
 		
 		// Virtual event handlers, overide them in your derived class
@@ -155,6 +156,7 @@ class MapFrameBase : public wxFrame
 		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSetFps( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMenu( wxCommandEvent& event ) { event.Skip(); }
 		
 	

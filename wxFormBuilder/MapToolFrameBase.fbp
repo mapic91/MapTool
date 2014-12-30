@@ -2047,7 +2047,7 @@
                 <event name="OnSize"></event>
                 <event name="OnUpdateUI"></event>
                 <object class="wxMenu" expanded="0">
-                    <property name="label">地图(MAP)</property>
+                    <property name="label">地图(&amp;MAP)</property>
                     <property name="name">m_MenuFile</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="0">
@@ -2145,8 +2145,8 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="1">
-                    <property name="label">人物( NPC )</property>
+                <object class="wxMenu" expanded="0">
+                    <property name="label">人物( &amp;NPC )</property>
                     <property name="name">m_MenuCharacter</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="0">
@@ -2249,7 +2249,7 @@
                     </object>
                 </object>
                 <object class="wxMenu" expanded="0">
-                    <property name="label">物品(OBJ)</property>
+                    <property name="label">物品(&amp;OBJ)</property>
                     <property name="name">m_menu3</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="0">
@@ -2351,6 +2351,26 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
+                <object class="wxMenu" expanded="0">
+                    <property name="label">性能(&amp;Performance)</property>
+                    <property name="name">m_menu5</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="0">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">帧率(&amp;FPS)...</property>
+                        <property name="name">m_menuItem25</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnSetFps</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
             </object>
             <object class="wxMenu" expanded="0">
                 <property name="label">MapView</property>
@@ -2435,11 +2455,11 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="separator" expanded="1">
+                <object class="separator" expanded="0">
                     <property name="name">m_separator7</property>
                     <property name="permission">none</property>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>

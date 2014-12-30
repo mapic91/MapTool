@@ -45,20 +45,20 @@ int wxWidgets_templateApp::OnExit()
 	return 0;
 }
 
-int wxWidgets_templateApp::FilterEvent(wxEvent& event)
-{
-	wxEventType type = event.GetEventType();
-	if(type == wxEVT_KEY_UP ||
-		type == wxEVT_KEY_DOWN)
-	{
-		wxKeyEvent *kEvent = (wxKeyEvent*)&event;
-		if(kEvent->GetKeyCode() == WXK_CONTROL)
-		{
-			m_mapTool->RedrawMapView();
-		}
-	}
-	return Event_Skip;
-}
+//int wxWidgets_templateApp::FilterEvent(wxEvent& event)
+//{
+//	wxEventType type = event.GetEventType();
+//	if(type == wxEVT_KEY_UP ||
+//		type == wxEVT_KEY_DOWN)
+//	{
+//		wxKeyEvent *kEvent = (wxKeyEvent*)&event;
+//		if(kEvent->GetKeyCode() == WXK_CONTROL)
+//		{
+//			m_mapTool->RedrawMapView();
+//		}
+//	}
+//	return Event_Skip;
+//}
 
 void LoadNpcLevelList()
 {

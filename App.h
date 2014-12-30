@@ -19,8 +19,8 @@ class wxWidgets_templateApp : public wxApp
         virtual bool OnInit();
         virtual int OnExit();
 
-	private:
-		virtual int FilterEvent(wxEvent &event);
+//	private:
+//		virtual int FilterEvent(wxEvent &event);
 
 	private:
 		MapTool *m_mapTool;

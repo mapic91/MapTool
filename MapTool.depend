@@ -2342,17 +2342,17 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1419947613 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1419951605 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
 	<wx/image.h>
 	<wx/regex.h>
 
-1419946300 e:\programmingworkshop\_store_\jxqy\maptool\app.h
+1419951605 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1419949822 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1419955450 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2362,10 +2362,11 @@
 	"wx/filedlg.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
+	"wx/timer.h"
 	<map>
 	<vector>
 
-1419948574 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1419952164 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2424,7 +2425,7 @@
 1419660547 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1419950116 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1419954282 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2528,9 +2529,11 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1419950088 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1419955600 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"YesNoAllDialog.h"
+	"Settings.h"
+	"FpsDialog.h"
 	"wx/msgdlg.h"
 	"wx/dcmemory.h"
 	"wx/accel.h"
@@ -5360,4 +5363,93 @@
 	"YesNoAllDialog.h"
 	"wx/settings.h"
 	<wx/string.h>
+
+1419954370 source:e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.cpp
+	"FpsDialog.h"
+	<wx/string.h>
+
+1419953736 e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.h
+	<wx/stattext.h>
+	<wx/spinctrl.h>
+	<wx/button.h>
+	<wx/dialog.h>
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\spinctrl.h
+	"wx/defs.h"
+	"wx/spinbutt.h"
+	"wx/msw/spinctrl.h"
+	"wx/os2/spinctrl.h"
+	"wx/gtk/spinctrl.h"
+	"wx/gtk1/spinctrl.h"
+	"wx/generic/spinctlg.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\spinbutt.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/event.h"
+	"wx/range.h"
+	"wx/univ/spinbutt.h"
+	"wx/msw/spinbutt.h"
+	"wx/motif/spinbutt.h"
+	"wx/gtk/spinbutt.h"
+	"wx/gtk1/spinbutt.h"
+	"wx/osx/spinbutt.h"
+	"wx/cocoa/spinbutt.h"
+	"wx/os2/spinbutt.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\range.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\spinbutt.h
+	"wx/univ/scrarrow.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\univ\scrarrow.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\spinbutt.h
+	"wx/control.h"
+	"wx/event.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\motif\spinbutt.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\spinbutt.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\spinbutt.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\osx\spinbutt.h
+	"wx/control.h"
+	"wx/event.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\cocoa\spinbutt.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\spinbutt.h
+	"wx/control.h"
+	"wx/event.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\msw\spinctrl.h
+	"wx/spinbutt.h"
+	"wx/dynarray.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\os2\spinctrl.h
+	"wx/spinbutt.h"
+	"wx/dynarray.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk\spinctrl.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\gtk1\spinctrl.h
+	"wx/defs.h"
+	"wx/control.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\generic\spinctlg.h
+	"wx/compositewin.h"
+	"wx/textctrl.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\compositewin.h
+	"wx/window.h"
+	"wx/containr.h"
+
+1419953407 e:\programmingworkshop\_store_\jxqy\maptool\settings.h
+
+1419953586 source:e:\programmingworkshop\_store_\jxqy\maptool\settings.cpp
+	"Settings.h"
+	<fstream>
 

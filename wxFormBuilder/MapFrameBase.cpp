@@ -178,7 +178,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItemRIGHT = new wxMenuItem( m_MenuFile, ID_MAPRIGHT, wxString( wxT("地图右移\tRight") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemRIGHT );
 	
-	m_menubar3->Append( m_MenuFile, wxT("地图(MAP)") ); 
+	m_menubar3->Append( m_MenuFile, wxT("地图(&MAP)") ); 
 	
 	m_MenuCharacter = new wxMenu();
 	wxMenuItem* m_menuItem5;
@@ -209,7 +209,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItem10 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("清空人物") ) , wxT("清空地图上所有NPC"), wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem10 );
 	
-	m_menubar3->Append( m_MenuCharacter, wxT("人物( NPC )") ); 
+	m_menubar3->Append( m_MenuCharacter, wxT("人物( &NPC )") ); 
 	
 	m_menu3 = new wxMenu();
 	wxMenuItem* m_menuItem11;
@@ -240,7 +240,14 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("清空物品") ) , wxT("清空地图上所有OBJ"), wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem16 );
 	
-	m_menubar3->Append( m_menu3, wxT("物品(OBJ)") ); 
+	m_menubar3->Append( m_menu3, wxT("物品(&OBJ)") ); 
+	
+	m_menu5 = new wxMenu();
+	wxMenuItem* m_menuItem25;
+	m_menuItem25 = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("帧率(&FPS)...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu5->Append( m_menuItem25 );
+	
+	m_menubar3->Append( m_menu5, wxT("性能(&Performance)") ); 
 	
 	this->SetMenuBar( m_menubar3 );
 	
@@ -326,6 +333,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
+	this->Connect( m_menuItem25->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetFps ) );
 	this->Connect( m_menuItemCopy->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemCut->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemPaste->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
@@ -384,6 +392,7 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetFps ) );
 	this->Disconnect( MYID_MAPVIEW_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );

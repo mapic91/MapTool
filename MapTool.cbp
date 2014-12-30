@@ -258,6 +258,8 @@
 		<Unit filename="AsfDecode.hpp" />
 		<Unit filename="ClipBoard.cpp" />
 		<Unit filename="ClipBoard.h" />
+		<Unit filename="FpsDialog.cpp" />
+		<Unit filename="FpsDialog.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="MapTool.cpp" />
@@ -266,6 +268,8 @@
 		<Unit filename="MpcDecode.hpp" />
 		<Unit filename="Npc.cpp" />
 		<Unit filename="Npc.hpp" />
+		<Unit filename="Settings.cpp" />
+		<Unit filename="Settings.h" />
 		<Unit filename="YesNoAllDialog.cpp" />
 		<Unit filename="YesNoAllDialog.h" />
 		<Unit filename="mydefs.hpp" />
@@ -276,6 +280,7 @@
 			<Option compiler="gcc" use="0" buildCommand="-finput-charset=utf-8" />
 		</Unit>
 		<Unit filename="wxFormBuilder/MapFrameBase.h" />
+		<Unit filename="wxsmith/FpsDialog.wxs" />
 		<Unit filename="wxsmith/YesNoAllDialog.wxs" />
 		<Extensions>
 			<code_completion />
@@ -285,6 +290,7 @@
 				<gui name="wxWidgets" src="App.cpp" main="" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxDialog wxs="wxsmith/YesNoAllDialog.wxs" src="YesNoAllDialog.cpp" hdr="YesNoAllDialog.h" fwddecl="0" i18n="0" name="YesNoAllDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/FpsDialog.wxs" src="FpsDialog.cpp" hdr="FpsDialog.h" fwddecl="0" i18n="0" name="FpsDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

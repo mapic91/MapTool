@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="FpsDialog">
+		<title>设置FPS</title>
+		<size>227,86</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>帧率(FPS)：</label>
+			<pos>16,16</pos>
+			<size>80,16</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="m_sbFps" member="yes">
+			<value>60</value>
+			<min>1</min>
+			<max>200</max>
+			<pos>90,12</pos>
+			<tooltip>帧率越高，画面更新越快，CPU使用越高，软件越卡&#x0A;如果软件较卡，请调低帧率</tooltip>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="m_bOk" member="yes">
+			<label>确定</label>
+			<pos>24,50</pos>
+			<size>80,23</size>
+			<handler function="Onm_bOkClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="m_bCancle" member="yes">
+			<label>取消</label>
+			<pos>128,50</pos>
+			<size>80,23</size>
+			<handler function="Onm_bCancleClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

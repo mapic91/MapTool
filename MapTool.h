@@ -11,6 +11,7 @@
 #include "wx/filedlg.h"
 #include "wx/stdpaths.h"
 #include "wx/msgdlg.h"
+#include "wx/timer.h"
 
 #include <map>
 #include <vector>
@@ -28,7 +29,7 @@ struct LevelDetial
     int Evade;
 };
 
-std::vector<long> GetAllSelectedItems(const wxListCtrl *listCtrl);
+std::vector<long> GetAllSelectedItems(const wxListView *listCtrl);
 
 class MapTool : public MapFrameBase
 {
@@ -38,6 +39,7 @@ public:
 
 public:
 	void RedrawMapView();
+	void RedrawNow();
 protected:
 private:
 
@@ -125,6 +127,12 @@ private:
      */
 	void MapPositionToScreenPositon(int tileX, int tileY, int *posX, int *posY);
 	bool IsItemSelectedAtTile(int tileX, int tileY);
+
+	//Timer
+	void OnTimer(wxTimerEvent &event);
+	virtual void OnSetFps( wxCommandEvent& event );
+	void DisableTimer();
+	void EnableTimer();
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
@@ -295,6 +303,8 @@ private:
     NpcItem *m_fixPosEditItem;
     std::list<wxPoint> m_fixPosPoints;
     typedef std::list<wxPoint>::iterator FixPosListIterator;
+
+    wxTimer m_timer;
 
     DECLARE_EVENT_TABLE()
 };

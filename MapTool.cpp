@@ -1,5 +1,7 @@
 #include "MapTool.h"
 #include "YesNoAllDialog.h"
+#include "Settings.h"
+#include "FpsDialog.h"
 #include "wx/msgdlg.h"
 #include "wx/dcmemory.h"
 
@@ -89,10 +91,17 @@ MapTool::MapTool(wxWindow* parent)
     m_objListCtrl->AppendColumn(wxT("序号"), wxLIST_FORMAT_LEFT, 50);
     m_objListCtrl->AppendColumn(wxT("X"), wxLIST_FORMAT_LEFT, 50);
     m_objListCtrl->AppendColumn(wxT("Y"), wxLIST_FORMAT_LEFT, 50);
+
+    //timer
+    m_timer.SetOwner(this);
+    this->Connect(wxEVT_TIMER, wxTimerEventHandler(MapTool::OnTimer), NULL, this);
+    m_timer.Start(20);
 }
 
 MapTool::~MapTool()
 {
+    m_timer.Stop();
+    this->Disconnect(wxEVT_TIMER, wxTimerEventHandler(MapTool::OnTimer), NULL, this);
     if(m_NpcAsfImgList != NULL)
     {
         FreeAsfImgList(m_NpcAsfImgList);
@@ -237,13 +246,51 @@ wxImage* MapTool::ReadMap(bool getImg)
     }
 }
 
-void MapTool::RedrawMapView()
+void MapTool::RedrawNow()
 {
     m_MapView->Refresh(false);
     m_MapView->Update();
     m_MapControl->Refresh(false);
     m_MapControl->Update();
 }
+
+
+void MapTool::RedrawMapView()
+{
+    if(m_placeModeNotDraw)
+    {
+        m_placeModeNotDraw = false;
+    }
+}
+
+void MapTool::OnTimer(wxTimerEvent& event)
+{
+    RedrawNow();
+}
+
+void MapTool::OnSetFps(wxCommandEvent& event)
+{
+    FpsDialog dialog(this);
+    dialog.SetFpsMilliseconds(Settings::TheSetting.GetFpsMilliseconds());
+    if(dialog.ShowModal() == wxID_OK)
+    {
+        int millsecond = 1000/dialog.GetFps();
+        m_timer.Stop();
+        m_timer.Start(millsecond);
+        Settings::TheSetting.SetFpsMilliseconds(millsecond);
+    }
+}
+
+void MapTool::DisableTimer()
+{
+    m_timer.Stop();
+}
+
+void MapTool::EnableTimer()
+{
+    m_timer.Start(Settings::TheSetting.GetFpsMilliseconds());
+}
+
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
 {
@@ -289,19 +336,15 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
     }
     else if(m_isPlaceMode)//Draw PlaceMode
     {
-        if(m_placeModeNotDraw)
+        if(!m_placeModeNotDraw)
         {
-            m_placeModeNotDraw = false;
-        }
-        else
-        {
-        	if(!IsInSelectingItem())
-			{
+            if(!IsInSelectingItem())
+            {
                 if(m_isNpc)
                     DrawTile(m_CurTileX, m_CurTileY, dc, &m_PlaceNpcData);
                 else if(m_isObj)
                     DrawTile(m_CurTileX, m_CurTileY, dc, NULL, &m_PlaceObjData);
-			}
+            }
         }
     }
 
@@ -347,7 +390,7 @@ void MapTool::OnMapDraw( wxPaintEvent& event )
         dc.SetPen(*(wxThePenList->FindOrCreatePen(*wxGREEN)));
     //Don't draw curren tile position when item selected at this position when in selecting item.
     if(!IsInSelectingItem() ||
-		!IsItemSelectedAtTile(m_CurTileX, m_CurTileY))
+            !IsItemSelectedAtTile(m_CurTileX, m_CurTileY))
     {
         DrawRectangle(m_CurTileX, m_CurTileY, dc);
     }
@@ -466,8 +509,8 @@ void MapTool::DrawEditFixPos(wxDC& dc)
 
 void MapTool::DrawListSelection(wxDC &dc)
 {
-	//When not in selecting, not draw
-	if(!IsInSelectingItem()) return;
+    //When not in selecting, not draw
+    if(!IsInSelectingItem()) return;
 
     if(m_isNpc)
     {
@@ -841,6 +884,7 @@ void MapTool::NpcItemEditShowModle(NpcItemEditDialog* dialog, NpcItem *npcitem)
 int MapTool::ShowYesNoAllInPosition(int tileX, int tileY)
 {
     ShowTile(tileX, tileY);
+    RedrawNow();
     int posx, posy;
     MapPositionToScreenPositon(tileX, tileY, &posx, &posy);
     posx += 40;
@@ -852,55 +896,58 @@ int MapTool::ShowYesNoAllInPosition(int tileX, int tileY)
 
 int MapTool::GetItemSelectionCount()
 {
-	if(m_isNpc)
-	{
-		return m_npcListCtrl->GetSelectedItemCount();
-	}
-	else if(m_isObj)
-	{
-		return m_objListCtrl->GetSelectedItemCount();
-	}
-	return 0;
+    if(m_isNpc)
+    {
+        return m_npcListCtrl->GetSelectedItemCount();
+    }
+    else if(m_isObj)
+    {
+        return m_objListCtrl->GetSelectedItemCount();
+    }
+    return 0;
 }
 
 void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
 {
-    if(items.size() == 0) return;
-    NpcItem item;
-    InitNpcItem(&item);
-    NpcItemEditDialog dialog(this,
-                             m_MapFileName.Mid(0, m_MapFileName.size() - 4),
-                             m_NpcAsfImgList,
-                             &item);
-    dialog.SetTitle(wxT("批量编辑模式，设置了值的项目，将被应用于所有选中NPC"));
-    dialog.InitFromNpcItem(&item);
-    if(dialog.ShowModal() == NpcItemEditDialog::OK)
+    if(items.size() > 0)
     {
-        bool isAll = false;
-        for(std::vector<long>::const_iterator it = items.begin();
-                it != items.end(); it++)
+        NpcItem item;
+        InitNpcItem(&item);
+        NpcItemEditDialog dialog(this,
+                                 m_MapFileName.Mid(0, m_MapFileName.size() - 4),
+                                 m_NpcAsfImgList,
+                                 &item);
+        dialog.SetTitle(wxT("批量编辑模式，设置了值的项目，将被应用于所有选中NPC"));
+        dialog.InitFromNpcItem(&item);
+        if(dialog.ShowModal() == NpcItemEditDialog::OK)
         {
-            NpcItem *listItem = m_NpcList.GetItem((int)*it);
-            if(listItem)
+
+            bool isAll = false;
+            for(std::vector<long>::const_iterator it = items.begin();
+                    it != items.end(); it++)
             {
-                if(!isAll)
+                NpcItem *listItem = m_NpcList.GetItem((int)*it);
+                if(listItem)
                 {
-                    int ret = ShowYesNoAllInPosition(listItem->MapX,
-                                                     listItem->MapY);
-                    if(ret == YesNoAllDialog::ALL)
+                    if(!isAll)
                     {
-                        isAll = true;
+                        int ret = ShowYesNoAllInPosition(listItem->MapX,
+                                                         listItem->MapY);
+                        if(ret == YesNoAllDialog::ALL)
+                        {
+                            isAll = true;
+                        }
+                        else if(ret == YesNoAllDialog::NO)
+                        {
+                            continue;
+                        }
+                        else if(ret == YesNoAllDialog::CANCLE)
+                        {
+                            break;
+                        }
                     }
-                    else if(ret == YesNoAllDialog::NO)
-                    {
-                        continue;
-                    }
-                    else if(ret == YesNoAllDialog::CANCLE)
-                    {
-                        break;
-                    }
+                    dialog.AssignToNpcItem(listItem, true);
                 }
-                dialog.AssignToNpcItem(listItem, true);
             }
         }
     }
@@ -919,6 +966,7 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
     dialog.InitFromObjItem(&item);
     if(dialog.ShowModal() == wxID_OK)
     {
+        DisableTimer();
         bool isAll = false;
         for(std::vector<long>::const_iterator it = items.begin();
                 it != items.end(); it++)
@@ -946,6 +994,7 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
                 dialog.AssignToObjItem(listItem, true);
             }
         }
+        EnableTimer();
     }
 }
 
@@ -1424,7 +1473,7 @@ void MapTool::OnListCtrlLeftDClick(wxMouseEvent& event)
 void MapTool::OnListCtrlRightDown(wxListEvent& event)
 {
     if(m_isEditFixPos) return;
-
+	DisableTimer();
     int id = event.GetId();
     if(id == MYID_NPCLISTCTRL)
     {
@@ -1444,6 +1493,7 @@ void MapTool::OnListCtrlRightDown(wxListEvent& event)
     menu.AppendSeparator();
     menu.Append(ID_BATEDITLISTITEM, wxT("批量编辑..."));
     PopupMenu(&menu);
+    EnableTimer();
 }
 void MapTool::OnListItemFocused(wxListEvent& event)
 {
@@ -1601,16 +1651,16 @@ void MapTool::BatEditListItem(wxCommandEvent& event)
     }
 }
 
-std::vector<long> GetAllSelectedItems(const wxListCtrl *listCtrl)
+std::vector<long> GetAllSelectedItems(const wxListView *listCtrl)
 {
-    std::vector<long> v;
+    int totalsize = 0;
+    if(listCtrl) totalsize = listCtrl->GetItemCount();
+    std::vector<long> v(totalsize);
     if(!listCtrl) return v;
-    long i = -1;
+    long i = listCtrl->GetFirstSelected();
+
     while(true)
     {
-        i = listCtrl->GetNextItem(i,
-                                  wxLIST_NEXT_ALL,
-                                  wxLIST_STATE_SELECTED);
         if(i != -1)
         {
             v.push_back(i);
@@ -1619,6 +1669,7 @@ std::vector<long> GetAllSelectedItems(const wxListCtrl *listCtrl)
         {
             break;
         }
+        i = listCtrl->GetNextSelected(i);
     }
     return v;
 }
@@ -2243,20 +2294,20 @@ void MapTool::MapPositionToScreenPositon(int tileX, int tileY, int* posX, int* p
 
 bool MapTool::IsItemSelectedAtTile(int tileX, int tileY)
 {
-	long index;
-	if(m_isNpc)
-	{
-		if(m_NpcList.GetItem(tileX, tileY, &index))
-		{
-			return m_npcListCtrl->IsSelected(index);
-		}
-	}
-	else if(m_isObj)
-	{
-		if(m_ObjList.GetItem(tileX, tileY, &index))
-		{
-			return m_objListCtrl->IsSelected(index);
-		}
-	}
-	return false;
+    long index;
+    if(m_isNpc)
+    {
+        if(m_NpcList.GetItem(tileX, tileY, &index))
+        {
+            return m_npcListCtrl->IsSelected(index);
+        }
+    }
+    else if(m_isObj)
+    {
+        if(m_ObjList.GetItem(tileX, tileY, &index))
+        {
+            return m_objListCtrl->IsSelected(index);
+        }
+    }
+    return false;
 }
