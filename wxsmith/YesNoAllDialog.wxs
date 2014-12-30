@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="YesNoAllDialog">
+		<size>255,67</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<style>0</style>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="m_message" member="yes">
+			<label></label>
+			<pos>8,8</pos>
+			<size>240,24</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="m_bYes" member="yes">
+			<label>是</label>
+			<pos>5,38</pos>
+			<size>50,23</size>
+			<tooltip>修改当前</tooltip>
+			<handler function="Onm_bYesClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="m_bNo" member="yes">
+			<label>否</label>
+			<pos>72,38</pos>
+			<size>50,23</size>
+			<tooltip>不修改当前</tooltip>
+			<handler function="Onm_bNoClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="m_bAll" member="yes">
+			<label>全部</label>
+			<pos>136,38</pos>
+			<size>50,23</size>
+			<tooltip>后面的全部修改</tooltip>
+			<handler function="Onm_bAllClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="m_bCancle" member="yes">
+			<label>取消</label>
+			<pos>200,38</pos>
+			<size>50,23</size>
+			<tooltip>后面的全部不修改</tooltip>
+			<handler function="Onm_bCancleClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

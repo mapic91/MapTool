@@ -33,8 +33,8 @@ bool wxWidgets_templateApp::OnInit()
 	wxInitAllImageHandlers();
 
 	LoadNpcLevelList();
-	wxFrame* frame = new MapTool(NULL);
-	frame->Show(true);
+	m_mapTool = new MapTool(NULL);
+	m_mapTool->Show(true);
 
 	return wxsOK;
 }
@@ -43,6 +43,21 @@ int wxWidgets_templateApp::OnExit()
 {
 	if(g_NpcLevelList != NULL) delete g_NpcLevelList;
 	return 0;
+}
+
+int wxWidgets_templateApp::FilterEvent(wxEvent& event)
+{
+	wxEventType type = event.GetEventType();
+	if(type == wxEVT_KEY_UP ||
+		type == wxEVT_KEY_DOWN)
+	{
+		wxKeyEvent *kEvent = (wxKeyEvent*)&event;
+		if(kEvent->GetKeyCode() == WXK_CONTROL)
+		{
+			m_mapTool->RedrawMapView();
+		}
+	}
+	return Event_Skip;
 }
 
 void LoadNpcLevelList()

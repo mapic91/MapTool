@@ -13,6 +13,7 @@
 #include "wx/msgdlg.h"
 
 #include <map>
+#include <vector>
 
 class NpcItemEditDialog;
 struct LevelDetial;
@@ -27,11 +28,16 @@ struct LevelDetial
     int Evade;
 };
 
+std::vector<long> GetAllSelectedItems(const wxListCtrl *listCtrl);
+
 class MapTool : public MapFrameBase
 {
 public:
     MapTool(wxWindow* parent);
     virtual ~MapTool();
+
+public:
+	void RedrawMapView();
 protected:
 private:
 
@@ -41,6 +47,7 @@ private:
         ID_SHOWOBJKEY,
         ID_ATTRIBUTELISTITEM,
         ID_DELETELISTITEM,
+        ID_BATEDITLISTITEM,
         ID_SETFIXPOSUNDO,
         ID_SETFIXPOSCOMPLETE,
     };
@@ -87,10 +94,15 @@ private:
         RedrawMapView();
     }
 
+	//Npc obj edit dialog
     void ShowNpcItemEditor(long npcitemidx);
     void ShowNpcItemEditor(NpcItem *item, long index = -1);
+    /* batch edit, items count must greater than 1 */
+    void ShowNpcItemEditor(const std::vector<long> &items);
     void ShowObjItemEditor(long objitemidx);
     void ShowObjItemEditor(ObjItem *item, long index = -1);
+    /* batch edit, items count must greater than 1 */
+    void ShowObjItemEditor(const std::vector<long> &items);
     void NpcItemEditShowModle(NpcItemEditDialog *dialog, NpcItem *npcitem);
 
 	//Map view
@@ -100,8 +112,19 @@ private:
 	virtual void OnMapViewPaste( wxCommandEvent& event );
 	virtual void OnMapViewDetail( wxCommandEvent& event );
 	virtual void OnMapViewDelete( wxCommandEvent& event );
+	virtual void OnMapViewBatEdit( wxCommandEvent& event);
 	void SetMapViewPopupMenuState(bool hasItem, bool canPaste);
 	void PopupMapViewMenu();
+    /** \brief Convert map tile position to screen position.
+     *
+     * \param tileX Map tile position x
+     * \param tileY Map tile position y
+	 * \param poxX[out] Position x
+     * \return poxY[out] Position y
+     *
+     */
+	void MapPositionToScreenPositon(int tileX, int tileY, int *posX, int *posY);
+	bool IsItemSelectedAtTile(int tileX, int tileY);
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
@@ -167,16 +190,32 @@ private:
     //ListData
     void OnListCtrlLeftDClick( wxMouseEvent& event );
     void OnListCtrlRightDown( wxListEvent& event );
-    void OnListItemSelected( wxListEvent& event );
+    void OnListItemFocused( wxListEvent& event );
     void RefreshNpcList();
     void RefreshObjList();
     void ShowTile(int tileX, int tileY);
     void DeleteListItem( wxCommandEvent& event);
     void AttributeListItem( wxCommandEvent& event);
+    void BatEditListItem( wxCommandEvent& event);
     void ShowAttributeListItem();
+    void ShowBatEditDialog();
     void UpdateListItem(int index, int listType = NPCLIST);
     void UpdateListItem(NpcItem *item);
     void UpdateListItem(ObjItem *item);
+    bool IsInSelectingItem(){return wxGetKeyState(WXK_CONTROL);}
+    /** \brief Show tile in map view and show YesNoAllDialog at than position.
+     *
+     * \param tileX Tile x position
+     * \param tileY Tile y position
+     * \return YesNoAllDialog returned value
+     *
+     */
+    int ShowYesNoAllInPosition(int tileX, int tileY);
+    /** \brief Draw position mark for selected item in list
+     *
+     */
+    void DrawListSelection(wxDC &dc);
+    int GetItemSelectionCount();
     enum  {NPCLIST, OBJLIST};
     int m_curList, m_curListIndex;
     bool m_placeModeNotDraw;
@@ -198,7 +237,6 @@ private:
 
     //if getImg is true return an image, else return NULL
     wxImage* ReadMap(bool getImg = false);
-    void RedrawMapView();
     void CheckMapViewBeginPosition();
 
     bool PromptDelection();
@@ -331,7 +369,15 @@ public:
     }
 
     void InitFromNpcItem(NpcItem *item);
-    void AssignToNpcItem(NpcItem *item);
+    /** \brief Assign to npc item from this dialog
+     *
+     * \param item Item to assign
+     * \param onlySetted Only assign setted value in dialog to item if true.
+     * \return
+     *
+     */
+
+    void AssignToNpcItem(NpcItem *item, bool onlySetted = false);
     void SetFixPos(wxString str)
     {
         m_FixedPos->SetValue(str);
@@ -346,6 +392,25 @@ private:
     void OnCancle( wxCommandEvent& event )
     {
         EndModal(CANCEL);
+    }
+
+    virtual void OnResetValue( wxMouseEvent& event )
+    {
+		switch(event.GetId())
+		{
+		case MYID_KIND:
+			m_Kind->SetSelection(-1);
+			break;
+		case MYID_RELATION:
+			m_Relation->SetSelection(-1);
+			break;
+		case MYID_DIR:
+			m_Dir->SetSelection(-1);
+			break;
+		case MYID_ACTION:
+			m_Action->SetSelection(-1);
+			break;
+		}
     }
 
     virtual void OnLevelChange( wxCommandEvent& event )
@@ -496,7 +561,11 @@ private:
         if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
         OpenFile(path);
     }
-
+	virtual void OnNpcIniClear( wxMouseEvent& event )
+	{
+		m_NpcIni->SetLabel(wxT(""));
+		m_NpcIni->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý"));
+	}
     void OnBodyIniClear( wxMouseEvent& event )
     {
         m_BodyIni->SetLabel(wxT(""));
@@ -590,7 +659,7 @@ public:
     }
     virtual ~ObjItemEditDialog() {}
     void InitFromObjItem(ObjItem *item);
-    void AssignToObjItem(ObjItem *item);
+    void AssignToObjItem(ObjItem *item, bool onlySetted = false);
 private:
 
     void OnObjFile( wxCommandEvent& event )
@@ -628,6 +697,11 @@ private:
             m_ScriptFile->SetLabel(filedlg.GetFilename());
             m_ScriptFile->SetToolTip(filedlg.GetFilename());
         }
+    }
+    void OnClearObjFile( wxMouseEvent& event )
+    {
+    	m_ObjFile->SetLabel(wxT(""));
+    	m_ObjFile->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý"));
     }
     void OnClearScriptFile( wxMouseEvent& event )
     {

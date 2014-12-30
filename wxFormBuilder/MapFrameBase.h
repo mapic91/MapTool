@@ -60,6 +60,11 @@ class wxListView;
 #define MYID_MAPVIEW_PASTE 1018
 #define MYID_MAPVIEW_DETIAL 1019
 #define MYID_MAPVIEW_DELETE 1020
+#define MYID_MAPVIEW_BATEDIT 1021
+#define MYID_KIND 1022
+#define MYID_RELATION 1023
+#define MYID_DIR 1024
+#define MYID_ACTION 1025
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -129,8 +134,8 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapCtrlMouseMotion( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnDrawMapControl( wxPaintEvent& event ) { event.Skip(); }
 		virtual void OnListCtrlLeftDClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnListItemFocused( wxListEvent& event ) { event.Skip(); }
 		virtual void OnListCtrlRightDown( wxListEvent& event ) { event.Skip(); }
-		virtual void OnListItemSelected( wxListEvent& event ) { event.Skip(); }
 		virtual void SaveToPNG( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapUp( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
@@ -275,8 +280,10 @@ class NpcItemEditDialogBase : public wxDialog
 		wxButton* m_Cancle;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnLevelChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNpcIni( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnNpcIniClear( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnNpcIniEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBodyIni( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnBodyIniClear( wxMouseEvent& event ) { event.Skip(); }
@@ -371,6 +378,7 @@ class ObjItemEditDialogBase : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnClearObjFile( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnEditObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearScriptFile( wxMouseEvent& event ) { event.Skip(); }

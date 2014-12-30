@@ -50,6 +50,7 @@ string FindAsfInIni(const string FilePath, const std::string match)
 
     return asfpath;
 }
+
 bool FindAndBufferAsf(const wxString &exepath,
                       const wxString &inifilename,
                       const wxString &match,
@@ -75,6 +76,11 @@ bool FindAndBufferAsf(const wxString &exepath,
     IniPath += inifilename.char_str();
 
     wxString asffilename(wxString(FindAsfInIni(IniPath, string(match.char_str())).c_str()));
+    if(asffilename.IsEmpty())
+	{
+		*asfdec = NULL;
+		return false;
+	}
     asfpath += asffilename;
 
     if(asflist != NULL && !IsAsfFileIn(asffilename, asflist, asfdec))
@@ -791,7 +797,7 @@ bool ObjListSave(const wxString path, const wxString mapName, ObjList *list)
 
 bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf)
 {
-    if(list == NULL) return false;
+    if(list == NULL || path.IsEmpty()) return false;
     for(AsfImgListIterator it = list->begin(); it != list->end(); it++)
     {
         if(path.CmpNoCase((*it)->path) == 0)

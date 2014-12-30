@@ -1563,7 +1563,7 @@
                                                                 <object class="notebookpage" expanded="0">
                                                                     <property name="bitmap"></property>
                                                                     <property name="label">NPC</property>
-                                                                    <property name="select">1</property>
+                                                                    <property name="select">0</property>
                                                                     <object class="wxPanel" expanded="0">
                                                                         <property name="BottomDockable">1</property>
                                                                         <property name="LeftDockable">1</property>
@@ -1692,7 +1692,7 @@
                                                                                     <property name="resize">Resizable</property>
                                                                                     <property name="show">1</property>
                                                                                     <property name="size"></property>
-                                                                                    <property name="style">wxLC_REPORT|wxLC_SINGLE_SEL</property>
+                                                                                    <property name="style">wxLC_REPORT</property>
                                                                                     <property name="subclass">wxListView; </property>
                                                                                     <property name="toolbar_pane">0</property>
                                                                                     <property name="tooltip"></property>
@@ -1728,10 +1728,10 @@
                                                                                     <event name="OnListInsertItem"></event>
                                                                                     <event name="OnListItemActivated"></event>
                                                                                     <event name="OnListItemDeselected"></event>
-                                                                                    <event name="OnListItemFocused"></event>
+                                                                                    <event name="OnListItemFocused">OnListItemFocused</event>
                                                                                     <event name="OnListItemMiddleClick"></event>
                                                                                     <event name="OnListItemRightClick">OnListCtrlRightDown</event>
-                                                                                    <event name="OnListItemSelected">OnListItemSelected</event>
+                                                                                    <event name="OnListItemSelected"></event>
                                                                                     <event name="OnListKeyDown"></event>
                                                                                     <event name="OnMiddleDClick"></event>
                                                                                     <event name="OnMiddleDown"></event>
@@ -1754,7 +1754,7 @@
                                                                 <object class="notebookpage" expanded="0">
                                                                     <property name="bitmap"></property>
                                                                     <property name="label">OBJ</property>
-                                                                    <property name="select">0</property>
+                                                                    <property name="select">1</property>
                                                                     <object class="wxPanel" expanded="0">
                                                                         <property name="BottomDockable">1</property>
                                                                         <property name="LeftDockable">1</property>
@@ -1883,7 +1883,7 @@
                                                                                     <property name="resize">Resizable</property>
                                                                                     <property name="show">1</property>
                                                                                     <property name="size"></property>
-                                                                                    <property name="style">wxLC_REPORT|wxLC_SINGLE_SEL</property>
+                                                                                    <property name="style">wxLC_REPORT</property>
                                                                                     <property name="subclass">wxListView; </property>
                                                                                     <property name="toolbar_pane">0</property>
                                                                                     <property name="tooltip"></property>
@@ -1919,10 +1919,10 @@
                                                                                     <event name="OnListInsertItem"></event>
                                                                                     <event name="OnListItemActivated"></event>
                                                                                     <event name="OnListItemDeselected"></event>
-                                                                                    <event name="OnListItemFocused"></event>
+                                                                                    <event name="OnListItemFocused">OnListItemFocused</event>
                                                                                     <event name="OnListItemMiddleClick"></event>
                                                                                     <event name="OnListItemRightClick">OnListCtrlRightDown</event>
-                                                                                    <event name="OnListItemSelected">OnListItemSelected</event>
+                                                                                    <event name="OnListItemSelected"></event>
                                                                                     <event name="OnListKeyDown"></event>
                                                                                     <event name="OnMiddleDClick"></event>
                                                                                     <event name="OnMiddleDown"></event>
@@ -2001,7 +2001,7 @@
                 <event name="OnSize"></event>
                 <event name="OnUpdateUI"></event>
             </object>
-            <object class="wxMenuBar" expanded="0">
+            <object class="wxMenuBar" expanded="1">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="context_menu">1</property>
@@ -2352,11 +2352,11 @@
                     </object>
                 </object>
             </object>
-            <object class="wxMenu" expanded="1">
+            <object class="wxMenu" expanded="0">
                 <property name="label">MapView</property>
                 <property name="name">m_menuMapView</property>
                 <property name="permission">protected</property>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -2371,7 +2371,7 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -2386,7 +2386,7 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -2401,11 +2401,11 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="separator" expanded="1">
+                <object class="separator" expanded="0">
                     <property name="name">m_separator8</property>
                     <property name="permission">none</property>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -2420,7 +2420,7 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -2429,6 +2429,25 @@
                     <property name="kind">wxITEM_NORMAL</property>
                     <property name="label">删除</property>
                     <property name="name">m_menuItemDelete</property>
+                    <property name="permission">none</property>
+                    <property name="shortcut"></property>
+                    <property name="unchecked_bitmap"></property>
+                    <event name="OnMenuSelection">OnMapViewMenu</event>
+                    <event name="OnUpdateUI"></event>
+                </object>
+                <object class="separator" expanded="1">
+                    <property name="name">m_separator7</property>
+                    <property name="permission">none</property>
+                </object>
+                <object class="wxMenuItem" expanded="1">
+                    <property name="bitmap"></property>
+                    <property name="checked">0</property>
+                    <property name="enabled">1</property>
+                    <property name="help"></property>
+                    <property name="id">MYID_MAPVIEW_BATEDIT</property>
+                    <property name="kind">wxITEM_NORMAL</property>
+                    <property name="label">批量编辑...</property>
+                    <property name="name">m_menuItemBatEdit</property>
                     <property name="permission">none</property>
                     <property name="shortcut"></property>
                     <property name="unchecked_bitmap"></property>
@@ -2979,7 +2998,7 @@
                                 <property name="font"></property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
-                                <property name="id">wxID_ANY</property>
+                                <property name="id">MYID_KIND</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size">110,-1</property>
@@ -3001,12 +3020,12 @@
                                 <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
-                                <property name="tooltip"></property>
+                                <property name="tooltip">鼠标右键清除</property>
                                 <property name="validator_data_type"></property>
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
                                 <property name="validator_variable"></property>
-                                <property name="value"></property>
+                                <property name="value">普通类</property>
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
@@ -3030,7 +3049,7 @@
                                 <event name="OnPaint"></event>
                                 <event name="OnRightDClick"></event>
                                 <event name="OnRightDown"></event>
-                                <event name="OnRightUp"></event>
+                                <event name="OnRightUp">OnResetValue</event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnText"></event>
@@ -3327,7 +3346,7 @@
                                 <property name="font"></property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
-                                <property name="id">wxID_ANY</property>
+                                <property name="id">MYID_RELATION</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size">110,-1</property>
@@ -3349,7 +3368,7 @@
                                 <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
-                                <property name="tooltip"></property>
+                                <property name="tooltip">鼠标右键清除</property>
                                 <property name="validator_data_type"></property>
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
@@ -3378,7 +3397,7 @@
                                 <event name="OnPaint"></event>
                                 <event name="OnRightDClick"></event>
                                 <event name="OnRightDown"></event>
-                                <event name="OnRightUp"></event>
+                                <event name="OnRightUp">OnResetValue</event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnText"></event>
@@ -5862,7 +5881,7 @@
                                 <property name="font"></property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
-                                <property name="id">wxID_ANY</property>
+                                <property name="id">MYID_DIR</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size">110,-1</property>
@@ -5884,7 +5903,7 @@
                                 <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
-                                <property name="tooltip"></property>
+                                <property name="tooltip">鼠标右键清除</property>
                                 <property name="validator_data_type"></property>
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
@@ -5913,7 +5932,7 @@
                                 <event name="OnPaint"></event>
                                 <event name="OnRightDClick"></event>
                                 <event name="OnRightDown"></event>
-                                <event name="OnRightUp"></event>
+                                <event name="OnRightUp">OnResetValue</event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnText"></event>
@@ -6558,7 +6577,7 @@
                                 <property name="font"></property>
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
-                                <property name="id">wxID_ANY</property>
+                                <property name="id">MYID_ACTION</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size">110,-1</property>
@@ -6580,7 +6599,7 @@
                                 <property name="style">wxCB_READONLY</property>
                                 <property name="subclass"></property>
                                 <property name="toolbar_pane">0</property>
-                                <property name="tooltip"></property>
+                                <property name="tooltip">鼠标右键清除</property>
                                 <property name="validator_data_type"></property>
                                 <property name="validator_style">wxFILTER_NONE</property>
                                 <property name="validator_type">wxDefaultValidator</property>
@@ -6609,7 +6628,7 @@
                                 <event name="OnPaint"></event>
                                 <event name="OnRightDClick"></event>
                                 <event name="OnRightDown"></event>
-                                <event name="OnRightUp"></event>
+                                <event name="OnRightUp">OnResetValue</event>
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnText"></event>
@@ -7633,7 +7652,7 @@
                                         <property name="style"></property>
                                         <property name="subclass"></property>
                                         <property name="toolbar_pane">0</property>
-                                        <property name="tooltip">选择...</property>
+                                        <property name="tooltip">左键选择，右键清除</property>
                                         <property name="validator_data_type"></property>
                                         <property name="validator_style">wxFILTER_NONE</property>
                                         <property name="validator_type">wxDefaultValidator</property>
@@ -7660,7 +7679,7 @@
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
                                         <event name="OnRightDClick"></event>
-                                        <event name="OnRightDown"></event>
+                                        <event name="OnRightDown">OnNpcIniClear</event>
                                         <event name="OnRightUp"></event>
                                         <event name="OnSetFocus"></event>
                                         <event name="OnSize"></event>
@@ -11842,7 +11861,7 @@
                                                 <property name="style"></property>
                                                 <property name="subclass"></property>
                                                 <property name="toolbar_pane">0</property>
-                                                <property name="tooltip">选择...</property>
+                                                <property name="tooltip">左键选择，右键清除</property>
                                                 <property name="validator_data_type"></property>
                                                 <property name="validator_style">wxFILTER_NONE</property>
                                                 <property name="validator_type">wxDefaultValidator</property>
@@ -11869,7 +11888,7 @@
                                                 <event name="OnMouseWheel"></event>
                                                 <event name="OnPaint"></event>
                                                 <event name="OnRightDClick"></event>
-                                                <event name="OnRightDown"></event>
+                                                <event name="OnRightDown">OnClearObjFile</event>
                                                 <event name="OnRightUp"></event>
                                                 <event name="OnSetFocus"></event>
                                                 <event name="OnSize"></event>

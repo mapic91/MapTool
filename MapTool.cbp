@@ -266,6 +266,8 @@
 		<Unit filename="MpcDecode.hpp" />
 		<Unit filename="Npc.cpp" />
 		<Unit filename="Npc.hpp" />
+		<Unit filename="YesNoAllDialog.cpp" />
+		<Unit filename="YesNoAllDialog.h" />
 		<Unit filename="mydefs.hpp" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
@@ -274,12 +276,16 @@
 			<Option compiler="gcc" use="0" buildCommand="-finput-charset=utf-8" />
 		</Unit>
 		<Unit filename="wxFormBuilder/MapFrameBase.h" />
+		<Unit filename="wxsmith/YesNoAllDialog.wxs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="App.cpp" main="" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxDialog wxs="wxsmith/YesNoAllDialog.wxs" src="YesNoAllDialog.cpp" hdr="YesNoAllDialog.h" fwddecl="0" i18n="0" name="YesNoAllDialog" language="CPP" />
+				</resources>
 			</wxsmith>
 		</Extensions>
 	</Project>

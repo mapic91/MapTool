@@ -2342,17 +2342,17 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1419674537 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1419947613 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
 	<wx/image.h>
 	<wx/regex.h>
 
-1419674537 e:\programmingworkshop\_store_\jxqy\maptool\app.h
+1419946300 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1419684441 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1419945900 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2363,8 +2363,9 @@
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
 	<map>
+	<vector>
 
-1419683328 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1419933509 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2423,7 +2424,7 @@
 1419660547 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1419683340 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1419945537 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2527,11 +2528,13 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1419684516 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1419945395 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
+	"YesNoAllDialog.h"
 	"wx/msgdlg.h"
 	"wx/dcmemory.h"
 	"wx/accel.h"
+	"wx/utils.h"
 
 1412631242 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\dcclient.h
 	"wx/dc.h"
@@ -2600,7 +2603,7 @@
 	"mydefs.hpp"
 	<list>
 
-1419677454 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1419920341 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>
@@ -5347,4 +5350,14 @@
 
 1419677700 source:e:\programmingworkshop\_store_\jxqy\maptool\clipboard.cpp
 	"ClipBoard.h"
+
+1419928408 e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.h
+	<wx/stattext.h>
+	<wx/button.h>
+	<wx/dialog.h>
+
+1419928489 source:e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.cpp
+	"YesNoAllDialog.h"
+	"wx/settings.h"
+	<wx/string.h>
 
