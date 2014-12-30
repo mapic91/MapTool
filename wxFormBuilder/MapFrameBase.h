@@ -65,6 +65,8 @@ class wxListView;
 #define MYID_RELATION 1023
 #define MYID_DIR 1024
 #define MYID_ACTION 1025
+#define MYID_OBJ_KIND 1026
+#define MYID_OBJ_DIR 1027
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -377,6 +379,7 @@ class ObjItemEditDialogBase : public wxDialog
 		wxButton* m_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObjFile( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnEditObjFile( wxCommandEvent& event ) { event.Skip(); }

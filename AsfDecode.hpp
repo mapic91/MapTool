@@ -39,7 +39,7 @@ public:
                                        COLOUR_MODLE mod = PIC_RGB,bool *isTransparent = NULL,
                                        Palette_Colour *TransparentColor = NULL, unsigned char transmask = 0);
     wxImage GetImageFromRgbaData(unsigned char *data, int width, int height);
-    wxBitmap GetDirectionBitmapFromBufferdData(unsigned long direction);
+    wxBitmap GetDirectionBitmapFromBufferdData(long direction, long index = 0);
 
     void BufferData();
 

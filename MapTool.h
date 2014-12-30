@@ -139,8 +139,13 @@ private:
     }
     void OnClearNpc( wxCommandEvent& event )
     {
-        m_NpcList.Clear();
-        RefreshNpcList();
+    	if(wxMessageBox(wxT("清除所有NPC？"),
+						wxMessageBoxCaptionStr,
+						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
+		{
+			m_NpcList.Clear();
+			RefreshNpcList();
+		}
     }
 
     //OBJ
@@ -158,8 +163,13 @@ private:
     }
     void OnClearObj( wxCommandEvent& event )
     {
-        m_ObjList.Clear();
-        RefreshObjList();
+    	if(wxMessageBox(wxT("清除所有OBJ？"),
+						wxMessageBoxCaptionStr,
+						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
+		{
+			m_ObjList.Clear();
+			RefreshObjList();
+		}
     }
 
     void OnDeleteMode( wxCommandEvent& event );
@@ -733,6 +743,18 @@ private:
         {
             m_WavFile->SetLabel(filedlg.GetFilename());
             m_WavFile->SetToolTip(filedlg.GetFilename());
+        }
+    }
+    void OnResetValue( wxMouseEvent& event )
+    {
+        switch(event.GetId())
+        {
+		case MYID_OBJ_KIND:
+			m_Kind->SetSelection(-1);
+			break;
+		case MYID_OBJ_DIR:
+			m_Dir->SetSelection(-1);
+			break;
         }
     }
     void OnClearWavFile( wxMouseEvent& event )

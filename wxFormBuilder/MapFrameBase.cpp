@@ -1062,7 +1062,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText41->Wrap( -1 );
 	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, wxID_ANY, wxT("植物和装饰类（新剑仅装饰类）"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+	m_Kind = new wxComboBox( this, MYID_OBJ_KIND, wxT("植物和装饰类（新剑仅装饰类）"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Kind->Append( wxT("宝物和装饰类（新剑仅装饰类）") );
 	m_Kind->Append( wxT("宝箱和动画类（新剑还包括宝物类）") );
 	m_Kind->Append( wxT("尸体类") );
@@ -1080,7 +1080,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_staticText42->Wrap( -1 );
 	gSizer2->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Dir = new wxComboBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+	m_Dir = new wxComboBox( this, MYID_OBJ_DIR, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Dir->Append( wxT("0") );
 	m_Dir->Append( wxT("1") );
 	m_Dir->Append( wxT("2") );
@@ -1089,6 +1089,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Dir->Append( wxT("5") );
 	m_Dir->Append( wxT("6") );
 	m_Dir->Append( wxT("7") );
+	m_Dir->SetToolTip( wxT("鼠标右键清除") );
 	m_Dir->SetMinSize( wxSize( 110,-1 ) );
 	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
 	
@@ -1266,6 +1267,8 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	m_Kind->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
+	m_Dir->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_ObjFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );
 	m_ObjFile->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearObjFile ), NULL, this );
 	m_button22->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditObjFile ), NULL, this );
@@ -1283,6 +1286,8 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 ObjItemEditDialogBase::~ObjItemEditDialogBase()
 {
 	// Disconnect Events
+	m_Kind->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
+	m_Dir->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_ObjFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );
 	m_ObjFile->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ObjItemEditDialogBase::OnClearObjFile ), NULL, this );
 	m_button22->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnEditObjFile ), NULL, this );

@@ -410,7 +410,7 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
     {
         if(objitem->ObjCommon)
         {
-            tbmp = objitem->ObjCommon->GetDirectionBitmapFromBufferdData(objitem->Dir);
+            tbmp = objitem->ObjCommon->GetDirectionBitmapFromBufferdData(objitem->Dir, objitem->Frame);
             tWidth = tbmp.GetWidth();
             tHeight = tbmp.GetHeight();
             tOffX = objitem->ObjCommon->GetLeft();
