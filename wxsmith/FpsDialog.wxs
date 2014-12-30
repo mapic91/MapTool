@@ -13,10 +13,10 @@
 		</object>
 		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="m_sbFps" member="yes">
 			<value>60</value>
-			<min>1</min>
+			<min>10</min>
 			<max>200</max>
 			<pos>90,12</pos>
-			<tooltip>帧率越高，画面更新越快，CPU使用越高，软件越卡&#x0A;如果软件较卡，请调低帧率</tooltip>
+			<tooltip>范围10 - 200&#x0A;帧率越高，画面更新越快，CPU使用越高，软件越卡&#x0A;如果软件较卡，请调低帧率</tooltip>
 		</object>
 		<object class="wxButton" name="ID_BUTTON1" variable="m_bOk" member="yes">
 			<label>确定</label>

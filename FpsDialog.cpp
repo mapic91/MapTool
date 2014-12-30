@@ -23,9 +23,9 @@ FpsDialog::FpsDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxS
 	SetClientSize(wxSize(227,86));
 	Move(wxDefaultPosition);
 	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("帧率(FPS)："), wxPoint(16,16), wxSize(80,16), 0, _T("ID_STATICTEXT1"));
-	m_sbFps = new wxSpinCtrl(this, ID_SPINCTRL1, _T("60"), wxPoint(90,12), wxDefaultSize, 0, 1, 200, 60, _T("ID_SPINCTRL1"));
+	m_sbFps = new wxSpinCtrl(this, ID_SPINCTRL1, _T("60"), wxPoint(90,12), wxDefaultSize, 0, 10, 200, 60, _T("ID_SPINCTRL1"));
 	m_sbFps->SetValue(_T("60"));
-	m_sbFps->SetToolTip(_T("帧率越高，画面更新越快，CPU使用越高，软件越卡\n如果软件较卡，请调低帧率"));
+	m_sbFps->SetToolTip(_T("范围10 - 200\n帧率越高，画面更新越快，CPU使用越高，软件越卡\n如果软件较卡，请调低帧率"));
 	m_bOk = new wxButton(this, ID_BUTTON1, _T("确定"), wxPoint(24,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	m_bCancle = new wxButton(this, ID_BUTTON2, _T("取消"), wxPoint(128,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 

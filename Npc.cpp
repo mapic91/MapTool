@@ -83,7 +83,8 @@ bool FindAndBufferAsf(const wxString &exepath,
 	}
     asfpath += asffilename;
 
-    if(asflist != NULL && !IsAsfFileIn(asffilename, asflist, asfdec))
+	bool isInList = IsAsfFileIn(asffilename, asflist, asfdec);
+    if(asflist != NULL && !isInList)
     {
         AsfImg *asf_img = new AsfImg;
         asf_img->path = asffilename;
@@ -95,17 +96,20 @@ bool FindAndBufferAsf(const wxString &exepath,
 
     if((*asfdec) == NULL) return false;
 
-    //if fail, try another floder
-    if(!(*asfdec)->ReadAsfFile(asfpath))
-    {
-        if(match.CmpNoCase(wxT("[Stand]")) == 0)//try another path
+    if(!isInList)
+	{
+		//if fail, try another floder
+        if(!(*asfdec)->ReadAsfFile(asfpath))
         {
-            asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
-            if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
+            if(match.CmpNoCase(wxT("[Stand]")) == 0)//try another path
+            {
+                asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
+                if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
+            }
+            else return false;
         }
-        else return false;
-    }
-    (*asfdec)->BufferData();
+        (*asfdec)->BufferData();
+	}
     return true;
 }
 

@@ -20,7 +20,6 @@ class NpcItemEditDialog;
 struct LevelDetial;
 extern std::map<int, LevelDetial> *g_NpcLevelList;
 
-
 struct LevelDetial
 {
     int Life;
@@ -40,6 +39,9 @@ public:
 public:
 	void RedrawMapView();
 	void RedrawNow();
+	//Disable timer to prevent from message quene full of timer event, use EnableTimer to enable.
+	void DisableTimer();
+	void EnableTimer();
 protected:
 private:
 
@@ -54,6 +56,7 @@ private:
         ID_SETFIXPOSCOMPLETE,
     };
 
+	void Exit();
     void FrameOnChar( wxKeyEvent& event );
     void OnClose( wxCloseEvent& event );
     void OpenMap(wxCommandEvent& event);
@@ -131,8 +134,6 @@ private:
 	//Timer
 	void OnTimer(wxTimerEvent &event);
 	virtual void OnSetFps( wxCommandEvent& event );
-	void DisableTimer();
-	void EnableTimer();
 
     //NPC
     void OnLoadCharater( wxCommandEvent& event );

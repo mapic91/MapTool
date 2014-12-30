@@ -10,6 +10,25 @@
 
 using namespace std;
 
+/** \brief Disable timer when constructing, enable timer when destructing.
+ *
+ */
+class TimerDisabler
+{
+public:
+	TimerDisabler(MapTool *mapTool)
+	{
+		m_mapTool = mapTool;
+		m_mapTool->DisableTimer();
+	}
+	~TimerDisabler()
+	{
+		m_mapTool->EnableTimer();
+	}
+private:
+	MapTool *m_mapTool;
+};
+
 BEGIN_EVENT_TABLE(MapTool, MapFrameBase)
     EVT_MENU(ID_MAPUP, MapTool::OnMapUp)
     EVT_MENU(ID_MAPDOWN, MapTool::OnMapDown)
@@ -137,13 +156,19 @@ void MapTool::OnClose(wxCloseEvent& event)
 {
     if(m_MapFileName.IsEmpty())
     {
-        Destroy();
+        Exit();
     }
     else
     {
         int ret = wxMessageBox(wxT("退出？"), wxT("确认"), wxYES_NO | wxCENTER | wxICON_QUESTION);
-        if(ret == wxYES) Destroy();
+        if(ret == wxYES) Exit();
     }
+}
+
+void MapTool::Exit()
+{
+	m_timer.Stop();
+	Destroy();
 }
 
 void MapTool::OpenMap(wxCommandEvent& event)
@@ -290,7 +315,6 @@ void MapTool::EnableTimer()
 {
     m_timer.Start(Settings::TheSetting.GetFpsMilliseconds());
 }
-
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
 {
@@ -966,7 +990,6 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
     dialog.InitFromObjItem(&item);
     if(dialog.ShowModal() == wxID_OK)
     {
-        DisableTimer();
         bool isAll = false;
         for(std::vector<long>::const_iterator it = items.begin();
                 it != items.end(); it++)
@@ -994,7 +1017,6 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
                 dialog.AssignToObjItem(listItem, true);
             }
         }
-        EnableTimer();
     }
 }
 
@@ -1081,6 +1103,9 @@ void MapTool::PopupMapViewMenu()
 
 void MapTool::OnMapViewMouseRightUp(wxMouseEvent& event)
 {
+	//Disable timer in this scop
+	TimerDisabler disableTimer(this);
+
     if(m_isEditFixPos)
     {
         EndFixPosEdit(true);
@@ -1473,7 +1498,10 @@ void MapTool::OnListCtrlLeftDClick(wxMouseEvent& event)
 void MapTool::OnListCtrlRightDown(wxListEvent& event)
 {
     if(m_isEditFixPos) return;
-	DisableTimer();
+
+	//Disable timer in this scop
+	TimerDisabler disableTimer(this);
+
     int id = event.GetId();
     if(id == MYID_NPCLISTCTRL)
     {
@@ -1493,7 +1521,6 @@ void MapTool::OnListCtrlRightDown(wxListEvent& event)
     menu.AppendSeparator();
     menu.Append(ID_BATEDITLISTITEM, wxT("批量编辑..."));
     PopupMenu(&menu);
-    EnableTimer();
 }
 void MapTool::OnListItemFocused(wxListEvent& event)
 {
@@ -1653,9 +1680,7 @@ void MapTool::BatEditListItem(wxCommandEvent& event)
 
 std::vector<long> GetAllSelectedItems(const wxListView *listCtrl)
 {
-    int totalsize = 0;
-    if(listCtrl) totalsize = listCtrl->GetItemCount();
-    std::vector<long> v(totalsize);
+    std::vector<long> v;
     if(!listCtrl) return v;
     long i = listCtrl->GetFirstSelected();
 
