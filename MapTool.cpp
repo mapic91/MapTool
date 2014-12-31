@@ -114,7 +114,7 @@ MapTool::MapTool(wxWindow* parent)
     //timer
     m_timer.SetOwner(this);
     this->Connect(wxEVT_TIMER, wxTimerEventHandler(MapTool::OnTimer), NULL, this);
-    m_timer.Start(20);
+    EnableTimer();
 }
 
 MapTool::~MapTool()
