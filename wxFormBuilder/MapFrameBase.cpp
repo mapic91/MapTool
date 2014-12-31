@@ -247,7 +247,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menuItem25 = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("帧率(&FPS)...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu5->Append( m_menuItem25 );
 	
-	m_menubar3->Append( m_menu5, wxT("性能(&Performance)") ); 
+	m_menubar3->Append( m_menu5, wxT("性能(&P)") ); 
 	
 	this->SetMenuBar( m_menubar3 );
 	
@@ -279,6 +279,10 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	wxMenuItem* m_menuItemBatEdit;
 	m_menuItemBatEdit = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_BATEDIT, wxString( wxT("批量编辑...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemBatEdit );
+	
+	wxMenuItem* m_menuItem26;
+	m_menuItem26 = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CLEAR_SELECTION, wxString( wxT("消除选择") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuMapView->Append( m_menuItem26 );
 	
 	this->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MapFrameBase::MapFrameBaseOnContextMenu ), NULL, this ); 
 	
@@ -340,6 +344,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItemDetail->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemDelete->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemBatEdit->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Connect( m_menuItem26->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 }
 
 MapFrameBase::~MapFrameBase()
@@ -399,6 +404,7 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( MYID_MAPVIEW_DETIAL, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_DELETE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_BATEDIT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
+	this->Disconnect( MYID_MAPVIEW_CLEAR_SELECTION, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	
 	delete m_menuMapView; 
 }

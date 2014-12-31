@@ -29,6 +29,7 @@ struct LevelDetial
 };
 
 std::vector<long> GetAllSelectedItems(const wxListView *listCtrl);
+void DeselectAllItem(wxListView *listCtrl);
 
 class MapTool : public MapFrameBase
 {
@@ -118,6 +119,7 @@ private:
 	virtual void OnMapViewDetail( wxCommandEvent& event );
 	virtual void OnMapViewDelete( wxCommandEvent& event );
 	virtual void OnMapViewBatEdit( wxCommandEvent& event);
+	virtual void OnMapViewClearSelection( wxCommandEvent& event);
 	void SetMapViewPopupMenuState(bool hasItem, bool canPaste);
 	void PopupMapViewMenu();
     /** \brief Convert map tile position to screen position.
@@ -332,6 +334,12 @@ public:
         STYLE = wxFD_OPEN;
     }
     virtual ~NpcItemEditDialog() {}
+
+    void EnableFixpos(bool enable = true)
+    {
+    	m_FixedPos->Enable(enable);
+    	m_FixedPosEdit->Enable(enable);
+    }
 
     static wxString ToFixPosString(std::list<wxPoint> &list)
     {

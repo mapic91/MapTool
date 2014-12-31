@@ -61,12 +61,13 @@ class wxListView;
 #define MYID_MAPVIEW_DETIAL 1019
 #define MYID_MAPVIEW_DELETE 1020
 #define MYID_MAPVIEW_BATEDIT 1021
-#define MYID_KIND 1022
-#define MYID_RELATION 1023
-#define MYID_DIR 1024
-#define MYID_ACTION 1025
-#define MYID_OBJ_KIND 1026
-#define MYID_OBJ_DIR 1027
+#define MYID_MAPVIEW_CLEAR_SELECTION 1022
+#define MYID_KIND 1023
+#define MYID_RELATION 1024
+#define MYID_DIR 1025
+#define MYID_ACTION 1026
+#define MYID_OBJ_KIND 1027
+#define MYID_OBJ_DIR 1028
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase

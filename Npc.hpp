@@ -125,6 +125,7 @@ template<class T>
 class ItemList
 {
 public:
+	typedef typename std::list<T>::iterator iterator;
     ItemList()
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
@@ -213,6 +214,16 @@ public:
             }
         }
         return false;
+    }
+
+    iterator begin()
+    {
+    	return m_list.begin();
+    }
+
+    iterator end()
+    {
+    	return m_list.end();
     }
 
     void Clear()

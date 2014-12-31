@@ -593,14 +593,13 @@ bool MapTool::IsDrawObjsNpcs()
 
 void MapTool::DrawObjsNpcs(wxDC &dc, bool currentView)
 {
-    int counts;
     if(m_ToolBarEdit->GetToolState(ID_SHOWNPC))
     {
-        counts = m_NpcList.getCounts();
         NpcItem *npcitem;
-        for(int i = 0; i < counts; i++)
+        NpcList::iterator end = m_NpcList.end();
+        for(NpcList::iterator it = m_NpcList.begin(); it != end; it++)
         {
-            npcitem = m_NpcList.GetItem(i);
+            npcitem = *it;
             if(npcitem == NULL) continue;
             DrawTile(npcitem->MapX, npcitem->MapY, dc, npcitem, NULL, currentView);
         }
@@ -608,11 +607,11 @@ void MapTool::DrawObjsNpcs(wxDC &dc, bool currentView)
 
     if(m_ToolBarEdit->GetToolState(ID_SHOWOBJ))
     {
-        counts = m_ObjList.getCounts();
         ObjItem *objitem;
-        for(int j = 0; j < counts; j++)
+        ObjList::iterator end = m_ObjList.end();
+        for(ObjList::iterator it = m_ObjList.begin(); it != end; it++)
         {
-            objitem = m_ObjList.GetItem(j);
+            objitem = *it;
             if(objitem == NULL) continue;
             DrawTile(objitem->MapX, objitem->MapY, dc, NULL, objitem, currentView);
         }
@@ -744,6 +743,9 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(m_NpcList.GetItem(m_CurTileX, m_CurTileY, &index))
             {
                 m_npcListCtrl->Select(index, !m_npcListCtrl->IsSelected(index));
+				m_StatusBar->SetStatusText(
+					wxString::Format(wxT("选择了 %d 个"), m_npcListCtrl->GetSelectedItemCount())
+					, 0);
             }
         }
         else if(m_isObj)
@@ -752,6 +754,9 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
             if(m_ObjList.GetItem(m_CurTileX, m_CurTileY, &index))
             {
                 m_objListCtrl->Select(index, !m_objListCtrl->IsSelected(index));
+                m_StatusBar->SetStatusText(
+					wxString::Format(wxT("选择了 %d 个"), m_objListCtrl->GetSelectedItemCount())
+					, 0);
             }
         }
     }
@@ -942,6 +947,7 @@ void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
                                  m_NpcAsfImgList,
                                  &item);
         dialog.SetTitle(wxT("批量编辑模式，设置了值的项目，将被应用于所有选中NPC"));
+        dialog.EnableFixpos(false);
         dialog.InitFromNpcItem(&item);
         if(dialog.ShowModal() == NpcItemEditDialog::OK)
         {
@@ -1092,12 +1098,24 @@ void MapTool::SetMapViewPopupMenuState(bool hasItem, bool canPaste)
     m_menuMapView->Enable(MYID_MAPVIEW_PASTE, canPaste);
     m_menuMapView->Enable(MYID_MAPVIEW_DETIAL, hasItem);
     m_menuMapView->Enable(MYID_MAPVIEW_DELETE, hasItem);
-    m_menuMapView->Enable(MYID_MAPVIEW_BATEDIT, GetItemSelectionCount());
+    int count = GetItemSelectionCount();
+    m_menuMapView->Enable(MYID_MAPVIEW_BATEDIT, count);
+    m_menuMapView->Enable(MYID_MAPVIEW_CLEAR_SELECTION, count);
 }
 
 void MapTool::PopupMapViewMenu()
 {
     m_popupMenuShowed = true;
+    if(m_isNpc)
+	{
+		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("NPC_批量编辑..."));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("NPC_消除选择"));
+	}
+	else if(m_isObj)
+	{
+		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("OBJ_批量编辑..."));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("OBJ_消除选择"));
+	}
     PopupMenu(m_menuMapView);
 }
 
@@ -2164,6 +2182,9 @@ void MapTool::OnMapViewMenu(wxCommandEvent& event)
     case MYID_MAPVIEW_BATEDIT:
         OnMapViewBatEdit(event);
         break;
+	case MYID_MAPVIEW_CLEAR_SELECTION:
+		OnMapViewClearSelection(event);
+		break;
     }
 }
 
@@ -2295,6 +2316,30 @@ void MapTool::OnMapViewDelete(wxCommandEvent& event)
 void MapTool::OnMapViewBatEdit(wxCommandEvent& event)
 {
     ShowBatEditDialog();
+}
+
+void MapTool::OnMapViewClearSelection(wxCommandEvent& event)
+{
+	if(m_isNpc)
+	{
+		DeselectAllItem(m_npcListCtrl);
+	}
+	else if(m_isObj)
+	{
+		DeselectAllItem(m_objListCtrl);
+	}
+}
+
+void DeselectAllItem(wxListView* listCtrl)
+{
+	if(listCtrl)
+	{
+		int count = listCtrl->GetItemCount();
+		for(int i = 0; i < count; i++)
+		{
+			listCtrl->Select(i, false);
+		}
+	}
 }
 
 bool MapTool::PromptDelection()
