@@ -80,7 +80,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.6 - by 小试刀剑  2014.12.30"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.6.1 - by 小试刀剑  2015.01.17"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -1589,7 +1589,6 @@ void MapTool::OnListItemFocused(wxListEvent& event)
 
 void MapTool::RefreshNpcList()
 {
-    int focuseditem = m_npcListCtrl->GetFocusedItem();
     NpcItem **items = m_NpcList.GetAllItem();
     m_npcListCtrl->DeleteAllItems();
     for(int i = 0; items[i] != NULL; i++)
@@ -1600,18 +1599,9 @@ void MapTool::RefreshNpcList()
         m_npcListCtrl->SetItem(i, 2, wxString::Format("%ld", items[i]->MapY));
     }
     delete[] items;
-
-    if(focuseditem != -1)
-    {
-        while(focuseditem >= m_npcListCtrl->GetItemCount())
-            focuseditem--;
-        m_npcListCtrl->Select(focuseditem);
-        m_npcListCtrl->Focus(focuseditem);
-    }
 }
 void MapTool::RefreshObjList()
 {
-    int focuseditem = m_objListCtrl->GetFocusedItem();
     ObjItem **items = m_ObjList.GetAllItem();
     m_objListCtrl->DeleteAllItems();
     for(int i = 0; items[i] != NULL; i++)
@@ -1622,14 +1612,6 @@ void MapTool::RefreshObjList()
         m_objListCtrl->SetItem(i, 2, wxString::Format("%ld", items[i]->MapY));
     }
     delete[] items;
-
-    if(focuseditem != -1)
-    {
-        while(focuseditem >= m_objListCtrl->GetItemCount())
-            focuseditem--;
-        m_objListCtrl->Select(focuseditem);
-        m_objListCtrl->Focus(focuseditem);
-    }
 }
 void MapTool::ShowTile(int tileX, int tileY)
 {

@@ -386,6 +386,7 @@ unsigned char* AsfDecode::GetDecodedFrameData(unsigned long index, long* Width, 
 wxBitmap AsfDecode::GetDirectionBitmapFromBufferdData(long direction, long indexOff)
 {
 	if(direction < 0) direction = 0;
+	if(indexOff < 0) indexOff = 0;
     if(direction >= GetDirection() ||
        GetFramesCounts() == 0 ||
        GetDirection() == 0) return wxNullBitmap;
