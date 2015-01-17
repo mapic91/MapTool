@@ -75,6 +75,9 @@ struct ObjItem
 
 	ObjItem(){ObjCommon = NULL;}
     void CopyFrom(const ObjItem *item);
+
+    int GetOffX() { return OffX < 0 ? 0 : OffX; }
+    int GetOffY() { return OffY < 0 ? 0 : OffY; }
 };
 struct AsfImg
 {

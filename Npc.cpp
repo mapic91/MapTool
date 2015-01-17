@@ -223,7 +223,7 @@ void InitObjItem(ObjItem *item)
     if(!item) return;
     item->Damage = -1;
     item->Dir = -1;
-    item->Frame = 0;
+    item->Frame = -1;
     item->Height = -1;
     item->Kind = -1;
     item->Lum = -1;
@@ -231,8 +231,8 @@ void InitObjItem(ObjItem *item)
     item->MapY = -1;
     item->ObjFile.clear();
     item->ObjName.clear();
-    item->OffX = 0;
-    item->OffY = 0;
+    item->OffX = -1;
+    item->OffY = -1;
     item->ScriptFile.clear();
     item->WavFile.clear();
 }

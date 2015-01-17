@@ -484,8 +484,8 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
             tOffY = objitem->ObjCommon->GetBottom();
 
             //Tile beg at tile middle(32,16)
-            tDrawX = recposx + 32 - tOffX + objitem->OffX;
-            tDrawY = recposy + 16 - tOffY + objitem->OffY;
+            tDrawX = recposx + 32 - tOffX + objitem->GetOffX();
+            tDrawY = recposy + 16 - tOffY + objitem->GetOffY();
         }
     }
 
