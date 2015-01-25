@@ -721,7 +721,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Action = new wxComboBox( this, MYID_ACTION, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
 	m_Action->Append( wxT("站立") );
 	m_Action->Append( wxT("走动（随机）") );
-	m_Action->Append( wxT("走动（循环）") );
+	m_Action->Append( wxT("走动（FixedPos）") );
 	m_Action->SetToolTip( wxT("鼠标右键清除") );
 	m_Action->SetMinSize( wxSize( 110,-1 ) );
 	m_Action->SetMaxSize( wxSize( 110,-1 ) );

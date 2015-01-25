@@ -26,7 +26,7 @@
         <property name="ui_table">UI</property>
         <property name="use_enum">0</property>
         <property name="use_microsoft_bom">0</property>
-        <object class="Frame" expanded="1">
+        <object class="Frame" expanded="0">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
@@ -2001,7 +2001,7 @@
                 <event name="OnSize"></event>
                 <event name="OnUpdateUI"></event>
             </object>
-            <object class="wxMenuBar" expanded="1">
+            <object class="wxMenuBar" expanded="0">
                 <property name="bg"></property>
                 <property name="context_help"></property>
                 <property name="context_menu">1</property>
@@ -2351,7 +2351,7 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="1">
+                <object class="wxMenu" expanded="0">
                     <property name="label">性能(&amp;P)</property>
                     <property name="name">m_menu5</property>
                     <property name="permission">protected</property>
@@ -2372,7 +2372,7 @@
                     </object>
                 </object>
             </object>
-            <object class="wxMenu" expanded="1">
+            <object class="wxMenu" expanded="0">
                 <property name="label">MapView</property>
                 <property name="name">m_menuMapView</property>
                 <property name="permission">protected</property>
@@ -2474,7 +2474,7 @@
                     <event name="OnMenuSelection">OnMapViewMenu</event>
                     <event name="OnUpdateUI"></event>
                 </object>
-                <object class="wxMenuItem" expanded="1">
+                <object class="wxMenuItem" expanded="0">
                     <property name="bitmap"></property>
                     <property name="checked">0</property>
                     <property name="enabled">1</property>
@@ -6598,7 +6598,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;站立&quot; &quot;走动（随机）&quot; &quot;走动（循环）&quot;</property>
+                                <property name="choices">&quot;站立&quot; &quot;走动（随机）&quot; &quot;走动（FixedPos）&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
