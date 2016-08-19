@@ -661,6 +661,7 @@ void MapTool::DrawObjPostion(wxDC &dc, bool currentView)
 void MapTool::StartFixPosEdit(NpcItem* npcitem)
 {
     m_isEditFixPos = true;
+    m_placeModeNotDraw = false;
     m_fixPosEditItem = npcitem;
     m_fixPosPoints.clear();
     int x,y;
