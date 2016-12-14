@@ -1,10 +1,13 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include "TmxMapMessage.pb.h"
+
 #include "wx/string.h"
 #include "wx/image.h"
 
 #include "MpcDecode.hpp"
+#include "TmxReaderClient.h"
 
 struct Name32b
 {
@@ -15,6 +18,30 @@ struct ImgData
     long width;
     long height;
     unsigned char *data; //RGBA
+
+    ImgData()
+		: width(0)
+		, height(0)
+		, data(nullptr)
+    {
+
+    }
+
+    ~ImgData()
+    {
+    	Free();
+    }
+
+    void Free()
+    {
+    	if(data != nullptr)
+    	{
+			free(data);
+			data = nullptr;
+		};
+		width=0;
+		height=0;
+    }
 };
 struct Tile
 {
@@ -33,6 +60,12 @@ class Map
     public:
         Map();
         virtual ~Map();
+
+        enum MapType
+        {
+        	JXQY,
+        	TMX
+        };
 
         static const unsigned char LAYER1 = 0x01;
         static const unsigned char LAYER2 = 0x02;
@@ -70,8 +103,12 @@ class Map
 		bool IsTileBarrer(int tileX, int tileY);
 		bool IsTileBarrerTrans(int tileX, int tileY);
 		unsigned char GetTileBarrerCode(int tileX, int tileY);
+		unsigned char GetTileBarrerCode(int index);
+		unsigned char GetTrapIndex(int tileIndex);
 
         bool ReadFile(const wxString FilePath);
+
+        void ShutDownClient();
     protected:
     private:
 
@@ -83,16 +120,23 @@ class Map
         **/
         void DrawTile(long Column, long Row, long TileWidth, long TileHeight, unsigned char* TileData, wxImage *img);
 
+        void DrawTmxTile(long Column, long Row,const Proto::TmxMap::TileImg *tileImg, wxImage *img);
+
+        void DoDrawLayer(int index, wxImage* img);
+
         /**
         index: 1,2,3
         tiles: (mCol * mRow) tiles data
         mpcpaths: 255 mpc files path
         **/
         void DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage* img);
+
+        void DrawTmxLayer(int index, wxImage* img);
+
         /**
         index: 1 - barrer, 2 - trap
         **/
-        void DrawLayer(int index, wxImage* img);
+        void DrawInfoLayer(int index, wxImage* img);
 
         long Char2Long(const unsigned char* in) const
         {
@@ -112,9 +156,11 @@ class Map
         {
             if(decode != NULL) delete[] decode;
             if(tiles != NULL) delete[] tiles;
+            if(mTmxImgSrc != nullptr) delete[] mTmxImgSrc;
 
             decode = NULL;
             tiles = NULL;
+            mCol = mRow = mPixelWidth = mPixelHeight = 0;
         }
 
         long mCol;
@@ -126,6 +172,12 @@ class Map
         //0 - Õ∏ 1-Ã¯Õ∏ 2-’œ 3-Ã¯’œ
         ImgData mBarrer[4];
         ImgData mTrap[19];
+
+        MapType mMapType;
+
+        TmxReaderClient mTmxReadClient;
+        Proto::TmxMap* mTmxMap;
+        ImgData *mTmxImgSrc;
 };
 
 #endif // MAP_H

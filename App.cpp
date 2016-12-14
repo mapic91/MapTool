@@ -20,6 +20,8 @@
 
 #include <wx/image.h>
 #include <wx/regex.h>
+#include "wx/stdpaths.h"
+#include <wx/utils.h>
 
 IMPLEMENT_APP(wxWidgets_templateApp);
 
@@ -32,8 +34,16 @@ bool wxWidgets_templateApp::OnInit()
 	bool wxsOK = true;
 	wxInitAllImageHandlers();
 
-	LoadNpcLevelList();
 	m_mapTool = new MapTool(NULL);
+
+	//Start tmx map file reader help server
+	wxString exepath;
+	exepath = wxStandardPaths::Get().GetExecutablePath();
+	exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME);
+	wxExecute(exepath+"/resource/TmxReadHelper/TmxReadHelper.exe");
+
+	LoadNpcLevelList();
+
 	m_mapTool->Show(true);
 
 	return wxsOK;

@@ -12,6 +12,8 @@ Map::Map()
     decode = NULL;
     tiles = NULL;
     mCol = mRow = mPixelWidth = mPixelHeight = 0;
+    mTmxImgSrc = nullptr;
+    mTmxMap = nullptr;
     LoadResource();
 }
 
@@ -19,90 +21,143 @@ Map::~Map()
 {
     DestoryData();
     DestoryResource();
-    //dtor
+    ShutDownClient();
 }
 
 bool Map::ReadFile(const wxString FilePath)
 {
-    DestoryData();
+	wxFileName fileName(FilePath);
+	wxString ext = fileName.GetExt().MakeLower();
 
-    ifstream mapfile(FilePath.char_str(), ios_base::binary | ios_base::in);
-    if(!mapfile.is_open()) return false;
+	DestoryData();
 
-    unsigned char temp4b[4];
-    char tempc;
-    wxString wx_mpcpath;
+	if(ext == "map")
+	{
+		mMapType = JXQY;
+		ifstream mapfile(FilePath.char_str(), ios_base::binary | ios_base::in);
+		if(!mapfile.is_open()) return false;
 
-    //check file format correctly
-    char vinfo[16];
-    mapfile.read(vinfo, 16);
-    if(strncmp(vinfo, "MAP File Ver2.0", 12) != 0)
-    {
-        mapfile.close();
-        return false;
-    }
+		unsigned char temp4b[4];
+		char tempc;
+		wxString wx_mpcpath;
 
-    //initialize mpc file path
-    mapfile.seekg(16, ios_base::cur);
-    char mpcpath[32] = {0};
-    for(int pidx = 0; pidx < 32 ; pidx++)
-    {
-        mapfile.read(&tempc, 1);
-        if(tempc != 0)
-            mpcpath[pidx] = tempc;
-    }
-    if(mpcpath[0] == 0)
-    {
-        wx_mpcpath = wxT("\\mpc\\map\\") +
-                     wxFileName::FileName(FilePath).GetName();
-    }
-    else
-    {
-        wx_mpcpath = wxString(mpcpath);
-    }
-    wxString exepath;
-    exepath = wxStandardPaths::Get().GetExecutablePath();
-    exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME);
-    wx_mpcpath = exepath + wx_mpcpath;
+		//check file format correctly
+		char vinfo[16];
+		mapfile.read(vinfo, 16);
+		if(strncmp(vinfo, "MAP File Ver2.0", 12) != 0)
+		{
+			mapfile.close();
+			return false;
+		}
 
-    mapfile.seekg(4, ios_base::cur);
-    mapfile.read((char*)temp4b, 4);
-    mCol = Char2Long(temp4b);
-    mPixelWidth = (mCol + 1) * 64 ;
-    mapfile.read((char*)temp4b, 4);
-    mRow = Char2Long(temp4b);
-    mPixelHeight = (mRow + 1) * 16;
+		//initialize mpc file path
+		mapfile.seekg(16, ios_base::cur);
+		char mpcpath[32] = {0};
+		for(int pidx = 0; pidx < 32 ; pidx++)
+		{
+			mapfile.read(&tempc, 1);
+			if(tempc != 0)
+				mpcpath[pidx] = tempc;
+		}
+		if(mpcpath[0] == 0)
+		{
+			wx_mpcpath = wxT("\\mpc\\map\\") +
+						 wxFileName::FileName(FilePath).GetName();
+		}
+		else
+		{
+			wx_mpcpath = wxString(mpcpath);
+		}
+		wxString exepath;
+		exepath = wxStandardPaths::Get().GetExecutablePath();
+		exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME);
+		wx_mpcpath = exepath + wx_mpcpath;
 
-    mapfile.seekg(192, ios_base::beg);
-    decode = new MpcDecode[255];
-    char mpcname[32] = {0};
-    for(int namei = 0; namei < 255; namei++)
-    {
-        for(int nc = 0; nc < 64; nc++)
-        {
-            mapfile.read(&tempc, 1);
-            if(nc < 31)
-            {
-                mpcname[nc] = tempc;
-            }
-        }
-        if(decode[namei].ReadMpcFile(wx_mpcpath + wxT("\\") + wxString(mpcname)))
-        {
-            decode[namei].BufferData();
-        }
-    }
+		mapfile.seekg(4, ios_base::cur);
+		mapfile.read((char*)temp4b, 4);
+		mCol = Char2Long(temp4b);
+		mPixelWidth = (mCol + 1) * 64 ;
+		mapfile.read((char*)temp4b, 4);
+		mRow = Char2Long(temp4b);
+		mPixelHeight = (mRow + 1) * 16;
 
-    long totaltiles = mCol * mRow;
-    tiles = new Tile[totaltiles];
-    mapfile.seekg(16512, ios_base::beg);
-    for(long tilei = 0; tilei < totaltiles; tilei++)
-    {
-        mapfile.read((char*)(&tiles[tilei]), 8);
-        mapfile.seekg(2, ios_base::cur);
-    }
-    mapfile.close();
+		mapfile.seekg(192, ios_base::beg);
+		decode = new MpcDecode[255];
+		char mpcname[32] = {0};
+		for(int namei = 0; namei < 255; namei++)
+		{
+			for(int nc = 0; nc < 64; nc++)
+			{
+				mapfile.read(&tempc, 1);
+				if(nc < 31)
+				{
+					mpcname[nc] = tempc;
+				}
+			}
+			if(decode[namei].ReadMpcFile(wx_mpcpath + wxT("\\") + wxString(mpcname)))
+			{
+				decode[namei].BufferData();
+			}
+		}
 
-    return true;
+		long totaltiles = mCol * mRow;
+		tiles = new Tile[totaltiles];
+		mapfile.seekg(16512, ios_base::beg);
+		for(long tilei = 0; tilei < totaltiles; tilei++)
+		{
+			mapfile.read((char*)(&tiles[tilei]), 8);
+			mapfile.seekg(2, ios_base::cur);
+		}
+		mapfile.close();
+
+		return true;
+	}
+	else if(ext == "tmx")
+	{
+		mMapType = TMX;
+		mTmxMap = mTmxReadClient.GetTmxMap(FilePath);
+
+		if(mTmxMap != nullptr)
+		{
+			mCol = mTmxMap->width();
+			mPixelWidth = (mCol + 1) * 64 ;
+			mRow = mTmxMap->height();
+			mPixelHeight = (mRow + 1) * 16;
+
+			if(mTmxMap->imgs_size() > 0)
+			{
+				wxLogNull lognull;
+				wxImage img;
+				mTmxImgSrc = new ImgData[mTmxMap->imgs_size()];
+				for(int i = 0; i < mTmxMap->imgs_size(); i++)
+				{
+					img.LoadFile(wxString::FromUTF8(mTmxMap->imgs(i).path().c_str()));
+					AssignImgData(mTmxImgSrc+i, img);
+				}
+			}
+		}
+
+		return mTmxMap != nullptr;
+	}
+	return false;
+}
+
+void Map::ShutDownClient()
+{
+	mTmxReadClient.Exit();
+}
+
+
+void Map::DoDrawLayer(int index, wxImage* img)
+{
+	if(mMapType == JXQY)
+	{
+		DrawLayer(index, tiles, decode, img);
+	}
+	else if (mMapType == TMX)
+	{
+		DrawTmxLayer(index, img);
+	}
 }
 
 void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage *img)
@@ -140,10 +195,41 @@ void Map::DrawLayer(int index, Tile *tiles, MpcDecode *decode, wxImage *img)
     }
 }
 
+void Map::DrawTmxLayer(int index, wxImage* img)
+{
+	if(index < 1 || index > 3) return;
+	if(mTmxImgSrc == nullptr || mTmxMap == nullptr) return;
+
+	index--;
+
+
+	const Proto::TmxMap_Layer *layer = nullptr;
+	for(int i = 0; i < mTmxMap->layers_size(); i++)
+	{
+		if(mTmxMap->layers(i).index() == index)
+		{
+			layer = &mTmxMap->layers(i);
+			break;
+		}
+	}
+
+	if(layer != nullptr)
+	{
+		int totaltiles = mCol * mRow;
+		for(int i = 0; i < totaltiles; i++)
+		{
+			const Proto::TmxMap_TileInfo *info = &layer->tiles(i);
+			if(info->gid() == 0) continue;
+			DrawTmxTile(i%mCol, i/mCol, &mTmxMap->tileimgs(info->gid()), img);
+		}
+	}
+}
+
+
 /**
     index: 1 - barrer, 2 - trap
 **/
-void Map::DrawLayer(int index, wxImage* img)
+void Map::DrawInfoLayer(int index, wxImage* img)
 {
     if(index < 1|| index > 2) return;
 
@@ -162,10 +248,10 @@ void Map::DrawLayer(int index, wxImage* img)
         switch(index)
         {
         case 1: //barrer
-            barrertype = tiles[tilei].barrer_type;
+            barrertype = GetTileBarrerCode(tilei);
             break;
         case 2: //trap
-            trapindex = tiles[tilei].trap_index;
+            trapindex = GetTrapIndex(tilei);
             break;
         default:
             break;
@@ -217,8 +303,56 @@ unsigned char Map::GetTileBarrerCode(int tileX, int tileY)
     if(tileX < 0 || tileX > mCol ||
             tileY < 0 || tileY > mRow) return 0;
 
-    return tiles[tileY * mCol + tileX].barrer_type;
+	int index = tileY * mCol + tileX;
+	return GetTileBarrerCode(index);
 }
+
+unsigned char Map::GetTileBarrerCode(int index)
+{
+	char code = 0;
+	if(mMapType == JXQY)
+	{
+		code = tiles[index].barrer_type;
+	}
+	else if(mMapType == TMX)
+	{
+		Proto::TmxMap::BarrerType type = mTmxMap->settings(index).barrertype();
+		switch(type)
+		{
+		case Proto::TmxMap::None:
+			code = 0;
+			break;
+		case Proto::TmxMap::Obstacle:
+			code = 0x80;
+			break;
+		case Proto::TmxMap::CanOverObstacle:
+			code = 0xA0;
+			break;
+		case Proto::TmxMap::Trans:
+			code = 0x40;
+			break;
+		case Proto::TmxMap::CanOVerTrans:
+			code = 0x60;
+			break;
+		}
+	}
+    return code;
+}
+
+unsigned char Map::GetTrapIndex(int tileIndex)
+{
+	unsigned char index = 0;
+	if(mMapType == JXQY)
+	{
+		index = tiles[tileIndex].trap_index;
+	}
+	else if(mMapType == TMX)
+	{
+		index = (unsigned char)mTmxMap->settings(tileIndex).trapindex();
+	}
+    return index;
+}
+
 
 bool Map::IsTileBarrer(int tileX, int tileY)
 {
@@ -369,17 +503,62 @@ void Map::DrawTile(long Column, long Row,
     }
 }
 
+void Map::DrawTmxTile(long Column, long Row,const Proto::TmxMap::TileImg* tileImg, wxImage *img)
+{
+	if(Column > mCol || Row > mRow || tileImg == NULL || img == NULL) return;
+
+	//tile top-left position
+    long basex, basey;
+    bool hasAlpha = img->HasAlpha();
+    basex = (Row%2) * 32 + 64 * Column;
+    basey = 16 * Row;
+
+    long x = tileImg->region().x();
+    long y = tileImg->region().y();
+    long w = tileImg->region().w();
+    long h = tileImg->region().h();
+
+    //graph top-left position
+    long graphx, graphy;
+    graphx = basex + tileImg->offset().x();
+    graphy = basey + (32 - h) + tileImg->offset().y();
+
+    ImgData *imgData = &(mTmxImgSrc[tileImg->imgindex()]);
+
+    if(imgData->data != nullptr)
+	{
+		for(long hi = y; hi < y+h; hi++)
+		{
+			for(long wi = x; wi < x+w; wi++)
+			{
+				long index = (wi + hi * imgData->width)*4;
+				if(imgData->data[index+3] != 0)
+				{
+					long imgX = graphx + wi - x;
+					long imgY = graphy + hi - y;
+					img->SetRGB(wxRect(imgX, imgY, 1, 1),
+									imgData->data[index],
+									imgData->data[index + 1],
+									imgData->data[index + 2]);
+					if(hasAlpha)img->SetAlpha(imgX, imgY, 0xFF);
+				}
+			}
+		}
+	}
+}
+
+
 wxImage* Map::getImage(unsigned char layer, bool hasAlpha)
 {
     wxImage *img = new wxImage;
     img->Create(mPixelWidth, mPixelHeight, true);
     if(hasAlpha)img->SetAlpha();
 
-    if(layer & LAYER1) DrawLayer(1, tiles, decode, img);
-    if(layer & LAYER2) DrawLayer(2, tiles, decode, img);
-    if(layer & LAYER3) DrawLayer(3, tiles, decode, img);
-    if(layer & TRAP)   DrawLayer(2, img);
-    if(layer & BARRER) DrawLayer(1, img);
+    if(layer & LAYER1) DoDrawLayer(1, img);
+    if(layer & LAYER2) DoDrawLayer(2, img);
+    if(layer & LAYER3) DoDrawLayer(3, img);
+    if(layer & TRAP)   DrawInfoLayer(2, img);
+    if(layer & BARRER) DrawInfoLayer(1, img);
 
     return img;
 }
@@ -422,30 +601,29 @@ void Map::DestoryResource()
 {
     for(int i = 0; i < 19; i++)
     {
-        if(mTrap[i].data != NULL) free(mTrap[i].data);
+        mTrap[i].Free();
     }
 
     for(int j = 0; j < 4; j++)
     {
-        if(mBarrer[j].data != NULL) free(mBarrer[j].data);
+        mBarrer[j].Free();
     }
 }
 
 void Map::AssignImgData(ImgData *imgdata, wxImage &img)
 {
     if(imgdata == NULL) return;
-
+	imgdata->Free();
     if(img.IsOk())
     {
-        unsigned char *pixdata, *alphadata;
+        unsigned char *pixdata = nullptr, *alphadata = nullptr;
         int width, height;
         long datasize;
 
-        if(!img.HasAlpha()) img.SetAlpha();
+        if(img.HasAlpha()) alphadata = img.GetAlpha();
         width = img.GetWidth();
         height = img.GetHeight();
         pixdata = img.GetData();
-        alphadata = img.GetAlpha();
         datasize = (long) 4  * width * height;
 
         (*imgdata).width = (long)width;
@@ -459,14 +637,8 @@ void Map::AssignImgData(ImgData *imgdata, wxImage &img)
             (*imgdata).data[di++] = pixdata[pi++];
             (*imgdata).data[di++] = pixdata[pi++];
             (*imgdata).data[di++] = pixdata[pi++];
-            (*imgdata).data[di++] = alphadata[ai++];
+            (*imgdata).data[di++] = alphadata == nullptr ? 0xFF : alphadata[ai++];
         }
-    }
-    else
-    {
-        (*imgdata).width = 0;
-        (*imgdata).height = 0;
-        (*imgdata).data = NULL;
     }
 }
 

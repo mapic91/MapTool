@@ -2342,12 +2342,14 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1419951605 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1481716097 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
 	<wx/image.h>
 	<wx/regex.h>
+	"wx/stdpaths.h"
+	<wx/utils.h>
 
 1419951605 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
@@ -2366,7 +2368,7 @@
 	<map>
 	<vector>
 
-1419987082 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1471614113 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2394,10 +2396,12 @@
 	<wx/textctrl.h>
 	<wx/dialog.h>
 
-1411460754 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+1481708225 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+	"TmxMapMessage.pb.h"
 	"wx/string.h"
 	"wx/image.h"
 	"MpcDecode.hpp"
+	"TmxReaderClient.h"
 
 1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
 	"wx/string.h"
@@ -2406,7 +2410,7 @@
 
 1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1411460795 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1481708483 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2425,7 +2429,7 @@
 1419660547 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1422185354 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1471614113 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2529,7 +2533,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1438181079 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1481708536 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"YesNoAllDialog.h"
 	"Settings.h"
@@ -8006,4 +8010,336 @@
 1412631243 d:\protools\wxwidgets\wxwidgets_3\lib\gcc_lib\mswud\wx\setup.h
 
 1412631243 d:\protools\wxwidgets\wxwidgets_3\lib\gcc_dll\mswu\wx\setup.h
+
+1481699908 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.cc
+	"TmxMapMessage.pb.h"
+	<algorithm>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/port.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/wire_format_lite_inl.h>
+	<google/protobuf/descriptor.h>
+	<google/protobuf/generated_message_reflection.h>
+	<google/protobuf/reflection_ops.h>
+	<google/protobuf/wire_format.h>
+
+1481699908 e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/generated_message_util.h>
+	<google/protobuf/metadata.h>
+	<google/protobuf/message.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/extension_set.h>
+	<google/protobuf/generated_enum_reflection.h>
+	<google/protobuf/unknown_field_set.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\common.h
+	<string>
+	<google/protobuf/stubs/port.h>
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/stubs/platform_macros.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/scoped_ptr.h>
+	<google/protobuf/stubs/mutex.h>
+	<google/protobuf/stubs/callback.h>
+	<exception>
+	<TargetConditionals.h>
+	<pthread.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\port.h
+	<assert.h>
+	<stdlib.h>
+	<cstddef>
+	<string>
+	<string.h>
+	<inttypes.h>
+	<stdint.h>
+	<sys/param.h>
+	<stdlib.h>
+	<libkern/OSByteOrder.h>
+	<byteswap.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\macros.h
+	<google/protobuf/stubs/port.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\platform_macros.h
+	<TargetConditionals.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\logging.h
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/stubs/port.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\scoped_ptr.h
+	<google/protobuf/stubs/port.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\mutex.h
+	<pthread.h>
+	<google/protobuf/stubs/macros.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\callback.h
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/stubs/type_traits.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\type_traits.h
+	<cstddef>
+	<utility>
+	<google/protobuf/stubs/template_util.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\template_util.h
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\arena.h
+	<limits>
+	<google/protobuf/stubs/type_traits.h>
+	<exception>
+	<typeinfo>
+	<typeinfo>
+	<google/protobuf/stubs/atomic_sequence_num.h>
+	<google/protobuf/stubs/atomicops.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/mutex.h>
+	<google/protobuf/stubs/type_traits.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomic_sequence_num.h
+	<google/protobuf/stubs/atomicops.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/platform_macros.h>
+	<google/protobuf/stubs/atomicops_internals_tsan.h>
+	<google/protobuf/stubs/atomicops_internals_x86_msvc.h>
+	<google/protobuf/stubs/atomicops_internals_solaris.h>
+	<google/protobuf/stubs/atomicops_internals_power.h>
+	<google/protobuf/stubs/atomicops_internals_macosx.h>
+	<google/protobuf/stubs/atomicops_internals_x86_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_arm_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_arm64_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_arm_qnx.h>
+	<google/protobuf/stubs/atomicops_internals_mips_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_power.h>
+	<google/protobuf/stubs/atomicops_internals_pnacl.h>
+	<google/protobuf/stubs/atomicops_internals_ppc_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_generic_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_generic_gcc.h>
+	<google/protobuf/stubs/atomicops_internals_atomicword_compat.h>
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_tsan.h
+	<sanitizer/tsan_interface_atomic.h>
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_x86_msvc.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_solaris.h
+	<atomic.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_power.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_macosx.h
+	<libkern/OSAtomic.h>
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_x86_gcc.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_arm_gcc.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_arm64_gcc.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_arm_qnx.h
+	<pthread.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_mips_gcc.h
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_pnacl.h
+	<atomic>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_ppc_gcc.h
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_generic_gcc.h
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\atomicops_internals_atomicword_compat.h
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\arenastring.h
+	<string>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/fastmem.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/generated_message_util.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\fastmem.h
+	<stddef.h>
+	<stdio.h>
+	<string.h>
+	<google/protobuf/stubs/common.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\generated_message_util.h
+	<assert.h>
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/has_bits.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\once.h
+	<google/protobuf/stubs/atomicops.h>
+	<google/protobuf/stubs/callback.h>
+	<google/protobuf/stubs/common.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\has_bits.h
+	<google/protobuf/stubs/common.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\metadata.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/unknown_field_set.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\unknown_field_set.h
+	<assert.h>
+	<string>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\message.h
+	<iosfwd>
+	<string>
+	<google/protobuf/stubs/type_traits.h>
+	<vector>
+	<google/protobuf/arena.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/descriptor.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\message_lite.h
+	<google/protobuf/stubs/common.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\descriptor.h
+	<memory>
+	<google/protobuf/stubs/shared_ptr.h>
+	<set>
+	<string>
+	<vector>
+	<google/protobuf/stubs/common.h>
+
+1481510375 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\shared_ptr.h
+	<google/protobuf/stubs/atomicops.h>
+	<algorithm>
+	<stddef.h>
+	<memory>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\repeated_field.h
+	<algorithm>
+	<string>
+	<iterator>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/type_traits.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/generated_message_util.h>
+	<google/protobuf/message_lite.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\casts.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/type_traits.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\extension_set.h
+	<vector>
+	<map>
+	<utility>
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/repeated_field.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\generated_enum_reflection.h
+	<string>
+	<google/protobuf/stubs/template_util.h>
+	<google/protobuf/generated_enum_util.h>
+
+1481513212 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\generated_enum_util.h
+	<google/protobuf/stubs/template_util.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\io\coded_stream.h
+	<assert.h>
+	<string>
+	<utility>
+	<sys/param.h>
+	<google/protobuf/stubs/common.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\wire_format_lite_inl.h
+	<algorithm>
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arenastring.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\wire_format_lite.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/io/coded_stream.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\generated_message_reflection.h
+	<string>
+	<vector>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/generated_enum_reflection.h>
+	<google/protobuf/message.h>
+	<google/protobuf/metadata.h>
+	<google/protobuf/unknown_field_set.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\reflection_ops.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/message.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\wire_format.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/descriptor.pb.h>
+	<google/protobuf/descriptor.h>
+	<google/protobuf/message.h>
+	<google/protobuf/wire_format_lite.h>
+
+1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\descriptor.pb.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/generated_message_util.h>
+	<google/protobuf/metadata.h>
+	<google/protobuf/message.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/extension_set.h>
+	<google/protobuf/generated_enum_reflection.h>
+	<google/protobuf/unknown_field_set.h>
+
+1481708462 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.cpp
+	"TmxReaderClient.h"
+	"wx/msgdlg.h"
+	"wx/filename.h"
+	<string>
+
+1481708542 e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.h
+	"wx/socket.h"
+	"wx/string.h"
+	"TmxMapMessage.pb.h"
+	<vector>
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\socket.h
+	"wx/defs.h"
+	"wx/event.h"
+	"wx/sckaddr.h"
+	"wx/list.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\sckaddr.h
+	"wx/defs.h"
+	"wx/string.h"
 

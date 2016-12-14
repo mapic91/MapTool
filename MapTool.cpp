@@ -80,7 +80,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.6.1 - by 小试刀剑  2015.01.17"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.7 - by 小试刀剑  2016.12.14"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -167,6 +167,7 @@ void MapTool::OnClose(wxCloseEvent& event)
 
 void MapTool::Exit()
 {
+	map.ShutDownClient();
 	m_timer.Stop();
 	Destroy();
 }
@@ -177,7 +178,7 @@ void MapTool::OpenMap(wxCommandEvent& event)
                          wxT("请选择一个地图文件"),
                          exepath + wxT("map\\"),
                          wxEmptyString,
-                         wxT("MAP文件(*.map)|*.map"),
+                         wxT("MAP文件(*.map, *.tmx)|*.map;*.tmx"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;

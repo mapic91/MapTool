@@ -44,6 +44,7 @@
 					<Add library="$(#wx.lib)/gcc_dll/libwxregexud.a" />
 					<Add library="$(#wx.lib)/gcc_dll/libwxscintillad.a" />
 					<Add directory="$(#wx.lib)/gcc_dll" />
+					<Add directory="proto/lib/32" />
 				</Linker>
 			</Target>
 			<Target title="Debug-static">
@@ -84,6 +85,7 @@
 					<Add library="$(#wx.lib)/gcc_lib/libwxregexud.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxscintillad.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
+					<Add directory="proto/lib/32" />
 				</Linker>
 			</Target>
 			<Target title="Release-dll">
@@ -125,6 +127,7 @@
 					<Add library="$(#wx.lib)/gcc_dll/libwxregexu.a" />
 					<Add library="$(#wx.lib)/gcc_dll/libwxscintilla.a" />
 					<Add directory="$(#wx.lib)/gcc_dll" />
+					<Add directory="proto/lib/32" />
 				</Linker>
 			</Target>
 			<Target title="Release-static">
@@ -168,6 +171,7 @@
 					<Add library="$(#wx.lib)/gcc_lib/libwxregexu.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxscintilla.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
+					<Add directory="proto/lib/32" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="D:\Protools\ExeTool\UPX\upx.exe -9 $(PROJECT_DIR)$(TARGET_OUTPUT_FILE)" />
@@ -214,6 +218,7 @@
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxregexu.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxscintilla.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
+					<Add directory="proto/lib/64" />
 				</Linker>
 				<ExtraCommands>
 					<Add after="D:\Protools\ExeTool\UPX\upx.exe -9 $(PROJECT_DIR)$(TARGET_OUTPUT_FILE)" />
@@ -233,6 +238,7 @@
 			<Add directory="$(#wx.include)" />
 			<Add directory="$(#wx)/contrib/include" />
 			<Add directory="wxFormBuilder" />
+			<Add directory="proto/include" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#wx.include)" />
@@ -252,6 +258,7 @@
 			<Add library="libcomctl32.a" />
 			<Add library="libwsock32.a" />
 			<Add library="libodbc32.a" />
+			<Add library="libprotobuf.a" />
 		</Linker>
 		<Unit filename="App.cpp" />
 		<Unit filename="App.h" />
@@ -271,6 +278,10 @@
 		<Unit filename="Npc.hpp" />
 		<Unit filename="Settings.cpp" />
 		<Unit filename="Settings.h" />
+		<Unit filename="TmxMapMessage.pb.cc" />
+		<Unit filename="TmxMapMessage.pb.h" />
+		<Unit filename="TmxReaderClient.cpp" />
+		<Unit filename="TmxReaderClient.h" />
 		<Unit filename="YesNoAllDialog.cpp" />
 		<Unit filename="YesNoAllDialog.h" />
 		<Unit filename="mydefs.hpp" />

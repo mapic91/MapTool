@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package Proto;
+
+message TmxMap{
+    enum BarrerType {
+        None = 0;
+        Obstacle = 1;
+        CanOverObstacle = 2;
+        Trans = 3;
+        CanOVerTrans = 4;
+    }
+    
+    message Rect {
+        int32 x = 1;
+        int32 y = 2;
+        int32 w = 3;
+        int32 h = 4;
+    }
+    
+    message Point {
+        int32 x = 1;
+        int32 y = 2;
+    }
+    
+    message ImgSet {
+        string path = 1;
+    }
+    
+    message TileImg {
+        int32 gid = 1;
+        int32 imgindex = 2;
+        Rect region = 3;
+        Point offset = 4;
+    }
+    
+    message TileInfo {
+        int32 gid = 1;
+        int32 x = 2;
+        int32 y = 3;
+    }
+    
+    message TileSetting {
+        BarrerType barrertype = 1;
+        int32 trapindex = 2;
+    }
+    
+    message Layer {
+        int32 index = 1;
+        repeated TileInfo tiles = 2;
+    }
+    
+    int32 width = 1;
+    int32 height = 2;
+    repeated ImgSet imgs = 3;
+    repeated TileImg tileimgs = 4;
+    repeated TileSetting settings = 5;
+    repeated Layer layers = 6;
+    
+}
