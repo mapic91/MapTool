@@ -2342,7 +2342,7 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1481716097 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1489205775 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
@@ -2354,12 +2354,13 @@
 1419951605 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1419989734 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1489222783 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
 	"AsfDecode.hpp"
 	"ClipBoard.h"
+	"TmxReaderSetting.h"
 	"wx/dcbuffer.h"
 	"wx/filedlg.h"
 	"wx/stdpaths.h"
@@ -2368,7 +2369,7 @@
 	<map>
 	<vector>
 
-1471614113 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1489223075 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2395,8 +2396,9 @@
 	<wx/button.h>
 	<wx/textctrl.h>
 	<wx/dialog.h>
+	<wx/spinctrl.h>
 
-1481708225 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+1489196791 e:\programmingworkshop\_store_\jxqy\maptool\map.h
 	"TmxMapMessage.pb.h"
 	"wx/string.h"
 	"wx/image.h"
@@ -2410,7 +2412,7 @@
 
 1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1481708483 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1489197777 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2429,7 +2431,7 @@
 1419660547 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1471614113 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1489223079 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2533,7 +2535,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1481708536 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1489220179 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"YesNoAllDialog.h"
 	"Settings.h"
@@ -8321,13 +8323,14 @@
 	<google/protobuf/generated_enum_reflection.h>
 	<google/protobuf/unknown_field_set.h>
 
-1481708462 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.cpp
+1489205455 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.cpp
 	"TmxReaderClient.h"
+	"TmxReaderSetting.h"
 	"wx/msgdlg.h"
 	"wx/filename.h"
 	<string>
 
-1481708542 e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.h
+1489205432 e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.h
 	"wx/socket.h"
 	"wx/string.h"
 	"TmxMapMessage.pb.h"
@@ -8342,4 +8345,13 @@
 1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\sckaddr.h
 	"wx/defs.h"
 	"wx/string.h"
+
+1489204895 e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.h
+
+1489204897 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.cpp
+	"TmxReaderSetting.h"
+	"wx/stdpaths.h"
+	"wx/string.h"
+	"wx/file.h"
+	"wx/filename.h"
 

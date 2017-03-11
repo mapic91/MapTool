@@ -1,4 +1,5 @@
 #include "TmxReaderClient.h"
+#include "TmxReaderSetting.h"
 
 #include "wx/msgdlg.h"
 #include "wx/filename.h"
@@ -9,6 +10,7 @@ TmxReaderClient::TmxReaderClient()
 	: mIsExited(false)
 {
 	mClient.SetFlags(wxSOCKET_WAITALL);
+	m_port = TmxReaderSetting::GetPort();
 }
 
 TmxReaderClient::~TmxReaderClient()
@@ -54,7 +56,7 @@ void TmxReaderClient::Connect(bool silent)
 	wxIPV4address addrIp4;
 	addr = &addrIp4;
 	addr->Hostname("localhost");
-	addr->Service(Port);
+	addr->Service(m_port);
 
 	mClient.Connect(*addr);
 

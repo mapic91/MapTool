@@ -160,6 +160,7 @@ class Map
 
             decode = NULL;
             tiles = NULL;
+            mTmxImgSrc = NULL;
             mCol = mRow = mPixelWidth = mPixelHeight = 0;
         }
 

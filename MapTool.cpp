@@ -174,6 +174,7 @@ void MapTool::Exit()
 
 void MapTool::OpenMap(wxCommandEvent& event)
 {
+	wxWindowDisabler disableUI();
     wxFileDialog filedlg(this,
                          wxT("请选择一个地图文件"),
                          exepath + wxT("map\\"),
@@ -305,6 +306,12 @@ void MapTool::OnSetFps(wxCommandEvent& event)
         m_timer.Start(millsecond);
         Settings::TheSetting.SetFpsMilliseconds(millsecond);
     }
+}
+
+void MapTool::OnSetTmxHelperPort(wxCommandEvent& event)
+{
+	SetTmxHelperPortDialog dialog(this);
+	dialog.ShowModal();
 }
 
 void MapTool::DisableTimer()
@@ -1376,6 +1383,50 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
             wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
+void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
+{
+	if(wxMessageBox(wxT("该操作会把地图外的，无法看到的NPC，移动到地图的左上角，是否执行？"),
+					wxT("消息"),
+					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
+		== wxOK)
+	{
+		if(m_NpcList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
+		{
+			long width = map.getCol();
+			long height = map.getRow();
+			NpcItem *item, *lastItem;
+			long x = 0, y = 4;
+			long maxX = width > 15 ? 15 : width;
+			bool moved = false;
+			for(NpcList::iterator it = m_NpcList.begin(); it != m_NpcList.end(); it++)
+			{
+				item = *it;
+				if(item == nullptr) continue;
+				if(item->MapX < 0 || item->MapY < 0 || item->MapX > width || item->MapY > height)
+				{
+					moved = true;
+					lastItem = item;
+					item->MapX = x;
+					item->MapY = y;
+					CorrectFixedPos(item);
+
+					x++;
+					if(x > maxX)
+					{
+						x = 0;
+						y++;
+					}
+				}
+			}
+
+			if(moved)
+			{
+				ShowTile(lastItem->MapX, lastItem->MapY);
+				RefreshNpcList();
+			}
+		}
+	}
+}
 void MapTool::OnImportObjFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
@@ -1419,6 +1470,49 @@ void MapTool::OnOutputObjFile( wxCommandEvent& event )
         else
             wxMessageBox(wxT("失败"), wxT("错误"), wxOK | wxCENTER | wxICON_ERROR);
     }
+}
+void MapTool::OnRepositionUnseenObj(wxCommandEvent& event)
+{
+	if(wxMessageBox(wxT("该操作会把地图外的，无法看到的OBJ，移动到地图的右上角，是否执行？"),
+					wxT("消息"),
+					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
+		== wxOK)
+	{
+		if(m_ObjList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
+		{
+			long width = map.getCol();
+			long height = map.getRow();
+			ObjItem *item, *lastItem;
+			long x = width, y = 4;
+			long minX = width < 15 ? 0 : (width - 15);
+			bool moved = false;
+			for(ObjList::iterator it = m_ObjList.begin(); it != m_ObjList.end(); it++)
+			{
+				item = *it;
+				if(item == nullptr) continue;
+				if(item->MapX < 0 || item->MapY < 0 || item->MapX > width || item->MapY > height)
+				{
+					moved = true;
+					lastItem = item;
+					item->MapX = x;
+					item->MapY = y;
+
+					x--;
+					if(x <= minX)
+					{
+						x = width;
+						y++;
+					}
+				}
+			}
+
+			if(moved)
+			{
+				ShowTile(lastItem->MapX, lastItem->MapY);
+				RefreshObjList();
+			}
+		}
+	}
 }
 void MapTool::OnPlaceMode( wxCommandEvent& event )
 {

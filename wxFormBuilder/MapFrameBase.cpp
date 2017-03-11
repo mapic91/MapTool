@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  5 2014)
+// C++ code generated with wxFormBuilder (version Nov  1 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -116,7 +116,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_panel5->SetSizer( bSizer20 );
 	m_panel5->Layout();
 	bSizer20->Fit( m_panel5 );
-	m_ListData->AddPage( m_panel5, wxT("NPC"), false );
+	m_ListData->AddPage( m_panel5, wxT("NPC"), true );
 	m_panel6 = new wxPanel( m_ListData, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer21;
 	bSizer21 = new wxBoxSizer( wxVERTICAL );
@@ -128,7 +128,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_panel6->SetSizer( bSizer21 );
 	m_panel6->Layout();
 	bSizer21->Fit( m_panel6 );
-	m_ListData->AddPage( m_panel6, wxT("OBJ"), true );
+	m_ListData->AddPage( m_panel6, wxT("OBJ"), false );
 	
 	bSizer19->Add( m_ListData, 1, wxALL|wxEXPAND, 5 );
 	
@@ -201,6 +201,12 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_MenuCharacter->AppendSeparator();
 	
+	wxMenuItem* m_menuItemShowUnShowNpc;
+	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("修复人物位置...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_MenuCharacter->Append( m_menuItemShowUnShowNpc );
+	
+	m_MenuCharacter->AppendSeparator();
+	
 	wxMenuItem* m_menuItem9;
 	m_menuItem9 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("人物数量") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem9 );
@@ -232,6 +238,12 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_menu3->AppendSeparator();
 	
+	wxMenuItem* m_menuItemShowUnShowOBj;
+	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("修复物品位置...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menu3->Append( m_menuItemShowUnShowOBj );
+	
+	m_menu3->AppendSeparator();
+	
 	wxMenuItem* m_menuItem15;
 	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("物品数量") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem15 );
@@ -248,6 +260,13 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menu5->Append( m_menuItem25 );
 	
 	m_menubar3->Append( m_menu5, wxT("性能(&P)") ); 
+	
+	m_menu6 = new wxMenu();
+	wxMenuItem* m_menuItem27;
+	m_menuItem27 = new wxMenuItem( m_menu6, wxID_ANY, wxString( wxT("端口(&Port)") ) , wxT("当连接TMX地图读取服务失败时，可尝试设置其它端口"), wxITEM_NORMAL );
+	m_menu6->Append( m_menuItem27 );
+	
+	m_menubar3->Append( m_menu6, wxT("TMX(&T)") ); 
 	
 	this->SetMenuBar( m_menubar3 );
 	
@@ -329,15 +348,18 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Connect( m_menuItem8->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
 	this->Connect( m_menuItem7->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputNpcFile ) );
+	this->Connect( m_menuItemShowUnShowNpc->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRepositionUnseenNpc ) );
 	this->Connect( m_menuItem9->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowNpcCounts ) );
 	this->Connect( m_menuItem10->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearNpc ) );
 	this->Connect( m_menuItem11->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
 	this->Connect( m_menuItem12->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
 	this->Connect( m_menuItem13->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
 	this->Connect( m_menuItem14->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Connect( m_menuItemShowUnShowOBj->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRepositionUnseenObj ) );
 	this->Connect( m_menuItem15->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Connect( m_menuItem16->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Connect( m_menuItem25->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetFps ) );
+	this->Connect( m_menuItem27->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetTmxHelperPort ) );
 	this->Connect( m_menuItemCopy->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemCut->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Connect( m_menuItemPaste->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
@@ -389,15 +411,18 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( ID_DIRECTION, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputNpcFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRepositionUnseenNpc ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowNpcCounts ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearNpc ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadObject ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnObjectDirection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportObjFile ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnOutputObjFile ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRepositionUnseenObj ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnShowObjCount ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnClearObj ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetFps ) );
+	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnSetTmxHelperPort ) );
 	this->Disconnect( MYID_MAPVIEW_COPY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_CUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
 	this->Disconnect( MYID_MAPVIEW_PASTE, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapViewMenu ) );
@@ -1315,5 +1340,69 @@ ObjItemEditDialogBase::~ObjItemEditDialogBase()
 	m_button25->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnSaveObjIniFile ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnOk ), NULL, this );
 	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnCancle ), NULL, this );
+	
+}
+
+SetTmxHelperPortDialogBase::SetTmxHelperPortDialogBase( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	
+	wxBoxSizer* bSizer24;
+	bSizer24 = new wxBoxSizer( wxVERTICAL );
+	
+	wxBoxSizer* bSizer25;
+	bSizer25 = new wxBoxSizer( wxVERTICAL );
+	
+	wxBoxSizer* bSizer27;
+	bSizer27 = new wxBoxSizer( wxHORIZONTAL );
+	
+	
+	bSizer27->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_staticText53 = new wxStaticText( this, wxID_ANY, wxT("端口："), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText53->Wrap( -1 );
+	bSizer27->Add( m_staticText53, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	m_spinCtrlPort = new wxSpinCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 65535, 1 );
+	bSizer27->Add( m_spinCtrlPort, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	
+	bSizer27->Add( 0, 0, 2, wxEXPAND, 5 );
+	
+	
+	bSizer25->Add( bSizer27, 0, wxEXPAND, 5 );
+	
+	
+	bSizer24->Add( bSizer25, 0, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer26;
+	bSizer26 = new wxBoxSizer( wxHORIZONTAL );
+	
+	
+	bSizer26->Add( 0, 0, 3, wxEXPAND, 5 );
+	
+	m_buttonOK = new wxButton( this, wxID_ANY, wxT("确定"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer26->Add( m_buttonOK, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	
+	
+	bSizer26->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	bSizer24->Add( bSizer26, 0, wxEXPAND, 5 );
+	
+	
+	this->SetSizer( bSizer24 );
+	this->Layout();
+	
+	this->Centre( wxBOTH );
+	
+	// Connect Events
+	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SetTmxHelperPortDialogBase::OnButtonOKClick ), NULL, this );
+}
+
+SetTmxHelperPortDialogBase::~SetTmxHelperPortDialogBase()
+{
+	// Disconnect Events
+	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( SetTmxHelperPortDialogBase::OnButtonOKClick ), NULL, this );
 	
 }

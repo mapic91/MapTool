@@ -27,7 +27,7 @@ class TmxReaderClient
 		static int CharToIntLE(unsigned char *in);
 
 	private:
-		unsigned short  const Port = 26543;
+		unsigned short m_port = 26543;
 
 		char const ExitServerCode = 0;
 		char const OpenMapCode = 1;

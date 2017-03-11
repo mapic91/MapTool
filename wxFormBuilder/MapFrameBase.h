@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun  5 2014)
+// C++ code generated with wxFormBuilder (version Nov  1 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -36,6 +36,7 @@ class wxListView;
 #include <wx/button.h>
 #include <wx/textctrl.h>
 #include <wx/dialog.h>
+#include <wx/spinctrl.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -111,6 +112,7 @@ class MapFrameBase : public wxFrame
 		wxMenu* m_MenuCharacter;
 		wxMenu* m_menu3;
 		wxMenu* m_menu5;
+		wxMenu* m_menu6;
 		wxMenu* m_menuMapView;
 		
 		// Virtual event handlers, overide them in your derived class
@@ -149,15 +151,18 @@ class MapFrameBase : public wxFrame
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputNpcFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRepositionUnseenNpc( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowNpcCounts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearNpc( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadObject( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnObjectDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOutputObjFile( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRepositionUnseenObj( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowObjCount( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObj( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSetFps( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSetTmxHelperPort( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapViewMenu( wxCommandEvent& event ) { event.Skip(); }
 		
 	
@@ -407,6 +412,29 @@ class ObjItemEditDialogBase : public wxDialog
 		
 		ObjItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,252 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ObjItemEditDialogBase();
+	
+};
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class SetTmxHelperPortDialogBase
+///////////////////////////////////////////////////////////////////////////////
+class SetTmxHelperPortDialogBase : public wxDialog 
+{
+	private:
+	
+	protected:
+		wxStaticText* m_staticText53;
+		wxSpinCtrl* m_spinCtrlPort;
+		wxButton* m_buttonOK;
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnButtonOKClick( wxCommandEvent& event ) { event.Skip(); }
+		
+	
+	public:
+		
+		SetTmxHelperPortDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("SetPort"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 279,104 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		~SetTmxHelperPortDialogBase();
 	
 };
 

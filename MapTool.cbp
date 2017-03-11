@@ -282,6 +282,8 @@
 		<Unit filename="TmxMapMessage.pb.h" />
 		<Unit filename="TmxReaderClient.cpp" />
 		<Unit filename="TmxReaderClient.h" />
+		<Unit filename="TmxReaderSetting.cpp" />
+		<Unit filename="TmxReaderSetting.h" />
 		<Unit filename="YesNoAllDialog.cpp" />
 		<Unit filename="YesNoAllDialog.h" />
 		<Unit filename="mydefs.hpp" />

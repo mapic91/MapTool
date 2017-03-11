@@ -6,6 +6,7 @@
 #include "Npc.hpp"
 #include "AsfDecode.hpp"
 #include "ClipBoard.h"
+#include "TmxReaderSetting.h"
 
 #include "wx/dcbuffer.h"
 #include "wx/filedlg.h"
@@ -137,12 +138,16 @@ private:
 	void OnTimer(wxTimerEvent &event);
 	virtual void OnSetFps( wxCommandEvent& event );
 
+	//Tmx
+	virtual void OnSetTmxHelperPort( wxCommandEvent& event );
+
     //NPC
     void OnLoadCharater( wxCommandEvent& event );
     void OnPlaceMode( wxCommandEvent& event ) ;
     void OnCharacterDirection( wxCommandEvent& event );
     void OnImportNpcFile( wxCommandEvent& event );
     void OnOutputNpcFile( wxCommandEvent& event );
+    void OnRepositionUnseenNpc( wxCommandEvent& event );
     void OnShowNpcCounts( wxCommandEvent& event )
     {
         wxMessageBox(wxString::Format(wxT("NPC 数量：Count = %d"), m_NpcList.getCounts()),
@@ -167,6 +172,7 @@ private:
     }
     void OnImportObjFile( wxCommandEvent& event );
     void OnOutputObjFile( wxCommandEvent& event );
+    void OnRepositionUnseenObj( wxCommandEvent& event );
     void OnShowObjCount( wxCommandEvent& event )
     {
         wxMessageBox(wxString::Format(wxT("OBJ 数量：Count = %d"), m_ObjList.getCounts()),
@@ -840,6 +846,28 @@ private:
     wxString exepath, m_mapName;
     AsfImgList *m_ObjAsfImgList;
     ObjItem *m_item;
+};
+
+class SetTmxHelperPortDialog : public SetTmxHelperPortDialogBase
+{
+public:
+	SetTmxHelperPortDialog(wxWindow *parent)
+	: SetTmxHelperPortDialogBase(parent)
+	{
+		SetTitle(wxT("设置端口"));
+		m_spinCtrlPort->SetValue((int)TmxReaderSetting::GetPort());
+	}
+
+	virtual void OnButtonOKClick( wxCommandEvent& event )
+	{
+		if(m_spinCtrlPort->GetValue() != (int)TmxReaderSetting::GetPort())
+		{
+			TmxReaderSetting::SetPortValue((unsigned short)m_spinCtrlPort->GetValue());
+			TmxReaderSetting::SaveConfig();
+			wxMessageBox(wxT("设置成功，请重启程序！"));
+		}
+		EndModal(wxID_OK);
+	}
 };
 
 #endif // MAPTOOL_H

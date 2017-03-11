@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -15,7 +16,13 @@ namespace TmxReadHelper
         [STAThread]
         static void Main()
         {
-            var server = new Server(26543);
+            int port = 26543;
+            var path = Path.Combine(Application.StartupPath, "PortSetting");
+            if (File.Exists(path))
+            {
+                int.TryParse(File.ReadAllText(path), out port);
+            }
+            var server = new Server(port);
             if (!server.CheckIsRunning())
             {
                 server.Run();

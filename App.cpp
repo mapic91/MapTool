@@ -34,6 +34,9 @@ bool wxWidgets_templateApp::OnInit()
 	bool wxsOK = true;
 	wxInitAllImageHandlers();
 
+	//Tmx settings
+    TmxReaderSetting::LoadConfing();
+
 	m_mapTool = new MapTool(NULL);
 
 	//Start tmx map file reader help server

@@ -491,11 +491,16 @@ void Map::DrawTile(long Column, long Row,
         {
             if(TileData[datai + 3] != 0)
             {
-                img->SetRGB(wxRect(graphx + wi, graphy + hi, 1, 1),
+                int iX = graphx + wi;
+            	int iY = graphy + hi;
+            	if(iX >= 0 && iY >= 0 && iX < img->GetWidth() && iY < img->GetHeight())
+				{
+					img->SetRGB(wxRect(iX, iY, 1, 1),
                             TileData[datai],
                             TileData[datai + 1],
                             TileData[datai + 2]);
-                if(hasAlpha)img->SetAlpha(graphx + wi, graphy + hi, 0xFF);
+					if(hasAlpha)img->SetAlpha(iX, iY, 0xFF);
+				}
             }
 
             datai += 4;
@@ -536,11 +541,14 @@ void Map::DrawTmxTile(long Column, long Row,const Proto::TmxMap::TileImg* tileIm
 				{
 					long imgX = graphx + wi - x;
 					long imgY = graphy + hi - y;
-					img->SetRGB(wxRect(imgX, imgY, 1, 1),
+					if(imgX >= 0 && imgY >= 0 && imgX < img->GetWidth() && imgY < img->GetHeight())
+					{
+						img->SetRGB(wxRect(imgX, imgY, 1, 1),
 									imgData->data[index],
 									imgData->data[index + 1],
 									imgData->data[index + 2]);
-					if(hasAlpha)img->SetAlpha(imgX, imgY, 0xFF);
+						if(hasAlpha)img->SetAlpha(imgX, imgY, 0xFF);
+					}
 				}
 			}
 		}
