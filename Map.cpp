@@ -310,30 +310,33 @@ unsigned char Map::GetTileBarrerCode(int tileX, int tileY)
 unsigned char Map::GetTileBarrerCode(int index)
 {
 	char code = 0;
-	if(mMapType == JXQY)
+	if(index < mCol * mRow)
 	{
-		code = tiles[index].barrer_type;
-	}
-	else if(mMapType == TMX)
-	{
-		Proto::TmxMap::BarrerType type = mTmxMap->settings(index).barrertype();
-		switch(type)
+		if(mMapType == JXQY)
 		{
-		case Proto::TmxMap::None:
-			code = 0;
-			break;
-		case Proto::TmxMap::Obstacle:
-			code = 0x80;
-			break;
-		case Proto::TmxMap::CanOverObstacle:
-			code = 0xA0;
-			break;
-		case Proto::TmxMap::Trans:
-			code = 0x40;
-			break;
-		case Proto::TmxMap::CanOVerTrans:
-			code = 0x60;
-			break;
+			code = tiles[index].barrer_type;
+		}
+		else if(mMapType == TMX)
+		{
+			Proto::TmxMap::BarrerType type = mTmxMap->settings(index).barrertype();
+			switch(type)
+			{
+			case Proto::TmxMap::None:
+				code = 0;
+				break;
+			case Proto::TmxMap::Obstacle:
+				code = 0x80;
+				break;
+			case Proto::TmxMap::CanOverObstacle:
+				code = 0xA0;
+				break;
+			case Proto::TmxMap::Trans:
+				code = 0x40;
+				break;
+			case Proto::TmxMap::CanOVerTrans:
+				code = 0x60;
+				break;
+			}
 		}
 	}
     return code;
@@ -342,14 +345,18 @@ unsigned char Map::GetTileBarrerCode(int index)
 unsigned char Map::GetTrapIndex(int tileIndex)
 {
 	unsigned char index = 0;
-	if(mMapType == JXQY)
+	if(tileIndex < mCol * mRow)
 	{
-		index = tiles[tileIndex].trap_index;
+		if(mMapType == JXQY)
+		{
+			index = tiles[tileIndex].trap_index;
+		}
+		else if(mMapType == TMX)
+		{
+			index = (unsigned char)mTmxMap->settings(tileIndex).trapindex();
+		}
 	}
-	else if(mMapType == TMX)
-	{
-		index = (unsigned char)mTmxMap->settings(tileIndex).trapindex();
-	}
+
     return index;
 }
 
