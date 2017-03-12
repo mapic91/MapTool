@@ -10,6 +10,8 @@
 
 using namespace std;
 
+wxPoint MapTool::INVALID_TILE_POSITION = wxPoint(-1, -1);
+
 /** \brief Disable timer when constructing, enable timer when destructing.
  *
  */
@@ -115,6 +117,9 @@ MapTool::MapTool(wxWindow* parent)
     m_timer.SetOwner(this);
     this->Connect(wxEVT_TIMER, wxTimerEventHandler(MapTool::OnTimer), NULL, this);
     EnableTimer();
+
+    //Batch selection
+    m_batchSelectionBeginTile = m_batchSelectionEndTile = INVALID_TILE_POSITION;
 }
 
 MapTool::~MapTool()
@@ -452,7 +457,24 @@ void MapTool::DrawRectangle(long col, long row, wxDC &dc, bool currentView)
         dc.DrawLines(5, point, recposx, recposy);
     }
 }
-
+void MapTool::DrawRectangle(wxPoint tileStart, wxPoint tileEnd, wxDC &dc, bool currentView)
+{
+	int sX, sY, eX, eY;
+    if(map.GetPixelPosition(tileStart.x, tileStart.y, &sX, &sY) &&
+		map.GetPixelPosition(tileEnd.x, tileEnd.y, &eX, &eY))
+	{
+		int x = std::min(sX, eX);
+		int y = std::min(sY, eY);
+		int w = std::abs(sX - eX);
+		int h = std::abs(sY - eY);
+		if(currentView)
+		{
+			x -= m_ViewBeginx;
+			y -= m_ViewBeginy;
+		}
+		dc.DrawRectangle(x,y,w,h);
+	}
+}
 void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *objitem, bool currentView)
 {
     if(npcitem == NULL && objitem == NULL) return;
@@ -575,6 +597,13 @@ void MapTool::DrawListSelection(wxDC &dc)
             }
         }
     }
+
+    if(m_batchSelectionBeginTile != INVALID_TILE_POSITION && m_batchSelectionEndTile != INVALID_TILE_POSITION)
+	{
+		dc.SetPen(*(wxThePenList->FindOrCreatePen(wxColor(100, 0, 255), 2)));
+		dc.SetBrush(*wxTRANSPARENT_BRUSH);
+		DrawRectangle(m_batchSelectionBeginTile, m_batchSelectionEndTile, dc);
+	}
 }
 
 void MapTool::CorrectFixedPos(NpcItem* item)
@@ -748,26 +777,13 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         //Selection mode, add selection
         if(m_isNpc)
         {
-            long index;
-            if(m_NpcList.GetItem(m_CurTileX, m_CurTileY, &index))
-            {
-                m_npcListCtrl->Select(index, !m_npcListCtrl->IsSelected(index));
-				m_StatusBar->SetStatusText(
-					wxString::Format(wxT("选择了 %d 个"), m_npcListCtrl->GetSelectedItemCount())
-					, 0);
-            }
+            ToggleNpcSelection(m_CurTileX, m_CurTileY);
         }
         else if(m_isObj)
         {
-            long index;
-            if(m_ObjList.GetItem(m_CurTileX, m_CurTileY, &index))
-            {
-                m_objListCtrl->Select(index, !m_objListCtrl->IsSelected(index));
-                m_StatusBar->SetStatusText(
-					wxString::Format(wxT("选择了 %d 个"), m_objListCtrl->GetSelectedItemCount())
-					, 0);
-            }
+        	ToggleObjSelection(m_CurTileX, m_CurTileY);
         }
+        m_batchSelectionBeginTile = m_batchSelectionEndTile = wxPoint(m_CurTileX, m_CurTileY);
     }
     else if(m_isEditFixPos)
     {
@@ -1058,9 +1074,12 @@ void MapTool::ShowObjItemEditor(ObjItem* item, long index)
 
 void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 {
-    if(wxGetKeyState(WXK_CONTROL))
+    if(IsInSelectingItem())
     {
-        //No process event when control key pressed
+        if(m_batchSelectionBeginTile != INVALID_TILE_POSITION && m_batchSelectionEndTile != INVALID_TILE_POSITION)
+		{
+			DoBatchRectangleSelection();
+		}
         return;
     }
     long posX, posY;
@@ -1200,6 +1219,21 @@ void MapTool::OnMouseMove( wxMouseEvent& event )
             }
             CorrectFixedPos(m_MoveNpcItem);
         }
+
+        if(IsInSelectingItem())
+		{
+			if(!wxGetMouseState().LeftIsDown() &&
+				m_batchSelectionBeginTile != INVALID_TILE_POSITION &&
+				m_batchSelectionEndTile != INVALID_TILE_POSITION)
+			{
+				//Mouse left button released at map view outer.
+				DoBatchRectangleSelection();
+			}
+			else if(m_batchSelectionBeginTile != INVALID_TILE_POSITION)
+			{
+				m_batchSelectionEndTile = wxPoint(m_CurTileX, m_CurTileY);
+			}
+		}
 
         RedrawMapView();
 
@@ -1868,6 +1902,73 @@ void MapTool::UpdateListItem(ObjItem* item)
         }
     }
 }
+
+void MapTool::ToggleNpcSelection(int tileX, int tileY)
+{
+    long index;
+    if(m_NpcList.GetItem(tileX, tileY, &index))
+    {
+        m_npcListCtrl->Select(index, !m_npcListCtrl->IsSelected(index));
+        m_StatusBar->SetStatusText(
+            wxString::Format(wxT("选择了 %d 个"), m_npcListCtrl->GetSelectedItemCount())
+            , 0);
+    }
+}
+
+void MapTool::ToggleObjSelection(int tileX, int tileY)
+{
+    long index;
+    if(m_ObjList.GetItem(tileX, tileY, &index))
+    {
+        m_objListCtrl->Select(index, !m_objListCtrl->IsSelected(index));
+        m_StatusBar->SetStatusText(
+            wxString::Format(wxT("选择了 %d 个"), m_objListCtrl->GetSelectedItemCount())
+            , 0);
+    }
+}
+
+void MapTool::DoBatchRectangleSelection()
+{
+	int sX, sY, eX, eY;
+	if(map.GetPixelPosition(m_batchSelectionBeginTile.x, m_batchSelectionBeginTile.y, &sX, &sY) &&
+		map.GetPixelPosition(m_batchSelectionEndTile.x, m_batchSelectionEndTile.y, &eX, &eY))
+	{
+		int x = std::min(sX, eX);
+		int y = std::min(sY, eY);
+		int w = std::abs(sX - eX);
+		int h = std::abs(sY - eY);
+		int itemX, itemY;
+		wxRect rect(x,y,w,h);
+		if(m_isNpc)
+		{
+			for(auto it = m_NpcList.begin(); it != m_NpcList.end(); it++)
+			{
+				NpcItem* item = *it;
+				if(item != nullptr &&
+					map.GetPixelPosition(item->MapX, item->MapY, &itemX, &itemY) &&
+					rect.Contains(itemX, itemY))
+				{
+					ToggleNpcSelection(item->MapX, item->MapY);
+				}
+			}
+		}
+		else if(m_isObj)
+		{
+			for(auto it = m_ObjList.begin(); it != m_ObjList.end(); it++)
+			{
+				ObjItem* item = *it;
+				if(item != nullptr &&
+					map.GetPixelPosition(item->MapX, item->MapY, &itemX, &itemY) &&
+					rect.Contains(itemX, itemY))
+				{
+					ToggleObjSelection(item->MapX, item->MapY);
+				}
+			}
+		}
+	}
+	m_batchSelectionBeginTile = m_batchSelectionEndTile = INVALID_TILE_POSITION;
+}
+
 
 
 //////////////////////////////

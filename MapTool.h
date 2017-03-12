@@ -230,6 +230,9 @@ private:
     void UpdateListItem(NpcItem *item);
     void UpdateListItem(ObjItem *item);
     bool IsInSelectingItem(){return wxGetKeyState(WXK_CONTROL);}
+    void ToggleNpcSelection(int tileX, int tileY);
+    void ToggleObjSelection(int tileX, int tileY);
+    void DoBatchRectangleSelection();
     /** \brief Show tile in map view and show YesNoAllDialog at than position.
      *
      * \param tileX Tile x position
@@ -250,6 +253,10 @@ private:
     //currentView: if true dc is the current mapview client,
     // else dc is the entire map
     void DrawRectangle(long col, long row, wxDC &dc, bool currentView = true);
+    //Draw a rectangle which top-left at tileStart bottom-right at tileEnd
+    //currentView: if true dc is the current mapview client,
+    // else dc is the entire map
+    void DrawRectangle(wxPoint tileStart, wxPoint tileEnd, wxDC &dc, bool currentView = true);
     void DrawTile(long col,
                   long row,
                   wxDC &dc,
@@ -312,6 +319,11 @@ private:
     NpcItem *m_fixPosEditItem;
     std::list<wxPoint> m_fixPosPoints;
     typedef std::list<wxPoint>::iterator FixPosListIterator;
+
+    //Ctrl button pressed selection
+    static wxPoint INVALID_TILE_POSITION;
+    wxPoint m_batchSelectionBeginTile;
+    wxPoint m_batchSelectionEndTile;
 
     wxTimer m_timer;
 
