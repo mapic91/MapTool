@@ -2,6 +2,10 @@
 #define CLIPBOARD_H
 #include "Npc.hpp"
 
+#include <vector>
+
+#include "wx/gdicmn.h"
+
 class ClipBoard
 {
 	public:
@@ -10,17 +14,23 @@ class ClipBoard
 
 	public:
 		void Clear();
-		void Copy(const NpcItem *item);
-		void Copy(const ObjItem *item);
-		NpcItem* GetNpcItem();
-		ObjItem* GetObjItem();
+		void ClearNpcs();
+		void ClearObjs();
+		void Add(const NpcItem *item);
+		void Add(const ObjItem *item);
+		bool HasNpc();
+		bool HasObj();
+		size_t NpcCount();
+		size_t ObjCount();
+		std::vector<NpcItem>& GetNpcItems();
+		std::vector<ObjItem>& GetObjItems();
+		wxPoint GetMinNpcTilePosition();
+		wxPoint GetMinObjTilePostion();
 
 	protected:
 	private:
-		NpcItem m_npcItem;
-		ObjItem m_objItem;
-		bool m_isNpcItemSet;
-		bool m_isObjItemSet;
+		std::vector<NpcItem> m_npcItmes;
+		std::vector<ObjItem> m_objItems;
 };
 
 #endif // CLIPBOARD_H

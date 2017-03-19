@@ -360,6 +360,17 @@ unsigned char Map::GetTrapIndex(int tileIndex)
     return index;
 }
 
+bool Map::IsObstacleForCharacter(int tileX, int tileY)
+{
+	int index = tileY * mCol + tileX;
+	if (index >= 0 and index < mCol * mRow)
+	{
+		unsigned char code = GetTileBarrerCode(index);
+		if ((code & (0x80 + 0x40)) == 0)
+                    return false;
+	}
+	return true;
+}
 
 bool Map::IsTileBarrer(int tileX, int tileY)
 {

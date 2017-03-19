@@ -2227,7 +2227,7 @@
                         <property name="label">修复人物位置...</property>
                         <property name="name">m_menuItemShowUnShowNpc</property>
                         <property name="permission">none</property>
-                        <property name="shortcut"></property>
+                        <property name="shortcut">CTRL+T</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnRepositionUnseenNpc</event>
                         <event name="OnUpdateUI"></event>
@@ -2339,7 +2339,7 @@
                         <property name="name">m_separator4</property>
                         <property name="permission">none</property>
                     </object>
-                    <object class="wxMenuItem" expanded="1">
+                    <object class="wxMenuItem" expanded="0">
                         <property name="bitmap"></property>
                         <property name="checked">0</property>
                         <property name="enabled">1</property>
@@ -2349,12 +2349,12 @@
                         <property name="label">修复物品位置...</property>
                         <property name="name">m_menuItemShowUnShowOBj</property>
                         <property name="permission">none</property>
-                        <property name="shortcut"></property>
+                        <property name="shortcut">CTRL+Y</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnRepositionUnseenObj</event>
                         <event name="OnUpdateUI"></event>
                     </object>
-                    <object class="separator" expanded="1">
+                    <object class="separator" expanded="0">
                         <property name="name">m_separator10</property>
                         <property name="permission">none</property>
                     </object>
@@ -2389,7 +2389,7 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="0">
+                <object class="wxMenu" expanded="1">
                     <property name="label">性能(&amp;P)</property>
                     <property name="name">m_menu5</property>
                     <property name="permission">protected</property>

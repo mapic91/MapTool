@@ -23,17 +23,15 @@ YesNoAllDialog::YesNoAllDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos
 {
 	//(*Initialize(YesNoAllDialog)
 	Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, _T("id"));
-	SetClientSize(wxSize(255,67));
+	SetClientSize(wxSize(307,67));
 	Move(wxDefaultPosition);
-	m_message = new wxStaticText(this, ID_STATICTEXT1, wxEmptyString, wxPoint(8,8), wxSize(240,24), 0, _T("ID_STATICTEXT1"));
-	m_bYes = new wxButton(this, ID_BUTTON1, _T("是"), wxPoint(5,38), wxSize(50,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	m_message = new wxStaticText(this, ID_STATICTEXT1, wxEmptyString, wxPoint(8,8), wxSize(288,24), 0, _T("ID_STATICTEXT1"));
+	m_bYes = new wxButton(this, ID_BUTTON1, _T("是"), wxPoint(5,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
 	m_bYes->SetToolTip(_T("修改当前"));
-	m_bNo = new wxButton(this, ID_BUTTON2, _T("否"), wxPoint(72,38), wxSize(50,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	m_bNo = new wxButton(this, ID_BUTTON2, _T("否"), wxPoint(84,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 	m_bNo->SetToolTip(_T("不修改当前"));
-	m_bAll = new wxButton(this, ID_BUTTON3, _T("全部"), wxPoint(136,38), wxSize(50,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
-	m_bAll->SetToolTip(_T("后面的全部修改"));
-	m_bCancle = new wxButton(this, ID_BUTTON4, _T("取消"), wxPoint(200,38), wxSize(50,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
-	m_bCancle->SetToolTip(_T("后面的全部不修改"));
+	m_bAll = new wxButton(this, ID_BUTTON3, _T("后面全是"), wxPoint(162,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	m_bCancle = new wxButton(this, ID_BUTTON4, _T("后面全否"), wxPoint(238,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&YesNoAllDialog::Onm_bYesClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&YesNoAllDialog::Onm_bNoClick);

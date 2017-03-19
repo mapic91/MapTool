@@ -121,7 +121,8 @@ private:
 	virtual void OnMapViewDelete( wxCommandEvent& event );
 	virtual void OnMapViewBatEdit( wxCommandEvent& event);
 	virtual void OnMapViewClearSelection( wxCommandEvent& event);
-	void SetMapViewPopupMenuState(bool hasItem, bool canPaste);
+	/*isMulty - is in multy copy/cut mode(CTRL button pressed)*/
+	void SetMapViewPopupMenuState(bool hasItem, bool canPaste, bool isMulty);
 	void PopupMapViewMenu();
     /** \brief Convert map tile position to screen position.
      *
@@ -232,7 +233,10 @@ private:
     bool IsInSelectingItem(){return wxGetKeyState(WXK_CONTROL);}
     void ToggleNpcSelection(int tileX, int tileY);
     void ToggleObjSelection(int tileX, int tileY);
+    void ShowNpcSelectionCountMessage();
+    void ShowObjSelectionCountMessage();
     void DoBatchRectangleSelection();
+    bool IsInMultyPaste();
     /** \brief Show tile in map view and show YesNoAllDialog at than position.
      *
      * \param tileX Tile x position
@@ -240,7 +244,7 @@ private:
      * \return YesNoAllDialog returned value
      *
      */
-    int ShowYesNoAllInPosition(int tileX, int tileY);
+    int ShowYesNoAllInPosition(int tileX, int tileY, wxString message = wxEmptyString);
     /** \brief Draw position mark for selected item in list
      *
      */
@@ -294,10 +298,10 @@ private:
     void DeleteObjItem(int index);
     NpcItem m_PlaceNpcData, // Npc to place
 			*m_MoveNpcItem, // Npc in move
-			*m_selectedNpcItem; //Selected npc on right click in map view
+			*m_selectedNpcItemByRightUp; //Selected npc on right click in map view
     ObjItem m_PlaceObjData, // Obj to place
 			*m_MoveObjItem, // Obj in move
-			*m_selectedObjItem; // Selected obj on right click in map view
+			*m_selectedObjItemByRightUp; // Selected obj on right click in map view
 	ClipBoard m_clipBoard;
 	bool m_popupMenuShowed;
     NpcList m_NpcList;
@@ -309,6 +313,8 @@ private:
 
     //File dialog path
     wxString m_NpcObjPath;
+    wxString m_LastNpcListFileName;
+    wxString m_LastObjListFileName;
 
     //FixPos
     void StartFixPosEdit(NpcItem *npcitem);
@@ -324,6 +330,15 @@ private:
     static wxPoint INVALID_TILE_POSITION;
     wxPoint m_batchSelectionBeginTile;
     wxPoint m_batchSelectionEndTile;
+
+    //Batch copy/cut
+    bool m_isBatch;
+    NpcList m_npcsToPasted;
+    ObjList m_objsToPasted;
+    wxPoint m_tilePositionOffsetNpc;
+    wxPoint m_tilePositionOffsetObj;
+    static const wxKeyCode SELECTION_ADD_KEY = WXK_CONTROL_A;
+    static const wxKeyCode SELECTION_SUB_KEY = WXK_CONTROL_Z;
 
     wxTimer m_timer;
 

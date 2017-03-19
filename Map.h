@@ -105,6 +105,7 @@ class Map
 		unsigned char GetTileBarrerCode(int tileX, int tileY);
 		unsigned char GetTileBarrerCode(int index);
 		unsigned char GetTrapIndex(int tileIndex);
+		bool IsObstacleForCharacter(int tileX, int tileY);
 
         bool ReadFile(const wxString FilePath);
 

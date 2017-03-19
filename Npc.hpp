@@ -96,6 +96,8 @@ void FreeAsfImgList(AsfImgList *list);
 
 // find [stand] asf file in npcres ini file
 std::string FindAsfInIni(const std::string FilePath, const std::string match);
+//Find asfdecoder in NpcItem or ObjItem or both ini res file
+void FindAndBufferAsf(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, AsfImgList *asflist);
 // find [stand] asf and buffer its data
 //exepath : the end contain path seprator
 //asfdec : out  , get a point of AsfDecode data
@@ -232,6 +234,22 @@ public:
     void Clear()
     {
         FreeData();
+    }
+
+    //clear list without deleting items in list.
+    void ClearWithoutFreeData()
+    {
+		m_list.clear();
+    }
+
+    void HandoverOwnship(ItemList<T>& newOwner)
+    {
+		for(typename std::list<T>::iterator it = m_list.begin();
+                it != m_list.end(); ++it)
+        {
+            newOwner.AddItem(*it);
+        }
+        m_list.clear();
     }
 
 private:

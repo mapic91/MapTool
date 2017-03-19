@@ -202,7 +202,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowNpc;
-	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("修复人物位置...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("修复人物位置...") ) + wxT('\t') + wxT("CTRL+T"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItemShowUnShowNpc );
 	
 	m_MenuCharacter->AppendSeparator();
@@ -239,7 +239,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menu3->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowOBj;
-	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("修复物品位置...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("修复物品位置...") ) + wxT('\t') + wxT("CTRL+Y"), wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItemShowUnShowOBj );
 	
 	m_menu3->AppendSeparator();

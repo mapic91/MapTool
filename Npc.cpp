@@ -51,6 +51,14 @@ string FindAsfInIni(const string FilePath, const std::string match)
     return asfpath;
 }
 
+void FindAndBufferAsf(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, AsfImgList *asflist)
+{
+	if(npcitem != NULL)
+        FindAndBufferAsf(exepath, npcitem->NpcIni, wxT("[Stand]"), &(npcitem->NpcStand), asflist);
+	if(objitem != NULL)
+        FindAndBufferAsf(exepath, objitem->ObjFile, wxT("[Common]"), &(objitem->ObjCommon), asflist);
+}
+
 bool FindAndBufferAsf(const wxString &exepath,
                       const wxString &inifilename,
                       const wxString &match,
