@@ -272,6 +272,8 @@
 		<Unit filename="Map.h" />
 		<Unit filename="MapTool.cpp" />
 		<Unit filename="MapTool.h" />
+		<Unit filename="MapToolCommand.cpp" />
+		<Unit filename="MapToolCommand.h" />
 		<Unit filename="MpcDecode.cpp" />
 		<Unit filename="MpcDecode.hpp" />
 		<Unit filename="Npc.cpp" />

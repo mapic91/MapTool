@@ -13,9 +13,12 @@
 #include "wx/stdpaths.h"
 #include "wx/msgdlg.h"
 #include "wx/timer.h"
+#include "wx/cmdproc.h"
+#include "MapToolCommand.h"
 
 #include <map>
 #include <vector>
+#include <memory>
 
 class NpcItemEditDialog;
 struct LevelDetial;
@@ -44,8 +47,13 @@ public:
 	//Disable timer to prevent from message quene full of timer event, use EnableTimer to enable.
 	void DisableTimer();
 	void EnableTimer();
+
+public:
+	void ReNewNpcAsf(NpcItem *item);
+	void ReNewObjAsf(ObjItem *item);
+
 protected:
-private:
+public:
 
     enum MYID
     {
@@ -100,6 +108,10 @@ private:
         m_ToolBarEdit->ToggleTool(ID_OBJMODE, true);
         RedrawMapView();
     }
+
+    //Edit
+	void OnUndo( wxCommandEvent& event );
+	void OnRedo( wxCommandEvent& event );
 
 	//Npc obj edit dialog
     void ShowNpcItemEditor(long npcitemidx);
@@ -160,6 +172,13 @@ private:
 						wxMessageBoxCaptionStr,
 						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
 		{
+			MTC_Delete_Npcs *cmd = new MTC_Delete_Npcs(wxT("清除所有NPC"));
+			for(auto item : m_NpcList)
+			{
+				cmd->DeleteItem(0, item);
+			}
+			m_commandProcessor.Store(cmd);
+
 			m_NpcList.Clear();
 			RefreshNpcList();
 		}
@@ -185,6 +204,13 @@ private:
 						wxMessageBoxCaptionStr,
 						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
 		{
+			MTC_Delete_Objs *cmd = new MTC_Delete_Objs(wxT("清除所有OBJ"));
+			for(auto item : m_ObjList)
+			{
+				cmd->DeleteItem(0, item);
+			}
+			m_commandProcessor.Store(cmd);
+
 			m_ObjList.Clear();
 			RefreshObjList();
 		}
@@ -338,7 +364,11 @@ private:
     wxPoint m_tilePositionOffsetNpc;
     wxPoint m_tilePositionOffsetObj;
     static const wxKeyCode SELECTION_ADD_KEY = WXK_CONTROL_A;
-    static const wxKeyCode SELECTION_SUB_KEY = WXK_CONTROL_Z;
+    static const wxKeyCode SELECTION_SUB_KEY = WXK_CONTROL_S;
+
+    wxCommandProcessor m_commandProcessor;
+    std::unique_ptr<MTC_Move_Npc> mMoveCmdNpc;
+    std::unique_ptr<MTC_Move_Obj> mMoveCmdObj;
 
     wxTimer m_timer;
 

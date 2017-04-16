@@ -88,7 +88,7 @@
             <event name="OnSetFocus"></event>
             <event name="OnSize"></event>
             <event name="OnUpdateUI"></event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer1</property>
                 <property name="orient">wxVERTICAL</property>
@@ -988,11 +988,11 @@
                         </object>
                     </object>
                 </object>
-                <object class="sizeritem" expanded="0">
+                <object class="sizeritem" expanded="1">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>
                     <property name="proportion">1</property>
-                    <object class="wxSplitterWindow" expanded="0">
+                    <object class="wxSplitterWindow" expanded="1">
                         <property name="BottomDockable">1</property>
                         <property name="LeftDockable">1</property>
                         <property name="RightDockable">1</property>
@@ -1153,8 +1153,8 @@
                                 <event name="OnUpdateUI"></event>
                             </object>
                         </object>
-                        <object class="splitteritem" expanded="0">
-                            <object class="wxPanel" expanded="0">
+                        <object class="splitteritem" expanded="1">
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -1228,16 +1228,16 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizer6</property>
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
-                                    <object class="sizeritem" expanded="0">
+                                    <object class="sizeritem" expanded="1">
                                         <property name="border">5</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">1</property>
-                                        <object class="wxSplitterWindow" expanded="0">
+                                        <object class="wxSplitterWindow" expanded="1">
                                             <property name="BottomDockable">1</property>
                                             <property name="LeftDockable">1</property>
                                             <property name="RightDockable">1</property>
@@ -1398,8 +1398,8 @@
                                                     <event name="OnUpdateUI"></event>
                                                 </object>
                                             </object>
-                                            <object class="splitteritem" expanded="0">
-                                                <object class="wxPanel" expanded="0">
+                                            <object class="splitteritem" expanded="1">
+                                                <object class="wxPanel" expanded="1">
                                                     <property name="BottomDockable">1</property>
                                                     <property name="LeftDockable">1</property>
                                                     <property name="RightDockable">1</property>
@@ -1473,16 +1473,16 @@
                                                     <event name="OnSetFocus"></event>
                                                     <event name="OnSize"></event>
                                                     <event name="OnUpdateUI"></event>
-                                                    <object class="wxBoxSizer" expanded="0">
+                                                    <object class="wxBoxSizer" expanded="1">
                                                         <property name="minimum_size"></property>
                                                         <property name="name">bSizer19</property>
                                                         <property name="orient">wxVERTICAL</property>
                                                         <property name="permission">none</property>
-                                                        <object class="sizeritem" expanded="0">
+                                                        <object class="sizeritem" expanded="1">
                                                             <property name="border">5</property>
                                                             <property name="flag">wxALL|wxEXPAND</property>
                                                             <property name="proportion">1</property>
-                                                            <object class="wxNotebook" expanded="0">
+                                                            <object class="wxNotebook" expanded="1">
                                                                 <property name="BottomDockable">1</property>
                                                                 <property name="LeftDockable">1</property>
                                                                 <property name="RightDockable">1</property>
@@ -1560,11 +1560,11 @@
                                                                 <event name="OnSetFocus"></event>
                                                                 <event name="OnSize"></event>
                                                                 <event name="OnUpdateUI"></event>
-                                                                <object class="notebookpage" expanded="0">
+                                                                <object class="notebookpage" expanded="1">
                                                                     <property name="bitmap"></property>
                                                                     <property name="label">NPC</property>
                                                                     <property name="select">1</property>
-                                                                    <object class="wxPanel" expanded="0">
+                                                                    <object class="wxPanel" expanded="1">
                                                                         <property name="BottomDockable">1</property>
                                                                         <property name="LeftDockable">1</property>
                                                                         <property name="RightDockable">1</property>
@@ -1638,7 +1638,7 @@
                                                                         <event name="OnSetFocus"></event>
                                                                         <event name="OnSize"></event>
                                                                         <event name="OnUpdateUI"></event>
-                                                                        <object class="wxBoxSizer" expanded="0">
+                                                                        <object class="wxBoxSizer" expanded="1">
                                                                             <property name="minimum_size"></property>
                                                                             <property name="name">bSizer20</property>
                                                                             <property name="orient">wxVERTICAL</property>
@@ -2146,6 +2146,41 @@
                     </object>
                 </object>
                 <object class="wxMenu" expanded="1">
+                    <property name="label">编辑(&amp;Edit)</property>
+                    <property name="name">m_menuEdit</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">0</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_UNDO</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">撤销</property>
+                        <property name="name">m_menuItemUndo</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">CTRL+Z</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnUndo</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">0</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_REDO</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">重做</property>
+                        <property name="name">m_menuItemRedo</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut">CTRL+Y</property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">OnRedo</event>
+                        <event name="OnUpdateUI"></event>
+                    </object>
+                </object>
+                <object class="wxMenu" expanded="1">
                     <property name="label">人物( &amp;NPC )</property>
                     <property name="name">m_MenuCharacter</property>
                     <property name="permission">protected</property>
@@ -2227,7 +2262,7 @@
                         <property name="label">修复人物位置...</property>
                         <property name="name">m_menuItemShowUnShowNpc</property>
                         <property name="permission">none</property>
-                        <property name="shortcut">CTRL+T</property>
+                        <property name="shortcut">CTRL+H</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnRepositionUnseenNpc</event>
                         <event name="OnUpdateUI"></event>
@@ -2349,7 +2384,7 @@
                         <property name="label">修复物品位置...</property>
                         <property name="name">m_menuItemShowUnShowOBj</property>
                         <property name="permission">none</property>
-                        <property name="shortcut">CTRL+Y</property>
+                        <property name="shortcut">CTRL+J</property>
                         <property name="unchecked_bitmap"></property>
                         <event name="OnMenuSelection">OnRepositionUnseenObj</event>
                         <event name="OnUpdateUI"></event>
@@ -2389,7 +2424,7 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="1">
+                <object class="wxMenu" expanded="0">
                     <property name="label">性能(&amp;P)</property>
                     <property name="name">m_menu5</property>
                     <property name="permission">protected</property>
@@ -2409,7 +2444,7 @@
                         <event name="OnUpdateUI"></event>
                     </object>
                 </object>
-                <object class="wxMenu" expanded="1">
+                <object class="wxMenu" expanded="0">
                     <property name="label">TMX(&amp;T)</property>
                     <property name="name">m_menu6</property>
                     <property name="permission">protected</property>

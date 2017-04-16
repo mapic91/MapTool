@@ -109,6 +109,7 @@ class MapFrameBase : public wxFrame
 		wxStatusBar* m_StatusBar;
 		wxMenuBar* m_menubar3;
 		wxMenu* m_MenuFile;
+		wxMenu* m_menuEdit;
 		wxMenu* m_MenuCharacter;
 		wxMenu* m_menu3;
 		wxMenu* m_menu5;
@@ -147,6 +148,8 @@ class MapFrameBase : public wxFrame
 		virtual void OnMapDown( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapLeft( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnMapRight( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnUndo( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRedo( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLoadCharater( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCharacterDirection( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnImportNpcFile( wxCommandEvent& event ) { event.Skip(); }

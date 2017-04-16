@@ -180,6 +180,19 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_menubar3->Append( m_MenuFile, wxT("地图(&MAP)") ); 
 	
+	m_menuEdit = new wxMenu();
+	wxMenuItem* m_menuItemUndo;
+	m_menuItemUndo = new wxMenuItem( m_menuEdit, wxID_UNDO, wxString( wxT("撤销") ) + wxT('\t') + wxT("CTRL+Z"), wxEmptyString, wxITEM_NORMAL );
+	m_menuEdit->Append( m_menuItemUndo );
+	m_menuItemUndo->Enable( false );
+	
+	wxMenuItem* m_menuItemRedo;
+	m_menuItemRedo = new wxMenuItem( m_menuEdit, wxID_REDO, wxString( wxT("重做") ) + wxT('\t') + wxT("CTRL+Y"), wxEmptyString, wxITEM_NORMAL );
+	m_menuEdit->Append( m_menuItemRedo );
+	m_menuItemRedo->Enable( false );
+	
+	m_menubar3->Append( m_menuEdit, wxT("编辑(&Edit)") ); 
+	
 	m_MenuCharacter = new wxMenu();
 	wxMenuItem* m_menuItem5;
 	m_menuItem5 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("加载人物") ) + wxT('\t') + wxT("CTRL+R"), wxT("加载一个人物等待放置"), wxITEM_NORMAL );
@@ -202,7 +215,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowNpc;
-	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("修复人物位置...") ) + wxT('\t') + wxT("CTRL+T"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("修复人物位置...") ) + wxT('\t') + wxT("CTRL+H"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItemShowUnShowNpc );
 	
 	m_MenuCharacter->AppendSeparator();
@@ -239,7 +252,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menu3->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowOBj;
-	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("修复物品位置...") ) + wxT('\t') + wxT("CTRL+Y"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("修复物品位置...") ) + wxT('\t') + wxT("CTRL+J"), wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItemShowUnShowOBj );
 	
 	m_menu3->AppendSeparator();
@@ -344,6 +357,8 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	this->Connect( m_menuItemDOWN->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Connect( m_menuItemLeft->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Connect( m_menuItemRIGHT->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
+	this->Connect( m_menuItemUndo->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnUndo ) );
+	this->Connect( m_menuItemRedo->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRedo ) );
 	this->Connect( m_menuItem5->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Connect( m_menuItem6->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Connect( m_menuItem8->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );
@@ -407,6 +422,8 @@ MapFrameBase::~MapFrameBase()
 	this->Disconnect( ID_MAPDOWN, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapDown ) );
 	this->Disconnect( ID_MAPLEFT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapLeft ) );
 	this->Disconnect( ID_MAPRIGHT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnMapRight ) );
+	this->Disconnect( wxID_UNDO, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnUndo ) );
+	this->Disconnect( wxID_REDO, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnRedo ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnLoadCharater ) );
 	this->Disconnect( ID_DIRECTION, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnCharacterDirection ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MapFrameBase::OnImportNpcFile ) );

@@ -8,6 +8,8 @@
 #include "wx/accel.h"
 #include "wx/utils.h"
 
+#define MAX_COMMAND 1000 //Max undo redo command
+
 using namespace std;
 
 wxPoint MapTool::INVALID_TILE_POSITION = wxPoint(-1, -1);
@@ -47,7 +49,8 @@ END_EVENT_TABLE()
 
 
 MapTool::MapTool(wxWindow* parent)
-    :MapFrameBase(parent)
+    : MapFrameBase(parent)
+    , m_commandProcessor(MAX_COMMAND)
 {
     m_ViewBeginx = m_ViewBeginy = 0;
     m_CurTileX = m_CurTileY = 0;
@@ -82,7 +85,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.8 - by 小试刀剑  2017.3.19"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.8.1 - by 小试刀剑  2017.4.16"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -123,6 +126,9 @@ MapTool::MapTool(wxWindow* parent)
     m_tilePositionOffsetNpc = m_tilePositionOffsetObj = wxPoint(0, 0);
 
     m_isBatch = false;
+
+    m_commandProcessor.SetEditMenu(m_menuEdit);
+    MTC_Init(this, exepath, &m_NpcList, &m_ObjList);
 }
 
 MapTool::~MapTool()
@@ -206,6 +212,12 @@ void MapTool::OpenMap(wxCommandEvent& event)
     m_ObjList.Clear();
     FreeAsfImgList(m_NpcAsfImgList);
     FreeAsfImgList(m_ObjAsfImgList);
+
+    m_commandProcessor.ClearCommands();
+    m_menuEdit->Enable(wxID_UNDO, false);
+    m_menuEdit->Enable(wxID_REDO, false);
+	m_menuEdit->SetLabel(wxID_UNDO, wxT("撤销\tCTRL+Z"));
+	m_menuEdit->SetLabel(wxID_REDO, wxT("重做\tCTRL+Y"));
 
     //Show view
     m_ListData->Show(true);
@@ -327,6 +339,16 @@ void MapTool::DisableTimer()
 void MapTool::EnableTimer()
 {
     m_timer.Start(Settings::TheSetting.GetFpsMilliseconds());
+}
+
+void MapTool::ReNewNpcAsf(NpcItem* item)
+{
+	FindAndBufferAsf(exepath, item->NpcIni, wxT("[Stand]"), &(item->NpcStand), m_NpcAsfImgList);
+}
+
+void MapTool::ReNewObjAsf(ObjItem* item)
+{
+	FindAndBufferAsf(exepath, item->ObjFile, wxT("[Common]"), &(item->ObjCommon), m_ObjAsfImgList);
 }
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
@@ -908,11 +930,27 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     {
         if(m_isNpc)
         {
+        	long index = 0;
+        	auto item = m_NpcList.GetItem(m_CurTileX, m_CurTileY, &index);
+        	if(item)
+			{
+				MTC_Delete_Npc *cmd = new MTC_Delete_Npc(index);
+				cmd->DeletedItem(item);
+				m_commandProcessor.Store(cmd);
+			}
             m_NpcList.DeleteItem(m_CurTileX, m_CurTileY);
             RefreshNpcList();
         }
         else if(m_isObj)
         {
+        	long index = 0;
+        	auto item = m_ObjList.GetItem(m_CurTileX, m_CurTileY, &index);
+        	if(item)
+			{
+				MTC_Delete_Obj *cmd = new MTC_Delete_Obj(index);
+				cmd->DeletedItem(item);
+				m_commandProcessor.Store(cmd);
+			}
             m_ObjList.DeleteItem(m_CurTileX, m_CurTileY);
             RefreshObjList();
         }
@@ -920,9 +958,19 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
     else if(m_isMoveMode)
     {
         if(m_isNpc)
-            m_MoveNpcItem = m_NpcList.GetItem(m_CurTileX, m_CurTileY);
+		{
+			long index = 0;
+			m_MoveNpcItem = m_NpcList.GetItem(m_CurTileX, m_CurTileY, &index);
+			mMoveCmdNpc.reset(new MTC_Move_Npc(index));
+			mMoveCmdNpc->OldPos(m_CurTileX, m_CurTileY);
+		}
         else if(m_isObj)
-            m_MoveObjItem = m_ObjList.GetItem(m_CurTileX, m_CurTileY);
+		{
+			long index = 0;
+			m_MoveObjItem = m_ObjList.GetItem(m_CurTileX, m_CurTileY, &index);
+			mMoveCmdObj.reset(new MTC_Move_Obj(index));
+			mMoveCmdObj->OldPos(m_CurTileX, m_CurTileY);
+		}
     }
     else if(m_isEditAttribute)
     {
@@ -951,12 +999,25 @@ bool MapTool::AddItem(NpcItem *item)
         int ret = wxMessageBox(wxT("替换当前NPC？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
         if(ret == wxYES)
         {
+        	long index = 0;
+        	NpcItem *deletedItem = m_NpcList.GetItem(item->MapX, item->MapY, &index);
+        	MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("替换Npc"));
+        	cmd->DeleteAndAdd(index, deletedItem, item);
+        	m_commandProcessor.Store(cmd);
+
             m_NpcList.DeleteItem(item->MapX, item->MapY);
             m_NpcList.AddItem(item);
         }
         else return false;
     }
-    else m_NpcList.AddItem(item);
+    else
+	{
+		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("添加Npc"));
+		cmd->Add(item);
+		m_commandProcessor.Store(cmd);
+
+		m_NpcList.AddItem(item);
+    }
     RefreshNpcList();
     return true;
 }
@@ -969,14 +1030,37 @@ bool MapTool::AddItem(ObjItem *item)
         int ret = wxMessageBox(wxT("替换当前OBJ？"), wxT("消息"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
         if(ret == wxYES)
         {
+        	long index = 0;
+        	ObjItem *deletedItem = m_ObjList.GetItem(item->MapX, item->MapY, &index);
+        	MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("替换Obj"));
+        	cmd->DeleteAndAdd(index, deletedItem, item);
+        	m_commandProcessor.Store(cmd);
+
             m_ObjList.DeleteItem(item->MapX, item->MapY);
             m_ObjList.AddItem(item);
         }
         else return false;
     }
-    else m_ObjList.AddItem(item);
+    else
+	{
+		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("添加Obj"));
+		cmd->Add(item);
+		m_commandProcessor.Store(cmd);
+
+		m_ObjList.AddItem(item);
+	}
     RefreshObjList();
     return true;
+}
+
+void MapTool::OnUndo(wxCommandEvent& event)
+{
+	m_commandProcessor.Undo();
+}
+
+void MapTool::OnRedo(wxCommandEvent& event)
+{
+	m_commandProcessor.Redo();
 }
 
 void MapTool::ShowNpcItemEditor(long npcitemidx)
@@ -1004,7 +1088,13 @@ void MapTool::NpcItemEditShowModle(NpcItemEditDialog* dialog, NpcItem *npcitem)
 {
     int ret = dialog->ShowModal();
     if(ret == NpcItemEditDialog::OK)
-        dialog->AssignToNpcItem(npcitem);
+	{
+		MTC_Change_Npc *cmd = new MTC_Change_Npc(m_NpcList.GetIndex(npcitem));
+		cmd->OldFrom(npcitem);
+		dialog->AssignToNpcItem(npcitem);
+		cmd->NewFrom(npcitem);
+		m_commandProcessor.Store(cmd);
+	}
     else if(ret == NpcItemEditDialog::FIXPOSEDIT)
         StartFixPosEdit(npcitem);
 }
@@ -1050,6 +1140,7 @@ void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
         dialog.InitFromNpcItem(&item);
         if(dialog.ShowModal() == NpcItemEditDialog::OK)
         {
+        	MTC_Change_Npcs *cmd = new MTC_Change_Npcs();
             bool isAll = false;
             for(std::vector<long>::const_iterator it = items.begin();
                     it != items.end(); it++)
@@ -1074,9 +1165,20 @@ void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
                             break;
                         }
                     }
+                    int index = m_NpcList.GetIndex(listItem);
+                    cmd->OldFrom(index, listItem);
                     dialog.AssignToNpcItem(listItem, true);
+                    cmd->NewFrom(index, listItem);
                 }
             }
+            if(cmd->size() > 0)
+			{
+				m_commandProcessor.Store(cmd);
+			}
+			else
+			{
+				delete cmd;
+			}
         }
     }
 }
@@ -1094,6 +1196,7 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
     dialog.InitFromObjItem(&item);
     if(dialog.ShowModal() == wxID_OK)
     {
+    	MTC_Change_Objs *cmd = new MTC_Change_Objs();
         bool isAll = false;
         for(std::vector<long>::const_iterator it = items.begin();
                 it != items.end(); it++)
@@ -1118,9 +1221,20 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
                         break;
                     }
                 }
+                int index = m_ObjList.GetIndex(listItem);
+                cmd->OldFrom(index, listItem);
                 dialog.AssignToObjItem(listItem, true);
+                cmd->NewFrom(index, listItem);
             }
         }
+        if(cmd->size() > 0)
+		{
+			m_commandProcessor.Store(cmd);
+		}
+		else
+		{
+			delete cmd;
+		}
     }
 }
 
@@ -1141,7 +1255,13 @@ void MapTool::ShowObjItemEditor(ObjItem* item, long index)
         itemEdit.SetTitle(wxString::Format(wxT("OBJ%03d"), index));
         itemEdit.InitFromObjItem(item);
         if(itemEdit.ShowModal() == wxID_OK)
-            itemEdit.AssignToObjItem(item);
+		{
+			MTC_Change_Obj *cmd = new MTC_Change_Obj(m_ObjList.GetIndex(item));
+			cmd->OldFrom(item);
+			itemEdit.AssignToObjItem(item);
+			cmd->NewFrom(item);
+			m_commandProcessor.Store(cmd);
+		}
     }
 }
 
@@ -1156,11 +1276,15 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 		m_npcsToPasted.HandoverOwnship(templist); //clear to pasted list to indicate multy pasting mode end
 		bool isAll = false;
 		bool isAllNo = false;
+
+		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("批量粘贴Npc"));
+
 		for(auto& npcitem : templist)
 		{
 			npcitem->MapX = npcitem->MapX - m_tilePositionOffsetNpc.x + curTileX;
 			npcitem->MapY = npcitem->MapY - m_tilePositionOffsetNpc.y + curTileY;
 
+			bool historyAdded = false;
 			if(m_NpcList.HasItem(npcitem->MapX, npcitem->MapY))
 			{
 				if(!isAll)
@@ -1189,10 +1313,25 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
                         continue;
                     }
 				}
+
+				long index = 0;
+				NpcItem *deletedItem = m_NpcList.GetItem(npcitem->MapX, npcitem->MapY, &index);
+				cmd->DeleteAndAdd(index, deletedItem, npcitem);
+				historyAdded = true;
+
 				m_NpcList.DeleteItem(npcitem->MapX, npcitem->MapY);
 			}
+
+			if(!historyAdded)
+			{
+				cmd->Add(npcitem);
+			}
+
 			m_NpcList.AddItem(npcitem);
 		}
+
+		m_commandProcessor.Store(cmd);
+
 		templist.ClearWithoutFreeData();
 		RefreshNpcList();
 
@@ -1204,11 +1343,15 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 		m_objsToPasted.HandoverOwnship(templist); //clear to pasted list to indicate multy pasting mode end
 		bool isAll = false;
 		bool isAllNo = false;
+
+		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("批量粘贴Obj"));
+
 		for(auto& objitem : templist)
 		{
 			objitem->MapX = objitem->MapX - m_tilePositionOffsetObj.x + curTileX;
 			objitem->MapY = objitem->MapY - m_tilePositionOffsetObj.y + curTileY;
 
+			bool historyAdded = false;
 			if(m_ObjList.HasItem(objitem->MapX, objitem->MapY))
 			{
 				if(!isAll)
@@ -1237,10 +1380,25 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
                         continue;
                     }
 				}
+
+				long index = 0;
+				ObjItem *deletedItem = m_ObjList.GetItem(objitem->MapX, objitem->MapY, &index);
+				cmd->DeleteAndAdd(index, deletedItem, objitem);
+				historyAdded = true;
+
 				m_ObjList.DeleteItem(objitem->MapX, objitem->MapY);
 			}
+
+			if(!historyAdded)
+			{
+				cmd->Add(objitem);
+			}
+
 			m_ObjList.AddItem(objitem);
 		}
+
+		m_commandProcessor.Store(cmd);
+
 		templist.ClearWithoutFreeData();
 		RefreshObjList();
 	}
@@ -1279,13 +1437,29 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 		{
 			if(m_isNpc)
 			{
-				UpdateListItem(m_MoveNpcItem);
-				m_MoveNpcItem = NULL;
+				if(m_MoveNpcItem)
+				{
+					mMoveCmdNpc->NewPos(m_MoveNpcItem->MapX, m_MoveNpcItem->MapY);
+					if(!mMoveCmdNpc->IsNewOldEqual())
+					{
+						m_commandProcessor.Store(mMoveCmdNpc.release());
+					}
+					UpdateListItem(m_MoveNpcItem);
+					m_MoveNpcItem = NULL;
+				}
 			}
 			else if(m_isObj)
 			{
-				UpdateListItem(m_MoveObjItem);
-				m_MoveObjItem = NULL;
+				if(m_MoveObjItem)
+				{
+					mMoveCmdObj->NewPos(m_MoveObjItem->MapX, m_MoveObjItem->MapY);
+					if(!mMoveCmdObj->IsNewOldEqual())
+					{
+						m_commandProcessor.Store(mMoveCmdObj.release());
+					}
+					UpdateListItem(m_MoveObjItem);
+					m_MoveObjItem = NULL;
+				}
 			}
 		}
 	}
@@ -1598,7 +1772,7 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
         m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
         m_LastNpcListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
-        if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcAsfImgList))
+        if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcAsfImgList, &m_commandProcessor))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
@@ -1636,6 +1810,7 @@ void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
 					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
 		== wxOK)
 	{
+		MTC_Move_Npcs *cmd = new MTC_Move_Npcs(wxT("修复人物位置"));
 		if(m_NpcList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
 		{
 			long width = map.getCol();
@@ -1644,17 +1819,21 @@ void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
 			long x = 0, y = 4;
 			long maxX = width > 15 ? 15 : width;
 			bool moved = false;
-			for(NpcList::iterator it = m_NpcList.begin(); it != m_NpcList.end(); it++)
+			size_t index = 0;
+			for(NpcList::iterator it = m_NpcList.begin(); it != m_NpcList.end(); it++, index++)
 			{
 				item = *it;
 				if(item == nullptr) continue;
 				if(item->MapX < 0 || item->MapY < 0 || item->MapX > width || item->MapY > height)
 				{
+					cmd->Move(index, item->MapX, item->MapY, x, y);
+
 					moved = true;
 					lastItem = item;
 					item->MapX = x;
 					item->MapY = y;
 					CorrectFixedPos(item);
+					UpdateListItem(index, NPCLIST);
 
 					x++;
 					if(x > maxX)
@@ -1668,9 +1847,9 @@ void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
 			if(moved)
 			{
 				ShowTile(lastItem->MapX, lastItem->MapY);
-				RefreshNpcList();
 			}
 		}
+		m_commandProcessor.Store(cmd);
 	}
 }
 void MapTool::OnImportObjFile( wxCommandEvent& event )
@@ -1688,7 +1867,7 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
         m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
         m_LastObjListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
-        if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList))
+        if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList, &m_commandProcessor))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
@@ -1726,6 +1905,7 @@ void MapTool::OnRepositionUnseenObj(wxCommandEvent& event)
 					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
 		== wxOK)
 	{
+		MTC_Move_Objs *cmd = new MTC_Move_Objs(wxT("修复物品位置"));
 		if(m_ObjList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
 		{
 			long width = map.getCol();
@@ -1734,16 +1914,20 @@ void MapTool::OnRepositionUnseenObj(wxCommandEvent& event)
 			long x = width, y = 4;
 			long minX = width < 15 ? 0 : (width - 15);
 			bool moved = false;
-			for(ObjList::iterator it = m_ObjList.begin(); it != m_ObjList.end(); it++)
+			size_t index = 0;
+			for(ObjList::iterator it = m_ObjList.begin(); it != m_ObjList.end(); it++,index++)
 			{
 				item = *it;
 				if(item == nullptr) continue;
 				if(item->MapX < 0 || item->MapY < 0 || item->MapX > width || item->MapY > height)
 				{
+					cmd->Move(index, item->MapX, item->MapY, x, y);
+
 					moved = true;
 					lastItem = item;
 					item->MapX = x;
 					item->MapY = y;
+					UpdateListItem(index, OBJLIST);
 
 					x--;
 					if(x <= minX)
@@ -1757,9 +1941,9 @@ void MapTool::OnRepositionUnseenObj(wxCommandEvent& event)
 			if(moved)
 			{
 				ShowTile(lastItem->MapX, lastItem->MapY);
-				RefreshObjList();
 			}
 		}
+		m_commandProcessor.Store(cmd);
 	}
 }
 void MapTool::OnPlaceMode( wxCommandEvent& event )
@@ -1982,10 +2166,26 @@ void MapTool::DeleteListItem(wxCommandEvent& event)
     }
     if(m_curList == NPCLIST)
     {
+    	NpcItem *item = m_NpcList.GetItem(m_curListIndex);
+    	if(item)
+		{
+			MTC_Delete_Npc *cmd = new MTC_Delete_Npc(m_curListIndex);
+			cmd->DeletedItem(item);
+			m_commandProcessor.Store(cmd);
+		}
+
         DeleteNpcItem(m_curListIndex);
     }
     else if(m_curList == OBJLIST)
     {
+    	ObjItem *item = m_ObjList.GetItem(m_curListIndex);
+    	if(item)
+		{
+			MTC_Delete_Obj *cmd = new MTC_Delete_Obj(m_curListIndex);
+			cmd->DeletedItem(item);
+			m_commandProcessor.Store(cmd);
+		}
+
         DeleteObjItem(m_curListIndex);
     }
     m_placeModeNotDraw = true;
@@ -2678,16 +2878,33 @@ void MapTool::OnMapViewCut(wxCommandEvent& event)
 				}
 			}
 
+			MTC_Delete_Npcs *cmd = new MTC_Delete_Npcs();
 			for(auto it = m_clipBoard.GetNpcItems().begin(); it != m_clipBoard.GetNpcItems().end(); it++)
 			{
+				long index = 0;
+				NpcItem *item = m_NpcList.GetItem(it->MapX, it->MapY, &index);
+				if(item)
+				{
+					cmd->DeleteItem(index, item);
+				}
 				m_NpcList.DeleteItem(it->MapX, it->MapY);
 			}
+			m_commandProcessor.Store(cmd);
 		}
 		else
 		{
 			if(m_selectedNpcItemByRightUp)
 			{
 				m_clipBoard.Add(m_selectedNpcItemByRightUp);
+
+				long index = 0;
+				auto item = m_NpcList.GetItem(m_selectedNpcItemByRightUp->MapX, m_selectedNpcItemByRightUp->MapY, &index);
+				if(item)
+				{
+					MTC_Delete_Npc *cmd = new MTC_Delete_Npc(index);
+					cmd->DeletedItem(item);
+					m_commandProcessor.Store(cmd);
+				}
 				m_NpcList.DeleteItem(m_selectedNpcItemByRightUp->MapX, m_selectedNpcItemByRightUp->MapY);
 			}
 		}
@@ -2708,16 +2925,34 @@ void MapTool::OnMapViewCut(wxCommandEvent& event)
 				}
 			}
 
+			MTC_Delete_Objs *cmd = new MTC_Delete_Objs();
 			for(auto it = m_clipBoard.GetObjItems().begin(); it != m_clipBoard.GetObjItems().end(); it++)
 			{
+				long index = 0;
+				ObjItem *item = m_ObjList.GetItem(it->MapX, it->MapY, &index);
+				if(item)
+				{
+					cmd->DeleteItem(index, item);
+				}
 				m_ObjList.DeleteItem(it->MapX, it->MapY);
 			}
+			m_commandProcessor.Store(cmd);
 		}
 		else
 		{
 			if(m_selectedObjItemByRightUp)
 			{
 				m_clipBoard.Add(m_selectedObjItemByRightUp);
+
+				long index = 0;
+				auto item = m_ObjList.GetItem(m_selectedObjItemByRightUp->MapX, m_selectedObjItemByRightUp->MapY, &index);
+				if(item)
+				{
+					MTC_Delete_Obj *cmd = new MTC_Delete_Obj(index);
+					cmd->DeletedItem(item);
+					m_commandProcessor.Store(cmd);
+				}
+
 				m_ObjList.DeleteItem(m_selectedObjItemByRightUp->MapX, m_selectedObjItemByRightUp->MapY);
 			}
 		}
@@ -2834,10 +3069,14 @@ void MapTool::OnMapViewDelete(wxCommandEvent& event)
 				}
 			}
 
+			MTC_Delete_Npcs *cmd = new MTC_Delete_Npcs();
 			for(auto item : tempList)
 			{
+				cmd->DeleteItem(m_NpcList.GetIndex(item), item);
 				m_NpcList.DeleteItem(item->MapX, item->MapY);
 			}
+			m_commandProcessor.Store(cmd);
+
 			tempList.ClearWithoutFreeData();
 			RefreshNpcList();
 		}
@@ -2851,6 +3090,10 @@ void MapTool::OnMapViewDelete(wxCommandEvent& event)
 												  &index);
 				if(item)
 				{
+					MTC_Delete_Npc *cmd = new MTC_Delete_Npc(index);
+					cmd->DeletedItem(item);
+					m_commandProcessor.Store(cmd);
+
 					DeleteNpcItem((int)index);
 					RefreshNpcList();
 				}
@@ -2872,10 +3115,13 @@ void MapTool::OnMapViewDelete(wxCommandEvent& event)
 				}
 			}
 
+			MTC_Delete_Objs *cmd = new MTC_Delete_Objs();
 			for(auto item : tempList)
 			{
+				cmd->DeleteItem(m_ObjList.GetIndex(item), item);
 				m_ObjList.DeleteItem(item->MapX, item->MapY);
 			}
+			m_commandProcessor.Store(cmd);
 			tempList.ClearWithoutFreeData();
 			RefreshObjList();
 		}
@@ -2889,6 +3135,10 @@ void MapTool::OnMapViewDelete(wxCommandEvent& event)
 												  &index);
 				if(item)
 				{
+					MTC_Delete_Obj *cmd = new MTC_Delete_Obj(index);
+					cmd->DeletedItem(item);
+					m_commandProcessor.Store(cmd);
+
 					DeleteObjItem((int)index);
 					RefreshObjList();
 				}

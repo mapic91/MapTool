@@ -74,4 +74,6 @@ struct Frame_Data
     unsigned char* data;//color model RGBA
     Frame_Data *next;
 };
+
+#define SAFE_DELETE(p) delete p; p = nullptr;
 #endif // MYDEFS_HPP_INCLUDED

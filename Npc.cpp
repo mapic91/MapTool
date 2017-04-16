@@ -6,6 +6,8 @@
 
 #include "wx/msgdlg.h"
 
+#include "MapToolCommand.h"
+
 using namespace std;
 
 string FindAsfInIni(const string FilePath, const std::string match)
@@ -632,7 +634,7 @@ bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n
     if(!value.ToLong(n_value)) (*n_value) = -1;
     return true;
 }
-bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist)
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc)
 {
     if(list == NULL ||
             asflist == NULL) return false;
@@ -657,6 +659,7 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
     }
 
     NpcItem *item;;
+    MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("导入NPC文件"));
     for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
     {
         while(!file.Eof())
@@ -676,10 +679,21 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
             AssignNpcItem(name, value, n_value, item);
         }
 
+		long index;
+		NpcItem* deletedItem = list->GetItem(item->MapX, item->MapY, &index);
+		if(deletedItem)
+		{
+			cmd->DeleteAndAdd(index, deletedItem, item);
+		}
+		else
+		{
+			cmd->Add(item);
+		}
         list->DeleteItem(item->MapX, item->MapY);
         list->AddItem(item);
         FindAndBufferAsf(exepath, item->NpcIni, wxT("[Stand]"), &(item->NpcStand), asflist);
     }
+    cmdProc->Store(cmd);
 
     return true;
 }
@@ -720,7 +734,7 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list)
     return true;
 }
 
-bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist)
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc)
 {
     if(list == NULL ||
             asflist == NULL) return false;
@@ -744,7 +758,8 @@ bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list,
         }
     }
 
-    ObjItem *item;;
+    ObjItem *item;
+    MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("导入OBJ文件"));
     for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
     {
         while(!file.Eof())
@@ -764,10 +779,21 @@ bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list,
             AssignObjItem(name, value, n_value, item);
         }
 
+        long index;
+        ObjItem *deletedItem = list->GetItem(item->MapX, item->MapY, &index);
+        if(deletedItem)
+		{
+			cmd->DeleteAndAdd(index, deletedItem, item);
+		}
+		else
+		{
+			cmd->Add(item);
+		}
         list->DeleteItem(item->MapX, item->MapY);
         list->AddItem(item);
         FindAndBufferAsf(exepath, item->ObjFile, wxT("[Common]"), &(item->ObjCommon), asflist);
     }
+    cmdProc->Store(cmd);
 
     return true;
 }

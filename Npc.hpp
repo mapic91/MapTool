@@ -8,6 +8,7 @@
 #include "wx/stdpaths.h"
 #include "wx/filename.h"
 #include "wx/textfile.h"
+#include "wx/cmdproc.h"
 
 #include "AsfDecode.hpp"
 
@@ -149,6 +150,16 @@ public:
         return *it;
     }
 
+    int GetIndex(T item)
+    {
+    	int index = 0;
+        for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it, index++)
+        {
+        	if(*it == item) return index;
+        }
+        return -1;
+    }
+
 	//Returned array must deleted use delete[]
     T* GetAllItem()
     {
@@ -177,10 +188,50 @@ public:
         return T(NULL);
     }
 
+    void InsertItem(int pos, T item)
+    {
+    	if(pos == 0)
+		{
+			m_list.insert(m_list.begin(), item);
+		}
+		else
+		{
+			int i = 0;
+			bool inserted = false;
+			auto it = m_list.begin();
+			for(; it != m_list.end();)
+			{
+				if(i == pos)
+				{
+					m_list.insert(it, item);
+					inserted = true;
+					break;
+				}
+				i++;
+				it++;
+			}
+
+			if(!inserted)
+			{
+				//insert at end
+				m_list.insert(it, item);
+			}
+		}
+    }
+
     void AddItem(T item)
     {
         if(item == NULL) return;
         m_list.push_back(item);
+    }
+
+    void DeleteBack()
+    {
+    	if(m_list.size() > 0)
+		{
+			delete m_list.back();
+			m_list.pop_back();
+		}
     }
 
     void DeleteItem(long mapx, long mapy)
@@ -270,11 +321,11 @@ private:
 };
 
 typedef ItemList<NpcItem*> NpcList;
-bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist);
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
 
 typedef ItemList<ObjItem*> ObjList;
-bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist);
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
 bool ObjListSave(const wxString path, const wxString mapName, ObjList *list);
 
 #endif // NPC_HPP_INCLUDED
