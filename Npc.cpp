@@ -165,6 +165,7 @@ void NpcItem::CopyFrom(const NpcItem* item)
     VisionRadius = item->VisionRadius;
     WalkSpeed = item->WalkSpeed;
     NpcStand = item->NpcStand;
+    Others = item->Others;
 }
 
 void ObjItem::CopyFrom(const ObjItem* item)
@@ -227,6 +228,7 @@ void InitNpcItem(NpcItem *item)
     item->ThewMax = -1;
     item->VisionRadius = -1;
     item->WalkSpeed = -1;
+    item->Others.clear();
 }
 void InitObjItem(ObjItem *item)
 {
@@ -462,6 +464,9 @@ void SaveNpcItem(wxTextFile &file, NpcItem *item)
 
     if(!item->FixedPos.IsEmpty())
         file.AddLine(wxT("FixedPos=") + item->FixedPos);
+
+	if(!item->Others.IsEmpty())
+		file.AddLine(item->Others.Trim());
 }
 void SaveObjItem(wxTextFile &file, ObjItem *item)
 {
@@ -589,6 +594,8 @@ void AssignNpcItem(const wxString &name, const wxString &value, long n_value, Np
         item->VisionRadius = n_value;
     else if(name.CmpNoCase(wxT("WalkSpeed")) == 0)
         item->WalkSpeed = n_value;
+	else
+		item->Others += (name + wxT("=") + value + wxT("\n"));
 //        else if(name.CmpNoCase(wxT("")) == 0)
 //            item-> = n_value;
 }

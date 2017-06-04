@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Nov  1 2016)
+// C++ code generated with wxFormBuilder (version Dec 21 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -457,6 +457,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	wxBoxSizer* bSizerTop;
 	bSizerTop = new wxBoxSizer( wxHORIZONTAL );
+	
+	wxBoxSizer* bSizerTop222;
+	bSizerTop222 = new wxBoxSizer( wxVERTICAL );
 	
 	wxGridSizer* gSizer1;
 	gSizer1 = new wxGridSizer( 20, 4, 0, 0 );
@@ -1001,7 +1004,23 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	gSizer1->Add( bSizer10, 1, wxEXPAND, 5 );
 	
 	
-	bSizerTop->Add( gSizer1, 1, wxEXPAND, 5 );
+	bSizerTop222->Add( gSizer1, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizer29;
+	bSizer29 = new wxBoxSizer( wxVERTICAL );
+	
+	m_staticText54 = new wxStaticText( this, wxID_ANY, wxT("ÆäËü£º"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText54->Wrap( -1 );
+	bSizer29->Add( m_staticText54, 0, wxALL, 5 );
+	
+	m_Others = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_DONTWRAP|wxTE_MULTILINE );
+	bSizer29->Add( m_Others, 1, wxALL|wxEXPAND, 5 );
+	
+	
+	bSizerTop222->Add( bSizer29, 1, wxEXPAND, 5 );
+	
+	
+	bSizerTop->Add( bSizerTop222, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
@@ -1030,6 +1049,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( NpcItemEditDialogBase::OnClose ) );
 	m_Kind->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( NpcItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Relation->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( NpcItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Level->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NpcItemEditDialogBase::OnLevelChange ), NULL, this );
@@ -1062,6 +1082,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 NpcItemEditDialogBase::~NpcItemEditDialogBase()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( NpcItemEditDialogBase::OnClose ) );
 	m_Kind->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( NpcItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Relation->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( NpcItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Level->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( NpcItemEditDialogBase::OnLevelChange ), NULL, this );
@@ -1324,6 +1345,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	this->Centre( wxBOTH );
 	
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ObjItemEditDialogBase::OnClose ) );
 	m_Kind->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Dir->Connect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_ObjFile->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );
@@ -1343,6 +1365,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 ObjItemEditDialogBase::~ObjItemEditDialogBase()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ObjItemEditDialogBase::OnClose ) );
 	m_Kind->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_Dir->Disconnect( wxEVT_RIGHT_UP, wxMouseEventHandler( ObjItemEditDialogBase::OnResetValue ), NULL, this );
 	m_ObjFile->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ObjItemEditDialogBase::OnObjFile ), NULL, this );

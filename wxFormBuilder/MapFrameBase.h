@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Nov  1 2016)
+// C++ code generated with wxFormBuilder (version Dec 21 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -288,11 +288,14 @@ class NpcItemEditDialogBase : public wxDialog
 		wxStaticText* m_staticText43;
 		wxButton* m_DeathScript;
 		wxButton* m_DeathScriptEdit;
+		wxStaticText* m_staticText54;
+		wxTextCtrl* m_Others;
 		wxButton* m_button26;
 		wxButton* m_OK;
 		wxButton* m_Cancle;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnLevelChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNpcIni( wxCommandEvent& event ) { event.Skip(); }
@@ -343,7 +346,7 @@ class NpcItemEditDialogBase : public wxDialog
 		wxString m_Validat21; 
 		wxString m_Validat22; 
 		
-		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,600 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,870 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~NpcItemEditDialogBase();
 	
 };
@@ -390,6 +393,7 @@ class ObjItemEditDialogBase : public wxDialog
 		wxButton* m_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnObjFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClearObjFile( wxMouseEvent& event ) { event.Skip(); }

@@ -1,6 +1,5 @@
 #include "MapTool.h"
 #include "YesNoAllDialog.h"
-#include "Settings.h"
 #include "FpsDialog.h"
 #include "wx/msgdlg.h"
 #include "wx/dcmemory.h"
@@ -85,7 +84,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.8.1 - by 小试刀剑  2017.4.16"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.8.2 - by 小试刀剑  2017.6.04"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -129,6 +128,14 @@ MapTool::MapTool(wxWindow* parent)
 
     m_commandProcessor.SetEditMenu(m_menuEdit);
     MTC_Init(this, exepath, &m_NpcList, &m_ObjList);
+
+    if(Settings::TheSetting.MapToolX != -1)
+	{
+		SetSize(Settings::TheSetting.MapToolX,
+				Settings::TheSetting.MapToolY,
+				Settings::TheSetting.MapToolWidth,
+				Settings::TheSetting.MapToolHeight);
+	}
 }
 
 MapTool::~MapTool()
@@ -166,8 +173,16 @@ void MapTool::FrameOnChar( wxKeyEvent& event )
 
     event.Skip();
 }
+
+void MapTool::SaveSettings()
+{
+	GetSize(&Settings::TheSetting.MapToolWidth, &Settings::TheSetting.MapToolHeight);
+	GetPosition(&Settings::TheSetting.MapToolX, &Settings::TheSetting.MapToolY);
+}
+
 void MapTool::OnClose(wxCloseEvent& event)
 {
+	SaveSettings();
     if(m_MapFileName.IsEmpty())
     {
         Exit();
@@ -2537,6 +2552,9 @@ void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
     }
     if(!item->FixedPos.IsEmpty())
         m_FixedPos->SetValue(item->FixedPos);
+
+	if(!item->Others.IsEmpty())
+		(*m_Others) << item->Others;
 }
 void NpcItemEditDialog::AssignToNpcItem(NpcItem *item, bool onlySetted)
 {
@@ -2691,6 +2709,16 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item, bool onlySetted)
     if((onlySetted && !value.IsEmpty()) || !onlySetted) item->DeathScript = value;
     value = m_FixedPos->GetValue();
     if((onlySetted && !value.IsEmpty()) || !onlySetted) item->FixedPos = value;
+    value.clear();
+    for(int i = 0; i < m_Others->GetNumberOfLines(); i++)
+	{
+		wxString line = m_Others->GetLineText(i);
+		if(!line.IsEmpty())
+		{
+			value += line + wxT("\n");
+		}
+	}
+    if((onlySetted && !value.IsEmpty()) || !onlySetted) item->Others = value;
 }
 
 void ObjItemEditDialog::InitFromObjItem(ObjItem *item)

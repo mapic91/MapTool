@@ -55,6 +55,7 @@ bool wxWidgets_templateApp::OnInit()
 int wxWidgets_templateApp::OnExit()
 {
 	if(g_NpcLevelList != NULL) delete g_NpcLevelList;
+	Settings::TheSetting.SaveSetting();
 	return 0;
 }
 

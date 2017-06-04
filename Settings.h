@@ -19,6 +19,22 @@ class Settings
 	protected:
 	private:
 		int m_fpsMilliSeconds;
+	public:
+		int MapToolX = -1;
+		int MapToolY = -1;
+		int MapToolWidth = -1;
+		int MapToolHeight = -1;
+
+		int NpcDialogX = -1;
+		int NpcDialogY = -1;
+		int NpcDialogWidth = -1;
+		int NpcDialogHeight = -1;
+
+		int ObjDialogX = -1;
+		int ObjDialogY = -1;
+		int ObjDialogWidth = -1;
+		int ObjDialogHeight = -1;
+
 };
 
 #endif // SETTINGS_H

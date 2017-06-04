@@ -51,6 +51,7 @@ struct NpcItem
     long ThewMax;
     long VisionRadius;
     long WalkSpeed;
+    wxString Others;
     AsfDecode *NpcStand; //Point to AsfImgList item, don't free
 
 	NpcItem() {NpcStand = NULL;}

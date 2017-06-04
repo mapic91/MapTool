@@ -7,6 +7,7 @@
 #include "AsfDecode.hpp"
 #include "ClipBoard.h"
 #include "TmxReaderSetting.h"
+#include "Settings.h"
 
 #include "wx/dcbuffer.h"
 #include "wx/filedlg.h"
@@ -65,6 +66,8 @@ public:
         ID_SETFIXPOSUNDO,
         ID_SETFIXPOSCOMPLETE,
     };
+
+    void SaveSettings();
 
 	void Exit();
     void FrameOnChar( wxKeyEvent& event );
@@ -395,6 +398,14 @@ public:
         TXT_MASK = wxT("TXT文件(*.txt)|*.txt");
         INI_MESSGEG = wxT("选择一个INI文件");
         STYLE = wxFD_OPEN;
+
+        if(Settings::TheSetting.NpcDialogX != -1)
+		{
+			SetSize(Settings::TheSetting.NpcDialogX,
+									Settings::TheSetting.NpcDialogY,
+									Settings::TheSetting.NpcDialogWidth,
+									Settings::TheSetting.NpcDialogHeight);
+		}
     }
     virtual ~NpcItemEditDialog() {}
 
@@ -479,11 +490,25 @@ private:
 
     void OnOk( wxCommandEvent& event )
     {
+    	SaveSettings();
         EndModal(OK);
     }
     void OnCancle( wxCommandEvent& event )
     {
+    	SaveSettings();
         EndModal(CANCEL);
+    }
+
+    void SaveSettings()
+    {
+    	GetSize(&Settings::TheSetting.NpcDialogWidth, &Settings::TheSetting.NpcDialogHeight);
+		GetPosition(&Settings::TheSetting.NpcDialogX, &Settings::TheSetting.NpcDialogY);
+    }
+
+    virtual void OnClose( wxCloseEvent& event )
+    {
+		SaveSettings();
+    	event.Skip();
     }
 
     virtual void OnResetValue( wxMouseEvent& event )
@@ -748,6 +773,14 @@ public:
         m_mapName = mapname;
         m_ObjAsfImgList = list;
         m_item = objitem;
+
+        if(Settings::TheSetting.ObjDialogX != -1)
+		{
+			SetSize(Settings::TheSetting.ObjDialogX,
+									Settings::TheSetting.ObjDialogY,
+									Settings::TheSetting.ObjDialogWidth,
+									Settings::TheSetting.ObjDialogHeight);
+		}
     }
     virtual ~ObjItemEditDialog() {}
     void InitFromObjItem(ObjItem *item);
@@ -852,11 +885,25 @@ private:
     }
     void OnOk( wxCommandEvent& event )
     {
+    	SaveSettings();
         EndModal(wxID_OK);
     }
     void OnCancle( wxCommandEvent& event )
     {
+    	SaveSettings();
         EndModal(wxID_CANCEL);
+    }
+
+    virtual void OnClose( wxCloseEvent& event )
+    {
+    	SaveSettings();
+    	event.Skip();
+    }
+
+    void SaveSettings()
+    {
+    	GetSize(&Settings::TheSetting.ObjDialogWidth, &Settings::TheSetting.ObjDialogHeight);
+		GetPosition(&Settings::TheSetting.ObjDialogX, &Settings::TheSetting.ObjDialogY);
     }
     void OnSaveObjIniFile( wxCommandEvent& event )
     {
