@@ -19,15 +19,15 @@ END_EVENT_TABLE()
 FpsDialog::FpsDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos,const wxSize& size)
 {
 	//(*Initialize(FpsDialog)
-	Create(parent, id, _T("ÉèÖÃFPS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+	Create(parent, id, _T("è®¾ç½®FPS"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
 	SetClientSize(wxSize(227,86));
 	Move(wxDefaultPosition);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("Ö¡ÂÊ(FPS)£º"), wxPoint(16,16), wxSize(80,16), 0, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _T("å¸§ç‡(FPS)ï¼š"), wxPoint(16,16), wxSize(80,16), 0, _T("ID_STATICTEXT1"));
 	m_sbFps = new wxSpinCtrl(this, ID_SPINCTRL1, _T("60"), wxPoint(90,12), wxDefaultSize, 0, 10, 200, 60, _T("ID_SPINCTRL1"));
 	m_sbFps->SetValue(_T("60"));
-	m_sbFps->SetToolTip(_T("·¶Î§10 - 200\nÖ¡ÂÊÔ½¸ß£¬»­Ãæ¸üĞÂÔ½¿ì£¬CPUÊ¹ÓÃÔ½¸ß£¬Èí¼şÔ½¿¨\nÈç¹ûÈí¼ş½Ï¿¨£¬Çëµ÷µÍÖ¡ÂÊ"));
-	m_bOk = new wxButton(this, ID_BUTTON1, _T("È·¶¨"), wxPoint(24,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	m_bCancle = new wxButton(this, ID_BUTTON2, _T("È¡Ïû"), wxPoint(128,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	m_sbFps->SetToolTip(_T("èŒƒå›´10 - 200\nå¸§ç‡è¶Šé«˜ï¼Œç”»é¢æ›´æ–°è¶Šå¿«ï¼ŒCPUä½¿ç”¨è¶Šé«˜ï¼Œè½¯ä»¶è¶Šå¡\nå¦‚æœè½¯ä»¶è¾ƒå¡ï¼Œè¯·è°ƒä½å¸§ç‡"));
+	m_bOk = new wxButton(this, ID_BUTTON1, _T("ç¡®å®š"), wxPoint(24,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	m_bCancle = new wxButton(this, ID_BUTTON2, _T("å–æ¶ˆ"), wxPoint(128,50), wxSize(80,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&FpsDialog::Onm_bOkClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&FpsDialog::Onm_bCancleClick);

@@ -171,7 +171,7 @@ class Map
         long mPixelHeight;// = (mRow + 1) * 16
         MpcDecode *decode;
         Tile* tiles;
-        //0 - Í¸ 1-ÌøÍ¸ 2-ÕÏ 3-ÌøÕÏ
+        //0 - é€ 1-è·³é€ 2-éšœ 3-è·³éšœ
         ImgData mBarrer[4];
         ImgData mTrap[19];
 

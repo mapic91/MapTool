@@ -16,6 +16,7 @@
 #include "wx/timer.h"
 #include "wx/cmdproc.h"
 #include "MapToolCommand.h"
+#include "ListDefHelper.h"
 
 #include <map>
 #include <vector>
@@ -166,16 +167,16 @@ public:
     void OnRepositionUnseenNpc( wxCommandEvent& event );
     void OnShowNpcCounts( wxCommandEvent& event )
     {
-        wxMessageBox(wxString::Format(wxT("NPC ÊıÁ¿£ºCount = %d"), m_NpcList.getCounts()),
-                     wxT("ÏûÏ¢"));
+        wxMessageBox(wxString::Format(wxT("NPC æ•°é‡ï¼šCount = %d"), m_NpcList.getCounts()),
+                     wxT("æ¶ˆæ¯"));
     }
     void OnClearNpc( wxCommandEvent& event )
     {
-    	if(wxMessageBox(wxT("Çå³ıËùÓĞNPC£¿"),
+    	if(wxMessageBox(wxT("æ¸…é™¤æ‰€æœ‰NPCï¼Ÿ"),
 						wxMessageBoxCaptionStr,
 						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
 		{
-			MTC_Delete_Npcs *cmd = new MTC_Delete_Npcs(wxT("Çå³ıËùÓĞNPC"));
+			MTC_Delete_Npcs *cmd = new MTC_Delete_Npcs(wxT("æ¸…é™¤æ‰€æœ‰NPC"));
 			for(auto item : m_NpcList)
 			{
 				cmd->DeleteItem(0, item);
@@ -198,16 +199,16 @@ public:
     void OnRepositionUnseenObj( wxCommandEvent& event );
     void OnShowObjCount( wxCommandEvent& event )
     {
-        wxMessageBox(wxString::Format(wxT("OBJ ÊıÁ¿£ºCount = %d"), m_ObjList.getCounts()),
-                     wxT("ÏûÏ¢"));
+        wxMessageBox(wxString::Format(wxT("OBJ æ•°é‡ï¼šCount = %d"), m_ObjList.getCounts()),
+                     wxT("æ¶ˆæ¯"));
     }
     void OnClearObj( wxCommandEvent& event )
     {
-    	if(wxMessageBox(wxT("Çå³ıËùÓĞOBJ£¿"),
+    	if(wxMessageBox(wxT("æ¸…é™¤æ‰€æœ‰OBJï¼Ÿ"),
 						wxMessageBoxCaptionStr,
 						wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES)
 		{
-			MTC_Delete_Objs *cmd = new MTC_Delete_Objs(wxT("Çå³ıËùÓĞOBJ"));
+			MTC_Delete_Objs *cmd = new MTC_Delete_Objs(wxT("æ¸…é™¤æ‰€æœ‰OBJ"));
 			for(auto item : m_ObjList)
 			{
 				cmd->DeleteItem(0, item);
@@ -375,6 +376,8 @@ public:
 
     wxTimer m_timer;
 
+    ListDefHelper m_NpcPropertyDefs;
+
     DECLARE_EVENT_TABLE()
 };
 
@@ -384,7 +387,8 @@ public:
     NpcItemEditDialog(wxWindow *parent,
                       const wxString mapname,
                       AsfImgList *list,
-                      NpcItem *item)
+                      NpcItem *item,
+                      ListDefHelper *listDefHelper)
         :NpcItemEditDialogBase(parent)
     {
         m_mapName = mapname;
@@ -394,9 +398,9 @@ public:
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
 
-        INI_MASK = wxT("INIÎÄ¼ş(*.ini)|*.ini");
-        TXT_MASK = wxT("TXTÎÄ¼ş(*.txt)|*.txt");
-        INI_MESSGEG = wxT("Ñ¡ÔñÒ»¸öINIÎÄ¼ş");
+        INI_MASK = wxT("INIæ–‡ä»¶(*.ini)|*.ini");
+        TXT_MASK = wxT("TXTæ–‡ä»¶(*.txt)|*.txt");
+        INI_MESSGEG = wxT("é€‰æ‹©ä¸€ä¸ªINIæ–‡ä»¶");
         STYLE = wxFD_OPEN;
 
         if(Settings::TheSetting.NpcDialogX != -1)
@@ -406,6 +410,11 @@ public:
 									Settings::TheSetting.NpcDialogWidth,
 									Settings::TheSetting.NpcDialogHeight);
 		}
+
+		m_GridManager->SetDescBoxHeight(50);
+		listDefHelper->InitPropGrid(m_GridManager->GetPage(0), m_mapName);
+		listDefHelper->BindEvent(m_GridManager);
+
     }
     virtual ~NpcItemEditDialog() {}
 
@@ -639,7 +648,7 @@ private:
     void OnScriptFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("Ñ¡ÔñÒ»¸ö½Å±¾ÎÄ¼ş"),
+                             wxT("é€‰æ‹©ä¸€ä¸ªè„šæœ¬æ–‡ä»¶"),
                              exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
                              wxT(""),
                              TXT_MASK,
@@ -660,7 +669,7 @@ private:
     void OnDeathScript( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("Ñ¡ÔñÒ»¸ö½Å±¾ÎÄ¼ş"),
+                             wxT("é€‰æ‹©ä¸€ä¸ªè„šæœ¬æ–‡ä»¶"),
                              exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
                              wxT(""),
                              TXT_MASK,
@@ -681,38 +690,38 @@ private:
 	virtual void OnNpcIniClear( wxMouseEvent& event )
 	{
 		m_NpcIni->SetLabel(wxT(""));
-		m_NpcIni->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+		m_NpcIni->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
 	}
     void OnBodyIniClear( wxMouseEvent& event )
     {
         m_BodyIni->SetLabel(wxT(""));
-        m_BodyIni->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_BodyIni->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnFlyIniClear( wxMouseEvent& event )
     {
         m_FlyIni->SetLabel(wxT(""));
-        m_FlyIni->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_FlyIni->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnFlyIni2Clear( wxMouseEvent& event )
     {
         m_FlyIni2->SetLabel(wxT(""));
-        m_FlyIni2->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_FlyIni2->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnScriptFileClear( wxMouseEvent& event )
     {
         m_ScriptFile->SetLabel(wxT(""));
-        m_ScriptFile->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_ScriptFile->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnDeathScriptClear( wxMouseEvent& event )
     {
         m_DeathScript->SetLabel(wxT(""));
-        m_DeathScript->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_DeathScript->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
 
     void OnSaveNpcIniFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("±£´æINI"),
+                             wxT("ä¿å­˜INI"),
                              exepath + wxT("ini\\npc\\"),
                              wxT(""),
                              INI_MASK,
@@ -733,7 +742,7 @@ private:
     {
         if(relatePath.IsEmpty())
         {
-            wxMessageBox(wxT("ÇëÏÈÑ¡ÔñÎÄ¼ş"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("è¯·å…ˆé€‰æ‹©æ–‡ä»¶"), wxT("æ¶ˆæ¯"));
             return;
         }
         if(wxFileName::FileExists(exepath + relatePath))
@@ -746,7 +755,7 @@ private:
         }
         else
         {
-            wxMessageBox(relatePath + wxT("  ÎÄ¼ş²»´æÔÚ"), wxT("ÏûÏ¢"));
+            wxMessageBox(relatePath + wxT("  æ–‡ä»¶ä¸å­˜åœ¨"), wxT("æ¶ˆæ¯"));
             return;
         }
     }
@@ -790,10 +799,10 @@ private:
     void OnObjFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("Ñ¡ÔñÒ»¸öINIÎÄ¼ş"),
+                             wxT("é€‰æ‹©ä¸€ä¸ªINIæ–‡ä»¶"),
                              exepath + wxT("ini\\objres\\"),
                              wxT(""),
-                             wxT("INIÎÄ¼ş(*.ini)|*.ini"),
+                             wxT("INIæ–‡ä»¶(*.ini)|*.ini"),
                              wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
@@ -811,10 +820,10 @@ private:
     void OnScriptFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("Ñ¡ÔñÒ»¸ö½Å±¾ÎÄ¼ş"),
+                             wxT("é€‰æ‹©ä¸€ä¸ªè„šæœ¬æ–‡ä»¶"),
                              exepath + wxT("script\\common\\"),
                              wxT(""),
-                             wxT("TXTÎÄ¼ş(*.txt)|*.txt"),
+                             wxT("TXTæ–‡ä»¶(*.txt)|*.txt"),
                              wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
@@ -826,12 +835,12 @@ private:
     void OnClearObjFile( wxMouseEvent& event )
     {
     	m_ObjFile->SetLabel(wxT(""));
-    	m_ObjFile->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+    	m_ObjFile->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnClearScriptFile( wxMouseEvent& event )
     {
         m_ScriptFile->SetLabel(wxT(""));
-        m_ScriptFile->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_ScriptFile->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnEditScriptFile( wxCommandEvent& event )
     {
@@ -848,10 +857,10 @@ private:
     void OnWavFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("Ñ¡ÔñÉùÒôÎÄ¼ş"),
+                             wxT("é€‰æ‹©å£°éŸ³æ–‡ä»¶"),
                              exepath + wxT("sound\\"),
                              wxT(""),
-                             wxT("WAVÎÄ¼ş(*.wav)|*.wav"),
+                             wxT("WAVæ–‡ä»¶(*.wav)|*.wav"),
                              wxFD_OPEN);
 
         if(filedlg.ShowModal() == wxID_OK)
@@ -875,7 +884,7 @@ private:
     void OnClearWavFile( wxMouseEvent& event )
     {
         m_WavFile->SetLabel(wxT(""));
-        m_WavFile->SetToolTip(wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ı"));
+        m_WavFile->SetToolTip(wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤"));
     }
     void OnOpenWavFile( wxCommandEvent& event )
     {
@@ -908,10 +917,10 @@ private:
     void OnSaveObjIniFile( wxCommandEvent& event )
     {
         wxFileDialog filedlg(this,
-                             wxT("±£´æINI"),
+                             wxT("ä¿å­˜INI"),
                              exepath + wxT("ini\\obj\\"),
                              wxT(""),
-                             wxT("INIÎÄ¼ş(*.ini)|*.ini"),
+                             wxT("INIæ–‡ä»¶(*.ini)|*.ini"),
                              wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
         if(filedlg.ShowModal() == wxID_OK)
@@ -929,7 +938,7 @@ private:
     {
         if(relatePath.IsEmpty())
         {
-            wxMessageBox(wxT("ÇëÏÈÑ¡ÔñÎÄ¼ş"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("è¯·å…ˆé€‰æ‹©æ–‡ä»¶"), wxT("æ¶ˆæ¯"));
             return;
         }
         if(wxFileName::FileExists(exepath + relatePath))
@@ -942,7 +951,7 @@ private:
         }
         else
         {
-            wxMessageBox(relatePath + wxT("  ÎÄ¼ş²»´æÔÚ"), wxT("ÏûÏ¢"));
+            wxMessageBox(relatePath + wxT("  æ–‡ä»¶ä¸å­˜åœ¨"), wxT("æ¶ˆæ¯"));
             return;
         }
     }
@@ -958,7 +967,7 @@ public:
 	SetTmxHelperPortDialog(wxWindow *parent)
 	: SetTmxHelperPortDialogBase(parent)
 	{
-		SetTitle(wxT("ÉèÖÃ¶Ë¿Ú"));
+		SetTitle(wxT("è®¾ç½®ç«¯å£"));
 		m_spinCtrlPort->SetValue((int)TmxReaderSetting::GetPort());
 	}
 
@@ -968,7 +977,7 @@ public:
 		{
 			TmxReaderSetting::SetPortValue((unsigned short)m_spinCtrlPort->GetValue());
 			TmxReaderSetting::SaveConfig();
-			wxMessageBox(wxT("ÉèÖÃ³É¹¦£¬ÇëÖØÆô³ÌĞò£¡"));
+			wxMessageBox(wxT("è®¾ç½®æˆåŠŸï¼Œè¯·é‡å¯ç¨‹åºï¼"));
 		}
 		EndModal(wxID_OK);
 	}

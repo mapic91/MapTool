@@ -75,5 +75,7 @@ struct Frame_Data
     Frame_Data *next;
 };
 
+#define MAGIC_FILE_PROPERTY_NAME wxT("Magic File")
+
 #define SAFE_DELETE(p) delete p; p = nullptr;
 #endif // MYDEFS_HPP_INCLUDED

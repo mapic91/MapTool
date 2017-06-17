@@ -35,6 +35,9 @@ class wxListView;
 #include <wx/bmpcbox.h>
 #include <wx/button.h>
 #include <wx/textctrl.h>
+#include <wx/propgrid/propgrid.h>
+#include <wx/propgrid/manager.h>
+#include <wx/propgrid/advprops.h>
 #include <wx/dialog.h>
 #include <wx/spinctrl.h>
 
@@ -289,7 +292,8 @@ class NpcItemEditDialogBase : public wxDialog
 		wxButton* m_DeathScript;
 		wxButton* m_DeathScriptEdit;
 		wxStaticText* m_staticText54;
-		wxTextCtrl* m_Others;
+		wxPropertyGridManager* m_GridManager;
+		wxPropertyGridPage* m_PropertyPage;
 		wxButton* m_button26;
 		wxButton* m_OK;
 		wxButton* m_Cancle;

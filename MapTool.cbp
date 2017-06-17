@@ -62,6 +62,7 @@
 					<Add directory="$(#wx.lib)/gcc_lib/mswud" />
 				</ResourceCompiler>
 				<Linker>
+					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_stc.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_richtext.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_xrc.a" />
@@ -79,13 +80,13 @@
 					<Add library="$(#wx.lib)/gcc_lib/libwxbase30u_net.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_gl.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_media.a" />
-					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_ribbon.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30ud_webview.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxregexud.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxscintillad.a" />
 					<Add directory="$(#wx.lib)/gcc_lib" />
 					<Add directory="proto/lib/32" />
+					<Add directory="$(#wx)/build/msw" />
 				</Linker>
 			</Target>
 			<Target title="Release-dll">
@@ -226,12 +227,12 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=gnu++11" />
 			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
 			<Add option="-pipe" />
 			<Add option="-mthreads" />
 			<Add option='[[if (PLATFORM == PLATFORM_MSW &amp;&amp; (GetCompilerFactory().GetCompilerVersionString(_T(&quot;gcc&quot;)) &gt;= _T(&quot;4.0.0&quot;))) print(_T(&quot;-Wno-attributes&quot;));]]' />
-			<Add option="-finput-charset=GBK" />
+			<Add option="-finput-charset=UTF-8" />
 			<Add option="-D__GNUWIN32__" />
 			<Add option="-D__WXMSW__" />
 			<Add option="-DwxUSE_UNICODE" />
@@ -268,12 +269,18 @@
 		<Unit filename="ClipBoard.h" />
 		<Unit filename="FpsDialog.cpp" />
 		<Unit filename="FpsDialog.h" />
+		<Unit filename="InputUIntDialog.cpp" />
+		<Unit filename="InputUIntDialog.h" />
+		<Unit filename="ListDefHelper.cpp" />
+		<Unit filename="ListDefHelper.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="MapTool.cpp" />
 		<Unit filename="MapTool.h" />
 		<Unit filename="MapToolCommand.cpp" />
 		<Unit filename="MapToolCommand.h" />
+		<Unit filename="MapToolPropertys.cpp" />
+		<Unit filename="MapToolPropertys.hpp" />
 		<Unit filename="MpcDecode.cpp" />
 		<Unit filename="MpcDecode.hpp" />
 		<Unit filename="Npc.cpp" />
@@ -286,8 +293,11 @@
 		<Unit filename="TmxReaderClient.h" />
 		<Unit filename="TmxReaderSetting.cpp" />
 		<Unit filename="TmxReaderSetting.h" />
+		<Unit filename="Utils.cpp" />
+		<Unit filename="Utils.h" />
 		<Unit filename="YesNoAllDialog.cpp" />
 		<Unit filename="YesNoAllDialog.h" />
+		<Unit filename="json.hpp" />
 		<Unit filename="mydefs.hpp" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
@@ -297,6 +307,7 @@
 		</Unit>
 		<Unit filename="wxFormBuilder/MapFrameBase.h" />
 		<Unit filename="wxsmith/FpsDialog.wxs" />
+		<Unit filename="wxsmith/InputUIntDialog.wxs" />
 		<Unit filename="wxsmith/YesNoAllDialog.wxs" />
 		<Extensions>
 			<code_completion />
@@ -307,6 +318,7 @@
 				<resources>
 					<wxDialog wxs="wxsmith/YesNoAllDialog.wxs" src="YesNoAllDialog.cpp" hdr="YesNoAllDialog.h" fwddecl="0" i18n="0" name="YesNoAllDialog" language="CPP" />
 					<wxDialog wxs="wxsmith/FpsDialog.wxs" src="FpsDialog.cpp" hdr="FpsDialog.h" fwddecl="0" i18n="0" name="FpsDialog" language="CPP" />
+					<wxDialog wxs="wxsmith/InputUIntDialog.wxs" src="InputUIntDialog.cpp" hdr="InputUIntDialog.h" fwddecl="0" i18n="0" name="InputUIntDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

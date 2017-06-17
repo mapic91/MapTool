@@ -403,7 +403,7 @@ bool Map::GetTilePosition(int *tileX, int *tileY,int pixelX, int pixelY)
     nx = pixelX / 64;
     ny = (pixelY/ 32) * 2;
 
-    //now caclue real position, please see »ñÈ¡µØÍ¼×ø±ê.jpg
+    //now caclue real position, please see è·å–åœ°å›¾åæ ‡.jpg
     int dx, dy;
     dx = pixelX - nx * 64;
     dy = pixelY - (ny / 2) * 32;
@@ -613,13 +613,13 @@ void Map::LoadResource()
         AssignImgData(&mTrap[i], img);
     }
 
-    img.LoadFile(exepath + wxT("Í¸.png"));
+    img.LoadFile(exepath + wxT("é€.png"));
     AssignImgData(&mBarrer[0], img);
-    img.LoadFile(exepath + wxT("ÌøÍ¸.png"));
+    img.LoadFile(exepath + wxT("è·³é€.png"));
     AssignImgData(&mBarrer[1], img);
-    img.LoadFile(exepath + wxT("ÕÏ.png"));
+    img.LoadFile(exepath + wxT("éšœ.png"));
     AssignImgData(&mBarrer[2], img);
-    img.LoadFile(exepath + wxT("ÌøÕÏ.png"));
+    img.LoadFile(exepath + wxT("è·³éšœ.png"));
     AssignImgData(&mBarrer[3], img);
 }
 

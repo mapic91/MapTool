@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxDialog" name="InputUIntDialog">
+		<title>请输入</title>
+		<size>294,143</size>
+		<pos_arg>1</pos_arg>
+		<size_arg>1</size_arg>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="m_MessageLabel" member="yes">
+			<label>请输入距离：</label>
+			<pos>24,16</pos>
+			<size>88,16</size>
+		</object>
+		<object class="wxSpinCtrl" name="ID_SPINCTRL1" variable="m_UIntValueInput" member="yes">
+			<value>0</value>
+			<max>99999999</max>
+			<pos>80,48</pos>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="m_ButtonOK" member="yes">
+			<label>确定</label>
+			<pos>96,104</pos>
+			<handler function="Onm_ButtonOKClick" entry="EVT_BUTTON" />
+		</object>
+	</object>
+</wxsmith>

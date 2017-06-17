@@ -26,12 +26,12 @@ YesNoAllDialog::YesNoAllDialog(wxWindow* parent,wxWindowID id,const wxPoint& pos
 	SetClientSize(wxSize(307,67));
 	Move(wxDefaultPosition);
 	m_message = new wxStaticText(this, ID_STATICTEXT1, wxEmptyString, wxPoint(8,8), wxSize(288,24), 0, _T("ID_STATICTEXT1"));
-	m_bYes = new wxButton(this, ID_BUTTON1, _T("ÊÇ"), wxPoint(5,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
-	m_bYes->SetToolTip(_T("ĞŞ¸Äµ±Ç°"));
-	m_bNo = new wxButton(this, ID_BUTTON2, _T("·ñ"), wxPoint(84,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
-	m_bNo->SetToolTip(_T("²»ĞŞ¸Äµ±Ç°"));
-	m_bAll = new wxButton(this, ID_BUTTON3, _T("ºóÃæÈ«ÊÇ"), wxPoint(162,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
-	m_bCancle = new wxButton(this, ID_BUTTON4, _T("ºóÃæÈ«·ñ"), wxPoint(238,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
+	m_bYes = new wxButton(this, ID_BUTTON1, _T("æ˜¯"), wxPoint(5,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON1"));
+	m_bYes->SetToolTip(_T("ä¿®æ”¹å½“å‰"));
+	m_bNo = new wxButton(this, ID_BUTTON2, _T("å¦"), wxPoint(84,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON2"));
+	m_bNo->SetToolTip(_T("ä¸ä¿®æ”¹å½“å‰"));
+	m_bAll = new wxButton(this, ID_BUTTON3, _T("åé¢å…¨æ˜¯"), wxPoint(162,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON3"));
+	m_bCancle = new wxButton(this, ID_BUTTON4, _T("åé¢å…¨å¦"), wxPoint(238,38), wxSize(65,23), 0, wxDefaultValidator, _T("ID_BUTTON4"));
 
 	Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&YesNoAllDialog::Onm_bYesClick);
 	Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&YesNoAllDialog::Onm_bNoClick);

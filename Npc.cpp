@@ -666,7 +666,7 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
     }
 
     NpcItem *item;;
-    MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("导入NPC文件"));
+    MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("瀵煎叆NPC鏂囦欢"));
     for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
     {
         while(!file.Eof())
@@ -766,7 +766,7 @@ bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list,
     }
 
     ObjItem *item;
-    MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("导入OBJ文件"));
+    MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("瀵煎叆OBJ鏂囦欢"));
     for(long i = 0; i < counts && !file.Eof(); i++, line = file.GetNextLine())
     {
         while(!file.Eof())

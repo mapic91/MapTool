@@ -39,7 +39,7 @@ Proto::TmxMap* TmxReaderClient::GetTmxMap(const wxString& mapPath)
 				}
 				else
 				{
-					wxMessageBox(wxT("TmxµØÍ¼¶ÁÈ¡Ê§°Ü£¡"), wxT("ÏûÏ¢"), wxCENTER| wxICON_ERROR);
+					wxMessageBox(wxT("Tmxåœ°å›¾è¯»å–å¤±è´¥ï¼"), wxT("æ¶ˆæ¯"), wxCENTER| wxICON_ERROR);
 				}
 			}
 
@@ -62,7 +62,7 @@ void TmxReaderClient::Connect(bool silent)
 
 	if(!mClient.IsConnected() && !silent)
 	{
-		wxMessageBox(wxT("TmxµØÍ¼¶ÁÈ¡·şÎñÁ¬½ÓÊ§°Ü£¡"), wxT("ÏûÏ¢"), wxCENTER| wxICON_ERROR);
+		wxMessageBox(wxT("Tmxåœ°å›¾è¯»å–æœåŠ¡è¿æ¥å¤±è´¥ï¼"), wxT("æ¶ˆæ¯"), wxCENTER| wxICON_ERROR);
 	}
 }
 
@@ -95,7 +95,7 @@ bool TmxReaderClient::Send(char code, const char* data, int length)
 	delete[] buffer;
 	if(mClient.Error())
 	{
-		wxMessageBox(wxT("ÓëTmxµØÍ¼¶ÁÈ¡·şÎñÊı¾İ´«Êä³ö´í£¡"), wxT("ÏûÏ¢"), wxCENTER| wxICON_ERROR);
+		wxMessageBox(wxT("ä¸Tmxåœ°å›¾è¯»å–æœåŠ¡æ•°æ®ä¼ è¾“å‡ºé”™ï¼"), wxT("æ¶ˆæ¯"), wxCENTER| wxICON_ERROR);
 		return false;
 	}
 	return true;

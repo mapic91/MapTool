@@ -132,7 +132,7 @@ private:
 class MTC_Delete_Npcs : public wxCommand
 {
 public:
-	MTC_Delete_Npcs(wxString name = wxT("批量删除Npc"));
+	MTC_Delete_Npcs(wxString name = wxT("鎵归噺鍒犻櫎Npc"));
 	~MTC_Delete_Npcs();
 	void DeleteItem(size_t index, NpcItem *item);
 	virtual bool Do();
@@ -269,7 +269,7 @@ private:
 class MTC_Delete_Objs : public wxCommand
 {
 public:
-	MTC_Delete_Objs(wxString name = wxT("批量删除Obj"));
+	MTC_Delete_Objs(wxString name = wxT("鎵归噺鍒犻櫎Obj"));
 	~MTC_Delete_Objs();
 	void DeleteItem(size_t index, ObjItem *item);
 	virtual bool Do();

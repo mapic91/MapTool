@@ -20,7 +20,7 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2 = new wxBoxSizer( wxVERTICAL );
 	
 	m_toolBar1 = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxTB_HORIZONTAL ); 
-	m_tool7 = m_toolBar1->AddTool( ID_OPENMAP, wxT("tool"), wxICON( OPENFILE ), wxNullBitmap, wxITEM_NORMAL, wxT("´ò¿ªµØÍ¼..."), wxT("CTRL+O"), NULL ); 
+	m_tool7 = m_toolBar1->AddTool( ID_OPENMAP, wxT("tool"), wxICON( OPENFILE ), wxNullBitmap, wxITEM_NORMAL, wxT("æ‰“å¼€åœ°å›¾..."), wxT("CTRL+O"), NULL ); 
 	
 	m_toolBar1->AddSeparator(); 
 	
@@ -28,29 +28,29 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_toolBar1->AddSeparator(); 
 	
-	m_Layer1 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã1"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer1 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("å›¾å±‚1"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer1->SetValue(true); 
 	m_toolBar1->AddControl( m_Layer1 );
-	m_Layer2 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer2 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("å›¾å±‚2"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer2->SetValue(true); 
 	m_toolBar1->AddControl( m_Layer2 );
-	m_Layer3 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ã3"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Layer3 = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("å›¾å±‚3"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_Layer3->SetValue(true); 
 	m_toolBar1->AddControl( m_Layer3 );
 	m_toolBar1->AddSeparator(); 
 	
 	m_toolBar1->AddSeparator(); 
 	
-	m_Trap = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("ÏÝÚå"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Trap = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("é™·é˜±"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_toolBar1->AddControl( m_Trap );
-	m_Barrer = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("ÕÏ°­"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Barrer = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("éšœç¢"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_toolBar1->AddControl( m_Barrer );
 	m_toolBar1->AddSeparator(); 
 	
 	m_toolBar1->AddSeparator(); 
 	
-	m_LayerTransparent = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("Í¼²ãÍ¸Ã÷"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_LayerTransparent->SetToolTip( wxT("Ê¹Í¼²ãÍ¸Ã÷µÄµØ·½Í¸Ã÷£¬¶ø²»ÊÇºÚÉ«") );
+	m_LayerTransparent = new wxCheckBox( m_toolBar1, wxID_ANY, wxT("å›¾å±‚é€æ˜Ž"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_LayerTransparent->SetToolTip( wxT("ä½¿å›¾å±‚é€æ˜Žçš„åœ°æ–¹é€æ˜Žï¼Œè€Œä¸æ˜¯é»‘è‰²") );
 	
 	m_toolBar1->AddControl( m_LayerTransparent );
 	m_toolBar1->Realize(); 
@@ -58,25 +58,25 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	bSizer2->Add( m_toolBar1, 1, wxEXPAND, 5 );
 	
 	m_ToolBarEdit = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxSize( -1,-1 ), wxTB_HORIZONTAL ); 
-	m_tool5 = m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxICON( NPC ), wxNullBitmap, wxITEM_CHECK, wxT("ÈËÎï±à¼­Ä£Ê½£¨F2£©"), wxEmptyString, NULL ); 
+	m_tool5 = m_ToolBarEdit->AddTool( ID_NPCMODE, wxT("tool"), wxICON( NPC ), wxNullBitmap, wxITEM_CHECK, wxT("äººç‰©ç¼–è¾‘æ¨¡å¼ï¼ˆF2ï¼‰"), wxEmptyString, NULL ); 
 	
-	m_tool6 = m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxICON( OBJ ), wxNullBitmap, wxITEM_CHECK, wxT("ÎïÆ·±à¼­Ä£Ê½£¨F3£©"), wxEmptyString, NULL ); 
-	
-	m_ToolBarEdit->AddSeparator(); 
-	
-	m_ToolPlace = m_ToolBarEdit->AddTool( ID_TOOLPLACE, wxT("tool"), wxICON( PLACE ), wxNullBitmap, wxITEM_CHECK, wxT("·ÅÖÃÄ£Ê½£¨P£©"), wxEmptyString, NULL ); 
-	
-	m_ToolDelete = m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxICON( DELETE ), wxNullBitmap, wxITEM_CHECK, wxT("É¾³ýÄ£Ê½£¨D£©"), wxEmptyString, NULL ); 
-	
-	m_ToolEditAttribute = m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxICON( ATTRIBUTE ), wxNullBitmap, wxITEM_CHECK, wxT("ÊôÐÔÉèÖÃÄ£Ê½£¨A£©"), wxEmptyString, NULL ); 
-	
-	m_tool4 = m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxICON( MOVE ), wxNullBitmap, wxITEM_CHECK, wxT("ÒÆ¶¯Ä£Ê½£¨M£©"), wxEmptyString, NULL ); 
+	m_tool6 = m_ToolBarEdit->AddTool( ID_OBJMODE, wxT("tool"), wxICON( OBJ ), wxNullBitmap, wxITEM_CHECK, wxT("ç‰©å“ç¼–è¾‘æ¨¡å¼ï¼ˆF3ï¼‰"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->AddSeparator(); 
 	
-	m_tool8 = m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxICON( VIEWNPC ), wxNullBitmap, wxITEM_CHECK, wxT("ÏÔÊ¾ÈËÎï£¨N£©"), wxEmptyString, NULL ); 
+	m_ToolPlace = m_ToolBarEdit->AddTool( ID_TOOLPLACE, wxT("tool"), wxICON( PLACE ), wxNullBitmap, wxITEM_CHECK, wxT("æ”¾ç½®æ¨¡å¼ï¼ˆPï¼‰"), wxEmptyString, NULL ); 
 	
-	m_tool9 = m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxICON( VIEWOBJ ), wxNullBitmap, wxITEM_CHECK, wxT("ÏÔÊ¾ÎïÆ·£¨O£©"), wxEmptyString, NULL ); 
+	m_ToolDelete = m_ToolBarEdit->AddTool( ID_TOOLDELETE, wxT("tool"), wxICON( DELETE ), wxNullBitmap, wxITEM_CHECK, wxT("åˆ é™¤æ¨¡å¼ï¼ˆDï¼‰"), wxEmptyString, NULL ); 
+	
+	m_ToolEditAttribute = m_ToolBarEdit->AddTool( ID_EDITATTRIBUTE, wxT("tool"), wxICON( ATTRIBUTE ), wxNullBitmap, wxITEM_CHECK, wxT("å±žæ€§è®¾ç½®æ¨¡å¼ï¼ˆAï¼‰"), wxEmptyString, NULL ); 
+	
+	m_tool4 = m_ToolBarEdit->AddTool( ID_TOOLMOVE, wxT("tool"), wxICON( MOVE ), wxNullBitmap, wxITEM_CHECK, wxT("ç§»åŠ¨æ¨¡å¼ï¼ˆMï¼‰"), wxEmptyString, NULL ); 
+	
+	m_ToolBarEdit->AddSeparator(); 
+	
+	m_tool8 = m_ToolBarEdit->AddTool( ID_SHOWNPC, wxT("tool"), wxICON( VIEWNPC ), wxNullBitmap, wxITEM_CHECK, wxT("æ˜¾ç¤ºäººç‰©ï¼ˆNï¼‰"), wxEmptyString, NULL ); 
+	
+	m_tool9 = m_ToolBarEdit->AddTool( ID_SHOWOBJ, wxT("tool"), wxICON( VIEWOBJ ), wxNullBitmap, wxITEM_CHECK, wxT("æ˜¾ç¤ºç‰©å“ï¼ˆOï¼‰"), wxEmptyString, NULL ); 
 	
 	m_ToolBarEdit->Realize(); 
 	
@@ -153,130 +153,130 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	m_menubar3 = new wxMenuBar( 0 );
 	m_MenuFile = new wxMenu();
 	wxMenuItem* m_menuItemOpenMap;
-	m_menuItemOpenMap = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("´ò¿ªµØÍ¼...") ) + wxT('\t') + wxT("CTRL+O"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemOpenMap = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("æ‰“å¼€åœ°å›¾...") ) + wxT('\t') + wxT("CTRL+O"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemOpenMap );
 	
 	wxMenuItem* m_menuItemSavePng;
-	m_menuItemSavePng = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("´æÎªPNG...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemSavePng = new wxMenuItem( m_MenuFile, wxID_ANY, wxString( wxT("å­˜ä¸ºPNG...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemSavePng );
 	
 	m_MenuFile->AppendSeparator();
 	
 	wxMenuItem* m_menuItemUP;
-	m_menuItemUP = new wxMenuItem( m_MenuFile, ID_MAPUP, wxString( wxT("µØÍ¼ÉÏÒÆ\tUp") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemUP = new wxMenuItem( m_MenuFile, ID_MAPUP, wxString( wxT("åœ°å›¾ä¸Šç§»\tUp") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemUP );
 	
 	wxMenuItem* m_menuItemDOWN;
-	m_menuItemDOWN = new wxMenuItem( m_MenuFile, ID_MAPDOWN, wxString( wxT("µØÍ¼ÏÂÒÆ\tDown") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemDOWN = new wxMenuItem( m_MenuFile, ID_MAPDOWN, wxString( wxT("åœ°å›¾ä¸‹ç§»\tDown") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemDOWN );
 	
 	wxMenuItem* m_menuItemLeft;
-	m_menuItemLeft = new wxMenuItem( m_MenuFile, ID_MAPLEFT, wxString( wxT("µØÍ¼×óÒÆ\tLeft") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemLeft = new wxMenuItem( m_MenuFile, ID_MAPLEFT, wxString( wxT("åœ°å›¾å·¦ç§»\tLeft") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemLeft );
 	
 	wxMenuItem* m_menuItemRIGHT;
-	m_menuItemRIGHT = new wxMenuItem( m_MenuFile, ID_MAPRIGHT, wxString( wxT("µØÍ¼ÓÒÒÆ\tRight") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemRIGHT = new wxMenuItem( m_MenuFile, ID_MAPRIGHT, wxString( wxT("åœ°å›¾å³ç§»\tRight") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuFile->Append( m_menuItemRIGHT );
 	
-	m_menubar3->Append( m_MenuFile, wxT("µØÍ¼(&MAP)") ); 
+	m_menubar3->Append( m_MenuFile, wxT("åœ°å›¾(&MAP)") ); 
 	
 	m_menuEdit = new wxMenu();
 	wxMenuItem* m_menuItemUndo;
-	m_menuItemUndo = new wxMenuItem( m_menuEdit, wxID_UNDO, wxString( wxT("³·Ïú") ) + wxT('\t') + wxT("CTRL+Z"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemUndo = new wxMenuItem( m_menuEdit, wxID_UNDO, wxString( wxT("æ’¤é”€") ) + wxT('\t') + wxT("CTRL+Z"), wxEmptyString, wxITEM_NORMAL );
 	m_menuEdit->Append( m_menuItemUndo );
 	m_menuItemUndo->Enable( false );
 	
 	wxMenuItem* m_menuItemRedo;
-	m_menuItemRedo = new wxMenuItem( m_menuEdit, wxID_REDO, wxString( wxT("ÖØ×ö") ) + wxT('\t') + wxT("CTRL+Y"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemRedo = new wxMenuItem( m_menuEdit, wxID_REDO, wxString( wxT("é‡åš") ) + wxT('\t') + wxT("CTRL+Y"), wxEmptyString, wxITEM_NORMAL );
 	m_menuEdit->Append( m_menuItemRedo );
 	m_menuItemRedo->Enable( false );
 	
-	m_menubar3->Append( m_menuEdit, wxT("±à¼­(&Edit)") ); 
+	m_menubar3->Append( m_menuEdit, wxT("ç¼–è¾‘(&Edit)") ); 
 	
 	m_MenuCharacter = new wxMenu();
 	wxMenuItem* m_menuItem5;
-	m_menuItem5 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("¼ÓÔØÈËÎï") ) + wxT('\t') + wxT("CTRL+R"), wxT("¼ÓÔØÒ»¸öÈËÎïµÈ´ý·ÅÖÃ"), wxITEM_NORMAL );
+	m_menuItem5 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("åŠ è½½äººç‰©") ) + wxT('\t') + wxT("CTRL+R"), wxT("åŠ è½½ä¸€ä¸ªäººç‰©ç­‰å¾…æ”¾ç½®"), wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem5 );
 	
 	wxMenuItem* m_menuItem6;
-	m_menuItem6 = new wxMenuItem( m_MenuCharacter, ID_DIRECTION, wxString( wxT("ÏÂÒ»·½Ïò") ) + wxT('\t') + wxT("Space"), wxT("ÈËÎïµÄ·½Ïò(Dir)"), wxITEM_NORMAL );
+	m_menuItem6 = new wxMenuItem( m_MenuCharacter, ID_DIRECTION, wxString( wxT("ä¸‹ä¸€æ–¹å‘") ) + wxT('\t') + wxT("Space"), wxT("äººç‰©çš„æ–¹å‘(Dir)"), wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem6 );
 	
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItem8;
-	m_menuItem8 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("µ¼ÈëNPCÎÄ¼þ") ) + wxT('\t') + wxT("CTRL+I"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItem8 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("å¯¼å…¥NPCæ–‡ä»¶") ) + wxT('\t') + wxT("CTRL+I"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem8 );
 	
 	wxMenuItem* m_menuItem7;
-	m_menuItem7 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("µ¼³öNPCÎÄ¼þ") ) + wxT('\t') + wxT("CTRL+N"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItem7 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("å¯¼å‡ºNPCæ–‡ä»¶") ) + wxT('\t') + wxT("CTRL+N"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem7 );
 	
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowNpc;
-	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("ÐÞ¸´ÈËÎïÎ»ÖÃ...") ) + wxT('\t') + wxT("CTRL+H"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowNpc = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("ä¿®å¤äººç‰©ä½ç½®...") ) + wxT('\t') + wxT("CTRL+H"), wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItemShowUnShowNpc );
 	
 	m_MenuCharacter->AppendSeparator();
 	
 	wxMenuItem* m_menuItem9;
-	m_menuItem9 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("ÈËÎïÊýÁ¿") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem9 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("äººç‰©æ•°é‡") ) , wxEmptyString, wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem9 );
 	
 	wxMenuItem* m_menuItem10;
-	m_menuItem10 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("Çå¿ÕÈËÎï") ) , wxT("Çå¿ÕµØÍ¼ÉÏËùÓÐNPC"), wxITEM_NORMAL );
+	m_menuItem10 = new wxMenuItem( m_MenuCharacter, wxID_ANY, wxString( wxT("æ¸…ç©ºäººç‰©") ) , wxT("æ¸…ç©ºåœ°å›¾ä¸Šæ‰€æœ‰NPC"), wxITEM_NORMAL );
 	m_MenuCharacter->Append( m_menuItem10 );
 	
-	m_menubar3->Append( m_MenuCharacter, wxT("ÈËÎï( &NPC )") ); 
+	m_menubar3->Append( m_MenuCharacter, wxT("äººç‰©( &NPC )") ); 
 	
 	m_menu3 = new wxMenu();
 	wxMenuItem* m_menuItem11;
-	m_menuItem11 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("¼ÓÔØÎïÆ·") ) + wxT('\t') + wxT("CTRL+W"), wxT("¼ÓÔØÒ»¸öÎïÆ·µÈ´ý·ÅÖÃ"), wxITEM_NORMAL );
+	m_menuItem11 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("åŠ è½½ç‰©å“") ) + wxT('\t') + wxT("CTRL+W"), wxT("åŠ è½½ä¸€ä¸ªç‰©å“ç­‰å¾…æ”¾ç½®"), wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem11 );
 	
 	wxMenuItem* m_menuItem12;
-	m_menuItem12 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ÏÂÒ»·½Ïò") ) + wxT('\t') + wxT("Space"), wxT("ÎïÆ·µÄ·½Ïò(Dir)"), wxITEM_NORMAL );
+	m_menuItem12 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ä¸‹ä¸€æ–¹å‘") ) + wxT('\t') + wxT("Space"), wxT("ç‰©å“çš„æ–¹å‘(Dir)"), wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem12 );
 	
 	m_menu3->AppendSeparator();
 	
 	wxMenuItem* m_menuItem13;
-	m_menuItem13 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("µ¼ÈëOBJÎÄ¼þ") ) + wxT('\t') + wxT("CTRL+L"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItem13 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("å¯¼å…¥OBJæ–‡ä»¶") ) + wxT('\t') + wxT("CTRL+L"), wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem13 );
 	
 	wxMenuItem* m_menuItem14;
-	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("µ¼³öOBJÎÄ¼þ") ) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItem14 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("å¯¼å‡ºOBJæ–‡ä»¶") ) + wxT('\t') + wxT("CTRL+B"), wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem14 );
 	
 	m_menu3->AppendSeparator();
 	
 	wxMenuItem* m_menuItemShowUnShowOBj;
-	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ÐÞ¸´ÎïÆ·Î»ÖÃ...") ) + wxT('\t') + wxT("CTRL+J"), wxEmptyString, wxITEM_NORMAL );
+	m_menuItemShowUnShowOBj = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ä¿®å¤ç‰©å“ä½ç½®...") ) + wxT('\t') + wxT("CTRL+J"), wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItemShowUnShowOBj );
 	
 	m_menu3->AppendSeparator();
 	
 	wxMenuItem* m_menuItem15;
-	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ÎïÆ·ÊýÁ¿") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem15 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("ç‰©å“æ•°é‡") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem15 );
 	
 	wxMenuItem* m_menuItem16;
-	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("Çå¿ÕÎïÆ·") ) , wxT("Çå¿ÕµØÍ¼ÉÏËùÓÐOBJ"), wxITEM_NORMAL );
+	m_menuItem16 = new wxMenuItem( m_menu3, wxID_ANY, wxString( wxT("æ¸…ç©ºç‰©å“") ) , wxT("æ¸…ç©ºåœ°å›¾ä¸Šæ‰€æœ‰OBJ"), wxITEM_NORMAL );
 	m_menu3->Append( m_menuItem16 );
 	
-	m_menubar3->Append( m_menu3, wxT("ÎïÆ·(&OBJ)") ); 
+	m_menubar3->Append( m_menu3, wxT("ç‰©å“(&OBJ)") ); 
 	
 	m_menu5 = new wxMenu();
 	wxMenuItem* m_menuItem25;
-	m_menuItem25 = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("Ö¡ÂÊ(&FPS)...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem25 = new wxMenuItem( m_menu5, wxID_ANY, wxString( wxT("å¸§çŽ‡(&FPS)...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menu5->Append( m_menuItem25 );
 	
-	m_menubar3->Append( m_menu5, wxT("ÐÔÄÜ(&P)") ); 
+	m_menubar3->Append( m_menu5, wxT("æ€§èƒ½(&P)") ); 
 	
 	m_menu6 = new wxMenu();
 	wxMenuItem* m_menuItem27;
-	m_menuItem27 = new wxMenuItem( m_menu6, wxID_ANY, wxString( wxT("¶Ë¿Ú(&Port)") ) , wxT("µ±Á¬½ÓTMXµØÍ¼¶ÁÈ¡·þÎñÊ§°ÜÊ±£¬¿É³¢ÊÔÉèÖÃÆäËü¶Ë¿Ú"), wxITEM_NORMAL );
+	m_menuItem27 = new wxMenuItem( m_menu6, wxID_ANY, wxString( wxT("ç«¯å£(&Port)") ) , wxT("å½“è¿žæŽ¥TMXåœ°å›¾è¯»å–æœåŠ¡å¤±è´¥æ—¶ï¼Œå¯å°è¯•è®¾ç½®å…¶å®ƒç«¯å£"), wxITEM_NORMAL );
 	m_menu6->Append( m_menuItem27 );
 	
 	m_menubar3->Append( m_menu6, wxT("TMX(&T)") ); 
@@ -285,35 +285,35 @@ MapFrameBase::MapFrameBase( wxWindow* parent, wxWindowID id, const wxString& tit
 	
 	m_menuMapView = new wxMenu();
 	wxMenuItem* m_menuItemCopy;
-	m_menuItemCopy = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_COPY, wxString( wxT("¸´ÖÆ") ) , wxT("ÉèÖÃÎª·ÅÖÃÔ´"), wxITEM_NORMAL );
+	m_menuItemCopy = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_COPY, wxString( wxT("å¤åˆ¶") ) , wxT("è®¾ç½®ä¸ºæ”¾ç½®æº"), wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemCopy );
 	
 	wxMenuItem* m_menuItemCut;
-	m_menuItemCut = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CUT, wxString( wxT("¼ôÇÐ") ) , wxT("ÉèÖÃÎª·ÅÖÃÔ´²¢É¾³ý"), wxITEM_NORMAL );
+	m_menuItemCut = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CUT, wxString( wxT("å‰ªåˆ‡") ) , wxT("è®¾ç½®ä¸ºæ”¾ç½®æºå¹¶åˆ é™¤"), wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemCut );
 	
 	wxMenuItem* m_menuItemPaste;
-	m_menuItemPaste = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_PASTE, wxString( wxT("Õ³Ìù") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemPaste = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_PASTE, wxString( wxT("ç²˜è´´") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemPaste );
 	
 	m_menuMapView->AppendSeparator();
 	
 	wxMenuItem* m_menuItemDetail;
-	m_menuItemDetail = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DETIAL, wxString( wxT("ÏêÏ¸...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemDetail = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DETIAL, wxString( wxT("è¯¦ç»†...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemDetail );
 	
 	wxMenuItem* m_menuItemDelete;
-	m_menuItemDelete = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DELETE, wxString( wxT("É¾³ý") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemDelete = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_DELETE, wxString( wxT("åˆ é™¤") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemDelete );
 	
 	m_menuMapView->AppendSeparator();
 	
 	wxMenuItem* m_menuItemBatEdit;
-	m_menuItemBatEdit = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_BATEDIT, wxString( wxT("ÅúÁ¿±à¼­...") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItemBatEdit = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_BATEDIT, wxString( wxT("æ‰¹é‡ç¼–è¾‘...") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItemBatEdit );
 	
 	wxMenuItem* m_menuItem26;
-	m_menuItem26 = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CLEAR_SELECTION, wxString( wxT("Ïû³ýÑ¡Ôñ") ) , wxEmptyString, wxITEM_NORMAL );
+	m_menuItem26 = new wxMenuItem( m_menuMapView, MYID_MAPVIEW_CLEAR_SELECTION, wxString( wxT("æ¶ˆé™¤é€‰æ‹©") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuMapView->Append( m_menuItem26 );
 	
 	this->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( MapFrameBase::MapFrameBaseOnContextMenu ), NULL, this ); 
@@ -464,7 +464,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxGridSizer* gSizer1;
 	gSizer1 = new wxGridSizer( 20, 4, 0, 0 );
 	
-	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("ÐÕÃû------Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText1 = new wxStaticText( this, wxID_ANY, wxT("å§“å------Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
 	gSizer1->Add( m_staticText1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -474,7 +474,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Name, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("ÉÁ±Ü------Evade"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("é—ªé¿------Evade"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
 	gSizer1->Add( m_staticText2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -484,24 +484,24 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Evade, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("ÀàÐÍ------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText3 = new wxStaticText( this, wxID_ANY, wxT("ç±»åž‹------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText3->Wrap( -1 );
 	gSizer1->Add( m_staticText3, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, MYID_KIND, wxT("ÆÕÍ¨Àà"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	m_Kind->Append( wxT("ÆÕÍ¨Àà") );
-	m_Kind->Append( wxT("Õ½¶·Àà") );
-	m_Kind->Append( wxT("ÊÂ¼þÀà") );
-	m_Kind->Append( wxT("µØÉÏ¶¯ÎïÀà") );
-	m_Kind->Append( wxT("ÅÂÈË¶¯ÎïÀà") );
-	m_Kind->Append( wxT("·ÉÏè¶¯ÎïÀà") );
-	m_Kind->SetToolTip( wxT("Êó±êÓÒ¼üÇå³ý") );
+	m_Kind = new wxComboBox( this, MYID_KIND, wxT("æ™®é€šç±»"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+	m_Kind->Append( wxT("æ™®é€šç±»") );
+	m_Kind->Append( wxT("æˆ˜æ–—ç±»") );
+	m_Kind->Append( wxT("äº‹ä»¶ç±»") );
+	m_Kind->Append( wxT("åœ°ä¸ŠåŠ¨ç‰©ç±»") );
+	m_Kind->Append( wxT("æ€•äººåŠ¨ç‰©ç±»") );
+	m_Kind->Append( wxT("é£žç¿”åŠ¨ç‰©ç±»") );
+	m_Kind->SetToolTip( wxT("é¼ æ ‡å³é”®æ¸…é™¤") );
 	m_Kind->SetMinSize( wxSize( 110,-1 ) );
 	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer1->Add( m_Kind, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷Á¦----Attack "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText4 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»åŠ›----Attack "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText4->Wrap( -1 );
 	gSizer1->Add( m_staticText4, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -511,21 +511,21 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Attack, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("¹ØÏµ------Relation"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText5 = new wxStaticText( this, wxID_ANY, wxT("å…³ç³»------Relation"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText5->Wrap( -1 );
 	gSizer1->Add( m_staticText5, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Relation = new wxComboBox( this, MYID_RELATION, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	m_Relation->Append( wxT("ÓÑºÃ") );
-	m_Relation->Append( wxT("µÐ¶Ô") );
-	m_Relation->Append( wxT("ÖÐÁ¢") );
-	m_Relation->SetToolTip( wxT("Êó±êÓÒ¼üÇå³ý") );
+	m_Relation->Append( wxT("å‹å¥½") );
+	m_Relation->Append( wxT("æ•Œå¯¹") );
+	m_Relation->Append( wxT("ä¸­ç«‹") );
+	m_Relation->SetToolTip( wxT("é¼ æ ‡å³é”®æ¸…é™¤") );
 	m_Relation->SetMinSize( wxSize( 110,-1 ) );
 	m_Relation->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer1->Add( m_Relation, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷µÈ¼¶--AttackLevel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText6 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»ç­‰çº§--AttackLevel"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText6->Wrap( -1 );
 	gSizer1->Add( m_staticText6, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -545,7 +545,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_AttackLevel, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT("Ñ°Â·------PathFinder"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText7 = new wxStaticText( this, wxID_ANY, wxT("å¯»è·¯------PathFinder"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText7->Wrap( -1 );
 	gSizer1->Add( m_staticText7, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -557,7 +557,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_PathFinder, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText8 = new wxStaticText( this, wxID_ANY, wxT("·ÀÓù------Defend"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText8 = new wxStaticText( this, wxID_ANY, wxT("é˜²å¾¡------Defend"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText8->Wrap( -1 );
 	gSizer1->Add( m_staticText8, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -567,7 +567,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Defend, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("×´Ì¬------State"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText9 = new wxStaticText( this, wxID_ANY, wxT("çŠ¶æ€------State"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText9->Wrap( -1 );
 	gSizer1->Add( m_staticText9, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -589,9 +589,9 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_comboBox10, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText11 = new wxStaticText( this, wxID_ANY, wxT("£¨ÐÂ½££©--ShowName"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText11 = new wxStaticText( this, wxID_ANY, wxT("ï¼ˆæ–°å‰‘ï¼‰--ShowName"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText11->Wrap( -1 );
-	m_staticText11->SetToolTip( wxT("ÔÂÓ°´«ËµÖÐÃ»ÓÐ£¬ÐÂ½£ÏÀÇéÔµÖÐÓÐ") );
+	m_staticText11->SetToolTip( wxT("æœˆå½±ä¼ è¯´ä¸­æ²¡æœ‰ï¼Œæ–°å‰‘ä¾ æƒ…ç¼˜ä¸­æœ‰") );
 	
 	gSizer1->Add( m_staticText11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -601,7 +601,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_ShowName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText12 = new wxStaticText( this, wxID_ANY, wxT("¾­Ñé------Exp "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText12 = new wxStaticText( this, wxID_ANY, wxT("ç»éªŒ------Exp "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText12->Wrap( -1 );
 	gSizer1->Add( m_staticText12, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -611,7 +611,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Exp, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText13 = new wxStaticText( this, wxID_ANY, wxT("ÊÓÒ°°ë¾¶--VisionRadius"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText13 = new wxStaticText( this, wxID_ANY, wxT("è§†é‡ŽåŠå¾„--VisionRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText13->Wrap( -1 );
 	gSizer1->Add( m_staticText13, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -625,7 +625,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_VisionRadius, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText14 = new wxStaticText( this, wxID_ANY, wxT("Éý¼¶¾­Ñé--LevelUpExp"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText14 = new wxStaticText( this, wxID_ANY, wxT("å‡çº§ç»éªŒ--LevelUpExp"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText14->Wrap( -1 );
 	gSizer1->Add( m_staticText14, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -640,7 +640,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_LevelUpExp, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText15 = new wxStaticText( this, wxID_ANY, wxT("¶Ô»°°ë¾¶--DialogRadius"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText15 = new wxStaticText( this, wxID_ANY, wxT("å¯¹è¯åŠå¾„--DialogRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText15->Wrap( -1 );
 	gSizer1->Add( m_staticText15, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -655,7 +655,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_DialogRadius, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT("µÈ¼¶------Level"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText16 = new wxStaticText( this, wxID_ANY, wxT("ç­‰çº§------Level"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText16->Wrap( -1 );
 	gSizer1->Add( m_staticText16, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -677,14 +677,14 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	m_FillNpcLevelDetail = new wxCheckBox( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_FillNpcLevelDetail->SetValue(true); 
-	m_FillNpcLevelDetail->SetToolTip( wxT("Í¬Ê±¸üÐÂ Evade  Attack  Defend  Life  LifeMax\nÐèÒªÎÄ¼þ ini\\level\\level-npc.ini") );
+	m_FillNpcLevelDetail->SetToolTip( wxT("åŒæ—¶æ›´æ–° Evade  Attack  Defend  Life  LifeMax\néœ€è¦æ–‡ä»¶ ini\\level\\level-npc.ini") );
 	
 	bSizer23->Add( m_FillNpcLevelDetail, 0, wxALL|wxEXPAND, 0 );
 	
 	
 	gSizer1->Add( bSizer23, 1, wxEXPAND, 5 );
 	
-	m_staticText17 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷°ë¾¶--AttackRadius"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText17 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»åŠå¾„--AttackRadius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText17->Wrap( -1 );
 	gSizer1->Add( m_staticText17, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -710,7 +710,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_comboBox17, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText19 = new wxStaticText( this, wxID_ANY, wxT("·½Ïò------Dir "), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText19 = new wxStaticText( this, wxID_ANY, wxT("æ–¹å‘------Dir "), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText19->Wrap( -1 );
 	gSizer1->Add( m_staticText19, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -723,13 +723,13 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Dir->Append( wxT("5") );
 	m_Dir->Append( wxT("6") );
 	m_Dir->Append( wxT("7") );
-	m_Dir->SetToolTip( wxT("Êó±êÓÒ¼üÇå³ý") );
+	m_Dir->SetToolTip( wxT("é¼ æ ‡å³é”®æ¸…é™¤") );
 	m_Dir->SetMinSize( wxSize( 110,-1 ) );
 	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer1->Add( m_Dir, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText20 = new wxStaticText( this, wxID_ANY, wxT("ÉúÃü------Life"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText20 = new wxStaticText( this, wxID_ANY, wxT("ç”Ÿå‘½------Life"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText20->Wrap( -1 );
 	gSizer1->Add( m_staticText20, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -739,7 +739,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Life, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText21 = new wxStaticText( this, wxID_ANY, wxT("ÁÁ¶È------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText21 = new wxStaticText( this, wxID_ANY, wxT("äº®åº¦------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText21->Wrap( -1 );
 	gSizer1->Add( m_staticText21, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -749,7 +749,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Lum, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText22 = new wxStaticText( this, wxID_ANY, wxT("×î´óÉúÃü--LifeMax"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText22 = new wxStaticText( this, wxID_ANY, wxT("æœ€å¤§ç”Ÿå‘½--LifeMax"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText22->Wrap( -1 );
 	gSizer1->Add( m_staticText22, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -759,21 +759,21 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_LifeMax, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText23 = new wxStaticText( this, wxID_ANY, wxT("¶¯×÷------Action"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText23 = new wxStaticText( this, wxID_ANY, wxT("åŠ¨ä½œ------Action"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText23->Wrap( -1 );
 	gSizer1->Add( m_staticText23, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	m_Action = new wxComboBox( this, MYID_ACTION, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	m_Action->Append( wxT("Õ¾Á¢") );
-	m_Action->Append( wxT("×ß¶¯£¨Ëæ»ú£©") );
-	m_Action->Append( wxT("×ß¶¯£¨FixedPos£©") );
-	m_Action->SetToolTip( wxT("Êó±êÓÒ¼üÇå³ý") );
+	m_Action->Append( wxT("ç«™ç«‹") );
+	m_Action->Append( wxT("èµ°åŠ¨ï¼ˆéšæœºï¼‰") );
+	m_Action->Append( wxT("èµ°åŠ¨ï¼ˆFixedPosï¼‰") );
+	m_Action->SetToolTip( wxT("é¼ æ ‡å³é”®æ¸…é™¤") );
 	m_Action->SetMinSize( wxSize( 110,-1 ) );
 	m_Action->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer1->Add( m_Action, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText24 = new wxStaticText( this, wxID_ANY, wxT("ÌåÁ¦------Thew"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText24 = new wxStaticText( this, wxID_ANY, wxT("ä½“åŠ›------Thew"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText24->Wrap( -1 );
 	gSizer1->Add( m_staticText24, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -783,7 +783,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Thew, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText25 = new wxStaticText( this, wxID_ANY, wxT("ÐÐ×ßËÙ¶È--WalkSpeed"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText25 = new wxStaticText( this, wxID_ANY, wxT("è¡Œèµ°é€Ÿåº¦--WalkSpeed"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText25->Wrap( -1 );
 	gSizer1->Add( m_staticText25, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -798,7 +798,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_WalkSpeed, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText26 = new wxStaticText( this, wxID_ANY, wxT("×î´óÌåÁ¦--ThewMax"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText26 = new wxStaticText( this, wxID_ANY, wxT("æœ€å¤§ä½“åŠ›--ThewMax"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText26->Wrap( -1 );
 	gSizer1->Add( m_staticText26, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -819,7 +819,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_comboBox26, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText28 = new wxStaticText( this, wxID_ANY, wxT("ÄÚÁ¦------Mana"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText28 = new wxStaticText( this, wxID_ANY, wxT("å†…åŠ›------Mana"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText28->Wrap( -1 );
 	gSizer1->Add( m_staticText28, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -829,7 +829,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Mana, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText29 = new wxStaticText( this, wxID_ANY, wxT("ÈËÎïÍ¼Ïñ--NpcIni"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText29 = new wxStaticText( this, wxID_ANY, wxT("äººç‰©å›¾åƒ--NpcIni"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText29->Wrap( -1 );
 	gSizer1->Add( m_staticText29, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -837,17 +837,17 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer5 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_NpcIni = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_NpcIni->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_NpcIni->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer5->Add( m_NpcIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_NpcIniEdit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_NpcIniEdit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer5->Add( m_NpcIniEdit, 0, wxALL, 5 );
 	
 	
 	gSizer1->Add( bSizer5, 1, wxEXPAND, 5 );
 	
-	m_staticText30 = new wxStaticText( this, wxID_ANY, wxT("×î´óÄÚÁ¦--ManaMax"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText30 = new wxStaticText( this, wxID_ANY, wxT("æœ€å¤§å†…åŠ›--ManaMax"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText30->Wrap( -1 );
 	gSizer1->Add( m_staticText30, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -857,7 +857,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_ManaMax, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText31 = new wxStaticText( this, wxID_ANY, wxT("Ê¬ÌåÍ¼Ïñ--BodyIni"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText31 = new wxStaticText( this, wxID_ANY, wxT("å°¸ä½“å›¾åƒ--BodyIni"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText31->Wrap( -1 );
 	gSizer1->Add( m_staticText31, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -865,11 +865,11 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer6 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_BodyIni = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_BodyIni->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_BodyIni->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer6->Add( m_BodyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_BodyIniEdit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_BodyIniEdit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer6->Add( m_BodyIniEdit, 0, wxALL, 5 );
 	
 	
@@ -886,7 +886,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_comboBox31, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText33 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷------FlyIni"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText33 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»------FlyIni"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText33->Wrap( -1 );
 	gSizer1->Add( m_staticText33, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -894,19 +894,19 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer7 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_FlyIni = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_FlyIni->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_FlyIni->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer7->Add( m_FlyIni, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_FlyIniEdit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FlyIniEdit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer7->Add( m_FlyIniEdit, 0, wxALL, 5 );
 	
 	
 	gSizer1->Add( bSizer7, 1, wxEXPAND, 5 );
 	
-	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("¶îÍâ¾­Ñé----ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34 = new wxStaticText( this, wxID_ANY, wxT("é¢å¤–ç»éªŒ----ExpBonus"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText34->Wrap( -1 );
-	m_staticText34->SetToolTip( wxT("»÷É±µÐÈË»ñµÃµÄ¶îÍâ¾­Ñé") );
+	m_staticText34->SetToolTip( wxT("å‡»æ€æ•ŒäººèŽ·å¾—çš„é¢å¤–ç»éªŒ") );
 	
 	gSizer1->Add( m_staticText34, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -916,7 +916,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_ExpBonus, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText35 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷2-----FlyIni2"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText35 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»2-----FlyIni2"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText35->Wrap( -1 );
 	gSizer1->Add( m_staticText35, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -924,19 +924,19 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer8 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_FlyIni2 = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_FlyIni2->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_FlyIni2->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer8->Add( m_FlyIni2, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_FlyIni2Edit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FlyIni2Edit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer8->Add( m_FlyIni2Edit, 0, wxALL, 5 );
 	
 	
 	gSizer1->Add( bSizer8, 1, wxEXPAND, 5 );
 	
-	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("¹¥»÷¼ä¸ô£¨Ö¡£©--Idle"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText36 = new wxStaticText( this, wxID_ANY, wxT("æ”»å‡»é—´éš”ï¼ˆå¸§ï¼‰--Idle"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText36->Wrap( -1 );
-	m_staticText36->SetToolTip( wxT("Ã¿´Î¹¥»÷¼ä¸ô¶àÉÙÖ¡") );
+	m_staticText36->SetToolTip( wxT("æ¯æ¬¡æ”»å‡»é—´éš”å¤šå°‘å¸§") );
 	
 	gSizer1->Add( m_staticText36, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -946,7 +946,7 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer1->Add( m_Idle, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("¶Ô»°½Å±¾--ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("å¯¹è¯è„šæœ¬--ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText41->Wrap( -1 );
 	gSizer1->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -954,17 +954,17 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer9 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_ScriptFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_ScriptFile->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_ScriptFile->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer9->Add( m_ScriptFile, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_ScriptFileEdit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_ScriptFileEdit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer9->Add( m_ScriptFileEdit, 0, wxALL, 5 );
 	
 	
 	gSizer1->Add( bSizer9, 1, wxEXPAND, 5 );
 	
-	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("¹Ì¶¨Â·¾¶----FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("å›ºå®šè·¯å¾„----FixedPos"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
 	gSizer1->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -977,15 +977,15 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	bSizer22->Add( m_FixedPos, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_FixedPosEdit = new wxButton( this, wxID_ANY, wxT("ÉèÖÃ"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	m_FixedPosEdit->SetToolTip( wxT("\"ESC\"¼üÈ¡ÏûÉÏ´ÎÉèÖÃ£¬\"Enter\"¼üÍê³ÉÉèÖÃ£¬Êó±êÓÒ¼üÈ¡ÏûÉèÖÃ¡£\n×î¶àÉèÖÃ8¸öµã¡£") );
+	m_FixedPosEdit = new wxButton( this, wxID_ANY, wxT("è®¾ç½®"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_FixedPosEdit->SetToolTip( wxT("\"ESC\"é”®å–æ¶ˆä¸Šæ¬¡è®¾ç½®ï¼Œ\"Enter\"é”®å®Œæˆè®¾ç½®ï¼Œé¼ æ ‡å³é”®å–æ¶ˆè®¾ç½®ã€‚\næœ€å¤šè®¾ç½®8ä¸ªç‚¹ã€‚") );
 	
 	bSizer22->Add( m_FixedPosEdit, 0, wxALL, 5 );
 	
 	
 	gSizer1->Add( bSizer22, 1, wxEXPAND, 5 );
 	
-	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("ËÀÍö½Å±¾--DeathScript"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("æ­»äº¡è„šæœ¬--DeathScript"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText43->Wrap( -1 );
 	gSizer1->Add( m_staticText43, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -993,11 +993,11 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer10 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_DeathScript = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_DeathScript->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_DeathScript->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer10->Add( m_DeathScript, 2, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_DeathScriptEdit = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_DeathScriptEdit = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer10->Add( m_DeathScriptEdit, 0, wxALL, 5 );
 	
 	
@@ -1009,12 +1009,15 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer29;
 	bSizer29 = new wxBoxSizer( wxVERTICAL );
 	
-	m_staticText54 = new wxStaticText( this, wxID_ANY, wxT("ÆäËü£º"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText54 = new wxStaticText( this, wxID_ANY, wxT("å…¶å®ƒï¼š ï¼ˆæç¤ºï¼šåŒå‡»å±žæ€§åç§°æ‰“å¼€ç›¸åº”æ–‡ä»¶ï¼‰"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText54->Wrap( -1 );
 	bSizer29->Add( m_staticText54, 0, wxALL, 5 );
 	
-	m_Others = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_DONTWRAP|wxTE_MULTILINE );
-	bSizer29->Add( m_Others, 1, wxALL|wxEXPAND, 5 );
+	m_GridManager = new wxPropertyGridManager(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxPGMAN_DEFAULT_STYLE|wxPG_DESCRIPTION|wxPG_TOOLBAR);
+	m_GridManager->SetExtraStyle( wxPG_EX_HIDE_PAGE_BUTTONS|wxPG_EX_MODE_BUTTONS ); 
+	
+	m_PropertyPage = m_GridManager->AddPage( wxT("Page"), wxNullBitmap );
+	bSizer29->Add( m_GridManager, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	bSizerTop222->Add( bSizer29, 1, wxEXPAND, 5 );
@@ -1025,18 +1028,18 @@ NpcItemEditDialogBase::NpcItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 	
-	m_button26 = new wxButton( this, wxID_ANY, wxT("±£´æ..."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_button26->SetToolTip( wxT("´æÎªINIÎÄ¼þ") );
+	m_button26 = new wxButton( this, wxID_ANY, wxT("ä¿å­˜..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_button26->SetToolTip( wxT("å­˜ä¸ºINIæ–‡ä»¶") );
 	
 	bSizer11->Add( m_button26, 0, wxALL, 5 );
 	
 	
 	bSizer11->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_OK = new wxButton( this, wxID_ANY, wxT("È·¶¨"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_OK = new wxButton( this, wxID_ANY, wxT("ç¡®å®š"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer11->Add( m_OK, 0, wxALL, 5 );
 	
-	m_Cancle = new wxButton( this, wxID_ANY, wxT("È¡Ïû"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Cancle = new wxButton( this, wxID_ANY, wxT("å–æ¶ˆ"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer11->Add( m_Cancle, 0, wxALL, 5 );
 	
 	
@@ -1126,7 +1129,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxGridSizer* gSizer2;
 	gSizer2 = new wxGridSizer( 0, 2, 0, 0 );
 	
-	m_staticText40 = new wxStaticText( this, wxID_ANY, wxT("Ãû³Æ--------ObjName"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText40 = new wxStaticText( this, wxID_ANY, wxT("åç§°--------ObjName"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText40->Wrap( -1 );
 	gSizer2->Add( m_staticText40, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1136,25 +1139,25 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer2->Add( m_ObjName, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("ÀàÐÍ--------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText41 = new wxStaticText( this, wxID_ANY, wxT("ç±»åž‹--------Kind"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText41->Wrap( -1 );
 	gSizer2->Add( m_staticText41, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_Kind = new wxComboBox( this, MYID_OBJ_KIND, wxT("Ö²ÎïºÍ×°ÊÎÀà£¨ÐÂ½£½ö×°ÊÎÀà£©"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
-	m_Kind->Append( wxT("±¦ÎïºÍ×°ÊÎÀà£¨ÐÂ½£½ö×°ÊÎÀà£©") );
-	m_Kind->Append( wxT("±¦ÏäºÍ¶¯»­Àà£¨ÐÂ½£»¹°üÀ¨±¦ÎïÀà£©") );
-	m_Kind->Append( wxT("Ê¬ÌåÀà") );
-	m_Kind->Append( wxT("Ñ­»·ÒôÐ§") );
-	m_Kind->Append( wxT("Ëæ»úÒôÐ§") );
-	m_Kind->Append( wxT("ÃÅÀà") );
-	m_Kind->Append( wxT("ÏÝÚå") );
-	m_Kind->SetToolTip( wxT("0-±¦ÎïºÍ×°ÊÎÀà£¨ÐÂ½£½ö×°ÊÎÀà£©\n1-±¦ÏäºÍ¶¯»­Àà£¨ÐÂ½£»¹°üÀ¨±¦ÎïÀà£©\n2-Ê¬ÌåÀà\n3-Ñ­»·ÒôÐ§\n4-Ëæ»úÒôÐ§\n5-ÃÅÀà\n6-ÏÝÚå£¨Damage¶¨ÒåÉËº¦Öµ£©") );
+	m_Kind = new wxComboBox( this, MYID_OBJ_KIND, wxT("æ¤ç‰©å’Œè£…é¥°ç±»ï¼ˆæ–°å‰‘ä»…è£…é¥°ç±»ï¼‰"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+	m_Kind->Append( wxT("å®ç‰©å’Œè£…é¥°ç±»ï¼ˆæ–°å‰‘ä»…è£…é¥°ç±»ï¼‰") );
+	m_Kind->Append( wxT("å®ç®±å’ŒåŠ¨ç”»ç±»ï¼ˆæ–°å‰‘è¿˜åŒ…æ‹¬å®ç‰©ç±»ï¼‰") );
+	m_Kind->Append( wxT("å°¸ä½“ç±»") );
+	m_Kind->Append( wxT("å¾ªçŽ¯éŸ³æ•ˆ") );
+	m_Kind->Append( wxT("éšæœºéŸ³æ•ˆ") );
+	m_Kind->Append( wxT("é—¨ç±»") );
+	m_Kind->Append( wxT("é™·é˜±") );
+	m_Kind->SetToolTip( wxT("0-å®ç‰©å’Œè£…é¥°ç±»ï¼ˆæ–°å‰‘ä»…è£…é¥°ç±»ï¼‰\n1-å®ç®±å’ŒåŠ¨ç”»ç±»ï¼ˆæ–°å‰‘è¿˜åŒ…æ‹¬å®ç‰©ç±»ï¼‰\n2-å°¸ä½“ç±»\n3-å¾ªçŽ¯éŸ³æ•ˆ\n4-éšæœºéŸ³æ•ˆ\n5-é—¨ç±»\n6-é™·é˜±ï¼ˆDamageå®šä¹‰ä¼¤å®³å€¼ï¼‰") );
 	m_Kind->SetMinSize( wxSize( 110,-1 ) );
 	m_Kind->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer2->Add( m_Kind, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("·½Ïò--------Dir"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText42 = new wxStaticText( this, wxID_ANY, wxT("æ–¹å‘--------Dir"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText42->Wrap( -1 );
 	gSizer2->Add( m_staticText42, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1167,15 +1170,15 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	m_Dir->Append( wxT("5") );
 	m_Dir->Append( wxT("6") );
 	m_Dir->Append( wxT("7") );
-	m_Dir->SetToolTip( wxT("Êó±êÓÒ¼üÇå³ý") );
+	m_Dir->SetToolTip( wxT("é¼ æ ‡å³é”®æ¸…é™¤") );
 	m_Dir->SetMinSize( wxSize( 110,-1 ) );
 	m_Dir->SetMaxSize( wxSize( 110,-1 ) );
 	
 	gSizer2->Add( m_Dir, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("ÉËº¦--------Damage"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText43 = new wxStaticText( this, wxID_ANY, wxT("ä¼¤å®³--------Damage"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText43->Wrap( -1 );
-	m_staticText43->SetToolTip( wxT("µ±ÀàÐÍÎªÏÝÚåÊ±µÄÉËº¦Öµ") );
+	m_staticText43->SetToolTip( wxT("å½“ç±»åž‹ä¸ºé™·é˜±æ—¶çš„ä¼¤å®³å€¼") );
 	
 	gSizer2->Add( m_staticText43, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1185,7 +1188,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer2->Add( m_Damage, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("ÆðÊ¼Ö¡------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText44 = new wxStaticText( this, wxID_ANY, wxT("èµ·å§‹å¸§------Frame"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText44->Wrap( -1 );
 	gSizer2->Add( m_staticText44, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1195,7 +1198,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer2->Add( m_Frame, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText45 = new wxStaticText( this, wxID_ANY, wxT("¸ß----------Height"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText45 = new wxStaticText( this, wxID_ANY, wxT("é«˜----------Height"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText45->Wrap( -1 );
 	gSizer2->Add( m_staticText45, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1205,7 +1208,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer2->Add( m_Height, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText52 = new wxStaticText( this, wxID_ANY, wxT("ÁÁ¶È--------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText52 = new wxStaticText( this, wxID_ANY, wxT("äº®åº¦--------Lum"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText52->Wrap( -1 );
 	gSizer2->Add( m_staticText52, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1227,7 +1230,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxGridSizer* gSizer3;
 	gSizer3 = new wxGridSizer( 0, 2, 0, 0 );
 	
-	m_staticText46 = new wxStaticText( this, wxID_ANY, wxT("ÎïÌåÍ¼Ïñ----ObjFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText46 = new wxStaticText( this, wxID_ANY, wxT("ç‰©ä½“å›¾åƒ----ObjFile"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText46->Wrap( -1 );
 	gSizer3->Add( m_staticText46, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1235,17 +1238,17 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer17 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_ObjFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_ObjFile->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_ObjFile->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer17->Add( m_ObjFile, 1, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_button22 = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_button22 = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer17->Add( m_button22, 0, wxALL, 5 );
 	
 	
 	gSizer3->Add( bSizer17, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText47 = new wxStaticText( this, wxID_ANY, wxT("½Å±¾ÎÄ¼þ----ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText47 = new wxStaticText( this, wxID_ANY, wxT("è„šæœ¬æ–‡ä»¶----ScriptFile"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText47->Wrap( -1 );
 	gSizer3->Add( m_staticText47, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1253,17 +1256,17 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_ScriptFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_ScriptFile->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_ScriptFile->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer18->Add( m_ScriptFile, 1, wxALL, 5 );
 	
-	m_button23 = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_button23 = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer18->Add( m_button23, 0, wxALL, 5 );
 	
 	
 	gSizer3->Add( bSizer18, 1, wxEXPAND|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText48 = new wxStaticText( this, wxID_ANY, wxT("ÉùÒôÎÄ¼þ----WavFile"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText48 = new wxStaticText( this, wxID_ANY, wxT("å£°éŸ³æ–‡ä»¶----WavFile"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText48->Wrap( -1 );
 	gSizer3->Add( m_staticText48, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1271,11 +1274,11 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	bSizer19 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_WavFile = new wxButton( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	m_WavFile->SetToolTip( wxT("×ó¼üÑ¡Ôñ£¬ÓÒ¼üÇå³ý") );
+	m_WavFile->SetToolTip( wxT("å·¦é”®é€‰æ‹©ï¼Œå³é”®æ¸…é™¤") );
 	
 	bSizer19->Add( m_WavFile, 1, wxALL, 5 );
 	
-	m_button24 = new wxButton( this, wxID_ANY, wxT("´ò¿ª"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
+	m_button24 = new wxButton( this, wxID_ANY, wxT("æ‰“å¼€"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
 	bSizer19->Add( m_button24, 0, wxALL, 5 );
 	
 	
@@ -1292,7 +1295,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer3->Add( m_comboBox41, 0, wxALL, 5 );
 	
-	m_staticText50 = new wxStaticText( this, wxID_ANY, wxT("ÓÒÆ«ÒÆ------OffX"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText50 = new wxStaticText( this, wxID_ANY, wxT("å³åç§»------OffX"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText50->Wrap( -1 );
 	gSizer3->Add( m_staticText50, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1302,7 +1305,7 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	
 	gSizer3->Add( m_OffX, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
-	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("ÏÂÆ«ÒÆ------OffY"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText51 = new wxStaticText( this, wxID_ANY, wxT("ä¸‹åç§»------OffY"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText51->Wrap( -1 );
 	gSizer3->Add( m_staticText51, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1321,18 +1324,18 @@ ObjItemEditDialogBase::ObjItemEditDialogBase( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer16;
 	bSizer16 = new wxBoxSizer( wxVERTICAL );
 	
-	m_button25 = new wxButton( this, wxID_ANY, wxT("±£´æ..."), wxDefaultPosition, wxDefaultSize, 0 );
-	m_button25->SetToolTip( wxT("´æÎªINIÎÄ¼þ") );
+	m_button25 = new wxButton( this, wxID_ANY, wxT("ä¿å­˜..."), wxDefaultPosition, wxDefaultSize, 0 );
+	m_button25->SetToolTip( wxT("å­˜ä¸ºINIæ–‡ä»¶") );
 	
 	bSizer16->Add( m_button25, 0, wxALL, 5 );
 	
 	
 	bSizer16->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_OK = new wxButton( this, wxID_ANY, wxT("È·¶¨"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_OK = new wxButton( this, wxID_ANY, wxT("ç¡®å®š"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer16->Add( m_OK, 0, wxALL, 5 );
 	
-	m_Cancel = new wxButton( this, wxID_ANY, wxT("È¡Ïû"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_Cancel = new wxButton( this, wxID_ANY, wxT("å–æ¶ˆ"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer16->Add( m_Cancel, 0, wxALL, 5 );
 	
 	
@@ -1399,7 +1402,7 @@ SetTmxHelperPortDialogBase::SetTmxHelperPortDialogBase( wxWindow* parent, wxWind
 	
 	bSizer27->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_staticText53 = new wxStaticText( this, wxID_ANY, wxT("¶Ë¿Ú£º"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText53 = new wxStaticText( this, wxID_ANY, wxT("ç«¯å£ï¼š"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText53->Wrap( -1 );
 	bSizer27->Add( m_staticText53, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
@@ -1421,7 +1424,7 @@ SetTmxHelperPortDialogBase::SetTmxHelperPortDialogBase( wxWindow* parent, wxWind
 	
 	bSizer26->Add( 0, 0, 3, wxEXPAND, 5 );
 	
-	m_buttonOK = new wxButton( this, wxID_ANY, wxT("È·¶¨"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK = new wxButton( this, wxID_ANY, wxT("ç¡®å®š"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizer26->Add( m_buttonOK, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 	
 	

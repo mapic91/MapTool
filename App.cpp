@@ -22,6 +22,7 @@
 #include <wx/regex.h>
 #include "wx/stdpaths.h"
 #include <wx/utils.h>
+#include "wx/propgrid/propgrid.h"
 
 IMPLEMENT_APP(wxWidgets_templateApp);
 
@@ -33,6 +34,7 @@ bool wxWidgets_templateApp::OnInit()
 {
 	bool wxsOK = true;
 	wxInitAllImageHandlers();
+	wxPropertyGridInterface::RegisterAdditionalEditors();
 
 	//Tmx settings
     TmxReaderSetting::LoadConfing();

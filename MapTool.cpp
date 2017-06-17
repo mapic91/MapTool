@@ -79,12 +79,14 @@ MapTool::MapTool(wxWindow* parent)
 
     m_NpcObjPath = exepath + wxT("ini\\save\\");
 
+    m_NpcPropertyDefs.Read(exepath + wxT("resource\\NpcDef.json"));
+
     m_ToolBarEdit->ToggleTool(ID_TOOLPLACE, true);
     m_ToolBarEdit->ToggleTool(ID_NPCMODE, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("½£ÏÀÇéÔµµØÍ¼¹¤¾ßV2.8.2 - by Ğ¡ÊÔµ¶½£  2017.6.04"));
+    this->SetTitle(wxT("å‰‘ä¾ æƒ…ç¼˜åœ°å›¾å·¥å…·V2.8.2 - by å°è¯•åˆ€å‰‘  2017.6.04"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -108,10 +110,10 @@ MapTool::MapTool(wxWindow* parent)
 
     //List config
     m_ListData->Show(false);
-    m_npcListCtrl->AppendColumn(wxT("ĞòºÅ"), wxLIST_FORMAT_LEFT, 50);
+    m_npcListCtrl->AppendColumn(wxT("åºå·"), wxLIST_FORMAT_LEFT, 50);
     m_npcListCtrl->AppendColumn(wxT("X"), wxLIST_FORMAT_LEFT, 50);
     m_npcListCtrl->AppendColumn(wxT("Y"), wxLIST_FORMAT_LEFT, 50);
-    m_objListCtrl->AppendColumn(wxT("ĞòºÅ"), wxLIST_FORMAT_LEFT, 50);
+    m_objListCtrl->AppendColumn(wxT("åºå·"), wxLIST_FORMAT_LEFT, 50);
     m_objListCtrl->AppendColumn(wxT("X"), wxLIST_FORMAT_LEFT, 50);
     m_objListCtrl->AppendColumn(wxT("Y"), wxLIST_FORMAT_LEFT, 50);
 
@@ -189,7 +191,7 @@ void MapTool::OnClose(wxCloseEvent& event)
     }
     else
     {
-        int ret = wxMessageBox(wxT("ÍË³ö£¿"), wxT("È·ÈÏ"), wxYES_NO | wxCENTER | wxICON_QUESTION);
+        int ret = wxMessageBox(wxT("é€€å‡ºï¼Ÿ"), wxT("ç¡®è®¤"), wxYES_NO | wxCENTER | wxICON_QUESTION);
         if(ret == wxYES) Exit();
     }
 }
@@ -205,17 +207,17 @@ void MapTool::OpenMap(wxCommandEvent& event)
 {
 	wxWindowDisabler disableUI();
     wxFileDialog filedlg(this,
-                         wxT("ÇëÑ¡ÔñÒ»¸öµØÍ¼ÎÄ¼ş"),
+                         wxT("è¯·é€‰æ‹©ä¸€ä¸ªåœ°å›¾æ–‡ä»¶"),
                          exepath + wxT("map\\"),
                          m_MapFileName,
-                         wxT("MAPÎÄ¼ş(*.map, *.tmx)|*.map;*.tmx"),
+                         wxT("MAPæ–‡ä»¶(*.map, *.tmx)|*.map;*.tmx"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
 
     if(!map.ReadFile(filedlg.GetPath())) return;
     m_MapFileName = filedlg.GetFilename();
-    this->SetTitle(wxString::Format(wxFormatString(wxT("%s      %ld ¡Á %ld - %ld ¡Á %ld")),
+    this->SetTitle(wxString::Format(wxFormatString(wxT("%s      %ld Ã— %ld - %ld Ã— %ld")),
                                     m_MapFileName,
                                     map.getCol(),
                                     map.getRow(),
@@ -231,8 +233,8 @@ void MapTool::OpenMap(wxCommandEvent& event)
     m_commandProcessor.ClearCommands();
     m_menuEdit->Enable(wxID_UNDO, false);
     m_menuEdit->Enable(wxID_REDO, false);
-	m_menuEdit->SetLabel(wxID_UNDO, wxT("³·Ïú\tCTRL+Z"));
-	m_menuEdit->SetLabel(wxID_REDO, wxT("ÖØ×ö\tCTRL+Y"));
+	m_menuEdit->SetLabel(wxID_UNDO, wxT("æ’¤é”€\tCTRL+Z"));
+	m_menuEdit->SetLabel(wxID_REDO, wxT("é‡åš\tCTRL+Y"));
 
     //Show view
     m_ListData->Show(true);
@@ -248,10 +250,10 @@ void MapTool::OpenMap(wxCommandEvent& event)
 void MapTool::SaveToPNG(wxCommandEvent& event)
 {
     wxFileDialog filedlg(this,
-                         wxT("´æÎªPNG"),
+                         wxT("å­˜ä¸ºPNG"),
                          wxEmptyString,
                          wxEmptyString,
-                         wxT("PNGÎÄ¼ş(*.png)|*.png"),
+                         wxT("PNGæ–‡ä»¶(*.png)|*.png"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
 
     if(filedlg.ShowModal() != wxID_OK) return;
@@ -279,9 +281,9 @@ void MapTool::SaveToPNG(wxCommandEvent& event)
     }
 
     if(success)
-        wxMessageBox(wxT("Íê³É"), wxT("ÏûÏ¢"));
+        wxMessageBox(wxT("å®Œæˆ"), wxT("æ¶ˆæ¯"));
     else
-        wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK|wxCENTER|wxICON_ERROR);
+        wxMessageBox(wxT("å¤±è´¥"), wxT("é”™è¯¯"), wxOK|wxCENTER|wxICON_ERROR);
 
     if(img != NULL) delete img;
 }
@@ -1011,12 +1013,12 @@ bool MapTool::AddItem(NpcItem *item)
     if(!item) return false;
     if(m_NpcList.HasItem(item->MapX, item->MapY))
     {
-        int ret = wxMessageBox(wxT("Ìæ»»µ±Ç°NPC£¿"), wxT("ÏûÏ¢"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
+        int ret = wxMessageBox(wxT("æ›¿æ¢å½“å‰NPCï¼Ÿ"), wxT("æ¶ˆæ¯"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
         if(ret == wxYES)
         {
         	long index = 0;
         	NpcItem *deletedItem = m_NpcList.GetItem(item->MapX, item->MapY, &index);
-        	MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("Ìæ»»Npc"));
+        	MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("æ›¿æ¢Npc"));
         	cmd->DeleteAndAdd(index, deletedItem, item);
         	m_commandProcessor.Store(cmd);
 
@@ -1027,7 +1029,7 @@ bool MapTool::AddItem(NpcItem *item)
     }
     else
 	{
-		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("Ìí¼ÓNpc"));
+		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("æ·»åŠ Npc"));
 		cmd->Add(item);
 		m_commandProcessor.Store(cmd);
 
@@ -1042,12 +1044,12 @@ bool MapTool::AddItem(ObjItem *item)
     if(!item) return false;
     if(m_ObjList.HasItem(item->MapX, item->MapY))
     {
-        int ret = wxMessageBox(wxT("Ìæ»»µ±Ç°OBJ£¿"), wxT("ÏûÏ¢"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
+        int ret = wxMessageBox(wxT("æ›¿æ¢å½“å‰OBJï¼Ÿ"), wxT("æ¶ˆæ¯"), wxYES_NO | wxCENTER | wxICON_INFORMATION);
         if(ret == wxYES)
         {
         	long index = 0;
         	ObjItem *deletedItem = m_ObjList.GetItem(item->MapX, item->MapY, &index);
-        	MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("Ìæ»»Obj"));
+        	MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("æ›¿æ¢Obj"));
         	cmd->DeleteAndAdd(index, deletedItem, item);
         	m_commandProcessor.Store(cmd);
 
@@ -1058,7 +1060,7 @@ bool MapTool::AddItem(ObjItem *item)
     }
     else
 	{
-		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("Ìí¼ÓObj"));
+		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("æ·»åŠ Obj"));
 		cmd->Add(item);
 		m_commandProcessor.Store(cmd);
 
@@ -1092,7 +1094,8 @@ void MapTool::ShowNpcItemEditor(NpcItem* item, long index)
         m_npcItemEdit = new NpcItemEditDialog(this,
                                               m_MapFileName.Mid(0, m_MapFileName.size() - 4),
                                               m_NpcAsfImgList,
-                                              item);
+                                              item,
+                                              &m_NpcPropertyDefs);
         m_npcItemEdit->SetTitle(wxString::Format(wxT("NPC%03d"), index));
         m_npcItemEdit->InitFromNpcItem(item);
         NpcItemEditShowModle(m_npcItemEdit, item);
@@ -1123,7 +1126,7 @@ int MapTool::ShowYesNoAllInPosition(int tileX, int tileY, wxString message)
     posx += 40;
     posy += 20;
     YesNoAllDialog dialog(this);
-    dialog.Set(message.IsEmpty() ? wxT("È·¶¨ĞŞ¸Ä£¿") : message, wxT("ÏûÏ¢"), wxPoint(posx, posy));
+    dialog.Set(message.IsEmpty() ? wxT("ç¡®å®šä¿®æ”¹ï¼Ÿ") : message, wxT("æ¶ˆæ¯"), wxPoint(posx, posy));
     return dialog.ShowModal();
 }
 
@@ -1149,8 +1152,9 @@ void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
         NpcItemEditDialog dialog(this,
                                  m_MapFileName.Mid(0, m_MapFileName.size() - 4),
                                  m_NpcAsfImgList,
-                                 &item);
-        dialog.SetTitle(wxT("ÅúÁ¿±à¼­Ä£Ê½£¬ÉèÖÃÁËÖµµÄÏîÄ¿£¬½«±»Ó¦ÓÃÓÚËùÓĞÑ¡ÖĞNPC"));
+                                 &item,
+                                 &m_NpcPropertyDefs);
+        dialog.SetTitle(wxT("æ‰¹é‡ç¼–è¾‘æ¨¡å¼ï¼Œè®¾ç½®äº†å€¼çš„é¡¹ç›®ï¼Œå°†è¢«åº”ç”¨äºæ‰€æœ‰é€‰ä¸­NPC"));
         dialog.EnableFixpos(false);
         dialog.InitFromNpcItem(&item);
         if(dialog.ShowModal() == NpcItemEditDialog::OK)
@@ -1207,7 +1211,7 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
                              m_MapFileName.Mid(0, m_MapFileName.size() - 4),
                              m_ObjAsfImgList,
                              &item);
-    dialog.SetTitle(wxT("ÅúÁ¿±à¼­Ä£Ê½£¬ÉèÖÃÁËÖµµÄÏîÄ¿£¬½«±»Ó¦ÓÃÓÚËùÓĞÑ¡ÖĞOBJ"));
+    dialog.SetTitle(wxT("æ‰¹é‡ç¼–è¾‘æ¨¡å¼ï¼Œè®¾ç½®äº†å€¼çš„é¡¹ç›®ï¼Œå°†è¢«åº”ç”¨äºæ‰€æœ‰é€‰ä¸­OBJ"));
     dialog.InitFromObjItem(&item);
     if(dialog.ShowModal() == wxID_OK)
     {
@@ -1292,7 +1296,7 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 		bool isAll = false;
 		bool isAllNo = false;
 
-		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("ÅúÁ¿Õ³ÌùNpc"));
+		MTC_Add_Npcs *cmd = new MTC_Add_Npcs(wxT("æ‰¹é‡ç²˜è´´Npc"));
 
 		for(auto& npcitem : templist)
 		{
@@ -1311,7 +1315,7 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 					}
 
                     int ret = ShowYesNoAllInPosition(npcitem->MapX,
-                    npcitem->MapY, wxT("Ìæ»»µ±Ç°NPC£¿"));
+                    npcitem->MapY, wxT("æ›¿æ¢å½“å‰NPCï¼Ÿ"));
                     if(ret == YesNoAllDialog::ALL)
                     {
                         isAll = true;
@@ -1359,7 +1363,7 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 		bool isAll = false;
 		bool isAllNo = false;
 
-		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("ÅúÁ¿Õ³ÌùObj"));
+		MTC_Add_Objs *cmd = new MTC_Add_Objs(wxT("æ‰¹é‡ç²˜è´´Obj"));
 
 		for(auto& objitem : templist)
 		{
@@ -1378,7 +1382,7 @@ void MapTool::OnMapViewMouseLeftUp( wxMouseEvent& event )
 					}
 
                     int ret = ShowYesNoAllInPosition(objitem->MapX,
-                    objitem->MapY, wxT("Ìæ»»µ±Ç°OBJ£¿"));
+                    objitem->MapY, wxT("æ›¿æ¢å½“å‰OBJï¼Ÿ"));
                     if(ret == YesNoAllDialog::ALL)
                     {
                         isAll = true;
@@ -1496,18 +1500,18 @@ void MapTool::PopupMapViewMenu()
 {
     m_popupMenuShowed = true;
     m_isBatch = IsInSelectingItem();
-    m_menuMapView->SetLabel(MYID_MAPVIEW_COPY, m_isBatch ? wxT("ÅúÁ¿¸´ÖÆ") : wxT("¸´ÖÆ"));
-    m_menuMapView->SetLabel(MYID_MAPVIEW_CUT, m_isBatch ? wxT("ÅúÁ¿¼ôÇĞ") : wxT("¼ôÇĞ"));
-    m_menuMapView->SetLabel(MYID_MAPVIEW_DELETE, m_isBatch ? wxT("ÅúÁ¿É¾³ı") : wxT("É¾³ı"));
+    m_menuMapView->SetLabel(MYID_MAPVIEW_COPY, m_isBatch ? wxT("æ‰¹é‡å¤åˆ¶") : wxT("å¤åˆ¶"));
+    m_menuMapView->SetLabel(MYID_MAPVIEW_CUT, m_isBatch ? wxT("æ‰¹é‡å‰ªåˆ‡") : wxT("å‰ªåˆ‡"));
+    m_menuMapView->SetLabel(MYID_MAPVIEW_DELETE, m_isBatch ? wxT("æ‰¹é‡åˆ é™¤") : wxT("åˆ é™¤"));
     if(m_isNpc)
 	{
-		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("NPC_ÅúÁ¿±à¼­..."));
-		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("NPC_Ïû³ıÑ¡Ôñ"));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("NPC_æ‰¹é‡ç¼–è¾‘..."));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("NPC_æ¶ˆé™¤é€‰æ‹©"));
 	}
 	else if(m_isObj)
 	{
-		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("OBJ_ÅúÁ¿±à¼­..."));
-		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("OBJ_Ïû³ıÑ¡Ôñ"));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_BATEDIT, wxT("OBJ_æ‰¹é‡ç¼–è¾‘..."));
+		m_menuMapView->SetLabel(MYID_MAPVIEW_CLEAR_SELECTION, wxT("OBJ_æ¶ˆé™¤é€‰æ‹©"));
 	}
     PopupMenu(m_menuMapView);
 }
@@ -1727,10 +1731,10 @@ void MapTool::OnMapCtrlMouseMotion( wxMouseEvent& event )
 void MapTool::OnLoadCharater( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("Ñ¡ÔñÒ»¸öÈËÎïiniÎÄ¼ş"),
+                         wxT("é€‰æ‹©ä¸€ä¸ªäººç‰©iniæ–‡ä»¶"),
                          exepath + wxT("ini\\npc\\"),
                          wxT(""),
-                         wxT("iniÎÄ¼ş(*.ini)|*.ini"),
+                         wxT("iniæ–‡ä»¶(*.ini)|*.ini"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
@@ -1741,10 +1745,10 @@ void MapTool::OnLoadCharater( wxCommandEvent& event )
 void MapTool::OnLoadObject( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("Ñ¡ÔñÒ»¸öÎïÆ·iniÎÄ¼ş"),
+                         wxT("é€‰æ‹©ä¸€ä¸ªç‰©å“iniæ–‡ä»¶"),
                          exepath + wxT("ini\\obj\\"),
                          wxT(""),
-                         wxT("iniÎÄ¼ş(*.ini)|*.ini"),
+                         wxT("iniæ–‡ä»¶(*.ini)|*.ini"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(filedlg.ShowModal() != wxID_OK) return;
@@ -1775,10 +1779,10 @@ void MapTool::OnCharacterDirection( wxCommandEvent& event )
 void MapTool::OnImportNpcFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("Ñ¡ÔñÒ»¸öNPCÎÄ¼ş"),
+                         wxT("é€‰æ‹©ä¸€ä¸ªNPCæ–‡ä»¶"),
                          m_NpcObjPath,
                          m_LastNpcListFileName,
-                         wxT("NPCÎÄ¼ş(*.npc)|*.npc"),
+                         wxT("NPCæ–‡ä»¶(*.npc)|*.npc"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
                         );
 
@@ -1789,21 +1793,21 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
 
         if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcAsfImgList, &m_commandProcessor))
         {
-            wxMessageBox(wxT("Íê³É"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("å®Œæˆ"), wxT("æ¶ˆæ¯"));
             RedrawMapView();
             RefreshNpcList();
         }
         else
-            wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK | wxCENTER | wxICON_ERROR);
+            wxMessageBox(wxT("å¤±è´¥"), wxT("é”™è¯¯"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
 void MapTool::OnOutputNpcFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("µ¼³öÎªNPCÎÄ¼ş"),
+                         wxT("å¯¼å‡ºä¸ºNPCæ–‡ä»¶"),
                          m_NpcObjPath,
                          m_LastNpcListFileName,
-                         wxT("NPCÎÄ¼ş(*.npc)|*.npc"),
+                         wxT("NPCæ–‡ä»¶(*.npc)|*.npc"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                         );
 
@@ -1813,19 +1817,19 @@ void MapTool::OnOutputNpcFile( wxCommandEvent& event )
         m_LastNpcListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
         if(NpcListSave(filedlg.GetPath(), m_MapFileName, &m_NpcList))
-            wxMessageBox(wxT("Íê³É"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("å®Œæˆ"), wxT("æ¶ˆæ¯"));
         else
-            wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK | wxCENTER | wxICON_ERROR);
+            wxMessageBox(wxT("å¤±è´¥"), wxT("é”™è¯¯"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
 void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
 {
-	if(wxMessageBox(wxT("¸Ã²Ù×÷»á°ÑµØÍ¼ÍâµÄ£¬ÎŞ·¨¿´µ½µÄNPC£¬ÒÆ¶¯µ½µØÍ¼µÄ×óÉÏ½Ç£¬ÊÇ·ñÖ´ĞĞ£¿"),
-					wxT("ÏûÏ¢"),
+	if(wxMessageBox(wxT("è¯¥æ“ä½œä¼šæŠŠåœ°å›¾å¤–çš„ï¼Œæ— æ³•çœ‹åˆ°çš„NPCï¼Œç§»åŠ¨åˆ°åœ°å›¾çš„å·¦ä¸Šè§’ï¼Œæ˜¯å¦æ‰§è¡Œï¼Ÿ"),
+					wxT("æ¶ˆæ¯"),
 					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
 		== wxOK)
 	{
-		MTC_Move_Npcs *cmd = new MTC_Move_Npcs(wxT("ĞŞ¸´ÈËÎïÎ»ÖÃ"));
+		MTC_Move_Npcs *cmd = new MTC_Move_Npcs(wxT("ä¿®å¤äººç‰©ä½ç½®"));
 		if(m_NpcList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
 		{
 			long width = map.getCol();
@@ -1870,10 +1874,10 @@ void MapTool::OnRepositionUnseenNpc(wxCommandEvent& event)
 void MapTool::OnImportObjFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("Ñ¡ÔñÒ»¸öOBJÎÄ¼ş"),
+                         wxT("é€‰æ‹©ä¸€ä¸ªOBJæ–‡ä»¶"),
                          m_NpcObjPath,
                          m_LastObjListFileName,
-                         wxT("OBJÎÄ¼ş(*.obj)|*.obj"),
+                         wxT("OBJæ–‡ä»¶(*.obj)|*.obj"),
                          wxFD_OPEN | wxFD_FILE_MUST_EXIST
                         );
 
@@ -1884,21 +1888,21 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
 
         if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList, &m_commandProcessor))
         {
-            wxMessageBox(wxT("Íê³É"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("å®Œæˆ"), wxT("æ¶ˆæ¯"));
             RedrawMapView();
             RefreshObjList();
         }
         else
-            wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK | wxCENTER | wxICON_ERROR);
+            wxMessageBox(wxT("å¤±è´¥"), wxT("é”™è¯¯"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
 void MapTool::OnOutputObjFile( wxCommandEvent& event )
 {
     wxFileDialog filedlg(this,
-                         wxT("µ¼³öÎªOBJÎÄ¼ş"),
+                         wxT("å¯¼å‡ºä¸ºOBJæ–‡ä»¶"),
                          m_NpcObjPath,
                          m_LastObjListFileName,
-                         wxT("OBJÎÄ¼ş(*.obj)|*.obj"),
+                         wxT("OBJæ–‡ä»¶(*.obj)|*.obj"),
                          wxFD_SAVE | wxFD_OVERWRITE_PROMPT
                         );
 
@@ -1908,19 +1912,19 @@ void MapTool::OnOutputObjFile( wxCommandEvent& event )
         m_LastObjListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
         if(ObjListSave(filedlg.GetPath(), m_MapFileName, &m_ObjList))
-            wxMessageBox(wxT("Íê³É"), wxT("ÏûÏ¢"));
+            wxMessageBox(wxT("å®Œæˆ"), wxT("æ¶ˆæ¯"));
         else
-            wxMessageBox(wxT("Ê§°Ü"), wxT("´íÎó"), wxOK | wxCENTER | wxICON_ERROR);
+            wxMessageBox(wxT("å¤±è´¥"), wxT("é”™è¯¯"), wxOK | wxCENTER | wxICON_ERROR);
     }
 }
 void MapTool::OnRepositionUnseenObj(wxCommandEvent& event)
 {
-	if(wxMessageBox(wxT("¸Ã²Ù×÷»á°ÑµØÍ¼ÍâµÄ£¬ÎŞ·¨¿´µ½µÄOBJ£¬ÒÆ¶¯µ½µØÍ¼µÄÓÒÉÏ½Ç£¬ÊÇ·ñÖ´ĞĞ£¿"),
-					wxT("ÏûÏ¢"),
+	if(wxMessageBox(wxT("è¯¥æ“ä½œä¼šæŠŠåœ°å›¾å¤–çš„ï¼Œæ— æ³•çœ‹åˆ°çš„OBJï¼Œç§»åŠ¨åˆ°åœ°å›¾çš„å³ä¸Šè§’ï¼Œæ˜¯å¦æ‰§è¡Œï¼Ÿ"),
+					wxT("æ¶ˆæ¯"),
 					wxOK | wxCANCEL |wxCENTER | wxICON_QUESTION)
 		== wxOK)
 	{
-		MTC_Move_Objs *cmd = new MTC_Move_Objs(wxT("ĞŞ¸´ÎïÆ·Î»ÖÃ"));
+		MTC_Move_Objs *cmd = new MTC_Move_Objs(wxT("ä¿®å¤ç‰©å“ä½ç½®"));
 		if(m_ObjList.getCounts() > 0 && map.getRow() > 0 && map.getCol() > 0)
 		{
 			long width = map.getCol();
@@ -2077,10 +2081,10 @@ void MapTool::OnListCtrlRightDown(wxListEvent& event)
     m_curListIndex = event.GetIndex();
 
     wxMenu menu;
-    menu.Append(ID_ATTRIBUTELISTITEM, wxT("ÏêÏ¸..."));
-    menu.Append(ID_DELETELISTITEM, wxT("É¾³ı"));
+    menu.Append(ID_ATTRIBUTELISTITEM, wxT("è¯¦ç»†..."));
+    menu.Append(ID_DELETELISTITEM, wxT("åˆ é™¤"));
     menu.AppendSeparator();
-    menu.Append(ID_BATEDITLISTITEM, wxT("ÅúÁ¿±à¼­..."));
+    menu.Append(ID_BATEDITLISTITEM, wxT("æ‰¹é‡ç¼–è¾‘..."));
     PopupMenu(&menu);
 }
 void MapTool::OnListItemFocused(wxListEvent& event)
@@ -2355,14 +2359,14 @@ void MapTool::ToggleObjSelection(int tileX, int tileY)
 void MapTool::ShowNpcSelectionCountMessage()
 {
 	m_StatusBar->SetStatusText(
-            wxString::Format(wxT("Ñ¡ÔñÁË %d ¸ö"), m_npcListCtrl->GetSelectedItemCount())
+            wxString::Format(wxT("é€‰æ‹©äº† %d ä¸ª"), m_npcListCtrl->GetSelectedItemCount())
             , 0);
 }
 
 void MapTool::ShowObjSelectionCountMessage()
 {
 	m_StatusBar->SetStatusText(
-            wxString::Format(wxT("Ñ¡ÔñÁË %d ¸ö"), m_objListCtrl->GetSelectedItemCount())
+            wxString::Format(wxT("é€‰æ‹©äº† %d ä¸ª"), m_objListCtrl->GetSelectedItemCount())
             , 0);
 }
 
@@ -2553,8 +2557,7 @@ void NpcItemEditDialog::InitFromNpcItem(NpcItem *item)
     if(!item->FixedPos.IsEmpty())
         m_FixedPos->SetValue(item->FixedPos);
 
-	if(!item->Others.IsEmpty())
-		(*m_Others) << item->Others;
+
 }
 void NpcItemEditDialog::AssignToNpcItem(NpcItem *item, bool onlySetted)
 {
@@ -2709,16 +2712,7 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item, bool onlySetted)
     if((onlySetted && !value.IsEmpty()) || !onlySetted) item->DeathScript = value;
     value = m_FixedPos->GetValue();
     if((onlySetted && !value.IsEmpty()) || !onlySetted) item->FixedPos = value;
-    value.clear();
-    for(int i = 0; i < m_Others->GetNumberOfLines(); i++)
-	{
-		wxString line = m_Others->GetLineText(i);
-		if(!line.IsEmpty())
-		{
-			value += line + wxT("\n");
-		}
-	}
-    if((onlySetted && !value.IsEmpty()) || !onlySetted) item->Others = value;
+
 }
 
 void ObjItemEditDialog::InitFromObjItem(ObjItem *item)
@@ -3206,7 +3200,7 @@ void DeselectAllItem(wxListView* listCtrl)
 
 bool MapTool::PromptDelection()
 {
-    return(wxMessageBox(wxT("È·¶¨É¾³ı£¿"),
+    return(wxMessageBox(wxT("ç¡®å®šåˆ é™¤ï¼Ÿ"),
                         wxMessageBoxCaptionStr,
                         wxYES_NO | wxCENTER | wxICON_QUESTION) == wxYES);
 }

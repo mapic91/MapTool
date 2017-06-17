@@ -22,7 +22,7 @@ void MTC_Uninit()
 }
 
 MTC_Change_Npc::MTC_Change_Npc(size_t index)
-: wxCommand(true, wxT("ĞŞ¸ÄNpcÊôĞÔ"))
+: wxCommand(true, wxT("ä¿®æ”¹Npcå±æ€§"))
 , mIndex(index)
 {
 
@@ -74,7 +74,7 @@ bool MTC_Change_Npc::Undo()
 }
 
 MTC_Move_Npc::MTC_Move_Npc(size_t index)
-: wxCommand(true, wxT("ÒÆ¶¯Npc"))
+: wxCommand(true, wxT("ç§»åŠ¨Npc"))
 , mIndex(index)
 {
 
@@ -179,7 +179,7 @@ bool MTC_Move_Npcs::Undo()
 }
 
 MTC_Change_Npcs::MTC_Change_Npcs()
-: wxCommand(true, wxT("ÅúÁ¿ĞŞ¸ÄNpcÊôĞÔ"))
+: wxCommand(true, wxT("æ‰¹é‡ä¿®æ”¹Npcå±æ€§"))
 {
 
 }
@@ -313,7 +313,7 @@ bool MTC_Add_Npcs::Undo()
 
 
 MTC_Delete_Npc::MTC_Delete_Npc(size_t index)
-: wxCommand(true, wxT("É¾³ıNpc"))
+: wxCommand(true, wxT("åˆ é™¤Npc"))
 {
 	mIndex = index;
 }
@@ -395,7 +395,7 @@ bool MTC_Delete_Npcs::Undo()
 }
 
 MTC_Change_Obj::MTC_Change_Obj(size_t index)
-: wxCommand(true, wxT("ĞŞ¸ÄObjÊôĞÔ"))
+: wxCommand(true, wxT("ä¿®æ”¹Objå±æ€§"))
 , mIndex(index)
 {
 
@@ -446,7 +446,7 @@ bool MTC_Change_Obj::Undo()
 }
 
 MTC_Move_Obj::MTC_Move_Obj(size_t index)
-: wxCommand(true, wxT("ÒÆ¶¯Obj"))
+: wxCommand(true, wxT("ç§»åŠ¨Obj"))
 , mIndex(index)
 {
 
@@ -548,7 +548,7 @@ bool MTC_Move_Objs::Undo()
 
 
 MTC_Change_Objs::MTC_Change_Objs()
-: wxCommand(true, wxT("ÅúÁ¿ĞŞ¸ÄObjÊôĞÔ"))
+: wxCommand(true, wxT("æ‰¹é‡ä¿®æ”¹Objå±æ€§"))
 {
 
 }
@@ -619,7 +619,7 @@ size_t MTC_Change_Objs::size()
 
 
 MTC_Delete_Obj::MTC_Delete_Obj(size_t index)
- :wxCommand(true, wxT("É¾³ıObj"))
+ :wxCommand(true, wxT("åˆ é™¤Obj"))
 {
 	mIndex = index;
 }
