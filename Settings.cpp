@@ -41,6 +41,15 @@ void Settings::LoadSetting()
 			file >> ObjDialogWidth;
 			file >> ObjDialogHeight;
 		}
+
+		if(!file.eof())
+		{
+			file >> NpcDetailDescBoxHeight;
+			file >> NpcDetailSpliterPos;
+
+			file >> ObjDetailDescBoxHeight;
+			file >> ObjDetailSpliterPos;
+		}
 	}
 }
 
@@ -65,6 +74,12 @@ void Settings::SaveSetting()
 		file << ObjDialogY << "\n";
 		file << ObjDialogWidth << "\n";
 		file << ObjDialogHeight << "\n";
+
+		file << NpcDetailDescBoxHeight << "\n";
+		file << NpcDetailSpliterPos << "\n";
+
+		file << ObjDetailDescBoxHeight << "\n";
+		file << ObjDetailSpliterPos << "\n";
 	}
 }
 

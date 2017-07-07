@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <map>
 #include "wx/string.h"
 #include "wx/arrstr.h"
 #include "wx/stdpaths.h"
@@ -11,75 +12,148 @@
 #include "wx/cmdproc.h"
 
 #include "AsfDecode.hpp"
+#include "ListDefHelper.h"
 
 struct NpcItem
 {
-    long Action;
-    long Attack;
-    long AttackLevel;
-    long AttackRadius;
-    wxString BodyIni;
-    wxString DeathScript;
-    long Defend;
-    long DialogRadius;
-    long Dir;
-    long Evade;
-    long Exp;
-    long ExpBonus;
-    wxString FixedPos;
-    wxString FlyIni;
-    wxString FlyIni2;
-    long Idle;
-    long Kind;
-    long Level;
-    long LevelUpExp;
-    long Life;
-    long LifeMax;
-    long Lum;
-    long Mana;
-    long ManaMax;
-    long MapX;
-    long MapY;
-    wxString Name;
-    wxString NpcIni;
-    long PathFinder;
-    long Relation;
-    wxString ScriptFile;
-    wxString ShowName;
-    long State;
-    long Thew;
-    long ThewMax;
-    long VisionRadius;
-    long WalkSpeed;
-    wxString Others;
+	std::map<wxString, wxVariant> KeyValues;
     AsfDecode *NpcStand; //Point to AsfImgList item, don't free
+
+    long MapX()
+    {
+    	if(KeyValues.count(wxT("MapX")) > 0)
+		{
+			return KeyValues[wxT("MapX")].GetInteger();
+		}
+		return 0;
+    }
+
+    long MapY()
+    {
+    	if(KeyValues.count(wxT("MapY")) > 0)
+		{
+			return KeyValues[wxT("MapY")].GetInteger();
+		}
+		return 0;
+    }
+
+    void SetMapX(long x)
+    {
+    	KeyValues[wxT("MapX")] = x;
+    }
+
+    void SetMapY(long y)
+    {
+    	KeyValues[wxT("MapY")] = y;
+    }
+
+    wxString GetString(const wxString& key)
+    {
+    	if(KeyValues.count(key) > 0)
+		{
+			return KeyValues[key].GetString();
+		}
+		return wxT("");
+    }
+
+    long GetInteger(const wxString& key)
+    {
+    	if(KeyValues.count(key) > 0)
+		{
+			return KeyValues[key].GetInteger();
+		}
+		return 0;
+    }
+
+    void SetValue(const wxString&key, const wxVariant& value)
+    {
+    	KeyValues[key] = value;
+    }
 
 	NpcItem() {NpcStand = NULL;}
     void CopyFrom(const NpcItem *item);
 };
 struct ObjItem
 {
-    long Damage;
-    long Dir;
-    long Frame;
-    long Height;
-    long Kind;
-    long Lum;
-    long MapX;
-    long MapY;
-    wxString ObjFile;
-    wxString ObjName;
-    long OffX;
-    long OffY;
-    wxString ScriptFile;
-    wxString WavFile;
+    std::map<wxString, wxVariant> KeyValues;
     AsfDecode *ObjCommon; //Point to AsfObjImgList item, don't free
+
+    long MapX()
+    {
+    	if(KeyValues.count(wxT("MapX")) > 0)
+		{
+			return KeyValues[wxT("MapX")].GetInteger();
+		}
+		return 0;
+    }
+
+    long MapY()
+    {
+    	if(KeyValues.count(wxT("MapY")) > 0)
+		{
+			return KeyValues[wxT("MapY")].GetInteger();
+		}
+		return 0;
+    }
+
+    void SetMapX(long x)
+    {
+    	KeyValues[wxT("MapX")] = x;
+    }
+
+    void SetMapY(long y)
+    {
+    	KeyValues[wxT("MapY")] = y;
+    }
+
+	long GetOffX()
+    {
+		long offx = GetInteger(wxT("OffX"));
+		return offx == -1 ? 0 : offx;
+	}
+    long GetOffY()
+    {
+    	long offy = GetInteger(wxT("OffY"));
+    	return offy == -1 ? 0 : offy;
+	}
+
+	void SetOffX(long x)
+    {
+    	KeyValues[wxT("OffX")] = x;
+    }
+
+    void SetOffY(long y)
+    {
+    	KeyValues[wxT("OffY")] = y;
+    }
+
+    wxString GetString(const wxString& key)
+    {
+    	if(KeyValues.count(key) > 0)
+		{
+			return KeyValues[key].GetString();
+		}
+		return wxT("");
+    }
+
+    long GetInteger(const wxString& key)
+    {
+    	if(KeyValues.count(key) > 0)
+		{
+			return KeyValues[key].GetInteger();
+		}
+		return 0;
+    }
+
+	void SetValue(const wxString&key, const wxVariant& value)
+    {
+    	KeyValues[key] = value;
+    }
 
 	ObjItem(){ObjCommon = NULL;}
     void CopyFrom(const ObjItem *item);
 
-    int GetOffX() { return OffX == -1 ? 0 : OffX; }
-    int GetOffY() { return OffY == -1 ? 0 : OffY; }
+
 };
 struct AsfImg
 {
@@ -121,9 +195,9 @@ bool ReadIni(const wxString &exepath,
              NpcItem *npcitem = NULL,
              ObjItem *objitem = NULL,
              AsfImgList *list = NULL);
-bool SaveIni(const wxString &filePath, NpcItem *npcitem = NULL, ObjItem *objitem = NULL);
-void SaveNpcItem(wxTextFile &file, NpcItem *item);
-void SaveObjItem(wxTextFile &file, ObjItem *item);
+bool SaveIni(const wxString &filePath, NpcItem *npcitem = NULL, ObjItem *objitem = NULL, ListDefHelper *listDefHelper = NULL);
+void SaveNpcItem(wxTextFile &file, NpcItem *item, ListDefHelper *listDefHelper);
+void SaveObjItem(wxTextFile &file, ObjItem *item, ListDefHelper *listDefHelper);
 void AssignNpcItem(const wxString &name, const wxString &value, long n_value, NpcItem *item);
 void AssignObjItem(const wxString &name, const wxString &value, long n_value, ObjItem *item);
 bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n_value);
@@ -180,7 +254,7 @@ public:
         long pos = 0;
         for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it, pos++)
         {
-            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            if((*it)->MapX() == mapx && (*it)->MapY() == mapy)
             {
                 if(index != NULL) (*index) = pos;
                 return *it;
@@ -239,7 +313,7 @@ public:
     {
         for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
         {
-            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            if((*it)->MapX() == mapx && (*it)->MapY() == mapy)
             {
                 delete *it;
                 m_list.erase(it);
@@ -265,7 +339,7 @@ public:
     {
         for(typename std::list<T>::iterator it = m_list.begin(); it != m_list.end(); ++it)
         {
-            if((*it)->MapX == mapx && (*it)->MapY == mapy)
+            if((*it)->MapX() == mapx && (*it)->MapY() == mapy)
             {
                 return true;
             }
@@ -323,10 +397,10 @@ private:
 
 typedef ItemList<NpcItem*> NpcList;
 bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
-bool NpcListSave(const wxString path, const wxString mapName, NpcList *list);
+bool NpcListSave(const wxString path, const wxString mapName, NpcList *list, ListDefHelper *listDefHelper);
 
 typedef ItemList<ObjItem*> ObjList;
 bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
-bool ObjListSave(const wxString path, const wxString mapName, ObjList *list);
+bool ObjListSave(const wxString path, const wxString mapName, ObjList *list, ListDefHelper *listDefHelper);
 
 #endif // NPC_HPP_INCLUDED

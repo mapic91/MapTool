@@ -149,6 +149,7 @@
 					<Add option="-s" />
 					<Add option="-static-libgcc" />
 					<Add option="-static-libstdc++" />
+					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_stc.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_richtext.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_xrc.a" />
@@ -166,7 +167,6 @@
 					<Add library="$(#wx.lib)/gcc_lib/libwxbase30u_net.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_gl.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_media.a" />
-					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_ribbon.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxmsw30u_webview.a" />
 					<Add library="$(#wx.lib)/gcc_lib/libwxregexu.a" />
@@ -196,6 +196,7 @@
 					<Add option="-s" />
 					<Add option="-static-libgcc" />
 					<Add option="-static-libstdc++" />
+					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_stc.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_richtext.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_xrc.a" />
@@ -213,7 +214,6 @@
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxbase30u_net.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_gl.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_media.a" />
-					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_ribbon.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_webview.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxregexu.a" />
@@ -269,10 +269,14 @@
 		<Unit filename="ClipBoard.h" />
 		<Unit filename="FpsDialog.cpp" />
 		<Unit filename="FpsDialog.h" />
+		<Unit filename="ICO/L.h" />
+		<Unit filename="ICO/L_Disabled.h" />
 		<Unit filename="InputUIntDialog.cpp" />
 		<Unit filename="InputUIntDialog.h" />
 		<Unit filename="ListDefHelper.cpp" />
 		<Unit filename="ListDefHelper.h" />
+		<Unit filename="LoadXPM.cpp" />
+		<Unit filename="LoadXPM.h" />
 		<Unit filename="Map.cpp" />
 		<Unit filename="Map.h" />
 		<Unit filename="MapTool.cpp" />

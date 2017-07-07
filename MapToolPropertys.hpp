@@ -35,15 +35,30 @@ public:
 							unsigned int radius = 0)
                       :wxStringProperty(label, name, wxT("<composed>"))
 	{
-		auto magicProperty = new FileNameProperty(MAGIC_FILE_PROPERTY_NAME, wxPG_LABEL, filename);
-		magicProperty->SetAttribute(wxPG_FILE_INITIAL_PATH, wxVariant(Utils::GetFullPath(wxT("ini\\magic"))));
-		magicProperty->SetAttribute(wxPG_FILE_WILDCARD, wxVariant(wxT("ini文件(*.ini)|*.ini")));
-		magicProperty->SetHelpString(wxT("武功文件"));
-		AppendChild(magicProperty);
-		auto radiousProperty = new wxUIntProperty(wxT("Radius"), wxPG_LABEL, radius);
-		radiousProperty->SetHelpString(wxT("使用距离"));
-		AppendChild(radiousProperty);
+		m_magicProperty = new FileNameProperty(MAGIC_FILE_PROPERTY_NAME, wxPG_LABEL, filename);
+		m_magicProperty->SetAttribute(wxPG_FILE_INITIAL_PATH, wxVariant(Utils::GetFullPath(wxT("ini\\magic"))));
+		m_magicProperty->SetAttribute(wxPG_FILE_WILDCARD, wxVariant(wxT("ini文件(*.ini)|*.ini")));
+		m_magicProperty->SetHelpString(wxT("武功文件"));
+		AppendChild(m_magicProperty);
+		m_radiousProperty = new wxUIntProperty(wxT("Radius"), wxPG_LABEL, radius);
+		m_radiousProperty->SetHelpString(wxT("使用距离"));
+		m_radiousProperty->SetEditor(wxPGEditor_SpinCtrl);
+		AppendChild(m_radiousProperty);
 	}
+
+	wxString GetValueStringForIni()
+	{
+		return m_magicProperty->GetValue().GetString() + wxT(":") + m_radiousProperty->GetValue().GetString() + wxT(";");
+	}
+
+	bool IsValueOk()
+	{
+		return !m_magicProperty->GetValue().GetString().IsEmpty();
+	}
+
+private:
+	wxPGProperty *m_magicProperty;
+	wxPGProperty *m_radiousProperty;
 };
 
 class AddMagicToListDialogAdapter : public wxPGEditorDialogAdapter

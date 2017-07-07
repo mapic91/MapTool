@@ -1,0 +1,306 @@
+{
+	"Order": ["Basic","RepeatScript", "Magic", "WhenLifeLow", "BeAttacked"],
+    "Basic": {
+		"ShowName": "基本项",
+		"Help": "",
+		"Items": [{
+            "Name" : "Name",
+            "Help" : "姓名",
+            "Type" : "String",
+            "Default" : ""
+        }, {
+            "Name" : "Kind",
+            "Help" : "NPC类型",
+            "Type" : "UIntEnum",
+            "Enums": [
+					["普通类", 0],
+					["战斗类", 1],
+					["事件类", 5],
+                    ["地上动物类",4],
+                    ["怕人动物类",6],
+                    ["飞翔动物类",7]
+				],
+            "Default" : 0
+        }, {
+            "Name" : "Relation",
+            "Help" : "与主角的关系",
+            "Type" : "UIntEnum",
+            "Enums": [
+					["友好", 0],
+					["敌对", 1],
+					["中立", 2]
+				],
+            "Default" : 0
+        }, {
+            "Name" : "PathFinder",
+            "Help" : "寻路类型",
+            "Type" : "UIntEnum",
+            "Enums" : [
+                ["普通",0],
+                ["最优（耗性能）",1]
+            ],
+            "Default" : 0
+        }, {
+            "Name" : "State",
+            "Help" : "当前状态",
+            "Type" : "UIntEnum",
+            "Enums" : [
+                ["Stand",0],
+                ["Stand1",1],
+                ["Walk",2],
+                ["Run",3],
+                ["Jump",4],
+                ["Attack",5],
+                ["Attack1",6],
+                ["Attack2",7],
+                ["Magic",8],
+                ["Sit",9],
+                ["Hurt",10],
+                ["Death",11],
+                ["FightStand",12],
+                ["FightWalk",13],
+                ["FightRun",14],
+                ["FightJump",15]
+            ],
+            "Default" : 0
+        }, {
+            "Name" : "ShowName",
+            "Help" : "（新剑）",
+            "Type" : "String",
+            "Default" : ""
+        }, {
+            "Name" : "VisionRadius",
+            "Help" : "视野半径",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "DialogRadius",
+            "Help" : "对话半径",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "AttackRadius",
+            "Help" : "攻击半径",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Dir",
+            "Help" : "NPC朝向",
+            "Type": "UIntRange",
+			"Range": [0, 7],
+            "Default" : 0
+        }, {
+            "Name" : "Lum",
+            "Help" : "亮度",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Action",
+            "Help" : "动作",
+            "Type" : "UIntEnum",
+            "Enums" : [
+                ["站立",0],
+                ["走动（随机）",1],
+                ["走动（FixedPos）",2]
+            ],
+            "Default" : 0
+        }, {
+            "Name" : "WalkSpeed",
+            "Help" : "行走速度",
+            "Type" : "UInt",
+            "Default" : 1
+        }, {
+            "Name" : "Evade",
+            "Help" : "闪避",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Attack",
+            "Help" : "攻击力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "AttackLevel",
+            "Help" : "攻击等级",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Defend",
+            "Help" : "防御力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Exp",
+            "Help" : "经验",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "LevelUpExp",
+            "Help" : "升级经验",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Level",
+            "Help" : "人物等级",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Life",
+            "Help" : "生命",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "LifeMax",
+            "Help" : "最大生命",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Thew",
+            "Help" : "体力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "ThewMax",
+            "Help" : "最大体力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Mana",
+            "Help" : "内力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "ManaMax",
+            "Help" : "最大内力",
+            "Type" : "UInt",
+            "Default" : 0
+        },{
+            "Name" : "NpcIni",
+            "Help" : "人物图像",
+            "Type" : "FileName",
+            "StartPath" : "ini\\npcres",
+            "FileNameFilter" : "ini文件(*.ini)|*.ini",
+            "Default" : ""
+        }, {
+            "Name" : "BodyIni",
+            "Help" : "尸体图像",
+            "Type" : "FileName",
+            "StartPath" : "ini\\obj",
+            "FileNameFilter" : "ini文件(*.ini)|*.ini",
+            "Default" : ""
+        }, {
+            "Name" : "FlyIni",
+            "Help" : "攻击武功1",
+            "Type" : "FileName",
+            "StartPath" : "ini\\magic",
+            "FileNameFilter" : "ini文件(*.ini)|*.ini",
+            "Default" : ""
+        }, {
+            "Name" : "FlyIni2",
+            "Help" : "攻击武功2",
+            "Type" : "FileName",
+            "StartPath" : "ini\\magic",
+            "FileNameFilter" : "ini文件(*.ini)|*.ini",
+            "Default" : ""
+        }, {
+            "Name" : "ScriptFile",
+            "Help" : "对话脚本",
+            "Type" : "ScriptFile",
+            "Default" : ""
+        }, {
+            "Name" : "DeathScript",
+            "Help" : "死亡脚本",
+            "Type" : "ScriptFile",
+            "Default" : ""
+        }, {
+            "Name" : "ExpBonus",
+            "Help" : "额外经验",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Idle",
+            "Help" : "攻击间隔（单位：帧）",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "FixedPos",
+            "Help" : "固定路径",
+            "Type" : "FixedPosString",
+            "Default" : ""
+        }]
+	},
+	"RepeatScript": {
+		"ShowName": "重复调用脚本",
+		"Help": "",
+		"Items": [{
+			"Name": "TimerScriptFile",
+			"Help": "要重复调用的脚本，脚本文件在 script\\map\\[地图文件名] 或者 script\\common",
+			"Type": "ScriptFile",
+			"Default": ""
+		}, {
+			"Name": "TimerScriptInterval",
+			"Help": "间隔（毫秒）,隔多少毫秒调用一次脚本，默认1000",
+			"Type": "UInt",
+			"Default": 1000
+		}]
+	},
+	"Magic": {
+		"ShowName": "攻击武功",
+		"Help": "",
+		"Items": [{
+			"Name": "FlyInis",
+			"Help": "设置多个攻击武功和其释放距离,比如：FlyInis=magic-飞刀.ini:3;magic-蜂王毒刺.ini:1;",
+			"Type": "MagicFileWithRadiusList",
+			"Default": ""
+		}]
+	},
+	"WhenLifeLow": {
+		"ShowName": "血量低时",
+		"Help": "",
+		"Items": [{
+				"Name": "KeepRadiusWhenLifeLow",
+				"Help": "如果大于0，表示当NPC的血量比例小于等于LifeLowPercent时，会保持离攻击目标该距离，默认0。比如设置为10，则当血量低时，会保持离攻击目标10的距离。",
+				"Type": "UInt",
+				"Default": 0
+			},
+			{
+				"Name": "MagicToUseWhenLifeLow",
+				"Help": "设置当NPC的血量比例小于等于LifeLowPercent时，使用该武功。武功的等级由AttackLevel决定。",
+				"Type" : "FileName",
+                "StartPath" : "ini\\magic",
+                "FileNameFilter" : "ini文件(*.ini)|*.ini",
+				"Default": ""
+			}, {
+				"Name": "LifeLowPercent",
+				"Help": "血量百分比，范围0-100，默认20",
+				"Type": "UIntRange",
+				"Range": [0, 100],
+				"Default": 20
+			}
+		]
+	},
+	"BeAttacked": {
+		"ShowName": "被攻击时",
+		"Help": "",
+		"Items": [{
+				"Name": "MagicToUseWhenBeAttacked",
+				"Help": "当NPC的被攻击时，会释放该武功。释放的方向由MagicDirectionWhenBeAttacked决定。武功的等级由AttackLevel决定。",
+				"Type" : "FileName",
+                "StartPath" : "ini\\magic",
+                "FileNameFilter" : "ini文件(*.ini)|*.ini",
+				"Default": ""
+			},
+			{
+				"Name": "MagicDirectionWhenBeAttacked",
+				"Help": "武功释放方向",
+				"Type": "UIntEnum",
+				"Enums": [
+					["攻击者的位置", 0],
+					["被攻击到的武功的反方向", 1],
+					["该NPC的当前朝向", 2]
+				],
+				"Default": 0
+			}
+		]
+	}
+}

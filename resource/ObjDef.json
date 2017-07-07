@@ -1,0 +1,97 @@
+{
+	"Order": ["Basic", "RepeatScript"],
+	"Basic": {
+		"ShowName": "基本项",
+		"Help": "",
+		"Items": [{
+            "Name" : "ObjName",
+            "Help" : "名称",
+            "Type" : "String",
+            "Default" : ""
+        }, {
+            "Name" : "Kind",
+            "Help" : "类型",
+            "Type" : "UIntEnum",
+            "Enums": [
+					["宝物和装饰类（新剑仅装饰类）", 0],
+					["宝箱和动画类（新剑还包括植物类）(不自动播放动画)", 1],
+					["尸体类(不自动播放动画)", 2],
+                    ["循环音效(不自动播放动画)",3],
+                    ["随机音效(不自动播放动画)",4],
+                    ["门类(不自动播放动画)",5],
+                    ["陷阱",6]
+				],
+            "Default" : 0
+        }, {
+            "Name" : "Dir",
+            "Help" : "OBJ朝向",
+            "Type" : "UIntRange",
+            "Range": [0, 7],
+            "Default" : 0
+        }, {
+            "Name" : "Damage",
+            "Help" : "当类型为陷阱时的伤害值",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Frame",
+            "Help" : "起始帧",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Height",
+            "Help" : "高",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Lum",
+            "Help" : "亮度",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "ObjFile",
+            "Help" : "物体图像",
+            "Type" : "FileName",
+            "StartPath" : "ini\\objres",
+            "FileNameFilter" : "ini文件(*.ini)|*.ini",
+            "Default" : ""
+        }, {
+            "Name" : "ScriptFile",
+            "Help" : "脚本文件",
+            "Type" : "ScriptFile",
+            "Default" : ""
+        }, {
+            "Name" : "WavFile",
+            "Help" : "声音文件",
+            "Type" : "FileName",
+            "StartPath" : "sound",
+            "FileNameFilter" : "ini文件(*.wav)|*.wav",
+            "Default" : ""
+        }, {
+            "Name" : "OffX",
+            "Help" : "右偏移",
+            "Type" : "Int",
+            "Default" : 0
+        }, {
+            "Name" : "OffY",
+            "Help" : "下偏移",
+            "Type" : "Int",
+            "Default" : 0
+        }]
+	},
+    "RepeatScript": {
+		"ShowName": "重复调用脚本",
+		"Help": "",
+		"Items": [{
+			"Name": "TimerScriptFile",
+			"Help": "要重复调用的脚本，脚本文件在 script\\map\\[地图文件名] 或者 script\\common",
+			"Type": "ScriptFile",
+			"Default": ""
+		}, {
+			"Name": "TimerScriptInterval",
+			"Help": "间隔（毫秒）,隔多少毫秒调用一次脚本，默认1000",
+			"Type": "UInt",
+			"Default": 1000
+		}]
+	}
+}

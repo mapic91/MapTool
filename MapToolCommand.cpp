@@ -60,7 +60,7 @@ bool MTC_Change_Npc::Do()
 	NpcItem *item = nl->GetItem(mIndex);
 	item->CopyFrom(mNewValue);
 	mt->ReNewNpcAsf(item);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -69,7 +69,7 @@ bool MTC_Change_Npc::Undo()
 	NpcItem *item = nl->GetItem(mIndex);
 	item->CopyFrom(mOldValue);
 	mt->ReNewNpcAsf(item);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -100,22 +100,22 @@ void MTC_Move_Npc::NewPos(int x, int y)
 bool MTC_Move_Npc::Do()
 {
 	NpcItem *item = nl->GetItem(mIndex);
-	item->MapX = mNewX;
-	item->MapY = mNewY;
+	item->SetMapX(mNewX);
+	item->SetMapY(mNewY);
 	mt->CorrectFixedPos(item);
 	mt->UpdateListItem(mIndex, MapTool::NPCLIST);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
 bool MTC_Move_Npc::Undo()
 {
 	NpcItem *item = nl->GetItem(mIndex);
-	item->MapX = mOldX;
-	item->MapY = mOldY;
+	item->SetMapX(mOldX);
+	item->SetMapY(mOldY);
 	mt->CorrectFixedPos(item);
 	mt->UpdateListItem(mIndex, MapTool::NPCLIST);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -146,13 +146,13 @@ bool MTC_Move_Npcs::Do()
 	for(auto &history : mHistory)
 	{
 		NpcItem *item = nl->GetItem(history.Index);
-		item->MapX = history.NewX;
-		item->MapY = history.NewY;
+		item->SetMapX(history.NewX);
+		item->SetMapY(history.NewY);
 		mt->CorrectFixedPos(item);
 		mt->UpdateListItem(history.Index, MapTool::NPCLIST);
 		if (i == mHistory.size())
 		{
-			mt->ShowTile(item->MapX, item->MapY);
+			mt->ShowTile(item->MapX(), item->MapY());
 		}
 		i++;
 	}
@@ -165,13 +165,13 @@ bool MTC_Move_Npcs::Undo()
 	for(auto &history : mHistory)
 	{
 		NpcItem *item = nl->GetItem(history.Index);
-		item->MapX = history.OldX;
-		item->MapY = history.OldY;
+		item->SetMapX(history.OldX);
+		item->SetMapY(history.OldY);
 		mt->CorrectFixedPos(item);
 		mt->UpdateListItem(history.Index, MapTool::NPCLIST);
 		if (i == mHistory.size())
 		{
-			mt->ShowTile(item->MapX, item->MapY);
+			mt->ShowTile(item->MapX(), item->MapY());
 		}
 		i++;
 	}
@@ -222,7 +222,7 @@ bool MTC_Change_Npcs::Do()
 	}
 	if (item)
 	{
-		mt->ShowTile(item->MapX, item->MapY);
+		mt->ShowTile(item->MapX(), item->MapY());
 	}
 	return true;
 }
@@ -238,7 +238,7 @@ bool MTC_Change_Npcs::Undo()
 	}
 	if (item)
 	{
-		mt->ShowTile(item->MapX, item->MapY);
+		mt->ShowTile(item->MapX(), item->MapY());
 	}
 	return true;
 }
@@ -337,7 +337,7 @@ bool MTC_Delete_Npc::Do()
 {
 	nl->DeleteItem(mIndex);
 	mt->RefreshNpcList();
-	mt->ShowTile(mDeletedItem->MapX, mDeletedItem->MapY);
+	mt->ShowTile(mDeletedItem->MapX(), mDeletedItem->MapY());
 	return true;
 }
 
@@ -348,7 +348,7 @@ bool MTC_Delete_Npc::Undo()
 	nl->InsertItem(mIndex, item);
 	mt->ReNewNpcAsf(item);
 	mt->RefreshNpcList();
-	mt->ShowTile(mDeletedItem->MapX, mDeletedItem->MapY);
+	mt->ShowTile(mDeletedItem->MapX(), mDeletedItem->MapY());
 	return true;
 }
 
@@ -432,7 +432,7 @@ bool MTC_Change_Obj::Do()
 	ObjItem *item = ol->GetItem(mIndex);
 	item->CopyFrom(mNewValue);
 	mt->ReNewObjAsf(item);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -441,7 +441,7 @@ bool MTC_Change_Obj::Undo()
 	ObjItem *item = ol->GetItem(mIndex);
 	item->CopyFrom(mOldValue);
 	mt->ReNewObjAsf(item);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -472,20 +472,20 @@ void MTC_Move_Obj::NewPos(int x, int y)
 bool MTC_Move_Obj::Do()
 {
 	ObjItem *item = ol->GetItem(mIndex);
-	item->MapX = mNewX;
-	item->MapY = mNewY;
+	item->SetMapX(mNewX);
+	item->SetMapY(mNewY);
 	mt->UpdateListItem(mIndex, MapTool::OBJLIST);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
 bool MTC_Move_Obj::Undo()
 {
 	ObjItem *item = ol->GetItem(mIndex);
-	item->MapX = mOldX;
-	item->MapY = mOldY;
+	item->SetMapX(mOldX);
+	item->SetMapY(mOldY);
 	mt->UpdateListItem(mIndex, MapTool::OBJLIST);
-	mt->ShowTile(item->MapX, item->MapY);
+	mt->ShowTile(item->MapX(), item->MapY());
 	return true;
 }
 
@@ -516,12 +516,12 @@ bool MTC_Move_Objs::Do()
 	for(auto &history : mHistory)
 	{
 		ObjItem *item = ol->GetItem(history.Index);
-		item->MapX = history.NewX;
-		item->MapY = history.NewY;
+		item->SetMapX(history.NewX);
+		item->SetMapY(history.NewY);
 		mt->UpdateListItem(history.Index, MapTool::OBJLIST);
 		if (i == mHistory.size())
 		{
-			mt->ShowTile(item->MapX, item->MapY);
+			mt->ShowTile(item->MapX(), item->MapY());
 		}
 		i++;
 	}
@@ -534,12 +534,12 @@ bool MTC_Move_Objs::Undo()
 	for(auto &history : mHistory)
 	{
 		ObjItem *item = ol->GetItem(history.Index);
-		item->MapX = history.OldX;
-		item->MapY = history.OldY;
+		item->SetMapX(history.OldX);
+		item->SetMapY(history.OldY);
 		mt->UpdateListItem(history.Index, MapTool::OBJLIST);
 		if (i == mHistory.size())
 		{
-			mt->ShowTile(item->MapX, item->MapY);
+			mt->ShowTile(item->MapX(), item->MapY());
 		}
 		i++;
 	}
@@ -591,7 +591,7 @@ bool MTC_Change_Objs::Do()
 	}
 	if (item)
 	{
-		mt->ShowTile(item->MapX, item->MapY);
+		mt->ShowTile(item->MapX(), item->MapY());
 	}
 	return true;
 }
@@ -607,7 +607,7 @@ bool MTC_Change_Objs::Undo()
 	}
 	if (item)
 	{
-		mt->ShowTile(item->MapX, item->MapY);
+		mt->ShowTile(item->MapX(), item->MapY());
 	}
 	return true;
 }
@@ -643,7 +643,7 @@ bool MTC_Delete_Obj::Do()
 {
 	ol->DeleteItem(mIndex);
 	mt->RefreshObjList();
-	mt->ShowTile(mDeletedItem->MapX, mDeletedItem->MapY);
+	mt->ShowTile(mDeletedItem->MapX(), mDeletedItem->MapY());
 	return true;
 }
 
@@ -654,7 +654,7 @@ bool MTC_Delete_Obj::Undo()
 	ol->InsertItem(mIndex, item);
 	mt->ReNewObjAsf(item);
 	mt->RefreshObjList();
-	mt->ShowTile(mDeletedItem->MapX, mDeletedItem->MapY);
+	mt->ShowTile(mDeletedItem->MapX(), mDeletedItem->MapY());
 	return true;
 }
 

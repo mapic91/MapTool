@@ -17,6 +17,7 @@
 #include "wx/cmdproc.h"
 #include "MapToolCommand.h"
 #include "ListDefHelper.h"
+#include "LoadXPM.h"
 
 #include <map>
 #include <vector>
@@ -377,6 +378,7 @@ public:
     wxTimer m_timer;
 
     ListDefHelper m_NpcPropertyDefs;
+    ListDefHelper m_ObjPropertyDefs;
 
     DECLARE_EVENT_TABLE()
 };
@@ -394,6 +396,7 @@ public:
         m_mapName = mapname;
         m_NpcAsfImgList = list;
         m_item = item;
+        m_listDefHelper = listDefHelper;
 
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
@@ -403,7 +406,33 @@ public:
         INI_MESSGEG = wxT("选择一个INI文件");
         STYLE = wxFD_OPEN;
 
-        if(Settings::TheSetting.NpcDialogX != -1)
+		m_GridManager->SetDescBoxHeight(50);
+		listDefHelper->InitPropGrid(m_GridManager->GetPage(0), m_mapName);
+		listDefHelper->BindEvent(m_GridManager,
+			[this](const wxString &propertyName, const wxString& typeName){
+				if (propertyName == wxT("FixedPos") && typeName == wxT("FixedPosString"))
+				{
+					EndModal(FIXPOSEDIT);
+				}
+			},[this](const wxString &propertyName, const wxString& typeName, const wxVariant& value){
+				if (propertyName == wxT("Level") && typeName == wxT("UInt"))
+				{
+					OnLevelChaged(value.GetInteger());
+				}
+			});
+
+		wxToolBar *toolBar = m_GridManager->GetToolBar();
+		toolBar->AddSeparator();
+		toolBar->AddTool(SET_LEVEL_DETAIL_ID,
+						wxT("同时更新属性数据"),
+						LoadXPM(wxT("L")),
+						LoadXPM(wxT("L_Disabled")),
+						wxITEM_CHECK,
+						wxT("设置等级时，同时更新 Evade  Attack  Defend  Life  LifeMax\n需要文件 ini\\level\\level-npc.ini"));
+		toolBar->Realize();
+		toolBar->ToggleTool(SET_LEVEL_DETAIL_ID, true);
+
+		if(Settings::TheSetting.NpcDialogX != -1)
 		{
 			SetSize(Settings::TheSetting.NpcDialogX,
 									Settings::TheSetting.NpcDialogY,
@@ -411,17 +440,26 @@ public:
 									Settings::TheSetting.NpcDialogHeight);
 		}
 
-		m_GridManager->SetDescBoxHeight(50);
-		listDefHelper->InitPropGrid(m_GridManager->GetPage(0), m_mapName);
-		listDefHelper->BindEvent(m_GridManager);
+		if(Settings::TheSetting.NpcDetailDescBoxHeight != -1)
+		{
+			m_GridManager->SetDescBoxHeight(Settings::TheSetting.NpcDetailDescBoxHeight);
+		}
 
+		if(Settings::TheSetting.NpcDetailSpliterPos != -1)
+		{
+			m_GridManager->SetSplitterPosition(Settings::TheSetting.NpcDetailSpliterPos);
+		}
     }
-    virtual ~NpcItemEditDialog() {}
+    virtual ~NpcItemEditDialog()
+    {
+		m_listDefHelper->UnbindEvent(m_GridManager);
+    }
 
     void EnableFixpos(bool enable = true)
     {
-    	m_FixedPos->Enable(enable);
-    	m_FixedPosEdit->Enable(enable);
+    	m_GridManager->GetPage(0)->EnableProperty(wxT("FixedPos"), enable);
+//    	m_FixedPos->Enable(enable);
+//    	m_FixedPosEdit->Enable(enable);
     }
 
     static wxString ToFixPosString(std::list<wxPoint> &list)
@@ -480,6 +518,8 @@ public:
         return list;
     }
 
+    void ClearVaules();
+
     void InitFromNpcItem(NpcItem *item);
     /** \brief Assign to npc item from this dialog
      *
@@ -492,9 +532,10 @@ public:
     void AssignToNpcItem(NpcItem *item, bool onlySetted = false);
     void SetFixPos(wxString str)
     {
-        m_FixedPos->SetValue(str);
+		m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("FixedPos"), str);
     }
     enum {OK, CANCEL, FIXPOSEDIT};
+    enum {SET_LEVEL_DETAIL_ID = 334};
 private:
 
     void OnOk( wxCommandEvent& event )
@@ -512,6 +553,8 @@ private:
     {
     	GetSize(&Settings::TheSetting.NpcDialogWidth, &Settings::TheSetting.NpcDialogHeight);
 		GetPosition(&Settings::TheSetting.NpcDialogX, &Settings::TheSetting.NpcDialogY);
+		Settings::TheSetting.NpcDetailDescBoxHeight = m_GridManager->GetDescBoxHeight();
+		Settings::TheSetting.NpcDetailSpliterPos = m_GridManager->GetPage(0)->GetSplitterPosition();
     }
 
     virtual void OnClose( wxCloseEvent& event )
@@ -520,202 +563,199 @@ private:
     	event.Skip();
     }
 
-    virtual void OnResetValue( wxMouseEvent& event )
-    {
-		switch(event.GetId())
-		{
-		case MYID_KIND:
-			m_Kind->SetSelection(-1);
-			break;
-		case MYID_RELATION:
-			m_Relation->SetSelection(-1);
-			break;
-		case MYID_DIR:
-			m_Dir->SetSelection(-1);
-			break;
-		case MYID_ACTION:
-			m_Action->SetSelection(-1);
-			break;
-		}
-    }
+//    virtual void OnResetValue( wxMouseEvent& event )
+//    {
+//		switch(event.GetId())
+//		{
+//		case MYID_KIND:
+//			m_Kind->SetSelection(-1);
+//			break;
+//		case MYID_RELATION:
+//			m_Relation->SetSelection(-1);
+//			break;
+//		case MYID_DIR:
+//			m_Dir->SetSelection(-1);
+//			break;
+//		case MYID_ACTION:
+//			m_Action->SetSelection(-1);
+//			break;
+//		}
+//    }
 
-    virtual void OnLevelChange( wxCommandEvent& event )
+    void OnLevelChaged( int level )
     {
-        wxString value = event.GetString();
-        long val;
-        if(m_FillNpcLevelDetail->GetValue() &&
-                value.ToLong(&val) &&
-                g_NpcLevelList->count(val))
+        if(m_GridManager->GetToolBar()->GetToolState(SET_LEVEL_DETAIL_ID) &&
+                g_NpcLevelList->count(level))
         {
-            LevelDetial &detail = g_NpcLevelList->at(val);
-            m_Evade->ChangeValue(wxString::Format(wxT("%d"), detail.Evade));
-            m_Attack->ChangeValue(wxString::Format(wxT("%d"), detail.Attack));
-            m_Defend->ChangeValue(wxString::Format(wxT("%d"), detail.Defend));
-            m_Life->ChangeValue(wxString::Format(wxT("%d"), detail.Life));
-            m_LifeMax->ChangeValue(wxString::Format(wxT("%d"), detail.Life));
+            LevelDetial &detail = g_NpcLevelList->at(level);
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Evade"), wxVariant(detail.Evade));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Attack"), wxVariant(detail.Attack));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Defend"), wxVariant(detail.Defend));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Life"), wxVariant(detail.Life));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("LifeMax"), wxVariant(detail.Life));
         }
     }
 
     virtual void OnSetFixedPos( wxCommandEvent& event )
     {
-        EndModal(FIXPOSEDIT);
+//        EndModal(FIXPOSEDIT);
     }
 
     void OnNpcIni( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             INI_MESSGEG,
-                             exepath + wxT("ini\\npcres\\"),
-                             wxT(""),
-                             INI_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_NpcIni->SetLabel(filedlg.GetFilename());
-            m_NpcIni->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             INI_MESSGEG,
+//                             exepath + wxT("ini\\npcres\\"),
+//                             wxT(""),
+//                             INI_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_NpcIni->SetLabel(filedlg.GetFilename());
+//            m_NpcIni->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnNpcIniEdit( wxCommandEvent& event )
     {
-        wxString path = m_NpcIni->GetLabel();
-        if(!path.IsEmpty()) path = wxT("ini\\npcres\\") + path;
-        OpenFile(path);
+//        wxString path = m_NpcIni->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("ini\\npcres\\") + path;
+//        OpenFile(path);
     }
     void OnBodyIni( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             INI_MESSGEG,
-                             exepath + wxT("ini\\obj\\"),
-                             wxT(""),
-                             INI_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_BodyIni->SetLabel(filedlg.GetFilename());
-            m_BodyIni->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             INI_MESSGEG,
+//                             exepath + wxT("ini\\obj\\"),
+//                             wxT(""),
+//                             INI_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_BodyIni->SetLabel(filedlg.GetFilename());
+//            m_BodyIni->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnBodyIniEdit( wxCommandEvent& event )
     {
-        wxString path = m_BodyIni->GetLabel();
-        if(!path.IsEmpty()) path = wxT("ini\\obj\\") + path;
-        OpenFile(path);
+//        wxString path = m_BodyIni->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("ini\\obj\\") + path;
+//        OpenFile(path);
     }
     void OnFlyIni( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             INI_MESSGEG,
-                             exepath + wxT("ini\\magic\\"),
-                             wxT(""),
-                             INI_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_FlyIni->SetLabel(filedlg.GetFilename());
-            m_FlyIni->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             INI_MESSGEG,
+//                             exepath + wxT("ini\\magic\\"),
+//                             wxT(""),
+//                             INI_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_FlyIni->SetLabel(filedlg.GetFilename());
+//            m_FlyIni->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnFlyIniEdit( wxCommandEvent& event )
     {
-        wxString path = m_FlyIni->GetLabel();
-        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
-        OpenFile(path);
+//        wxString path = m_FlyIni->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
+//        OpenFile(path);
     }
     void OnFlyIni2( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             INI_MESSGEG,
-                             exepath + wxT("ini\\magic\\"),
-                             wxT(""),
-                             INI_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_FlyIni2->SetLabel(filedlg.GetFilename());
-            m_FlyIni2->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             INI_MESSGEG,
+//                             exepath + wxT("ini\\magic\\"),
+//                             wxT(""),
+//                             INI_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_FlyIni2->SetLabel(filedlg.GetFilename());
+//            m_FlyIni2->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnFlyIni2Edit( wxCommandEvent& event )
     {
-        wxString path = m_FlyIni2->GetLabel();
-        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
-        OpenFile(path);
+//        wxString path = m_FlyIni2->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("ini\\magic\\") + path;
+//        OpenFile(path);
     }
     void OnScriptFile( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             wxT("选择一个脚本文件"),
-                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
-                             wxT(""),
-                             TXT_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_ScriptFile->SetLabel(filedlg.GetFilename());
-            m_ScriptFile->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             wxT("选择一个脚本文件"),
+//                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
+//                             wxT(""),
+//                             TXT_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_ScriptFile->SetLabel(filedlg.GetFilename());
+//            m_ScriptFile->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnScriptFileEdit( wxCommandEvent& event )
     {
-        wxString path = m_ScriptFile->GetLabel();
-        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
-        OpenFile(path);
+//        wxString path = m_ScriptFile->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+//        OpenFile(path);
     }
     void OnDeathScript( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             wxT("选择一个脚本文件"),
-                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
-                             wxT(""),
-                             TXT_MASK,
-                             STYLE);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_DeathScript->SetLabel(filedlg.GetFilename());
-            m_DeathScript->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             wxT("选择一个脚本文件"),
+//                             exepath + wxT("script\\map\\") + m_mapName + wxT("\\"),
+//                             wxT(""),
+//                             TXT_MASK,
+//                             STYLE);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_DeathScript->SetLabel(filedlg.GetFilename());
+//            m_DeathScript->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnDeathScriptEdit( wxCommandEvent& event )
     {
-        wxString path = m_DeathScript->GetLabel();
-        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
-        OpenFile(path);
+//        wxString path = m_DeathScript->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("script\\map\\") + m_mapName + wxT("\\")+ path;
+//        OpenFile(path);
     }
 	virtual void OnNpcIniClear( wxMouseEvent& event )
 	{
-		m_NpcIni->SetLabel(wxT(""));
-		m_NpcIni->SetToolTip(wxT("左键选择，右键清除"));
+//		m_NpcIni->SetLabel(wxT(""));
+//		m_NpcIni->SetToolTip(wxT("左键选择，右键清除"));
 	}
     void OnBodyIniClear( wxMouseEvent& event )
     {
-        m_BodyIni->SetLabel(wxT(""));
-        m_BodyIni->SetToolTip(wxT("左键选择，右键清除"));
+//        m_BodyIni->SetLabel(wxT(""));
+//        m_BodyIni->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnFlyIniClear( wxMouseEvent& event )
     {
-        m_FlyIni->SetLabel(wxT(""));
-        m_FlyIni->SetToolTip(wxT("左键选择，右键清除"));
+//        m_FlyIni->SetLabel(wxT(""));
+//        m_FlyIni->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnFlyIni2Clear( wxMouseEvent& event )
     {
-        m_FlyIni2->SetLabel(wxT(""));
-        m_FlyIni2->SetToolTip(wxT("左键选择，右键清除"));
+//        m_FlyIni2->SetLabel(wxT(""));
+//        m_FlyIni2->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnScriptFileClear( wxMouseEvent& event )
     {
-        m_ScriptFile->SetLabel(wxT(""));
-        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
+//        m_ScriptFile->SetLabel(wxT(""));
+//        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnDeathScriptClear( wxMouseEvent& event )
     {
-        m_DeathScript->SetLabel(wxT(""));
-        m_DeathScript->SetToolTip(wxT("左键选择，右键清除"));
+//        m_DeathScript->SetLabel(wxT(""));
+//        m_DeathScript->SetToolTip(wxT("左键选择，右键清除"));
     }
 
     void OnSaveNpcIniFile( wxCommandEvent& event )
@@ -732,32 +772,32 @@ private:
             NpcItem item;
             InitNpcItem(&item);
             AssignToNpcItem(&item);
-            item.MapX = m_item->MapX;
-            item.MapY = m_item->MapY;
-            SaveIni(filedlg.GetPath(), &item);
+            item.SetMapX(m_item->MapX());
+            item.SetMapY(m_item->MapY());
+            SaveIni(filedlg.GetPath(), &item, nullptr, m_listDefHelper);
         }
     }
 
     void OpenFile(wxString relatePath)
     {
-        if(relatePath.IsEmpty())
-        {
-            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
-            return;
-        }
-        if(wxFileName::FileExists(exepath + relatePath))
-        {
-        	wxString program = wxT("explorer");
-        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
-				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
-				program = exepath + wxT("JxqyScriptEditor.exe");
-            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
-        }
-        else
-        {
-            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
-            return;
-        }
+//        if(relatePath.IsEmpty())
+//        {
+//            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
+//            return;
+//        }
+//        if(wxFileName::FileExists(exepath + relatePath))
+//        {
+//        	wxString program = wxT("explorer");
+//        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
+//				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
+//				program = exepath + wxT("JxqyScriptEditor.exe");
+//            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
+//        }
+//        else
+//        {
+//            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
+//            return;
+//        }
     }
 
     wxString INI_MASK,INI_MESSGEG, TXT_MASK;
@@ -765,6 +805,7 @@ private:
     wxString exepath, m_mapName;
     AsfImgList *m_NpcAsfImgList;
     NpcItem *m_item;
+    ListDefHelper *m_listDefHelper;
 };
 
 class ObjItemEditDialog: public ObjItemEditDialogBase
@@ -774,7 +815,8 @@ public:
     ObjItemEditDialog(wxWindow *parent,
                       const wxString mapname,
                       AsfImgList *list,
-                      ObjItem *objitem)
+                      ObjItem *objitem,
+                      ListDefHelper *listDefHelper)
         :ObjItemEditDialogBase(parent)
     {
         exepath = wxStandardPaths::Get().GetExecutablePath();
@@ -782,115 +824,132 @@ public:
         m_mapName = mapname;
         m_ObjAsfImgList = list;
         m_item = objitem;
+        m_listDefHelper = listDefHelper;
 
-        if(Settings::TheSetting.ObjDialogX != -1)
+		listDefHelper->InitPropGrid(m_GridManager->GetPage(0), m_mapName);
+		listDefHelper->BindEvent(m_GridManager, nullptr, nullptr);
+
+		if(Settings::TheSetting.ObjDialogX != -1)
 		{
 			SetSize(Settings::TheSetting.ObjDialogX,
 									Settings::TheSetting.ObjDialogY,
 									Settings::TheSetting.ObjDialogWidth,
 									Settings::TheSetting.ObjDialogHeight);
 		}
+
+		if(Settings::TheSetting.ObjDetailDescBoxHeight != -1)
+		{
+			m_GridManager->SetDescBoxHeight(Settings::TheSetting.ObjDetailDescBoxHeight);
+		}
+		if(Settings::TheSetting.ObjDetailSpliterPos != -1)
+		{
+			m_GridManager->SetSplitterPosition(Settings::TheSetting.ObjDetailSpliterPos);
+		}
     }
-    virtual ~ObjItemEditDialog() {}
+    virtual ~ObjItemEditDialog()
+    {
+		m_listDefHelper->UnbindEvent(m_GridManager);
+    }
+    void ClearVaules();
     void InitFromObjItem(ObjItem *item);
     void AssignToObjItem(ObjItem *item, bool onlySetted = false);
 private:
 
     void OnObjFile( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             wxT("选择一个INI文件"),
-                             exepath + wxT("ini\\objres\\"),
-                             wxT(""),
-                             wxT("INI文件(*.ini)|*.ini"),
-                             wxFD_OPEN);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_ObjFile->SetLabel(filedlg.GetFilename());
-            m_ObjFile->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             wxT("选择一个INI文件"),
+//                             exepath + wxT("ini\\objres\\"),
+//                             wxT(""),
+//                             wxT("INI文件(*.ini)|*.ini"),
+//                             wxFD_OPEN);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_ObjFile->SetLabel(filedlg.GetFilename());
+//            m_ObjFile->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnEditObjFile( wxCommandEvent& event )
     {
-        wxString path = m_ObjFile->GetLabel();
-        if(!path.IsEmpty()) path = wxT("ini\\objres\\") + path;
-        OpenFile(path);
+//        wxString path = m_ObjFile->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("ini\\objres\\") + path;
+//        OpenFile(path);
     }
     void OnScriptFile( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             wxT("选择一个脚本文件"),
-                             exepath + wxT("script\\common\\"),
-                             wxT(""),
-                             wxT("TXT文件(*.txt)|*.txt"),
-                             wxFD_OPEN);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_ScriptFile->SetLabel(filedlg.GetFilename());
-            m_ScriptFile->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             wxT("选择一个脚本文件"),
+//                             exepath + wxT("script\\common\\"),
+//                             wxT(""),
+//                             wxT("TXT文件(*.txt)|*.txt"),
+//                             wxFD_OPEN);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_ScriptFile->SetLabel(filedlg.GetFilename());
+//            m_ScriptFile->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnClearObjFile( wxMouseEvent& event )
     {
-    	m_ObjFile->SetLabel(wxT(""));
-    	m_ObjFile->SetToolTip(wxT("左键选择，右键清除"));
+//    	m_ObjFile->SetLabel(wxT(""));
+//    	m_ObjFile->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnClearScriptFile( wxMouseEvent& event )
     {
-        m_ScriptFile->SetLabel(wxT(""));
-        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
+//        m_ScriptFile->SetLabel(wxT(""));
+//        m_ScriptFile->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnEditScriptFile( wxCommandEvent& event )
     {
-        wxString path = m_ScriptFile->GetLabel();
-        if(!path.IsEmpty())
-        {
-            if(wxFileName::FileExists(exepath + wxT("script\\common\\") + path))
-                path = wxT("script\\common\\") + path;
-            else
-                path = wxT("script\\map\\") + m_mapName + wxT("\\") + path;
-        }
-        OpenFile(path);
+//        wxString path = m_ScriptFile->GetLabel();
+//        if(!path.IsEmpty())
+//        {
+//            if(wxFileName::FileExists(exepath + wxT("script\\common\\") + path))
+//                path = wxT("script\\common\\") + path;
+//            else
+//                path = wxT("script\\map\\") + m_mapName + wxT("\\") + path;
+//        }
+//        OpenFile(path);
     }
     void OnWavFile( wxCommandEvent& event )
     {
-        wxFileDialog filedlg(this,
-                             wxT("选择声音文件"),
-                             exepath + wxT("sound\\"),
-                             wxT(""),
-                             wxT("WAV文件(*.wav)|*.wav"),
-                             wxFD_OPEN);
-
-        if(filedlg.ShowModal() == wxID_OK)
-        {
-            m_WavFile->SetLabel(filedlg.GetFilename());
-            m_WavFile->SetToolTip(filedlg.GetFilename());
-        }
+//        wxFileDialog filedlg(this,
+//                             wxT("选择声音文件"),
+//                             exepath + wxT("sound\\"),
+//                             wxT(""),
+//                             wxT("WAV文件(*.wav)|*.wav"),
+//                             wxFD_OPEN);
+//
+//        if(filedlg.ShowModal() == wxID_OK)
+//        {
+//            m_WavFile->SetLabel(filedlg.GetFilename());
+//            m_WavFile->SetToolTip(filedlg.GetFilename());
+//        }
     }
     void OnResetValue( wxMouseEvent& event )
     {
-        switch(event.GetId())
-        {
-		case MYID_OBJ_KIND:
-			m_Kind->SetSelection(-1);
-			break;
-		case MYID_OBJ_DIR:
-			m_Dir->SetSelection(-1);
-			break;
-        }
+//        switch(event.GetId())
+//        {
+//		case MYID_OBJ_KIND:
+//			m_Kind->SetSelection(-1);
+//			break;
+//		case MYID_OBJ_DIR:
+//			m_Dir->SetSelection(-1);
+//			break;
+//        }
     }
     void OnClearWavFile( wxMouseEvent& event )
     {
-        m_WavFile->SetLabel(wxT(""));
-        m_WavFile->SetToolTip(wxT("左键选择，右键清除"));
+//        m_WavFile->SetLabel(wxT(""));
+//        m_WavFile->SetToolTip(wxT("左键选择，右键清除"));
     }
     void OnOpenWavFile( wxCommandEvent& event )
     {
-        wxString path = m_WavFile->GetLabel();
-        if(!path.IsEmpty()) path = wxT("sound\\") + path;
-        OpenFile(path);
+//        wxString path = m_WavFile->GetLabel();
+//        if(!path.IsEmpty()) path = wxT("sound\\") + path;
+//        OpenFile(path);
     }
     void OnOk( wxCommandEvent& event )
     {
@@ -913,6 +972,9 @@ private:
     {
     	GetSize(&Settings::TheSetting.ObjDialogWidth, &Settings::TheSetting.ObjDialogHeight);
 		GetPosition(&Settings::TheSetting.ObjDialogX, &Settings::TheSetting.ObjDialogY);
+
+		Settings::TheSetting.ObjDetailDescBoxHeight = m_GridManager->GetDescBoxHeight();
+		Settings::TheSetting.ObjDetailSpliterPos = m_GridManager->GetPage(0)->GetSplitterPosition();
     }
     void OnSaveObjIniFile( wxCommandEvent& event )
     {
@@ -928,37 +990,38 @@ private:
             ObjItem item;
             InitObjItem(&item);
             AssignToObjItem(&item);
-            item.MapX = m_item->MapX;
-            item.MapY = m_item->MapY;
-            SaveIni(filedlg.GetPath(), NULL, &item);
+            item.SetMapX(m_item->MapX());
+            item.SetMapY(m_item->MapY());
+            SaveIni(filedlg.GetPath(), NULL, &item, m_listDefHelper);
         }
     }
 
     void OpenFile(wxString relatePath)
     {
-        if(relatePath.IsEmpty())
-        {
-            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
-            return;
-        }
-        if(wxFileName::FileExists(exepath + relatePath))
-        {
-        	wxString program = wxT("explorer");
-        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
-				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
-				program = exepath + wxT("JxqyScriptEditor.exe");
-            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
-        }
-        else
-        {
-            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
-            return;
-        }
+//        if(relatePath.IsEmpty())
+//        {
+//            wxMessageBox(wxT("请先选择文件"), wxT("消息"));
+//            return;
+//        }
+//        if(wxFileName::FileExists(exepath + relatePath))
+//        {
+//        	wxString program = wxT("explorer");
+//        	if(wxFileName(relatePath).GetExt() == wxT("txt") &&
+//				wxFileName::FileExists(exepath + wxT("JxqyScriptEditor.exe")))
+//				program = exepath + wxT("JxqyScriptEditor.exe");
+//            wxExecute(program + wxT(" \"")  + exepath + relatePath + wxT("\""));
+//        }
+//        else
+//        {
+//            wxMessageBox(relatePath + wxT("  文件不存在"), wxT("消息"));
+//            return;
+//        }
     }
 
     wxString exepath, m_mapName;
     AsfImgList *m_ObjAsfImgList;
     ObjItem *m_item;
+    ListDefHelper *m_listDefHelper;
 };
 
 class SetTmxHelperPortDialog : public SetTmxHelperPortDialogBase

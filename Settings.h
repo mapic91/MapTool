@@ -35,6 +35,11 @@ class Settings
 		int ObjDialogWidth = -1;
 		int ObjDialogHeight = -1;
 
+		int NpcDetailDescBoxHeight = -1;
+		int NpcDetailSpliterPos = -1;
+
+		int ObjDetailDescBoxHeight = -1;
+		int ObjDetailSpliterPos = -1;
 };
 
 #endif // SETTINGS_H

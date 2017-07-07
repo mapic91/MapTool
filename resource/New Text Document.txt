@@ -1,0 +1,15 @@
+"Name" : "",
+"ShowName" : "",
+"Type" : "",
+"Default" : ""
+
+"Enums" : [
+                ["",],
+                ["",],
+            ],
+            
+            
+"Name" : "",
+            "Help" : "",
+            "Type" : "",
+            "Default" : ""

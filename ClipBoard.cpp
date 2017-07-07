@@ -32,7 +32,7 @@ void ClipBoard::Add(const NpcItem* item)
 	NpcItem ni;
 	ni.CopyFrom(item);
 	ni.NpcStand = nullptr;
-	ni.FixedPos = wxEmptyString;
+	ni.KeyValues["FixedPos"] = wxEmptyString;
 	m_npcItmes.push_back(ni);
 }
 
@@ -80,14 +80,14 @@ wxPoint ClipBoard::GetMinNpcTilePosition()
 	int x = 0, y = 0;
 	if(m_npcItmes.size() > 0)
 	{
-		x = m_npcItmes.front().MapX;
-		y = m_npcItmes.front().MapY;
+		x = m_npcItmes.front().MapX();
+		y = m_npcItmes.front().MapY();
 		for(auto it = m_npcItmes.begin(); it != m_npcItmes.end(); it++)
 		{
-			if((it->MapX - x) + (it->MapY - y) < 0)
+			if((it->MapX() - x) + (it->MapY() - y) < 0)
 			{
-				x = it->MapX;
-				y = it->MapY;
+				x = it->MapX();
+				y = it->MapY();
 			}
 		}
 	}
@@ -100,14 +100,14 @@ wxPoint ClipBoard::GetMinObjTilePostion()
 	int x = 0, y = 0;
 	if(m_objItems.size() > 0)
 	{
-		x = m_objItems.front().MapX;
-		y = m_objItems.front().MapY;
+		x = m_objItems.front().MapX();
+		y = m_objItems.front().MapY();
 		for(auto it = m_objItems.begin(); it != m_objItems.end(); it++)
 		{
-			if((it->MapX - x) + (it->MapY - y) < 0)
+			if((it->MapX() - x) + (it->MapY() - y) < 0)
 			{
-				x = it->MapX;
-				y = it->MapY;
+				x = it->MapX();
+				y = it->MapY();
 			}
 		}
 	}

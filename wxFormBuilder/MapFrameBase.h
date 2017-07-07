@@ -31,13 +31,10 @@ class wxListView;
 #include <wx/menu.h>
 #include <wx/frame.h>
 #include <wx/stattext.h>
-#include <wx/combobox.h>
-#include <wx/bmpcbox.h>
-#include <wx/button.h>
-#include <wx/textctrl.h>
 #include <wx/propgrid/propgrid.h>
 #include <wx/propgrid/manager.h>
 #include <wx/propgrid/advprops.h>
+#include <wx/button.h>
 #include <wx/dialog.h>
 #include <wx/spinctrl.h>
 
@@ -66,12 +63,6 @@ class wxListView;
 #define MYID_MAPVIEW_DELETE 1020
 #define MYID_MAPVIEW_BATEDIT 1021
 #define MYID_MAPVIEW_CLEAR_SELECTION 1022
-#define MYID_KIND 1023
-#define MYID_RELATION 1024
-#define MYID_DIR 1025
-#define MYID_ACTION 1026
-#define MYID_OBJ_KIND 1027
-#define MYID_OBJ_DIR 1028
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MapFrameBase
@@ -205,92 +196,6 @@ class NpcItemEditDialogBase : public wxDialog
 	private:
 	
 	protected:
-		wxStaticText* m_staticText1;
-		wxComboBox* m_Name;
-		wxStaticText* m_staticText2;
-		wxComboBox* m_Evade;
-		wxStaticText* m_staticText3;
-		wxComboBox* m_Kind;
-		wxStaticText* m_staticText4;
-		wxComboBox* m_Attack;
-		wxStaticText* m_staticText5;
-		wxComboBox* m_Relation;
-		wxStaticText* m_staticText6;
-		wxComboBox* m_AttackLevel;
-		wxStaticText* m_staticText7;
-		wxComboBox* m_PathFinder;
-		wxStaticText* m_staticText8;
-		wxComboBox* m_Defend;
-		wxStaticText* m_staticText9;
-		wxComboBox* m_State;
-		wxStaticText* m_staticText10;
-		wxComboBox* m_comboBox10;
-		wxStaticText* m_staticText11;
-		wxComboBox* m_ShowName;
-		wxStaticText* m_staticText12;
-		wxBitmapComboBox* m_Exp;
-		wxStaticText* m_staticText13;
-		wxComboBox* m_VisionRadius;
-		wxStaticText* m_staticText14;
-		wxComboBox* m_LevelUpExp;
-		wxStaticText* m_staticText15;
-		wxComboBox* m_DialogRadius;
-		wxStaticText* m_staticText16;
-		wxComboBox* m_Level;
-		wxCheckBox* m_FillNpcLevelDetail;
-		wxStaticText* m_staticText17;
-		wxComboBox* m_AttackRadius;
-		wxStaticText* m_staticText18;
-		wxComboBox* m_comboBox17;
-		wxStaticText* m_staticText19;
-		wxComboBox* m_Dir;
-		wxStaticText* m_staticText20;
-		wxComboBox* m_Life;
-		wxStaticText* m_staticText21;
-		wxComboBox* m_Lum;
-		wxStaticText* m_staticText22;
-		wxComboBox* m_LifeMax;
-		wxStaticText* m_staticText23;
-		wxComboBox* m_Action;
-		wxStaticText* m_staticText24;
-		wxComboBox* m_Thew;
-		wxStaticText* m_staticText25;
-		wxComboBox* m_WalkSpeed;
-		wxStaticText* m_staticText26;
-		wxComboBox* m_ThewMax;
-		wxStaticText* m_staticText27;
-		wxComboBox* m_comboBox26;
-		wxStaticText* m_staticText28;
-		wxComboBox* m_Mana;
-		wxStaticText* m_staticText29;
-		wxButton* m_NpcIni;
-		wxButton* m_NpcIniEdit;
-		wxStaticText* m_staticText30;
-		wxComboBox* m_ManaMax;
-		wxStaticText* m_staticText31;
-		wxButton* m_BodyIni;
-		wxButton* m_BodyIniEdit;
-		wxStaticText* m_staticText32;
-		wxComboBox* m_comboBox31;
-		wxStaticText* m_staticText33;
-		wxButton* m_FlyIni;
-		wxButton* m_FlyIniEdit;
-		wxStaticText* m_staticText34;
-		wxComboBox* m_ExpBonus;
-		wxStaticText* m_staticText35;
-		wxButton* m_FlyIni2;
-		wxButton* m_FlyIni2Edit;
-		wxStaticText* m_staticText36;
-		wxComboBox* m_Idle;
-		wxStaticText* m_staticText41;
-		wxButton* m_ScriptFile;
-		wxButton* m_ScriptFileEdit;
-		wxStaticText* m_staticText42;
-		wxTextCtrl* m_FixedPos;
-		wxButton* m_FixedPosEdit;
-		wxStaticText* m_staticText43;
-		wxButton* m_DeathScript;
-		wxButton* m_DeathScriptEdit;
 		wxStaticText* m_staticText54;
 		wxPropertyGridManager* m_GridManager;
 		wxPropertyGridPage* m_PropertyPage;
@@ -300,57 +205,14 @@ class NpcItemEditDialogBase : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnLevelChange( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnNpcIni( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnNpcIniClear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnNpcIniEdit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnBodyIni( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnBodyIniClear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnBodyIniEdit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnFlyIni( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnFlyIniClear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnFlyIniEdit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnFlyIni2( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnFlyIni2Clear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnFlyIni2Edit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnScriptFileClear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnScriptFileEdit( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnSetFixedPos( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDeathScript( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDeathScriptClear( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnDeathScriptEdit( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSaveNpcIniFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
-		wxString m_Validat8; 
-		wxString m_Validat9; 
-		wxString m_Validat10; 
-		wxString m_Validat1; 
-		wxString m_Validat11; 
-		wxString m_Validat2; 
-		wxString m_Validat12; 
-		wxString m_Validat3; 
-		wxString m_Validat13; 
-		wxString m_Validat4; 
-		wxString m_Validat14; 
-		wxString m_Validat5; 
-		wxString m_Validat15; 
-		wxString m_Validat6; 
-		wxString m_Validat16; 
-		wxString m_Validat17; 
-		wxString m_Validat7; 
-		wxString m_Validat18; 
-		wxString m_Validat19; 
-		wxString m_Validat20; 
-		wxString m_Validat21; 
-		wxString m_Validat22; 
 		
-		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 650,870 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		NpcItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,714 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~NpcItemEditDialogBase();
 	
 };
@@ -363,65 +225,22 @@ class ObjItemEditDialogBase : public wxDialog
 	private:
 	
 	protected:
-		wxStaticText* m_staticText40;
-		wxComboBox* m_ObjName;
-		wxStaticText* m_staticText41;
-		wxComboBox* m_Kind;
-		wxStaticText* m_staticText42;
-		wxComboBox* m_Dir;
-		wxStaticText* m_staticText43;
-		wxComboBox* m_Damage;
-		wxStaticText* m_staticText44;
-		wxComboBox* m_Frame;
-		wxStaticText* m_staticText45;
-		wxComboBox* m_Height;
-		wxStaticText* m_staticText52;
-		wxComboBox* m_Lum;
-		wxStaticText* m_staticText46;
-		wxButton* m_ObjFile;
-		wxButton* m_button22;
-		wxStaticText* m_staticText47;
-		wxButton* m_ScriptFile;
-		wxButton* m_button23;
-		wxStaticText* m_staticText48;
-		wxButton* m_WavFile;
-		wxButton* m_button24;
-		wxStaticText* m_staticText49;
-		wxComboBox* m_comboBox41;
-		wxStaticText* m_staticText50;
-		wxComboBox* m_OffX;
-		wxStaticText* m_staticText51;
-		wxComboBox* m_OffY;
+		wxPropertyGridManager* m_GridManager;
+		wxPropertyGridPage* m_propertyGridPage2;
 		wxButton* m_button25;
 		wxButton* m_OK;
 		wxButton* m_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnResetValue( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnObjFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClearObjFile( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnEditObjFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnScriptFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClearScriptFile( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnEditScriptFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnWavFile( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClearWavFile( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnOpenWavFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSaveObjIniFile( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnOk( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancle( wxCommandEvent& event ) { event.Skip(); }
 		
 	
 	public:
-		wxString m_Validat1; 
-		wxString m_Validat2; 
-		wxString m_Validat3; 
-		wxString m_Validat4; 
-		wxString m_Validat5; 
-		wxString m_Validat6; 
 		
-		ObjItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,252 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		ObjItemEditDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 620,447 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~ObjItemEditDialogBase();
 	
 };
