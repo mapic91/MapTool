@@ -31,8 +31,15 @@ struct LevelDetial
 {
     int Life;
     int Attack;
+    int Attack2;
     int Defend;
+    int Defend2;
     int Evade;
+
+    LevelDetial()
+    {
+    	memset(this, 0, sizeof(LevelDetial));
+    }
 };
 
 std::vector<long> GetAllSelectedItems(const wxListView *listCtrl);
@@ -428,7 +435,7 @@ public:
 						LoadXPM(wxT("L")),
 						LoadXPM(wxT("L_Disabled")),
 						wxITEM_CHECK,
-						wxT("设置等级时，同时更新 Evade  Attack  Defend  Life  LifeMax\n需要文件 ini\\level\\level-npc.ini"));
+						wxT("设置等级时，同时更新 Evade  Attack Attack2 Defend Defend2 Life  LifeMax\n需要文件 ini\\level\\level-npc.ini"));
 		toolBar->Realize();
 		toolBar->ToggleTool(SET_LEVEL_DETAIL_ID, true);
 
@@ -590,7 +597,9 @@ private:
             LevelDetial &detail = g_NpcLevelList->at(level);
             m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Evade"), wxVariant(detail.Evade));
             m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Attack"), wxVariant(detail.Attack));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Attack2"), wxVariant(detail.Attack2));
             m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Defend"), wxVariant(detail.Defend));
+            m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Defend2"), wxVariant(detail.Defend2));
             m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("Life"), wxVariant(detail.Life));
             m_listDefHelper->SetValue(m_GridManager->GetPage(0), wxT("LifeMax"), wxVariant(detail.Life));
         }

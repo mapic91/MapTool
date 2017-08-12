@@ -91,12 +91,12 @@ void LoadNpcLevelList()
 		if(file.IsOpened())
 		{
 			long level, value;
-			LevelDetial detail;
 			wxString name;
 			size_t count = file.GetLineCount();
 			size_t i;
 			for(i = 0; i < count;)
 			{
+				LevelDetial detail;
                 regex.Compile(wxT("\\[Level([0-9]+)\\]"));
                 if(regex.Matches(file[i]) &&
 				   !regex.GetMatch(file[i]).IsEmpty())
@@ -114,8 +114,12 @@ void LoadNpcLevelList()
 							detail.Life = value;
 						else if(name == wxT("Attack"))
 							detail.Attack = value;
+						else if(name == wxT("Attack2"))
+							detail.Attack2 = value;
 						else if(name == wxT("Defend"))
 							detail.Defend = value;
+						else if(name == wxT("Defend2"))
+							detail.Defend2 = value;
 						else if(name == wxT("Evade"))
 							detail.Evade = value;
 						i++;

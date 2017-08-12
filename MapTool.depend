@@ -2342,7 +2342,7 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1489205775 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1502536707 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
@@ -2350,17 +2350,19 @@
 	<wx/regex.h>
 	"wx/stdpaths.h"
 	<wx/utils.h>
+	"wx/propgrid/propgrid.h"
 
-1419951605 e:\programmingworkshop\_store_\jxqy\maptool\app.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1492315878 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1502536551 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
 	"AsfDecode.hpp"
 	"ClipBoard.h"
 	"TmxReaderSetting.h"
+	"Settings.h"
 	"wx/dcbuffer.h"
 	"wx/filedlg.h"
 	"wx/stdpaths.h"
@@ -2368,11 +2370,13 @@
 	"wx/timer.h"
 	"wx/cmdproc.h"
 	"MapToolCommand.h"
+	"ListDefHelper.h"
+	"LoadXPM.h"
 	<map>
 	<vector>
 	<memory>
 
-1489920131 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
+1499434906 e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.h
 	<wx/artprov.h>
 	<wx/xrc/xmlres.h>
 	<wx/string.h>
@@ -2394,28 +2398,28 @@
 	<wx/menu.h>
 	<wx/frame.h>
 	<wx/stattext.h>
-	<wx/combobox.h>
-	<wx/bmpcbox.h>
+	<wx/propgrid/propgrid.h>
+	<wx/propgrid/manager.h>
+	<wx/propgrid/advprops.h>
 	<wx/button.h>
-	<wx/textctrl.h>
 	<wx/dialog.h>
 	<wx/spinctrl.h>
 
-1489889476 e:\programmingworkshop\_store_\jxqy\maptool\map.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\map.h
 	"TmxMapMessage.pb.h"
 	"wx/string.h"
 	"wx/image.h"
 	"MpcDecode.hpp"
 	"TmxReaderClient.h"
 
-1396356545 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
 	"mydefs.hpp"
 
-1489918760 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
+1497098724 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1489889660 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1496843705 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2423,7 +2427,7 @@
 	"Map.h"
 	<fstream>
 
-1396421978 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
+1496843259 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
 	"MpcDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -2434,7 +2438,7 @@
 1419660547 source:e:\programmingworkshop\_store_\jxqy\maptool\resource.rc
 	"wx/msw/wx.rc"
 
-1491300709 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
+1499435334 source:e:\programmingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\menu.h
@@ -2538,10 +2542,9 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1492314666 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1502536423 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"YesNoAllDialog.h"
-	"Settings.h"
 	"FpsDialog.h"
 	"wx/msgdlg.h"
 	"wx/dcmemory.h"
@@ -2591,9 +2594,10 @@
 	"wx/button.h"
 	"wx/dcclient.h"
 
-1492313152 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+1499348357 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
 	<string>
 	<list>
+	<map>
 	"wx/string.h"
 	"wx/arrstr.h"
 	"wx/stdpaths.h"
@@ -2601,22 +2605,23 @@
 	"wx/textfile.h"
 	"wx/cmdproc.h"
 	"AsfDecode.hpp"
+	"ListDefHelper.h"
 
-1438181079 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
+1496843283 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
 	"AsfDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
 	<cstring>
 	<fstream>
 
-1419950368 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
 	"wx/dcclient.h"
 	"mydefs.hpp"
 	<list>
 
-1492310248 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1499348338 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>
@@ -5359,29 +5364,29 @@
 	"wx/defs.h"
 	"wx/string.h"
 
-1489412936 e:\programmingworkshop\_store_\jxqy\maptool\clipboard.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\clipboard.h
 	"Npc.hpp"
 	<vector>
 	"wx/gdicmn.h"
 
-1489414104 source:e:\programmingworkshop\_store_\jxqy\maptool\clipboard.cpp
+1497680975 source:e:\programmingworkshop\_store_\jxqy\maptool\clipboard.cpp
 	"ClipBoard.h"
 
-1419928408 e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.h
 	<wx/stattext.h>
 	<wx/button.h>
 	<wx/dialog.h>
 
-1489894537 source:e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.cpp
+1496843245 source:e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.cpp
 	"YesNoAllDialog.h"
 	"wx/settings.h"
 	<wx/string.h>
 
-1419962195 source:e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.cpp
+1496843221 source:e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.cpp
 	"FpsDialog.h"
 	<wx/string.h>
 
-1419953736 e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.h
 	<wx/stattext.h>
 	<wx/spinctrl.h>
 	<wx/button.h>
@@ -5460,9 +5465,9 @@
 	"wx/window.h"
 	"wx/containr.h"
 
-1419953407 e:\programmingworkshop\_store_\jxqy\maptool\settings.h
+1499434186 e:\programmingworkshop\_store_\jxqy\maptool\settings.h
 
-1419953586 source:e:\programmingworkshop\_store_\jxqy\maptool\settings.cpp
+1499434293 source:e:\programmingworkshop\_store_\jxqy\maptool\settings.cpp
 	"Settings.h"
 	<fstream>
 
@@ -8033,7 +8038,7 @@
 	<google/protobuf/reflection_ops.h>
 	<google/protobuf/wire_format.h>
 
-1481699908 e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.h
 	<string>
 	<google/protobuf/stubs/common.h>
 	<google/protobuf/arena.h>
@@ -8330,14 +8335,14 @@
 	<google/protobuf/generated_enum_reflection.h>
 	<google/protobuf/unknown_field_set.h>
 
-1489205455 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.cpp
+1496843248 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.cpp
 	"TmxReaderClient.h"
 	"TmxReaderSetting.h"
 	"wx/msgdlg.h"
 	"wx/filename.h"
 	<string>
 
-1489205432 e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\tmxreaderclient.h
 	"wx/socket.h"
 	"wx/string.h"
 	"TmxMapMessage.pb.h"
@@ -8353,9 +8358,9 @@
 	"wx/defs.h"
 	"wx/string.h"
 
-1489204895 e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.h
 
-1489204897 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.cpp
+1496843250 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxreadersetting.cpp
 	"TmxReaderSetting.h"
 	"wx/stdpaths.h"
 	"wx/string.h"
@@ -8367,16 +8372,1167 @@
 	"wx/object.h"
 	"wx/list.h"
 
-1492313811 source:e:\programmingworkshop\_store_\jxqy\maptool\maptoolcommand.cpp
+1497673048 source:e:\programmingworkshop\_store_\jxqy\maptool\maptoolcommand.cpp
 	"MapToolCommand.h"
 	"MapTool.h"
 	"Npc.hpp"
 	"mydefs.hpp"
 
-1492309406 e:\programmingworkshop\_store_\jxqy\maptool\maptoolcommand.h
+1496843411 e:\programmingworkshop\_store_\jxqy\maptool\maptoolcommand.h
 	"wx/cmdproc.h"
 	"wx/string.h"
 	"Npc.hpp"
 	<map>
 	<vector>
+
+1496752363 e:\programmingworkshop\_store_\jxqy\maptool\listdefreader.h
+	"wx/string.h"
+	"json.hpp"
+
+1496750859 e:\programmingworkshop\_store_\jxqy\maptool\json.hpp
+	<algorithm>
+	<array>
+	<cassert>
+	<cctype>
+	<ciso646>
+	<cmath>
+	<cstddef>
+	<cstdint>
+	<cstdlib>
+	<cstring>
+	<forward_list>
+	<functional>
+	<initializer_list>
+	<iomanip>
+	<iostream>
+	<iterator>
+	<limits>
+	<locale>
+	<map>
+	<memory>
+	<numeric>
+	<sstream>
+	<stdexcept>
+	<string>
+	<type_traits>
+	<utility>
+	<vector>
+
+1496752647 source:e:\programmingworkshop\_store_\jxqy\maptool\listdefreader.cpp
+	"ListDefReader.h"
+	<fstream>
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\propgrid.h
+	"wx/defs.h"
+	"wx/thread.h"
+	"wx/dcclient.h"
+	"wx/control.h"
+	"wx/scrolwin.h"
+	"wx/tooltip.h"
+	"wx/datetime.h"
+	"wx/recguard.h"
+	"wx/propgrid/property.h"
+	"wx/propgrid/propgridiface.h"
+	"wx/propgrid/props.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\recguard.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\property.h
+	"wx/defs.h"
+	"wx/propgrid/propgriddefs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\propgriddefs.h
+	"wx/defs.h"
+	"wx/dynarray.h"
+	"wx/vector.h"
+	"wx/hashmap.h"
+	"wx/variant.h"
+	"wx/any.h"
+	"wx/longlong.h"
+	"wx/clntdata.h"
+	"wx/tokenzr.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\tokenzr.h
+	"wx/object.h"
+	"wx/string.h"
+	"wx/arrstr.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\propgridiface.h
+	"wx/defs.h"
+	"wx/propgrid/property.h"
+	"wx/propgrid/propgridpagestate.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\propgridpagestate.h
+	"wx/defs.h"
+	"wx/propgrid/property.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\props.h
+	"wx/defs.h"
+	"wx/propgrid/editors.h"
+	"wx/filename.h"
+	"wx/dialog.h"
+	"wx/textctrl.h"
+	"wx/button.h"
+	"wx/listbox.h"
+	"wx/valtext.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\editors.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\listbox.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/univ/listbox.h"
+	"wx/msw/listbox.h"
+	"wx/motif/listbox.h"
+	"wx/gtk/listbox.h"
+	"wx/gtk1/listbox.h"
+	"wx/osx/listbox.h"
+	"wx/os2/listbox.h"
+	"wx/cocoa/listbox.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\listbox.h
+	"wx/scrolwin.h"
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\listbox.h
+	"wx/dynarray.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\listbox.h
+	"wx/ctrlsub.h"
+	"wx/clntdata.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\listbox.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\listbox.h
+	"wx/list.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\listbox.h
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\listbox.h
+	"wx/dynarray.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\listbox.h
+	"wx/cocoa/NSTableView.h"
+	"wx/dynarray.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\nstableview.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\valtext.h
+	"wx/defs.h"
+	"wx/validate.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\manager.h
+	"wx/defs.h"
+	"wx/propgrid/propgrid.h"
+	"wx/dcclient.h"
+	"wx/scrolwin.h"
+	"wx/toolbar.h"
+	"wx/stattext.h"
+	"wx/button.h"
+	"wx/textctrl.h"
+	"wx/dialog.h"
+	"wx/headerctrl.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\headerctrl.h
+	"wx/control.h"
+	"wx/dynarray.h"
+	"wx/vector.h"
+	"wx/headercol.h"
+	"wx/msw/headerctrl.h"
+	"wx/generic/headerctrlg.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\headercol.h
+	"wx/bitmap.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\headerctrl.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\headerctrlg.h
+	"wx/event.h"
+	"wx/vector.h"
+	"wx/overlay.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\overlay.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\propgrid\advprops.h
+	"wx/defs.h"
+	"wx/propgrid/props.h"
+	"wx/image.h"
+	"wx/spinbutt.h"
+	"wx/propgrid/editors.h"
+
+1499346998 e:\programmingworkshop\_store_\jxqy\maptool\listdefhelper.h
+	<functional>
+	<map>
+	"wx/string.h"
+	"wx/propgrid/propgrid.h"
+	"wx/propgrid/advprops.h"
+	"mydefs.hpp"
+	"json.hpp"
+
+1499351070 source:e:\programmingworkshop\_store_\jxqy\maptool\listdefhelper.cpp
+	"ListDefHelper.h"
+	"wx/msgdlg.h"
+	"wx/stdpaths.h"
+	"wx/tokenzr.h"
+	"MapToolPropertys.hpp"
+	"Utils.h"
+	<fstream>
+
+1497689219 e:\programmingworkshop\_store_\jxqy\maptool\maptoolpropertys.hpp
+	"wx/propgrid/propgrid.h"
+	"wx/propgrid/advprops.h"
+	"Utils.h"
+	"mydefs.hpp"
+
+1497086544 source:e:\programmingworkshop\_store_\jxqy\maptool\maptoolpropertys.cpp
+	"MapToolPropertys.hpp"
+	"wx/filename.h"
+	"wx/filedlg.h"
+	"wx/tokenzr.h"
+	"wx/msgdlg.h"
+	"InputUIntDialog.h"
+
+1497065633 e:\programmingworkshop\_store_\jxqy\maptool\utils.h
+	"wx/string.h"
+
+1497065611 source:e:\programmingworkshop\_store_\jxqy\maptool\utils.cpp
+	"Utils.h"
+	"wx/stdpaths.h"
+	"wx/filename.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\locale
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\auibar.cpp
+	"wx/wxprec.h"
+	"wx/statline.h"
+	"wx/dcbuffer.h"
+	"wx/sizer.h"
+	"wx/image.h"
+	"wx/settings.h"
+	"wx/menu.h"
+	"wx/aui/auibar.h"
+	"wx/aui/framemanager.h"
+	"wx/osx/private.h"
+	"wx/arrimpl.cpp"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\wxprec.h
+	"wx/defs.h"
+	"wx/chartype.h"
+	"wx/msw/wrapwin.h"
+	"wx/msw/private.h"
+	"wx/msw/wrapcctl.h"
+	"wx/msw/wrapcdlg.h"
+	"wx/msw/missing.h"
+	"wx/os2/private.h"
+	"wx/wx.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\wrapcctl.h
+	"wx/msw/wrapwin.h"
+	<commctrl.h>
+	"wx/msw/missing.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\missing.h
+	<windows.h>
+	"wx/msw/winundef.h"
+	"wx/msw/wince/missing.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\wince\missing.h
+	"wx/msw/private.h"
+	"shellapi.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\wrapcdlg.h
+	"wx/defs.h"
+	"wx/msw/wrapwin.h"
+	"wx/msw/private.h"
+	"wx/msw/missing.h"
+	<commdlg.h>
+	"wx/msw/winundef.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\wx.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/dynarray.h"
+	"wx/list.h"
+	"wx/hash.h"
+	"wx/string.h"
+	"wx/hashmap.h"
+	"wx/arrstr.h"
+	"wx/intl.h"
+	"wx/log.h"
+	"wx/event.h"
+	"wx/app.h"
+	"wx/utils.h"
+	"wx/stream.h"
+	"wx/memory.h"
+	"wx/math.h"
+	"wx/stopwatch.h"
+	"wx/timer.h"
+	"wx/module.h"
+	"wx/wxcrt.h"
+	"wx/wxcrtvararg.h"
+	"wx/window.h"
+	"wx/containr.h"
+	"wx/panel.h"
+	"wx/toplevel.h"
+	"wx/frame.h"
+	"wx/gdicmn.h"
+	"wx/gdiobj.h"
+	"wx/region.h"
+	"wx/bitmap.h"
+	"wx/image.h"
+	"wx/colour.h"
+	"wx/font.h"
+	"wx/dc.h"
+	"wx/dcclient.h"
+	"wx/dcmemory.h"
+	"wx/dcprint.h"
+	"wx/dcscreen.h"
+	"wx/button.h"
+	"wx/menuitem.h"
+	"wx/menu.h"
+	"wx/pen.h"
+	"wx/brush.h"
+	"wx/palette.h"
+	"wx/icon.h"
+	"wx/cursor.h"
+	"wx/dialog.h"
+	"wx/settings.h"
+	"wx/msgdlg.h"
+	"wx/dataobj.h"
+	"wx/control.h"
+	"wx/ctrlsub.h"
+	"wx/bmpbuttn.h"
+	"wx/checkbox.h"
+	"wx/checklst.h"
+	"wx/choice.h"
+	"wx/scrolbar.h"
+	"wx/stattext.h"
+	"wx/statbmp.h"
+	"wx/statbox.h"
+	"wx/listbox.h"
+	"wx/radiobox.h"
+	"wx/radiobut.h"
+	"wx/textctrl.h"
+	"wx/slider.h"
+	"wx/gauge.h"
+	"wx/scrolwin.h"
+	"wx/dirdlg.h"
+	"wx/toolbar.h"
+	"wx/combobox.h"
+	"wx/layout.h"
+	"wx/sizer.h"
+	"wx/statusbr.h"
+	"wx/choicdlg.h"
+	"wx/textdlg.h"
+	"wx/filedlg.h"
+	"wx/mdi.h"
+	"wx/validate.h"
+	"wx/valtext.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\module.h
+	"wx/object.h"
+	"wx/list.h"
+	"wx/arrstr.h"
+	"wx/dynarray.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\dcprint.h
+	"wx/defs.h"
+	"wx/dc.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\dcscreen.h
+	"wx/defs.h"
+	"wx/dc.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\dataobj.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/bitmap.h"
+	"wx/list.h"
+	"wx/arrstr.h"
+	"wx/msw/ole/dataform.h"
+	"wx/motif/dataform.h"
+	"wx/gtk/dataform.h"
+	"wx/gtk1/dataform.h"
+	"wx/x11/dataform.h"
+	"wx/osx/dataform.h"
+	"wx/cocoa/dataform.h"
+	"wx/os2/dataform.h"
+	"wx/msw/ole/dataobj.h"
+	"wx/motif/dataobj.h"
+	"wx/x11/dataobj.h"
+	"wx/gtk/dataobj.h"
+	"wx/gtk1/dataobj.h"
+	"wx/osx/dataobj.h"
+	"wx/cocoa/dataobj.h"
+	"wx/os2/dataobj.h"
+	"wx/msw/ole/dataobj2.h"
+	"wx/gtk/dataobj2.h"
+	"wx/gtk1/dataobj2.h"
+	"wx/x11/dataobj2.h"
+	"wx/motif/dataobj2.h"
+	"wx/osx/dataobj2.h"
+	"wx/cocoa/dataobj2.h"
+	"wx/os2/dataobj2.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\ole\dataform.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\dataform.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\dataform.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\dataform.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\x11\dataform.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dataform.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\dataform.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\dataform.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\ole\dataobj.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\dataobj.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\x11\dataobj.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\dataobj.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\dataobj.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dataobj.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\dataobj.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\dataobj.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\ole\dataobj2.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\dataobj2.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\dataobj2.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\x11\dataobj2.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\dataobj2.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dataobj2.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\dataobj2.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\dataobj2.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\bmpbuttn.h
+	"wx/defs.h"
+	"wx/button.h"
+	"wx/univ/bmpbuttn.h"
+	"wx/msw/bmpbuttn.h"
+	"wx/motif/bmpbuttn.h"
+	"wx/gtk/bmpbuttn.h"
+	"wx/gtk1/bmpbuttn.h"
+	"wx/osx/bmpbuttn.h"
+	"wx/cocoa/bmpbuttn.h"
+	"wx/os2/bmpbuttn.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\bmpbuttn.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\bmpbuttn.h
+	"wx/button.h"
+	"wx/bitmap.h"
+	"wx/brush.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\bmpbuttn.h
+	"wx/motif/bmpmotif.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\bmpmotif.h
+	"wx/defs.h"
+	"wx/bitmap.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\bmpbuttn.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\bmpbuttn.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\bmpbuttn.h
+	"wx/button.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\bmpbuttn.h
+	"wx/cocoa/NSButton.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\bmpbuttn.h
+	"wx/button.h"
+	"wx/dcclient.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\checklst.h
+	"wx/defs.h"
+	"wx/listbox.h"
+	"wx/univ/checklst.h"
+	"wx/msw/wince/checklst.h"
+	"wx/msw/checklst.h"
+	"wx/motif/checklst.h"
+	"wx/gtk/checklst.h"
+	"wx/gtk1/checklst.h"
+	"wx/osx/checklst.h"
+	"wx/cocoa/checklst.h"
+	"wx/os2/checklst.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\checklst.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\wince\checklst.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\checklst.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\checklst.h
+	"wx/listbox.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\checklst.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\checklst.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\checklst.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\checklst.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\checklst.h
+	<stddef.h>
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\scrolbar.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/scrolbar.h"
+	"wx/msw/scrolbar.h"
+	"wx/motif/scrolbar.h"
+	"wx/gtk/scrolbar.h"
+	"wx/gtk1/scrolbar.h"
+	"wx/osx/scrolbar.h"
+	"wx/cocoa/scrolbar.h"
+	"wx/os2/scrolbar.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\scrolbar.h
+	"wx/univ/scrarrow.h"
+	"wx/renderer.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\scrolbar.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\scrolbar.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\scrolbar.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\scrolbar.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\scrolbar.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\scrolbar.h
+	"wx/cocoa/NSScroller.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\nsscroller.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/cocoa/ObjcRef.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\scrolbar.h
+	"wx/scrolbar.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\statbmp.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/bitmap.h"
+	"wx/icon.h"
+	"wx/univ/statbmp.h"
+	"wx/msw/statbmp.h"
+	"wx/motif/statbmp.h"
+	"wx/gtk/statbmp.h"
+	"wx/gtk1/statbmp.h"
+	"wx/osx/statbmp.h"
+	"wx/cocoa/statbmp.h"
+	"wx/os2/statbmp.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\statbmp.h
+	"wx/bitmap.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\statbmp.h
+	"wx/control.h"
+	"wx/icon.h"
+	"wx/bitmap.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\statbmp.h
+	"wx/motif/bmpmotif.h"
+	"wx/icon.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\statbmp.h
+	"wx/icon.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\statbmp.h
+	"wx/icon.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\statbmp.h
+	"wx/osx/carbon/statbmp.h"
+	"wx/generic/statbmpg.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\carbon\statbmp.h
+	"wx/icon.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\statbmpg.h
+	"wx/statbmp.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\statbmp.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\statbmp.h
+	"wx/control.h"
+	"wx/icon.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\statbox.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/containr.h"
+	"wx/univ/statbox.h"
+	"wx/msw/statbox.h"
+	"wx/motif/statbox.h"
+	"wx/gtk/statbox.h"
+	"wx/gtk1/statbox.h"
+	"wx/osx/statbox.h"
+	"wx/cocoa/statbox.h"
+	"wx/os2/statbox.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\statbox.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\statbox.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\statbox.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\statbox.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\statbox.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\statbox.h
+	"wx/control.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\statbox.h
+	"wx/cocoa/NSBox.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\nsbox.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\statbox.h
+	"wx/control.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\radiobox.h
+	"wx/defs.h"
+	"wx/ctrlsub.h"
+	"wx/dynarray.h"
+	"wx/univ/radiobox.h"
+	"wx/msw/radiobox.h"
+	"wx/motif/radiobox.h"
+	"wx/gtk/radiobox.h"
+	"wx/gtk1/radiobox.h"
+	"wx/osx/radiobox.h"
+	"wx/cocoa/radiobox.h"
+	"wx/os2/radiobox.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\radiobox.h
+	"wx/statbox.h"
+	"wx/dynarray.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\radiobox.h
+	"wx/statbox.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\radiobox.h
+	"wx/dynarray.h"
+	"wx/arrstr.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\radiobox.h
+	"wx/bitmap.h"
+	"wx/list.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\radiobox.h
+	"wx/bitmap.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\radiobox.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\radiobox.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\radiobox.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\radiobut.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/radiobut.h"
+	"wx/msw/radiobut.h"
+	"wx/motif/radiobut.h"
+	"wx/gtk/radiobut.h"
+	"wx/gtk1/radiobut.h"
+	"wx/osx/radiobut.h"
+	"wx/cocoa/radiobut.h"
+	"wx/os2/radiobut.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\radiobut.h
+	"wx/checkbox.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\radiobut.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\radiobut.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\radiobut.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\radiobut.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\radiobut.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\radiobut.h
+	"wx/cocoa/NSButton.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\radiobut.h
+	"wx/control.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\slider.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/slider.h"
+	"wx/msw/slider.h"
+	"wx/motif/slider.h"
+	"wx/gtk/slider.h"
+	"wx/gtk1/slider.h"
+	"wx/osx/slider.h"
+	"wx/cocoa/slider.h"
+	"wx/os2/slider.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\slider.h
+	"wx/univ/scrthumb.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\scrthumb.h
+	"wx/timer.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\slider.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\slider.h
+	"wx/control.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\slider.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\slider.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\slider.h
+	"wx/control.h"
+	"wx/slider.h"
+	"wx/stattext.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\slider.h
+	"wx/cocoa/NSSlider.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\nsslider.h
+	"wx/hashmap.h"
+	"wx/cocoa/ObjcAssociate.h"
+	"wx/cocoa/ObjcRef.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\slider.h
+	"wx/control.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gauge.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/gauge.h"
+	"wx/msw/gauge.h"
+	"wx/motif/gauge.h"
+	"wx/gtk/gauge.h"
+	"wx/gtk1/gauge.h"
+	"wx/osx/gauge.h"
+	"wx/cocoa/gauge.h"
+	"wx/os2/gauge.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\gauge.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\gauge.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\gauge.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\gauge.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\gauge.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\gauge.h
+	"wx/control.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\gauge.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\gauge.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\dirdlg.h
+	"wx/dialog.h"
+	"wx/generic/dirdlgg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/msw/dirdlg.h"
+	"wx/gtk/dirdlg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/osx/dirdlg.h"
+	"wx/cocoa/dirdlg.h"
+	"wx/generic/dirdlgg.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\dirdlgg.h
+	"wx/dialog.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\dirdlg.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\dirdlg.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dirdlg.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\dirdlg.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\layout.h
+	"wx/object.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\choicdlg.h
+	"wx/defs.h"
+	"wx/generic/choicdgg.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\choicdgg.h
+	"wx/dynarray.h"
+	"wx/dialog.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\textdlg.h
+	"wx/generic/textdlgg.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\textdlgg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/valtext.h"
+	"wx/textctrl.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\mdi.h
+	"wx/defs.h"
+	"wx/frame.h"
+	"wx/menu.h"
+	"wx/generic/mdig.h"
+	"wx/msw/mdi.h"
+	"wx/gtk/mdi.h"
+	"wx/gtk1/mdi.h"
+	"wx/osx/mdi.h"
+	"wx/cocoa/mdi.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\mdig.h
+	"wx/panel.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\mdi.h
+	"wx/frame.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\mdi.h
+	"wx/frame.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\mdi.h
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\mdi.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\mdi.h
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\statline.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/statline.h"
+	"wx/msw/statline.h"
+	"wx/gtk/statline.h"
+	"wx/gtk1/statline.h"
+	"wx/os2/statline.h"
+	"wx/osx/statline.h"
+	"wx/cocoa/statline.h"
+	"wx/generic/statline.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\univ\statline.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\statline.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\statline.h
+	"wx/defs.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\statline.h
+	"wx/defs.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\statline.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\statline.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\cocoa\statline.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\generic\statline.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\auibar.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/sizer.h"
+	"wx/pen.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\framemanager.h
+	"wx/defs.h"
+	"wx/dynarray.h"
+	"wx/gdicmn.h"
+	"wx/window.h"
+	"wx/timer.h"
+	"wx/sizer.h"
+	"wx/bitmap.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\private.h
+	"wx/osx/core/private.h"
+	"wx/osx/iphone/private.h"
+	"wx/osx/carbon/private.h"
+	"wx/osx/cocoa/private.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\core\private.h
+	"wx/defs.h"
+	<CoreFoundation/CoreFoundation.h>
+	"wx/osx/core/cfstring.h"
+	"wx/osx/core/cfdataref.h"
+	<Carbon/Carbon.h>
+	<CoreGraphics/CoreGraphics.h>
+	<ApplicationServices/ApplicationServices.h>
+	"wx/bitmap.h"
+	"wx/window.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\core\cfstring.h
+	<CoreFoundation/CFString.h>
+	"wx/dlimpexp.h"
+	"wx/fontenc.h"
+	"wx/osx/core/cfref.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\core\cfdataref.h
+	"wx/osx/core/cfref.h"
+	<CoreFoundation/CFData.h>
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\iphone\private.h
+	<CoreText/CTFont.h>
+	<CoreText/CTStringAttributes.h>
+	<CoreText/CTLine.h>
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\carbon\private.h
+	"wx/osx/uma.h"
+	"wx/listbox.h"
+	"wx/osx/dc.h"
+	"wx/osx/dcclient.h"
+	"wx/osx/dcmemory.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\uma.h
+	"wx/osx/carbon/uma.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\carbon\uma.h
+	"wx/osx/private.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dc.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dcclient.h
+	"wx/dc.h"
+	"wx/dcgraph.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\dcgraph.h
+	"wx/dc.h"
+	"wx/geometry.h"
+	"wx/graphics.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\dcmemory.h
+	"wx/osx/dcclient.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\cocoa\private.h
+	<ApplicationServices/ApplicationServices.h>
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\arrimpl.cpp
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\auibook.cpp
+	"wx/wxprec.h"
+	"wx/aui/auibook.h"
+	"wx/settings.h"
+	"wx/dcclient.h"
+	"wx/dcmemory.h"
+	"wx/aui/tabmdi.h"
+	"wx/osx/private.h"
+	"wx/arrimpl.cpp"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\auibook.h
+	"wx/defs.h"
+	"wx/aui/tabart.h"
+	"wx/aui/framemanager.h"
+	"wx/bookctrl.h"
+	"wx/containr.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\tabart.h
+	"wx/defs.h"
+	"wx/colour.h"
+	"wx/gdicmn.h"
+	"wx/font.h"
+	"wx/pen.h"
+	"wx/brush.h"
+	"wx/bitmap.h"
+	"wx/aui/tabartgtk.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\tabartgtk.h
+	"wx/defs.h"
+	"wx/aui/tabart.h"
+	"wx/gdicmn.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\tabmdi.h
+	"wx/frame.h"
+	"wx/panel.h"
+	"wx/notebook.h"
+	"wx/icon.h"
+	"wx/aui/auibook.h"
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\dockart.cpp
+	"wx/wxprec.h"
+	"wx/aui/framemanager.h"
+	"wx/aui/dockart.h"
+	"wx/aui/auibook.h"
+	"wx/aui/tabart.h"
+	"wx/settings.h"
+	"wx/dcclient.h"
+	"wx/image.h"
+	"wx/osx/private.h"
+	"wx/graphics.h"
+	"wx/dcgraph.h"
+	<gtk/gtk.h>
+	"wx/renderer.h"
+	"wx/gtk/private/gtk2-compat.h"
+	"wx/graphics.h"
+	"wx/gtk/private.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\dockart.h
+	"wx/defs.h"
+	"wx/pen.h"
+	"wx/brush.h"
+	"wx/bitmap.h"
+	"wx/colour.h"
+
+1412631224 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\private\gtk2-compat.h
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\private.h
+	<gtk/gtk.h>
+	"wx/gtk/private/string.h"
+	"wx/gtk/private/gtk2-compat.h"
+	"wx/font.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\private\string.h
+	"wx/string.h"
+	"wx/vector.h"
+	"wx/sharedptr.h"
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\floatpane.cpp
+	"wx/wxprec.h"
+	"wx/aui/framemanager.h"
+	"wx/aui/floatpane.h"
+	"wx/aui/dockart.h"
+	"wx/msw/private.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\aui\floatpane.h
+	"wx/defs.h"
+	"wx/weakref.h"
+	"wx/minifram.h"
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\minifram.h
+	"wx/defs.h"
+	"wx/msw/minifram.h"
+	"wx/motif/minifram.h"
+	"wx/gtk/minifram.h"
+	"wx/gtk1/minifram.h"
+	"wx/x11/minifram.h"
+	"wx/osx/minifram.h"
+	"wx/os2/minifram.h"
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\minifram.h
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\motif\minifram.h
+	"wx/frame.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk\minifram.h
+	"wx/bitmap.h"
+	"wx/frame.h"
+
+1412631242 d:\protools\wxwidgets\wxwidgets_3\include\wx\gtk1\minifram.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\x11\minifram.h
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\osx\minifram.h
+	"wx/frame.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\os2\minifram.h
+	"wx/frame.h"
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\framemanager.cpp
+	"wx/wxprec.h"
+	"wx/aui/framemanager.h"
+	"wx/aui/dockart.h"
+	"wx/aui/floatpane.h"
+	"wx/aui/tabmdi.h"
+	"wx/aui/auibar.h"
+	"wx/mdi.h"
+	"wx/panel.h"
+	"wx/settings.h"
+	"wx/app.h"
+	"wx/dcclient.h"
+	"wx/dcscreen.h"
+	"wx/toolbar.h"
+	"wx/image.h"
+	"wx/statusbr.h"
+	"wx/arrimpl.cpp"
+	"wx/osx/private.h"
+	"wx/msw/wrapwin.h"
+	"wx/msw/private.h"
+	"wx/msw/dc.h"
+	<gtk/gtk.h>
+	"wx/gtk/private/gtk2-compat.h"
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\include\wx\msw\dc.h
+	"wx/defs.h"
+	"wx/dc.h"
+
+1412631244 source:d:\protools\wxwidgets\wxwidgets_3\src\aui\tabart.cpp
+	"wx/wxprec.h"
+	"wx/dc.h"
+	"wx/dcclient.h"
+	"wx/settings.h"
+	"wx/bitmap.h"
+	"wx/menu.h"
+	"wx/renderer.h"
+	"wx/aui/auibook.h"
+	"wx/aui/framemanager.h"
+	"wx/aui/dockart.h"
+	"wx/osx/private.h"
+
+1497086667 source:e:\programmingworkshop\_store_\jxqy\maptool\inputuintdialog.cpp
+	"InputUIntDialog.h"
+	<wx/string.h>
+
+1497086318 e:\programmingworkshop\_store_\jxqy\maptool\inputuintdialog.h
+	<wx/stattext.h>
+	<wx/spinctrl.h>
+	<wx/button.h>
+	<wx/dialog.h>
+
+1499177748 e:\programmingworkshop\_store_\jxqy\maptool\loadxpm.h
+	"wx/string.h"
+	"wx/bitmap.h"
+
+1499179796 source:e:\programmingworkshop\_store_\jxqy\maptool\loadxpm.cpp
+	"LoadXPM.h"
+	<memory>
+	"ICO/L.h"
+	"ICO/L_Disabled.h"
+
+1499179720 e:\programmingworkshop\_store_\jxqy\maptool\ico\l.h
+
+1499179718 e:\programmingworkshop\_store_\jxqy\maptool\ico\l_disabled.h
 

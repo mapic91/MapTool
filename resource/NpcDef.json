@@ -1,5 +1,5 @@
 {
-	"Order": ["Basic","RepeatScript", "Magic", "WhenLifeLow", "BeAttacked"],
+	"Order": ["Basic","RepeatScript", "Magic", "WhenLifeLow", "BeAttacked", "WhenDeath", "WhenFriendDeath", "GoodDrop"],
     "Basic": {
 		"ShowName": "基本项",
 		"Help": "",
@@ -120,6 +120,11 @@
             "Type" : "UInt",
             "Default" : 0
         }, {
+            "Name" : "Attack2",
+            "Help" : "攻击力2",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
             "Name" : "AttackLevel",
             "Help" : "攻击等级",
             "Type" : "UInt",
@@ -127,6 +132,11 @@
         }, {
             "Name" : "Defend",
             "Help" : "防御力",
+            "Type" : "UInt",
+            "Default" : 0
+        }, {
+            "Name" : "Defend2",
+            "Help" : "防御力2",
             "Type" : "UInt",
             "Default" : 0
         }, {
@@ -302,5 +312,53 @@
 				"Default": 0
 			}
 		]
-	}
+	},
+    "WhenDeath": {
+        "ShowName": "死亡时",
+        "Help": "",
+        "Items": [{
+                "Name": "MagicToUseWhenDeath",
+				"Help": "当NPC死亡时，会释放该武功。释放的方向由MagicDirectionWhenDeath决定。武功的等级由AttackLevel决定。",
+				"Type" : "FileName",
+                "StartPath" : "ini\\magic",
+                "FileNameFilter" : "ini文件(*.ini)|*.ini",
+				"Default": ""
+            },
+            {
+				"Name": "MagicDirectionWhenDeath",
+				"Help": "武功释放方向；如果武功是固定类的，不飞行的，或者没有攻击者，比如陷阱致死的，则释放的方向为该NPC的当前朝向。",
+				"Type": "UIntEnum",
+				"Enums": [
+					["最后攻击该NPC的攻击者位置", 0],
+					["最后攻击该NPC的武功的反方向", 1],
+					["该NPC的当前朝向", 2]
+				],
+				"Default": 0
+			}
+        ]
+    },
+    "WhenFriendDeath": {
+        "ShowName": "同伴死亡时",
+        "Help": "",
+        "Items": [{
+                "Name": "KeepRadiusWhenFriendDeath",
+				"Help": "默认0。对敌人和友方有效，对跟随类无效（因为要跟着主角）；如果大于零，如果在VisionRadius内有其同伴死亡，则会与最后一次攻击那个死亡的同伴人保持该设置值的距离。",
+				"Type": "UInt",
+				"Default": 0
+            }
+        ]
+    },
+    "GoodDrop": {
+        "ShowName": "物品掉落",
+        "Help": "",
+        "Items": [{
+                "Name": "DropIni",
+                "Help": "设置掉落物品，文件位置在 ini\\obj 文件夹下。如果没设置则使用默认的掉落设定。",
+                "Type" : "FileName",
+                "StartPath" : "ini\\obj",
+                "FileNameFilter" : "ini文件(*.ini)|*.ini",
+                "Default" : ""
+            }
+        ]
+    }
 }
