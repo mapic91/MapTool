@@ -87,7 +87,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.10 - by 小试刀剑  2017.08.12"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.11 - by 小试刀剑  2018.07.04"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();

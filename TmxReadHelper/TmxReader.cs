@@ -125,14 +125,14 @@ namespace TmxReadHelper
             tmxOut.Tileimgs.Add(new Proto.TmxMap.Types.TileImg()); //tile img gid start at 1
             foreach (var tileset in tmx.Tilesets)
             {
-                var gid = tileset.FirstGid;
+                var firstGid = tileset.FirstGid;
                 switch (tileset.Name)
                 {
                     case TrapName:
                     {
                         foreach (var tile in tileset.Tiles)
                         {
-                            trapGidToIndex[gid + tile.Id] =
+                            trapGidToIndex[firstGid + tile.Id] =
                                 int.Parse(Path.GetFileNameWithoutExtension(tile.Image.Source));
                         }
 
@@ -145,16 +145,16 @@ namespace TmxReadHelper
                             switch (Path.GetFileNameWithoutExtension(tile.Image.Source))
                             {
                                 case "跳透":
-                                    barrerGidToType[gid + tile.Id] = Proto.TmxMap.Types.BarrerType.CanOverTrans;
+                                    barrerGidToType[firstGid + tile.Id] = Proto.TmxMap.Types.BarrerType.CanOverTrans;
                                     break;
                                 case "跳障":
-                                    barrerGidToType[gid + tile.Id] = Proto.TmxMap.Types.BarrerType.CanOverObstacle;
+                                    barrerGidToType[firstGid + tile.Id] = Proto.TmxMap.Types.BarrerType.CanOverObstacle;
                                     break;
                                 case "透":
-                                    barrerGidToType[gid + tile.Id] = Proto.TmxMap.Types.BarrerType.Trans;
+                                    barrerGidToType[firstGid + tile.Id] = Proto.TmxMap.Types.BarrerType.Trans;
                                     break;
                                 case "障":
-                                    barrerGidToType[gid + tile.Id] = Proto.TmxMap.Types.BarrerType.Obstacle;
+                                    barrerGidToType[firstGid + tile.Id] = Proto.TmxMap.Types.BarrerType.Obstacle;
                                     break;
                             }
                         }
@@ -167,7 +167,7 @@ namespace TmxReadHelper
                     foreach (var tile in tileset.Tiles)
                     {
                         var info = new Proto.TmxMap.Types.TileImg();
-                        info.Gid = gid;
+                        info.Gid = firstGid + tile.Id;
                         info.Imgindex = imgs[tile.Image.Source];
                         info.Region = new Proto.TmxMap.Types.Rect();
                         info.Region.X = 0;
@@ -178,7 +178,6 @@ namespace TmxReadHelper
                         info.Offset.X = tileset.TileOffset.X;
                         info.Offset.Y = tileset.TileOffset.Y;
                         tmxOut.Tileimgs.Add(info);
-                        gid++;
                     }
                 }
                 else
@@ -191,7 +190,7 @@ namespace TmxReadHelper
                         for (var i = 0; i < columns; i++)
                         {
                             var info = new Proto.TmxMap.Types.TileImg();
-                            info.Gid = gid;
+                            info.Gid = firstGid + i;
                             info.Imgindex = imgs[tileset.Image.Source];
                             info.Region = new Proto.TmxMap.Types.Rect();
                             info.Region.X = tileset.Margin + i*(tileset.Spacing + tileset.TileWidth);
@@ -202,7 +201,6 @@ namespace TmxReadHelper
                             info.Offset.X = tileset.TileOffset.X;
                             info.Offset.Y = tileset.TileOffset.Y;
                             tmxOut.Tileimgs.Add(info);
-                            gid++;
                             count++;
                         }
                         if (count == tileset.TileCount.Value) break;

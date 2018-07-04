@@ -132,6 +132,7 @@ bool Map::ReadFile(const wxString FilePath)
 				for(int i = 0; i < mTmxMap->imgs_size(); i++)
 				{
 					img.LoadFile(wxString::FromUTF8(mTmxMap->imgs(i).path().c_str()));
+					if(img.HasMask()) img.InitAlpha();
 					AssignImgData(mTmxImgSrc+i, img);
 				}
 			}
@@ -220,7 +221,18 @@ void Map::DrawTmxLayer(int index, wxImage* img)
 		{
 			const Proto::TmxMap_TileInfo *info = &layer->tiles(i);
 			if(info->gid() == 0) continue;
-			DrawTmxTile(i%mCol, i/mCol, &mTmxMap->tileimgs(info->gid()), img);
+			const Proto::TmxMap::TileImg *tileImg = nullptr;
+			for(int j = 0; j < mTmxMap->tileimgs_size(); j++)
+			{
+				if( mTmxMap->tileimgs(j).gid() == info->gid())
+				{
+					tileImg = &mTmxMap->tileimgs(j);
+				}
+			}
+			if(tileImg)
+			{
+				DrawTmxTile(i%mCol, i/mCol, tileImg, img);
+			}
 		}
 	}
 }
