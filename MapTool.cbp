@@ -239,7 +239,7 @@
 			<Add directory="$(#wx.include)" />
 			<Add directory="$(#wx)/contrib/include" />
 			<Add directory="wxFormBuilder" />
-			<Add directory="proto/include" />
+			<Add directory="proto/protobuf-3.11.3/src" />
 		</Compiler>
 		<ResourceCompiler>
 			<Add directory="$(#wx.include)" />
