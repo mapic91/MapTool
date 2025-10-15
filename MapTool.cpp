@@ -61,8 +61,8 @@ MapTool::MapTool(wxWindow* parent)
     m_isDeleteMode = false;
     m_isEditAttribute = false;
     m_isMoveMode = false;
-    m_NpcAsfImgList = new AsfImgList;
-    m_ObjAsfImgList = new AsfImgList;
+    m_NpcGameImageList = new GameImageList;
+    m_ObjGameImageList = new GameImageList;
     m_MoveNpcItem = NULL;
     m_MoveObjItem = NULL;
     m_selectedNpcItemByRightUp = NULL;
@@ -87,7 +87,7 @@ MapTool::MapTool(wxWindow* parent)
     m_ToolBarEdit->ToggleTool(ID_SHOWNPC, true);
     m_ToolBarEdit->ToggleTool(ID_SHOWOBJ, true);
 
-    this->SetTitle(wxT("剑侠情缘地图工具V2.11 - by 小试刀剑  2018.07.04"));
+    this->SetTitle(wxT("剑侠情缘地图工具V2.12 - by 小试刀剑  2025.10.15"));
     this->SetIcon(wxICON(aaaa));
     this->SetSize(800, 600);
     this->Center();
@@ -145,15 +145,15 @@ MapTool::~MapTool()
 {
     m_timer.Stop();
     this->Disconnect(wxEVT_TIMER, wxTimerEventHandler(MapTool::OnTimer), NULL, this);
-    if(m_NpcAsfImgList != NULL)
+    if(m_NpcGameImageList != NULL)
     {
-        FreeAsfImgList(m_NpcAsfImgList);
-        delete m_NpcAsfImgList;
+        FreeGameImageList(m_NpcGameImageList);
+        delete m_NpcGameImageList;
     }
-    if(m_ObjAsfImgList != NULL)
+    if(m_ObjGameImageList != NULL)
     {
-        FreeAsfImgList(m_ObjAsfImgList);
-        delete m_ObjAsfImgList;
+        FreeGameImageList(m_ObjGameImageList);
+        delete m_ObjGameImageList;
     }
     if(m_PlaceNpcData.NpcStand != NULL) delete m_PlaceNpcData.NpcStand;
     if(m_PlaceObjData.ObjCommon != NULL) delete m_PlaceObjData.ObjCommon;
@@ -228,8 +228,8 @@ void MapTool::OpenMap(wxCommandEvent& event)
     //clear npcs
     m_NpcList.Clear();
     m_ObjList.Clear();
-    FreeAsfImgList(m_NpcAsfImgList);
-    FreeAsfImgList(m_ObjAsfImgList);
+    FreeGameImageList(m_NpcGameImageList);
+    FreeGameImageList(m_ObjGameImageList);
 
     m_commandProcessor.ClearCommands();
     m_menuEdit->Enable(wxID_UNDO, false);
@@ -361,12 +361,12 @@ void MapTool::EnableTimer()
 
 void MapTool::ReNewNpcAsf(NpcItem* item)
 {
-	FindAndBufferAsf(exepath, item->GetString("NpcIni"), wxT("[Stand]"), &(item->NpcStand), m_NpcAsfImgList);
+	FindAndBufferImage(exepath, item->GetString("NpcIni"), wxT("[Stand]"), &(item->NpcStand), m_NpcGameImageList);
 }
 
 void MapTool::ReNewObjAsf(ObjItem* item)
 {
-	FindAndBufferAsf(exepath, item->GetString("ObjFile"), wxT("[Common]"), &(item->ObjCommon), m_ObjAsfImgList);
+	FindAndBufferImage(exepath, item->GetString("ObjFile"), wxT("[Common]"), &(item->ObjCommon), m_ObjGameImageList);
 }
 
 void MapTool::OnMapDraw( wxPaintEvent& event )
@@ -555,8 +555,16 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
             //tDrawY = recposy + 58 - tOffY + (32 - tHeight) - m_ViewBeginy;
 
             //Tile beg at tile middle(32,16)
-            tDrawX = recposx + 32 - tOffX;
-            tDrawY = recposy + 16 - tOffY;
+            if(dynamic_cast<AsfDecode*>(npcitem->NpcStand) != nullptr)
+			{
+				tDrawX = recposx + 32 - tOffX;
+				tDrawY = recposy + 16 - tOffY;
+			}
+            else
+			{
+				tDrawX = recposx - (tWidth/2 - 32);
+				tDrawY = recposy - (tHeight - 32) + tOffY;
+			}
         }
     }
     else if(objitem != NULL)
@@ -570,8 +578,16 @@ void MapTool::DrawTile(long col, long row, wxDC &dc, NpcItem *npcitem, ObjItem *
             tOffY = objitem->ObjCommon->GetBottom();
 
             //Tile beg at tile middle(32,16)
-            tDrawX = recposx + 32 - tOffX + objitem->GetOffX();
-            tDrawY = recposy + 16 - tOffY + objitem->GetOffY();
+            if(dynamic_cast<AsfDecode*>(objitem->ObjCommon) != nullptr)
+			{
+				tDrawX = recposx + 32 - tOffX + objitem->GetOffX();
+				tDrawY = recposy + 16 - tOffY + objitem->GetOffY();
+			}
+            else
+			{
+				tDrawX = recposx - (tWidth/2 - 32) + objitem->GetOffX();
+				tDrawY = recposy - (tHeight - 32) + tOffY + objitem->GetOffY();
+			}
         }
     }
 
@@ -914,7 +930,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         if(m_isNpc && !m_NpcIniFilePath.IsEmpty())
         {
             NpcItem *npcitem = new NpcItem;
-            if(!ReadIni(exepath, m_NpcIniFilePath,  npcitem, NULL, m_NpcAsfImgList))
+            if(!ReadIni(exepath, m_NpcIniFilePath,  npcitem, NULL, m_NpcGameImageList))
             {
                 delete npcitem;
                 return;
@@ -930,7 +946,7 @@ void MapTool::OnMapViewMouseLeftDown( wxMouseEvent& event )
         else if(m_isObj && !m_ObjIniFilePath.IsEmpty())
         {
             ObjItem *objitem = new ObjItem;
-            if(!ReadIni(exepath, m_ObjIniFilePath, NULL, objitem, m_ObjAsfImgList))
+            if(!ReadIni(exepath, m_ObjIniFilePath, NULL, objitem, m_ObjGameImageList))
             {
                 delete objitem;
                 return;
@@ -1094,7 +1110,7 @@ void MapTool::ShowNpcItemEditor(NpcItem* item, long index)
         if(m_npcItemEdit) delete m_npcItemEdit;
         m_npcItemEdit = new NpcItemEditDialog(this,
                                               m_MapFileName.Mid(0, m_MapFileName.size() - 4),
-                                              m_NpcAsfImgList,
+                                              m_NpcGameImageList,
                                               item,
                                               &m_NpcPropertyDefs);
         m_npcItemEdit->SetTitle(wxString::Format(wxT("NPC%03d"), index));
@@ -1152,7 +1168,7 @@ void MapTool::ShowNpcItemEditor(const std::vector<long>& items)
         InitNpcItem(&item);
         NpcItemEditDialog dialog(this,
                                  m_MapFileName.Mid(0, m_MapFileName.size() - 4),
-                                 m_NpcAsfImgList,
+                                 m_NpcGameImageList,
                                  &item,
                                  &m_NpcPropertyDefs);
         dialog.SetTitle(wxT("批量编辑模式，设置了值的项目，将被应用于所有选中NPC"));
@@ -1210,7 +1226,7 @@ void MapTool::ShowObjItemEditor(const std::vector<long>& items)
     InitObjItem(&item);
     ObjItemEditDialog dialog(this,
                              m_MapFileName.Mid(0, m_MapFileName.size() - 4),
-                             m_ObjAsfImgList,
+                             m_ObjGameImageList,
                              &item,
                              &m_ObjPropertyDefs);
     dialog.SetTitle(wxT("批量编辑模式，设置了值的项目，将被应用于所有选中OBJ"));
@@ -1271,7 +1287,7 @@ void MapTool::ShowObjItemEditor(ObjItem* item, long index)
     {
         ObjItemEditDialog itemEdit(this,
                                    m_MapFileName.Mid(0, m_MapFileName.size() - 4),
-                                   m_ObjAsfImgList,
+                                   m_ObjGameImageList,
                                    item,
                                    &m_ObjPropertyDefs);
         itemEdit.SetTitle(wxString::Format(wxT("OBJ%03d"), index));
@@ -1794,7 +1810,7 @@ void MapTool::OnImportNpcFile( wxCommandEvent& event )
         m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
         m_LastNpcListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
-        if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcAsfImgList, &m_commandProcessor))
+        if(NpcListImport(exepath, filedlg.GetPath(), &m_NpcList, m_NpcGameImageList, &m_commandProcessor))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
@@ -1889,7 +1905,7 @@ void MapTool::OnImportObjFile( wxCommandEvent& event )
         m_NpcObjPath = filedlg.GetDirectory() + wxT("\\");
         m_LastObjListFileName = wxFileName(filedlg.GetFilename()).GetFullName();
 
-        if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjAsfImgList, &m_commandProcessor))
+        if(ObjListImport(exepath, filedlg.GetPath(), &m_ObjList, m_ObjGameImageList, &m_commandProcessor))
         {
             wxMessageBox(wxT("完成"), wxT("消息"));
             RedrawMapView();
@@ -2461,7 +2477,7 @@ void NpcItemEditDialog::AssignToNpcItem(NpcItem *item, bool onlySetted)
     if(item == NULL) return;
     m_listDefHelper->AssignValues(m_GridManager->GetPage(0), item->KeyValues, onlySetted);
 
-    FindAndBufferAsf(exepath, item->GetString(wxT("NpcIni")), wxT("[Stand]"), &(item->NpcStand), m_NpcAsfImgList);
+    FindAndBufferImage(exepath, item->GetString(wxT("NpcIni")), wxT("[Stand]"), &(item->NpcStand), m_NpcGameImageList);
 }
 
 void ObjItemEditDialog::ClearVaules()
@@ -2479,7 +2495,7 @@ void ObjItemEditDialog::AssignToObjItem(ObjItem *item, bool onlySetted)
 
     m_listDefHelper->AssignValues(m_GridManager->GetPage(0), item->KeyValues, onlySetted);
 
-    FindAndBufferAsf(exepath, item->GetString(wxT("ObjFile")), wxT("[Common]"), &(item->ObjCommon), m_ObjAsfImgList);
+    FindAndBufferImage(exepath, item->GetString(wxT("ObjFile")), wxT("[Common]"), &(item->ObjCommon), m_ObjGameImageList);
 }
 
 void MapTool::OnMapViewMenu(wxCommandEvent& event)
@@ -2667,7 +2683,7 @@ void MapTool::OnMapViewPaste(wxCommandEvent& event)
 			item->CopyFrom(data);
 			item->SetMapX(m_CurTileX);
 			item->SetMapY(m_CurTileY);
-			FindAndBufferAsf(exepath, item, nullptr, m_NpcAsfImgList);
+			FindAndBufferImage(exepath, item, nullptr, m_NpcGameImageList);
 			if(!AddItem(item))
 			{
 				delete item;
@@ -2680,7 +2696,7 @@ void MapTool::OnMapViewPaste(wxCommandEvent& event)
 			{
 				NpcItem *item = new NpcItem;
 				item->CopyFrom(&(*it));
-				FindAndBufferAsf(exepath, item, nullptr, m_NpcAsfImgList);
+				FindAndBufferImage(exepath, item, nullptr, m_NpcGameImageList);
 				m_npcsToPasted.AddItem(item);
 			}
 			m_tilePositionOffsetNpc = m_clipBoard.GetMinNpcTilePosition();
@@ -2696,7 +2712,7 @@ void MapTool::OnMapViewPaste(wxCommandEvent& event)
 			item->CopyFrom(data);
 			item->SetMapX(m_CurTileX);
 			item->SetMapY(m_CurTileY);
-			FindAndBufferAsf(exepath, nullptr, item, m_ObjAsfImgList);
+			FindAndBufferImage(exepath, nullptr, item, m_ObjGameImageList);
 			if(!AddItem(item))
 			{
 				delete item;
@@ -2709,7 +2725,7 @@ void MapTool::OnMapViewPaste(wxCommandEvent& event)
 			{
 				ObjItem *item = new ObjItem;
 				item->CopyFrom(&(*it));
-				FindAndBufferAsf(exepath, nullptr, item, m_ObjAsfImgList);
+				FindAndBufferImage(exepath, nullptr, item, m_ObjGameImageList);
 				m_objsToPasted.AddItem(item);
 			}
 			m_tilePositionOffsetObj = m_clipBoard.GetMinObjTilePostion();

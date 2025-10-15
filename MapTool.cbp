@@ -187,15 +187,15 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-DNDEBUG" />
-					<Add directory="$(#wx.lib)/gcc_lib/mswu" />
+					<Add directory="$(#wx.lib)/gcc_lib_x64/mswu" />
 				</Compiler>
 				<ResourceCompiler>
-					<Add directory="$(#wx.lib)/gcc_lib/mswu" />
+					<Add directory="$(#wx.lib)/gcc_lib_x64/mswu" />
 				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-static-libgcc" />
 					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_propgrid.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_stc.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_richtext.a" />
@@ -218,7 +218,7 @@
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxmsw30u_webview.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxregexu.a" />
 					<Add library="$(#wx.lib)/gcc_lib_x64/libwxscintilla.a" />
-					<Add directory="$(#wx.lib)/gcc_lib" />
+					<Add directory="$(#wx.lib)/gcc_lib_x64" />
 					<Add directory="proto/lib/64" />
 				</Linker>
 				<ExtraCommands>
@@ -271,6 +271,9 @@
 		<Unit filename="FpsDialog.h" />
 		<Unit filename="ICO/L.h" />
 		<Unit filename="ICO/L_Disabled.h" />
+		<Unit filename="ImageDecode.hpp">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="InputUIntDialog.cpp" />
 		<Unit filename="InputUIntDialog.h" />
 		<Unit filename="ListDefHelper.cpp" />
@@ -314,9 +317,6 @@
 		<Unit filename="wxsmith/InputUIntDialog.wxs" />
 		<Unit filename="wxsmith/YesNoAllDialog.wxs" />
 		<Extensions>
-			<code_completion />
-			<envvars />
-			<debugger />
 			<wxsmith version="1">
 				<gui name="wxWidgets" src="App.cpp" main="" init_handlers="necessary" language="CPP" />
 				<resources>

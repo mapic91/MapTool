@@ -2342,7 +2342,7 @@
 1395460860 source:e:\programingworkshop\_store_\jxqy\maptool\wxformbuilder\mapframebase.cpp
 	"MapFrameBase.h"
 
-1502536707 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
+1673617248 source:e:\programmingworkshop\_store_\jxqy\maptool\app.cpp
 	"wx_pch.h"
 	"App.h"
 	"MapTool.h"
@@ -2355,7 +2355,7 @@
 1496843411 e:\programmingworkshop\_store_\jxqy\maptool\app.h
 	<wx/app.h>
 
-1502536551 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
+1760518465 e:\programmingworkshop\_store_\jxqy\maptool\maptool.h
 	<MapFrameBase.h>
 	"Map.h"
 	"Npc.hpp"
@@ -2412,14 +2412,17 @@
 	"MpcDecode.hpp"
 	"TmxReaderClient.h"
 
-1496843411 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
+1760530278 e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
+	"wx/dcclient.h"
 	"mydefs.hpp"
+	"ImageDecode.hpp"
+	<list>
 
 1497098724 e:\programmingworkshop\_store_\jxqy\maptool\mydefs.hpp
 
-1496843705 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
+1760517224 source:e:\programmingworkshop\_store_\jxqy\maptool\map.cpp
 	"wx/filename.h"
 	"wx/stdpaths.h"
 	"wx/msgdlg.h"
@@ -2427,7 +2430,7 @@
 	"Map.h"
 	<fstream>
 
-1496843259 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
+1760530983 source:e:\programmingworkshop\_store_\jxqy\maptool\mpcdecode.cpp
 	"MpcDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
@@ -2542,7 +2545,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1502536423 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
+1760519176 source:e:\programmingworkshop\_store_\jxqy\maptool\maptool.cpp
 	"MapTool.h"
 	"YesNoAllDialog.h"
 	"FpsDialog.h"
@@ -2594,7 +2597,7 @@
 	"wx/button.h"
 	"wx/dcclient.h"
 
-1499348357 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
+1760519808 e:\programmingworkshop\_store_\jxqy\maptool\npc.hpp
 	<string>
 	<list>
 	<map>
@@ -2607,27 +2610,29 @@
 	"AsfDecode.hpp"
 	"ListDefHelper.h"
 
-1496843283 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
+1760530258 source:e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.cpp
 	"AsfDecode.hpp"
 	"wx/image.h"
 	"wx/msgdlg.h"
 	<cstring>
 	<fstream>
 
-1496843411 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
+1760530198 e:\programmingworkshop\_store_\jxqy\maptool\asfdecode.hpp
 	"wx/string.h"
 	"wx/image.h"
 	"wx/dcclient.h"
 	"mydefs.hpp"
+	"ImageDecode.hpp"
 	<list>
 
-1499348338 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
+1760532439 source:e:\programmingworkshop\_store_\jxqy\maptool\npc.cpp
 	"Npc.hpp"
 	<fstream>
 	<cstdlib>
 	<cstring>
 	"wx/msgdlg.h"
 	"MapToolCommand.h"
+	"MpcDecode.hpp"
 
 1412631243 d:\protools\wxwidgets\wxwidgets-3.0\include\wx\splitter.h
 	"wx/event.h"
@@ -5372,7 +5377,7 @@
 1497680975 source:e:\programmingworkshop\_store_\jxqy\maptool\clipboard.cpp
 	"ClipBoard.h"
 
-1496843411 e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.h
+1673617248 e:\programmingworkshop\_store_\jxqy\maptool\yesnoalldialog.h
 	<wx/stattext.h>
 	<wx/button.h>
 	<wx/dialog.h>
@@ -5386,7 +5391,7 @@
 	"FpsDialog.h"
 	<wx/string.h>
 
-1496843411 e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.h
+1673617248 e:\programmingworkshop\_store_\jxqy\maptool\fpsdialog.h
 	<wx/stattext.h>
 	<wx/spinctrl.h>
 	<wx/button.h>
@@ -8025,31 +8030,39 @@
 
 1412631243 d:\protools\wxwidgets\wxwidgets_3\lib\gcc_dll\mswu\wx\setup.h
 
-1481699908 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.cc
+1668600803 source:e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.cc
 	"TmxMapMessage.pb.h"
 	<algorithm>
-	<google/protobuf/stubs/common.h>
-	<google/protobuf/stubs/port.h>
-	<google/protobuf/stubs/once.h>
 	<google/protobuf/io/coded_stream.h>
-	<google/protobuf/wire_format_lite_inl.h>
+	<google/protobuf/extension_set.h>
+	<google/protobuf/wire_format_lite.h>
 	<google/protobuf/descriptor.h>
 	<google/protobuf/generated_message_reflection.h>
 	<google/protobuf/reflection_ops.h>
 	<google/protobuf/wire_format.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
 
-1496843411 e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.h
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\tmxmapmessage.pb.h
+	<limits>
 	<string>
-	<google/protobuf/stubs/common.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+	<google/protobuf/io/coded_stream.h>
 	<google/protobuf/arena.h>
 	<google/protobuf/arenastring.h>
+	<google/protobuf/generated_message_table_driven.h>
 	<google/protobuf/generated_message_util.h>
+	<google/protobuf/inlined_string_field.h>
 	<google/protobuf/metadata.h>
+	<google/protobuf/generated_message_reflection.h>
 	<google/protobuf/message.h>
 	<google/protobuf/repeated_field.h>
 	<google/protobuf/extension_set.h>
 	<google/protobuf/generated_enum_reflection.h>
 	<google/protobuf/unknown_field_set.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
 
 1481518209 e:\programmingworkshop\_store_\jxqy\maptool\proto\include\google\protobuf\stubs\common.h
 	<string>
@@ -9516,7 +9529,7 @@
 	"InputUIntDialog.h"
 	<wx/string.h>
 
-1497086318 e:\programmingworkshop\_store_\jxqy\maptool\inputuintdialog.h
+1673617248 e:\programmingworkshop\_store_\jxqy\maptool\inputuintdialog.h
 	<wx/stattext.h>
 	<wx/spinctrl.h>
 	<wx/button.h>
@@ -9535,4 +9548,476 @@
 1499179720 e:\programmingworkshop\_store_\jxqy\maptool\ico\l.h
 
 1499179718 e:\programmingworkshop\_store_\jxqy\maptool\ico\l_disabled.h
+
+1412631243 d:\protools\wxwidgets\wxwidgets_3\lib\gcc_lib_x64\mswu\wx\setup.h
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\port_def.inc
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\port_undef.inc
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\io\coded_stream.h
+	<assert.h>
+	<atomic>
+	<climits>
+	<cstddef>
+	<cstring>
+	<string>
+	<type_traits>
+	<utility>
+	<sys/param.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/port.h>
+	<google/protobuf/stubs/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\common.h
+	<algorithm>
+	<iostream>
+	<map>
+	<memory>
+	<set>
+	<string>
+	<vector>
+	<google/protobuf/stubs/port.h>
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/stubs/platform_macros.h>
+	<exception>
+	<TargetConditionals.h>
+	<pthread.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\port.h
+	<assert.h>
+	<cstdint>
+	<stdlib.h>
+	<cstddef>
+	<string>
+	<string.h>
+	<google/protobuf/stubs/platform_macros.h>
+	<google/protobuf/port_def.inc>
+	<sys/param.h>
+	<endian.h>
+	<stdlib.h>
+	<intrin.h>
+	<libkern/OSByteOrder.h>
+	<byteswap.h>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\platform_macros.h
+	<Availability.h>
+	<TargetConditionals.h>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\macros.h
+	<google/protobuf/stubs/port.h>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\logging.h
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/stubs/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\strutil.h
+	<stdlib.h>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/stringpiece.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\stringpiece.h
+	<assert.h>
+	<stddef.h>
+	<string.h>
+	<iosfwd>
+	<limits>
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/hash.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\hash.h
+	<string.h>
+	<google/protobuf/stubs/common.h>
+	<unordered_map>
+	<unordered_set>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\port.h
+	<google/protobuf/stubs/port.h>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\arena.h
+	<limits>
+	<type_traits>
+	<utility>
+	<exception>
+	<typeinfo>
+	<typeinfo>
+	<type_traits>
+	<google/protobuf/arena_impl.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\arena_impl.h
+	<atomic>
+	<limits>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<sanitizer/asan_interface.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\arenastring.h
+	<string>
+	<type_traits>
+	<utility>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/fastmem.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\fastmem.h
+	<stddef.h>
+	<stdio.h>
+	<string.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\generated_message_table_driven.h
+	<google/protobuf/map.h>
+	<google/protobuf/map_entry_lite.h>
+	<google/protobuf/map_field_lite.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\map.h
+	<initializer_list>
+	<iterator>
+	<limits>
+	<set>
+	<utility>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/generated_enum_util.h>
+	<google/protobuf/map_type_handler.h>
+	<google/protobuf/stubs/hash.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\generated_enum_util.h
+	<type_traits>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\message_lite.h
+	<climits>
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/port.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\once.h
+	<mutex>
+	<utility>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\map_type_handler.h
+	<google/protobuf/parse_context.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/wire_format_lite.h>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\parse_context.h
+	<cstdint>
+	<cstring>
+	<string>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/io/zero_copy_stream.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/implicit_weak_message.h>
+	<google/protobuf/metadata_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\io\zero_copy_stream.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\implicit_weak_message.h
+	<string>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\repeated_field.h
+	<utility>
+	<algorithm>
+	<iterator>
+	<limits>
+	<string>
+	<type_traits>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/stubs/casts.h>
+	<type_traits>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\casts.h
+	<type_traits>
+	<google/protobuf/stubs/common.h>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\metadata_lite.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/generated_message_util.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\generated_message_util.h
+	<assert.h>
+	<atomic>
+	<climits>
+	<string>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/any.h>
+	<google/protobuf/has_bits.h>
+	<google/protobuf/implicit_weak_message.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/port.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\any.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\has_bits.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\wire_format_lite.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\map_entry_lite.h
+	<assert.h>
+	<string>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/parse_context.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/arenastring.h>
+	<google/protobuf/generated_message_util.h>
+	<google/protobuf/map.h>
+	<google/protobuf/map_type_handler.h>
+	<google/protobuf/port.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\map_field_lite.h
+	<type_traits>
+	<google/protobuf/parse_context.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/map.h>
+	<google/protobuf/map_entry_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\inlined_string_field.h
+	<string>
+	<utility>
+	<google/protobuf/port.h>
+	<google/protobuf/stubs/strutil.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\metadata.h
+	<google/protobuf/metadata_lite.h>
+	<google/protobuf/unknown_field_set.h>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\unknown_field_set.h
+	<assert.h>
+	<string>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/parse_context.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/io/zero_copy_stream_impl_lite.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\io\zero_copy_stream_impl_lite.h
+	<iosfwd>
+	<memory>
+	<string>
+	<google/protobuf/stubs/callback.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/io/zero_copy_stream.h>
+	<google/protobuf/stubs/stl_util.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\callback.h
+	<type_traits>
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\stl_util.h
+	<google/protobuf/stubs/common.h>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\generated_message_reflection.h
+	<string>
+	<vector>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/descriptor.h>
+	<google/protobuf/generated_enum_reflection.h>
+	<google/protobuf/metadata.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/port.h>
+	<google/protobuf/unknown_field_set.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\descriptor.h
+	<memory>
+	<set>
+	<string>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/mutex.h>
+	<google/protobuf/stubs/once.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\stubs\mutex.h
+	<mutex>
+	<windows.h>
+	<google/protobuf/stubs/macros.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\generated_enum_reflection.h
+	<string>
+	<google/protobuf/generated_enum_util.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600803 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\message.h
+	<iosfwd>
+	<string>
+	<type_traits>
+	<vector>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/arena.h>
+	<google/protobuf/descriptor.h>
+	<google/protobuf/generated_message_reflection.h>
+	<google/protobuf/message_lite.h>
+	<google/protobuf/port.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\extension_set.h
+	<algorithm>
+	<cassert>
+	<map>
+	<string>
+	<utility>
+	<vector>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/stubs/logging.h>
+	<google/protobuf/parse_context.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/port.h>
+	<google/protobuf/repeated_field.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\reflection_ops.h
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/message.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1668600805 e:\programmingworkshop\_store_\jxqy\maptool\proto\protobuf-3.11.3\src\google\protobuf\wire_format.h
+	<string>
+	<google/protobuf/stubs/common.h>
+	<google/protobuf/io/coded_stream.h>
+	<google/protobuf/descriptor.h>
+	<google/protobuf/message.h>
+	<google/protobuf/wire_format_lite.h>
+	<google/protobuf/stubs/casts.h>
+	<google/protobuf/port_def.inc>
+	<google/protobuf/port_undef.inc>
+
+1760530243 e:\programmingworkshop\_store_\jxqy\maptool\imagedecode.hpp
+	"wx/string.h"
+	"wx/image.h"
+	"wx/dcclient.h"
 

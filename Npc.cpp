@@ -7,14 +7,15 @@
 #include "wx/msgdlg.h"
 
 #include "MapToolCommand.h"
+#include "MpcDecode.hpp"
 
 using namespace std;
 
-string FindAsfInIni(const string FilePath, const std::string match)
+string FindImgInIni(const string FilePath, const std::string match)
 {
-    string asfpath;
+    string imgpath;
     ifstream file(FilePath.c_str());
-    if(!file.is_open()) return asfpath;
+    if(!file.is_open()) return imgpath;
 
     string line;
     size_t pos;
@@ -26,100 +27,146 @@ string FindAsfInIni(const string FilePath, const std::string match)
             getline(file, line);
             pos = line.find('=');
             if(pos == string::npos) break;
-            asfpath = line.substr(pos + 1);
+            imgpath = line.substr(pos + 1);
             break;
         }
     }
 
-    if(asfpath.empty())
+    if(imgpath.empty())
     {
         file.close();
         file.open(FilePath.c_str());
-        size_t posequal, posasf;
+        size_t posequal, posimg;
         while(!file.eof())
         {
             getline(file, line);
-            posasf = line.find(".asf");
+            posimg = line.find(".asf");
+            if (posimg == string::npos)
+			{
+				posimg = line.find(".mpc");
+			}
             posequal = line.find("=");
-            if(posasf != string::npos && posequal != string::npos)
+            if(posimg != string::npos && posequal != string::npos)
             {
-                asfpath = line.substr(posequal + 1);
+                imgpath = line.substr(posequal + 1);
                 break;
             }
         }
     }
     file.close();
 
-    return asfpath;
+    return imgpath;
 }
 
-void FindAndBufferAsf(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, AsfImgList *asflist)
+void FindAndBufferImage(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, GameImageList *imglist)
 {
 	if(npcitem != NULL)
-        FindAndBufferAsf(exepath, npcitem->GetString("NpcIni"), wxT("[Stand]"), &(npcitem->NpcStand), asflist);
+        FindAndBufferImage(exepath, npcitem->GetString("NpcIni"), wxT("[Stand]"), &(npcitem->NpcStand), imglist);
 	if(objitem != NULL)
-        FindAndBufferAsf(exepath, objitem->GetString("ObjFile"), wxT("[Common]"), &(objitem->ObjCommon), asflist);
+        FindAndBufferImage(exepath, objitem->GetString("ObjFile"), wxT("[Common]"), &(objitem->ObjCommon), imglist);
 }
 
-bool FindAndBufferAsf(const wxString &exepath,
+bool FindAndBufferImage(const wxString &exepath,
                       const wxString &inifilename,
                       const wxString &match,
-                      AsfDecode **asfdec,
-                      AsfImgList *asflist)
+                      ImageDecode **imgdec,
+                      GameImageList *imglist)
 {
-    if(asfdec == NULL ||
-            (*asfdec == NULL && asflist == NULL) //asfdecode missing
+    if(imgdec == NULL ||
+            (*imgdec == NULL && imglist == NULL) //imgdecode missing
       ) return false;
 
     string IniPath(exepath.char_str());
-    wxString asfpath;
+    wxString imgpath;
     if(match.CmpNoCase(wxT("[Stand]")) == 0)
     {
         IniPath += "ini\\npcres\\";
-        asfpath = exepath + wxT("asf\\character\\");
     }
     else if(match.CmpNoCase(wxT("[Common]")) == 0)
     {
         IniPath += "ini\\objres\\";
-        asfpath = exepath + wxT("asf\\object\\");
     }
     IniPath += inifilename.char_str();
 
-    wxString asffilename(wxString(FindAsfInIni(IniPath, string(match.char_str())).c_str()));
-    if(asffilename.IsEmpty())
+    wxString imgfilename(wxString(FindImgInIni(IniPath, string(match.char_str())).c_str()));
+    if(imgfilename.IsEmpty())
 	{
-		if(asflist) *asfdec = NULL;
-		else (*asfdec)->ReadAsfFile(wxEmptyString);
+		if(imglist) *imgdec = NULL;
+		else (*imgdec)->ReadFile(wxEmptyString);
 		return false;
 	}
-    asfpath += asffilename;
-
-	bool isInList = IsAsfFileIn(asffilename, asflist, asfdec);
-    if(asflist != NULL && !isInList)
+	bool isAsf = imgfilename.length() > 3 && imgfilename.Mid(imgfilename.length() - 4).CmpNoCase(wxT(".asf")) == 0;
+	if(isAsf)
+	{
+		imgpath = exepath + wxT("asf\\");
+	}
+	else
+	{
+		imgpath = exepath + wxT("mpc\\");
+	}
+	if(match.CmpNoCase(wxT("[Stand]")) == 0)
     {
-        AsfImg *asf_img = new AsfImg;
-        asf_img->path = asffilename;
-        asf_img->asfdec = new AsfDecode;
-        asflist->push_back(asf_img);
-
-        *asfdec = asf_img->asfdec;
+        imgpath += wxT("character\\");
     }
+    else if(match.CmpNoCase(wxT("[Common]")) == 0)
+    {
+        imgpath += wxT("object\\");
+    }
+    imgpath += imgfilename;
 
-    if((*asfdec) == NULL) return false;
+	bool isInList = IsImageFileIn(imgfilename, imglist, imgdec);
+    if(imglist != NULL && !isInList)
+    {
+        GameImage *asf_img = new GameImage;
+        asf_img->path = imgfilename;
+        if(isAsf)
+		{
+			asf_img->imgdec = new AsfDecode;
+		}
+		else
+		{
+			asf_img->imgdec = new MpcDecode;
+		}
+
+        imglist->push_back(asf_img);
+
+        *imgdec = asf_img->imgdec;
+    }
+    else if((*imgdec) != NULL)
+	{
+		if(isAsf)
+		{
+			if(dynamic_cast<AsfDecode*>(*imgdec) == nullptr)
+			{
+				delete *imgdec;
+				*imgdec = new AsfDecode;
+			}
+		}
+		else
+		{
+			if(dynamic_cast<MpcDecode*>(*imgdec) == nullptr)
+			{
+				delete *imgdec;
+				*imgdec = new MpcDecode;
+			}
+		}
+	}
+
+    if((*imgdec) == NULL) return false;
 
     if(!isInList)
 	{
 		//if fail, try another floder
-        if(!(*asfdec)->ReadAsfFile(asfpath))
+        if(!(*imgdec)->ReadFile(imgpath))
         {
-            if(match.CmpNoCase(wxT("[Stand]")) == 0)//try another path
+            if(match.CmpNoCase(wxT("[Stand]")) == 0 && isAsf)//try another path
             {
-                asfpath = exepath + wxT("asf\\interlude\\") + asffilename;
-                if(!(*asfdec)->ReadAsfFile(asfpath)) return false;
+                imgpath = exepath + wxT("asf\\interlude\\") + imgfilename;
+                if(!(*imgdec)->ReadFile(imgpath)) return false;
             }
             else return false;
         }
-        (*asfdec)->BufferData();
+        (*imgdec)->BufferData();
 	}
     return true;
 }
@@ -153,7 +200,7 @@ bool ReadIni(const wxString &exepath,
              const wxString &filePath,
              NpcItem *npcitem,
              ObjItem *objitem,
-             AsfImgList *list)
+             GameImageList *list)
 {
     if((npcitem == NULL && objitem == NULL)||
             (npcitem != NULL && objitem != NULL)
@@ -186,9 +233,9 @@ bool ReadIni(const wxString &exepath,
 
     }
     if(npcitem != NULL)
-        FindAndBufferAsf(exepath, npcitem->GetString("NpcIni"), wxT("[Stand]"), &(npcitem->NpcStand), list);
+        FindAndBufferImage(exepath, npcitem->GetString("NpcIni"), wxT("[Stand]"), &(npcitem->NpcStand), list);
     else if(objitem != NULL)
-        FindAndBufferAsf(exepath, objitem->GetString("ObjFile"), wxT("[Common]"), &(objitem->ObjCommon), list);
+        FindAndBufferImage(exepath, objitem->GetString("ObjFile"), wxT("[Common]"), &(objitem->ObjCommon), list);
 
     return true;
 }
@@ -269,10 +316,10 @@ bool GetNameValue(const wxString &line, wxString &name, wxString &value, long *n
     if(!value.ToLong(n_value)) (*n_value) = -1;
     return true;
 }
-bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc)
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, GameImageList *imglist, wxCommandProcessor *cmdProc)
 {
     if(list == NULL ||
-            asflist == NULL) return false;
+            imglist == NULL) return false;
 
     wxTextFile file;
     file.Open(path, wxConvLibc);
@@ -326,7 +373,7 @@ bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list,
 		}
         list->DeleteItem(item->MapX(), item->MapY());
         list->AddItem(item);
-        FindAndBufferAsf(exepath, item->GetString("NpcIni"), wxT("[Stand]"), &(item->NpcStand), asflist);
+        FindAndBufferImage(exepath, item->GetString("NpcIni"), wxT("[Stand]"), &(item->NpcStand), imglist);
     }
     cmdProc->Store(cmd);
 
@@ -369,10 +416,10 @@ bool NpcListSave(const wxString path, const wxString mapName, NpcList *list, Lis
     return true;
 }
 
-bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc)
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, GameImageList *imglist, wxCommandProcessor *cmdProc)
 {
     if(list == NULL ||
-            asflist == NULL) return false;
+            imglist == NULL) return false;
 
     wxTextFile file;
     file.Open(path, wxConvLibc);
@@ -426,7 +473,7 @@ bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list,
 		}
         list->DeleteItem(item->MapX(), item->MapY());
         list->AddItem(item);
-        FindAndBufferAsf(exepath, item->GetString("ObjFile"), wxT("[Common]"), &(item->ObjCommon), asflist);
+        FindAndBufferImage(exepath, item->GetString("ObjFile"), wxT("[Common]"), &(item->ObjCommon), imglist);
     }
     cmdProc->Store(cmd);
 
@@ -469,39 +516,47 @@ bool ObjListSave(const wxString path, const wxString mapName, ObjList *list, Lis
     return true;
 }
 
-bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf)
+bool IsImageFileIn(wxString path, GameImageList *list, ImageDecode **outimg)
 {
     if(list == NULL || path.IsEmpty()) return false;
-    for(AsfImgListIterator it = list->begin(); it != list->end(); it++)
+    for(GameImageListIterator it = list->begin(); it != list->end(); it++)
     {
         if(path.CmpNoCase((*it)->path) == 0)
         {
-            (*outasf) = (*it)->asfdec;
+            (*outimg) = (*it)->imgdec;
             return true;
         }
     }
     return false;
 }
-AsfImg* AddImg(AsfImgList &list, const wxString &asfFilePath)
+GameImage* AddImg(GameImageList &list, const wxString &imgFilePath)
 {
-    AsfDecode *decode = new AsfDecode;
-    if(decode->ReadAsfFile(asfFilePath))
+    ImageDecode *decode = nullptr;
+    if(imgFilePath.Find(".asf") != wxNOT_FOUND)
+	{
+		decode = new AsfDecode();
+	}
+	else
+	{
+		decode = new MpcDecode();
+	}
+    if(decode->ReadFile(imgFilePath))
     {
         decode->BufferData();
     }
-    AsfImg *asf_img = new AsfImg;
-    asf_img->path = wxFileName::FileName(asfFilePath).GetFullName();
-    asf_img->asfdec = decode;
+    GameImage *asf_img = new GameImage;
+    asf_img->path = wxFileName::FileName(imgFilePath).GetFullName();
+    asf_img->imgdec = decode;
     list.push_back(asf_img);
     return asf_img;
 }
 
-void FreeAsfImgList(AsfImgList *list)
+void FreeGameImageList(GameImageList *list)
 {
     if(list == NULL) return;
-    for(AsfImgListIterator it = list->begin(); it != list->end(); it++)
+    for(GameImageListIterator it = list->begin(); it != list->end(); it++)
     {
-        if((*it)->asfdec != NULL) delete (*it)->asfdec;
+        if((*it)->imgdec != NULL) delete (*it)->imgdec;
         if((*it) != NULL) delete (*it);
     }
     list->clear();

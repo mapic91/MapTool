@@ -25,7 +25,7 @@ void MpcDecode::Init()
     memset(&PaletteData, 0, sizeof(PaletteData));
     first = NULL;
 }
-void MpcDecode::SetMpcFile(const wxString MpcFilePath)
+void MpcDecode::SetFilePath(const wxString MpcFilePath)
 {
     FilePath = MpcFilePath;
 }
@@ -33,7 +33,7 @@ wxString MpcDecode::GetFilePath()
 {
     return FilePath;
 }
-bool MpcDecode::ReadMpcFile()
+bool MpcDecode::ReadFile()
 {
     if(FilePath.IsEmpty()) return false;
     else
@@ -133,10 +133,10 @@ bool MpcDecode::ReadMpcFile()
 
     return true;
 }
-bool MpcDecode::ReadMpcFile(const wxString MpcFilePath)
+bool MpcDecode::ReadFile(const wxString MpcFilePath)
 {
     FilePath = MpcFilePath;
-    return ReadMpcFile();
+    return ReadFile();
 }
 wxString MpcDecode::GetVersionInfo()
 {
@@ -464,6 +464,29 @@ wxImage MpcDecode::GetFrameImage(const unsigned long index)
     else return  wxNullImage;
 }
 
+wxBitmap MpcDecode::GetDirectionBitmapFromBufferdData(long direction, long indexOff)
+{
+	if(direction < 0) direction = 0;
+	if(indexOff < 0) indexOff = 0;
+    if(direction >= GetDirection() ||
+       GetFramesCounts() == 0 ||
+       GetDirection() == 0) return wxNullBitmap;
+	int index;
+	if(GetDirection() < 1)
+	{
+		index = 0;
+	}
+	else
+	{
+		index = direction * GetFramesCounts() / GetDirection();
+	}
+	index += indexOff;
+	if(index < 0 || index >= (int)GetFramesCounts()) return wxNullBitmap;
+	std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
+	for(int i = 0; i < index; i++, it++);
+    return (*(*it));
+}
+
 void MpcDecode::BufferData()
 {
     FreeBufferData();
@@ -477,6 +500,11 @@ void MpcDecode::BufferData()
         temp->data = GetDecodedFrameData(i, &width, &height, PIC_RGBA);
         temp->width = width;
         temp->height = height;
+
+        wxImage image = GetImageFromRgbaData(temp->data, (int)width, (int)height);
+		wxBitmap *bmp = new wxBitmap(image);
+		BufferdFrame.push_back(bmp);
+
         if(i != GetFramesCounts() - 1)
         {
             temp->next = new Frame_Data;
@@ -486,7 +514,6 @@ void MpcDecode::BufferData()
         {
             temp->next = NULL;
         }
-
     }
 }
 
@@ -501,4 +528,12 @@ void MpcDecode::FreeBufferData()
         first = temp;
     }
     first = NULL;
+
+    for(std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
+		it != BufferdFrame.end();
+		it++)
+	{
+		delete (*it);
+	}
+	BufferdFrame.clear();
 }

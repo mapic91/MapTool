@@ -344,7 +344,7 @@ public:
 	bool m_popupMenuShowed;
     NpcList m_NpcList;
     ObjList m_ObjList;
-    AsfImgList *m_NpcAsfImgList, *m_ObjAsfImgList;
+    GameImageList *m_NpcGameImageList, *m_ObjGameImageList;
     wxString m_NpcIniFilePath, m_ObjIniFilePath;
     bool m_isObj, //Is in obj edit mode.
 		 m_isNpc; //Is in npc edit mode.
@@ -395,13 +395,13 @@ class NpcItemEditDialog: public NpcItemEditDialogBase
 public:
     NpcItemEditDialog(wxWindow *parent,
                       const wxString mapname,
-                      AsfImgList *list,
+                      GameImageList *list,
                       NpcItem *item,
                       ListDefHelper *listDefHelper)
         :NpcItemEditDialogBase(parent)
     {
         m_mapName = mapname;
-        m_NpcAsfImgList = list;
+        m_NpcGameImageList = list;
         m_item = item;
         m_listDefHelper = listDefHelper;
 
@@ -812,7 +812,7 @@ private:
     wxString INI_MASK,INI_MESSGEG, TXT_MASK;
     long STYLE;
     wxString exepath, m_mapName;
-    AsfImgList *m_NpcAsfImgList;
+    GameImageList *m_NpcGameImageList;
     NpcItem *m_item;
     ListDefHelper *m_listDefHelper;
 };
@@ -823,7 +823,7 @@ public:
 
     ObjItemEditDialog(wxWindow *parent,
                       const wxString mapname,
-                      AsfImgList *list,
+                      GameImageList *list,
                       ObjItem *objitem,
                       ListDefHelper *listDefHelper)
         :ObjItemEditDialogBase(parent)
@@ -831,7 +831,7 @@ public:
         exepath = wxStandardPaths::Get().GetExecutablePath();
         exepath = wxFileName::FileName(exepath).GetPath(wxPATH_GET_VOLUME | wxPATH_GET_SEPARATOR);
         m_mapName = mapname;
-        m_ObjAsfImgList = list;
+        m_ObjGameImageList = list;
         m_item = objitem;
         m_listDefHelper = listDefHelper;
 
@@ -1028,7 +1028,7 @@ private:
     }
 
     wxString exepath, m_mapName;
-    AsfImgList *m_ObjAsfImgList;
+    GameImageList *m_ObjGameImageList;
     ObjItem *m_item;
     ListDefHelper *m_listDefHelper;
 };

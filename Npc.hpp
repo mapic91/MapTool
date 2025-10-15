@@ -17,7 +17,7 @@
 struct NpcItem
 {
 	std::map<wxString, wxVariant> KeyValues;
-    AsfDecode *NpcStand; //Point to AsfImgList item, don't free
+    ImageDecode *NpcStand; //Point to GameImageList item, don't free
 
     long MapX()
     {
@@ -76,7 +76,7 @@ struct NpcItem
 struct ObjItem
 {
     std::map<wxString, wxVariant> KeyValues;
-    AsfDecode *ObjCommon; //Point to AsfObjImgList item, don't free
+    ImageDecode *ObjCommon; //Point to AsfObjImgList item, don't free
 
     long MapX()
     {
@@ -155,34 +155,34 @@ struct ObjItem
 
 
 };
-struct AsfImg
+struct GameImage
 {
     wxString path;
-    AsfDecode *asfdec;
+    ImageDecode *imgdec;
 };
 
-typedef std::list<AsfImg*> AsfImgList;
-typedef std::list<AsfImg*>::iterator AsfImgListIterator;
-// if in , outasf is the asf data
-bool IsAsfFileIn(wxString path, AsfImgList *list, AsfDecode **outasf);
+typedef std::list<GameImage*> GameImageList;
+typedef std::list<GameImage*>::iterator GameImageListIterator;
+// if in , outimg is the img data
+bool IsImageFileIn(wxString path, GameImageList *list, ImageDecode **outimg);
 // Add img to list
-AsfImg* AddImg(AsfImgList &list, const wxString &asfFilePath);
-//delete list item AsfImg*, AsfImg::asfdec, and clear list
-void FreeAsfImgList(AsfImgList *list);
+GameImage* AddImg(GameImageList &list, const wxString &imgFilePath);
+//delete list item GameImage*, GameImage::imgdec, and clear list
+void FreeGameImageList(GameImageList *list);
 
-// find [stand] asf file in npcres ini file
-std::string FindAsfInIni(const std::string FilePath, const std::string match);
-//Find asfdecoder in NpcItem or ObjItem or both ini res file
-void FindAndBufferAsf(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, AsfImgList *asflist);
+// find [stand] img file in npcres ini file
+std::string FindImgInIni(const std::string FilePath, const std::string match);
+//Find imgdecoder in NpcItem or ObjItem or both ini res file
+void FindAndBufferImage(const wxString &exepath, NpcItem *npcitem, ObjItem *objitem, GameImageList *asflist);
 // find [stand] asf and buffer its data
 //exepath : the end contain path seprator
-//asfdec : out  , get a point of AsfDecode data
+//imgdec : out  , get a point of AsfDecode data
 //asflist : AsfDecode manager list
-bool FindAndBufferAsf(const wxString &exepath,
+bool FindAndBufferImage(const wxString &exepath,
                       const wxString &inifilename,
                       const wxString &match,
-                      AsfDecode **asfdec,
-                      AsfImgList *asflist = NULL);
+                      ImageDecode **imgdec,
+                      GameImageList *imglist = NULL);
 
 // init NpcItem to default vaule
 void InitNpcItem(NpcItem *item);
@@ -194,7 +194,7 @@ bool ReadIni(const wxString &exepath,
              const wxString &filePath,
              NpcItem *npcitem = NULL,
              ObjItem *objitem = NULL,
-             AsfImgList *list = NULL);
+             GameImageList *list = NULL);
 bool SaveIni(const wxString &filePath, NpcItem *npcitem = NULL, ObjItem *objitem = NULL, ListDefHelper *listDefHelper = NULL);
 void SaveNpcItem(wxTextFile &file, NpcItem *item, ListDefHelper *listDefHelper);
 void SaveObjItem(wxTextFile &file, ObjItem *item, ListDefHelper *listDefHelper);
@@ -396,11 +396,11 @@ private:
 };
 
 typedef ItemList<NpcItem*> NpcList;
-bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
+bool NpcListImport(const wxString &exepath, const wxString &path, NpcList *list, GameImageList *asflist, wxCommandProcessor *cmdProc);
 bool NpcListSave(const wxString path, const wxString mapName, NpcList *list, ListDefHelper *listDefHelper);
 
 typedef ItemList<ObjItem*> ObjList;
-bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, AsfImgList *asflist, wxCommandProcessor *cmdProc);
+bool ObjListImport(const wxString &exepath, const wxString &path, ObjList *list, GameImageList *asflist, wxCommandProcessor *cmdProc);
 bool ObjListSave(const wxString path, const wxString mapName, ObjList *list, ListDefHelper *listDefHelper);
 
 #endif // NPC_HPP_INCLUDED

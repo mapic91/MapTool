@@ -23,7 +23,7 @@ void AsfDecode::Init()
     memset(&FileHead,0, sizeof(AsfFileHead));
     memset(&PaletteData, 0, sizeof(PaletteData));
 }
-void AsfDecode::SetAsfFile(const wxString AsfFilePath)
+void AsfDecode::SetFilePath(const wxString AsfFilePath)
 {
     FilePath = AsfFilePath;
 }
@@ -31,7 +31,7 @@ wxString AsfDecode::GetFilePath()
 {
     return FilePath;
 }
-bool AsfDecode::ReadAsfFile()
+bool AsfDecode::ReadFile()
 {
     FreeBufferData();
     Init();
@@ -131,10 +131,10 @@ bool AsfDecode::ReadAsfFile()
 
     return true;
 }
-bool AsfDecode::ReadAsfFile(const wxString AsfFilePath)
+bool AsfDecode::ReadFile(const wxString AsfFilePath)
 {
     FilePath = AsfFilePath;
-    return ReadAsfFile();
+    return ReadFile();
 }
 wxString AsfDecode::GetVersionInfo()
 {
@@ -404,32 +404,6 @@ wxBitmap AsfDecode::GetDirectionBitmapFromBufferdData(long direction, long index
 	std::list<wxBitmap*>::iterator it = BufferdFrame.begin();
 	for(int i = 0; i < index; i++, it++);
     return (*(*it));
-}
-
-wxImage AsfDecode::GetImageFromRgbaData(unsigned char *data, int width, int height)
-{
-    if(data == NULL) return wxNullImage;
-
-    wxImage img;
-    long datapos = 0;
-    img.Create(width, height, true);
-    img.SetAlpha();
-
-    for(long hi = 0; hi < height; hi++)
-    {
-        for(long wi = 0; wi < width; wi++)
-        {
-            img.SetRGB(wi,
-                       hi,
-                       data[datapos],
-                       data[datapos + 1],
-                       data[datapos + 2]);
-            img.SetAlpha(wi, hi, data[datapos + 3]);
-            datapos += 4;
-        }
-    }
-
-    return img;
 }
 
 void AsfDecode::BufferData()

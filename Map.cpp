@@ -94,7 +94,7 @@ bool Map::ReadFile(const wxString FilePath)
 					mpcname[nc] = tempc;
 				}
 			}
-			if(decode[namei].ReadMpcFile(wx_mpcpath + wxT("\\") + wxString(mpcname)))
+			if(decode[namei].ReadFile(wx_mpcpath + wxT("\\") + wxString(mpcname)))
 			{
 				decode[namei].BufferData();
 			}
